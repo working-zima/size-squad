@@ -1,13 +1,14 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import { ThemeProvider } from 'styled-components';
-
 import { Reset } from 'styled-reset';
 
 import routes from './routes';
 
 import GlobalStyle from './styles/GlobalStyle';
 import DefaultTheme from './styles/defaultTheme';
+
+import './styles/fonts/font.css';
 
 const router = createBrowserRouter(routes);
 

@@ -1,0 +1,60 @@
+{
+  "goods": [
+    {
+      "id": "0BV000GOD0001",
+      "category": {
+        "id": "0BV000CAT0001",
+        "name": "longSleeve"
+      },
+      "thumbnail": {
+        "url": "https://example.com/products/01.jpg"
+      },
+      "brand": "유니클로",
+      "name": "레귤러핏 러닝 탑",
+      "price": 38000,
+      "sizes": {
+        "id": "0BV000SIZ0003",
+        "name": "100(L)"
+      },
+      "measurements": {
+        "totalLength": 62.5,
+        "shoulderWidth": 48.5,
+        "chestWidth": 57.5,
+        "sleeveLength": 60
+      },
+      "fits": {
+        "id": "0BV000FIT0002",
+        "name": "regular"
+      },
+      "description": "수선 없이 잘 맞아요."
+    },
+    {
+      "id": "0BV000GOD0002",
+      "category": {
+        "id": "0BV000CAT0004",
+        "name": "shorts"
+      },
+      "thumbnail": {
+        "url": "https://example.com/products/02.jpg"
+      },
+      "name": "19ss og utility fatigue short pants",
+      "price": 28000,
+      "size": {
+        "id": "0BV000SIZ0002",
+        "name": "95(M)"
+      },
+      "measurements": {
+        "waistWidth": 40,
+        "hipWidth": null,
+        "thighWidth": 32,
+        "rise": 29,
+        "hemWidth": 25
+      },
+      "fits": {
+        "id": "0BV000FIT0003",
+        "name": "wide"
+      },
+      "description": "허리가 조금 남아서 벨트 매야합니다."
+    }
+  ]
+}

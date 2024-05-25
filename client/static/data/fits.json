@@ -1,0 +1,16 @@
+{
+  "fits": [
+    {
+      "id": "0BV000FIT0001",
+      "name": "slim"
+    },
+    {
+      "id": "0BV000FIT0002",
+      "name": "regular"
+    },
+    {
+      "id": "0BV000FIT0003",
+      "name": "oversized"
+    }
+  ]
+}
