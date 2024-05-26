@@ -2,19 +2,24 @@
   "goods": [
     {
       "id": "0BV000GOD0001",
+      "Author": "0BV000Aut0001",
       "category": {
         "id": "0BV000CAT0001",
-        "name": "longSleeve"
-      },
-      "thumbnail": {
-        "url": "https://example.com/products/01.jpg"
+        "name": "상의",
+        "subCategories": [
+            {
+              "id": "0BV000SUB0001",
+              "name": "긴소매 상의"
+            }
+        ]
       },
       "brand": "유니클로",
-      "name": "레귤러핏 러닝 탑",
+      "name": "긴팔원숭이 티셔츠",
       "price": 38000,
       "sizes": {
-        "id": "0BV000SIZ0003",
-        "name": "100(L)"
+        "id": "0BV000SIZ0000",
+        "gender": "unisex",
+        "name": "ONE SIZE"
       },
       "measurements": {
         "totalLength": 62.5,
@@ -26,24 +31,163 @@
         "id": "0BV000FIT0002",
         "name": "regular"
       },
-      "description": "수선 없이 잘 맞아요."
+      "description": "소매가 좀 길어요."
     },
     {
       "id": "0BV000GOD0002",
+      "Author": "0BV000Aut0002",
       "category": {
-        "id": "0BV000CAT0004",
-        "name": "shorts"
+        "id": "0BV000CAT0001",
+        "name": "상의",
+        "subCategories": [
+          {
+            "id": "0BV000SUB0002",
+            "name": "반소매 상의"
+          }
+      ]
       },
-      "thumbnail": {
-        "url": "https://example.com/products/02.jpg"
-      },
-      "name": "19ss og utility fatigue short pants",
+      "brand": "유니클로",
+      "name": "UT 반팔",
       "price": 28000,
       "size": {
         "id": "0BV000SIZ0002",
+        "gender": "men",
         "name": "95(M)"
       },
       "measurements": {
+        "totalLength": 65,
+        "shoulderWidth": 48,
+        "chestWidth": 54,
+        "sleeveLength": 21
+      },
+      "fits": {
+        "id": "0BV000FIT0003",
+        "name": "wide"
+      },
+      "description": "어깨가 넓은 느낌"
+    },
+    {
+      "id": "0BV000GOD0003",
+      "Author": "0BV000Aut0003",
+      "category": {
+        "id": "0BV000CAT0002",
+        "name": "아우터",
+        "subCategories": [
+          {
+            "id": "0BV000SUB0003",
+            "name": "롱 아우터"
+          }
+      ]
+      },
+      "brand": "아이다",
+      "name": "한강 고양이 롱패딩",
+      "price": 38000,
+      "sizes": {
+        "id": "0BV000SIZ0003",
+        "name": "100(L)"
+      },
+      "measurements": {
+        "totalLength": 113,
+        "shoulderWidth": 0,
+        "chestWidth": 66,
+        "sleeveLength": 76
+      },
+      "fits": {
+        "id": "0BV000FIT0003",
+        "gender": "men",
+        "name": "oversized"
+      },
+      "description": "무릎 아래 2.5cm 정도 느낌"
+    },
+    {
+      "id": "0BV000GOD0004",
+      "Author": "0BV000Aut0004",
+      "category": {
+        "id": "0BV000CAT0002",
+        "name": "아우터",
+        "subCategories": [
+          {
+            "id": "0BV000SUB0004",
+            "name": "레귤러 아우터"
+          }
+      ]
+      },
+      "brand": "샤넬",
+      "name": "트위드 자켓",
+      "price": 9228000,
+      "size": {
+        "id": "0BV000SIZ0002",
+        "gender": "men",
+        "name": "95(M)"
+      },
+      "measurements": {
+        "totalLength": 63,
+        "shoulderWidth": 50,
+        "chestWidth": 59,
+        "sleeveLength": 65
+      },
+      "fits": {
+        "id": "0BV000FIT0001",
+        "name": "slim"
+      },
+      "description": "품이 핏하게 맞음"
+    },
+    {
+      "id": "0BV000GOD0005",
+      "Author": "0BV000Aut0003",
+      "category": {
+        "id": "0BV000CAT0002",
+        "name": "아우터",
+        "subCategories": [
+          {
+            "id": "0BV000SUB0005",
+            "name": "크롭 아우터"
+          }
+      ]
+      },
+      "brand": "Doff Jason",
+      "name": "크롭 카우레더 자켓",
+      "price": 138000,
+      "sizes": {
+        "id": "0BV000SIZ0003",
+        "gender": "men",
+        "name": "100(L)"
+      },
+      "measurements": {
+        "totalLength": 59,
+        "shoulderWidth": 48,
+        "chestWidth": 57,
+        "sleeveLength": 64
+      },
+      "fits": {
+        "id": "0BV000FIT0002",
+        "name": "regular"
+      },
+      "description": "팔 기장 3cm 수선"
+    },
+    {
+      "id": "0BV000GOD0006",
+      "Author": "0BV000Aut0002",
+      "category": {
+        "id": "0BV000CAT0003",
+        "name": "바지",
+        "subCategories": [
+          {
+            "id": "0BV000SUB0006",
+            "name": "롱 팬츠"
+          }
+        ]
+      },
+      "brand": "리바이스",
+      "name": "빈티지 청바지",
+      "price": 120000,
+      "sizes": {
+        "id": "0BV000SIZ0003",
+        "gender": "men",
+        "name": "100(L)"
+      },
+      "measurements": {
+        "totalLength": 104,
         "waistWidth": 40,
         "hipWidth": null,
         "thighWidth": 32,
@@ -52,9 +196,246 @@
       },
       "fits": {
         "id": "0BV000FIT0003",
-        "name": "wide"
+        "name": "oversized"
       },
-      "description": "허리가 조금 남아서 벨트 매야합니다."
+      "description": "엉덩이 부분 타이트"
+    },
+    {
+      "id": "0BV000GOD0007",
+      "Author": "0BV000Aut0001",
+      "category": {
+        "id": "0BV000CAT0003",
+        "name": "바지",
+        "subCategories": [
+          {
+            "id": "0BV000SUB0007",
+            "gender": "men",
+            "name": "숏 팬츠"
+          }
+        ]
+      },
+      "brand": "유니폼 브릿지",
+      "name": "og utility 퍼티그 팬츠",
+      "price": 120000,
+      "sizes": {
+        "id": "0BV000SIZ0003",
+        "name": "100(L)"
+      },
+      "measurements": {
+        "totalLength": 61,
+        "waistWidth": 36.5,
+        "hipWidth": 54,
+        "thighWidth": 34.4,
+        "rise": 32.6,
+        "hemWidth": 33
+      },
+      "fits": {
+        "id": "0BV000FIT0002",
+        "gender": "men",
+        "name": "regular"
+      },
+      "description": "무릎 아래 기장"
+    },
+    {
+      "id": "0BV000GOD0008",
+      "Author": "0BV000Aut0009",
+      "category": {
+        "id": "0BV000CAT0004",
+        "name": "스커트",
+        "subCategories": [
+          {
+            "id": "0BV000SUB0008",
+            "name": "롱 스커트"
+          }
+        ]
+      },
+      "brand": "우알롱",
+      "name": "See-through long wrap skirt - Black",
+      "price": 45000,
+      "sizes": {
+        "id": "0BV000SIZ0003",
+        "gender": "women",
+        "name": "100(L)"
+      },
+      "measurements": {
+        "totalLength": 78,
+        "shoulderWidth": 33,
+        "chestWidth": 46,
+        "sleeveLength": 100
+      },
+      "fits": {
+        "id": "0BV000FIT0002",
+        "name": "regular"
+      },
+      "description": "땅에 끌리지 않는 정도"
+    },
+    {
+      "id": "0BV000GOD0010",
+      "Author": "0BV000Aut0009",
+      "category": {
+        "id": "0BV000CAT0004",
+        "name": "스커트",
+        "subCategories": [
+          {
+            "id": "0BV000SUB0009",
+            "name": "미디 스커트"
+          }
+        ]
+      },
+      "brand": "썬번 프로젝트",
+      "name": "Moss Low-rise Midi Skirt",
+      "price": 85559,
+      "sizes": {
+        "id": "0BV000SIZ0003",
+        "gender": "women",
+        "name": "100(L)"
+      },
+      "measurements": {
+        "totalLength": 63,
+        "waistWidth": 34,
+        "chestWidth": 45,
+        "sleeveLength": 54
+      },
+      "fits": {
+        "id": "0BV000FIT0002",
+        "name": "slim"
+      },
+      "description": ""
+    },
+    {
+      "id": "0BV000GOD0011",
+      "Author": "0BV000Aut0008",
+      "category": {
+        "id": "0BV000CAT0004",
+        "name": "스커트",
+        "subCategories": [
+          {
+            "id": "0BV000SUB0010",
+            "name": "미니 스커트"
+          }
+        ]
+      },
+      "brand": "로우클래식",
+      "name": "SHEER LAYERED SKIRT_BLACK_LC241_SK04BK",
+      "price": 66796,
+      "sizes": {
+        "id": "0BV000SIZ0003",
+        "gender": "women",
+        "name": "100(L)"
+      },
+      "measurements": {
+        "totalLength": 30,
+        "waistWidth": 35,
+        "hipWidth": 47,
+        "hemWidth": 49
+      },
+      "fits": {
+        "id": "0BV000FIT0002",
+        "name": "regular"
+      },
+      "description": "생각보다 길어요~ 허리끈도 길구"
+    },
+    {
+      "id": "0BV000GOD0012",
+      "Author": "0BV000Aut0007",
+      "category": {
+        "id": "0BV000CAT0005",
+        "name": "원피스",
+        "subCategories": [
+          {
+            "id": "0BV000SUB0011",
+            "name": "맥시 원피스"
+          }
+        ]
+      },
+      "brand": "로우클래식",
+      "name": "SHEER LAYERED SKIRT_BLACK_LC241_SK04BK",
+      "price": 66796,
+      "sizes": {
+        "id": "0BV000SIZ0003",
+        "gender": "women",
+        "name": "100(L)"
+      },
+      "measurements": {
+        "totalLength": 123,
+        "shoulderWidth": 38,
+        "chestWidth": 58,
+        "sleeveLength": 26,
+        "hipWidth": 68
+      },
+      "fits": {
+        "id": "0BV000FIT0002",
+        "name": "regular"
+      },
+      "description": "생각보다 길어요~ 허리끈도 길구"
+    },
+    {
+      "id": "0BV000GOD0013",
+      "Author": "0BV000Aut0009",
+      "category": {
+        "id": "0BV000CAT0005",
+        "name": "원피스",
+        "subCategories": [
+          {
+            "id": "0BV000SUB0012",
+            "name": "미디 원피스"
+          }
+        ]
+      },
+      "brand": "로우클래식",
+      "name": "SHEER LAYERED SKIRT_BLACK_LC241_SK04BK",
+      "price": 66796,
+      "sizes": {
+        "id": "0BV000SIZ0003",
+        "gender": "women",
+        "name": "100(L)"
+      },
+      "measurements": {
+        "totalLength": 80,
+        "shoulderWidth": 41,
+        "chestWidth": 46,
+        "sleeveLength": 19.5,
+        "hipWidth": 0
+      },
+      "fits": {
+        "id": "0BV000FIT0002",
+        "name": "regular"
+      },
+      "description": "생각보다 길어요~ 허리끈도 길구"
+    },
+    {
+      "id": "0BV000GOD0013",
+      "Author": "0BV000Aut0009",
+      "category": {
+        "id": "0BV000CAT0005",
+        "name": "원피스",
+        "subCategories": [
+          {
+            "id": "0BV000SUB0013",
+            "name": "미니 원피스"
+          }
+        ]
+      },
+      "brand": "로우클래식",
+      "name": "SHEER LAYERED SKIRT_BLACK_LC241_SK04BK",
+      "price": 66796,
+      "sizes": {
+        "id": "0BV000SIZ0003",
+        "gender": "women",
+        "name": "100(L)"
+      },
+      "measurements": {
+        "totalLength": 80,
+        "shoulderWidth": 38.5,
+        "chestWidth": 39.5,
+        "sleeveLength": 16,
+        "hipWidth": 0
+      },
+      "fits": {
+        "id": "0BV000FIT0002",
+        "name": "regular"
+      },
+      "description": "생각보다 길어요~ 허리끈도 길구"
     }
   ]
 }
