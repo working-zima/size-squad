@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import CategoryBar from '../components/category/CategoryBar';
+import Sizes from '../components/Sizes';
 
 import useFetchCategories from '../hooks/useFetchCategories';
 
@@ -11,7 +12,7 @@ const Container = styled.div`
     font-size: 2.4rem;
     font-weight: 500;
     line-height: 1.25;
-    padding: 0 ${(props) => props.theme.sizes.contentPadding};
+    padding: 0 ${(props) => props.theme.sizes.contentHorizontalPadding};
   }
 `;
 
@@ -26,6 +27,7 @@ export default function MySizePage() {
     <Container>
       <CategoryBar />
       <h2>나의 사이즈</h2>
+      <Sizes />
     </Container>
   );
 }

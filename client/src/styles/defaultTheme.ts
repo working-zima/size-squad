@@ -13,9 +13,9 @@ const defaultTheme = {
 
   },
   sizes: {
-    /** 좌우 패딩 */
-    contentPadding: '1.6rem',
+    contentHorizontalPadding: '1.6rem',
     contentBorderRadius: '0.1rem',
+    sectionTopMargin: '2.4rem',
   },
 };
 
