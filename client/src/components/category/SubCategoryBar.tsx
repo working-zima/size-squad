@@ -27,7 +27,7 @@ const CustomButton = styled(Button)<{active: boolean}>`
   height: 3.4rem;
   margin-right: 0.4rem;
   padding: 0.5rem 1.2rem;
-  border-radius: 9999px;
+  border-radius: 100px;
   font-size: 1.3rem;
   line-height: 2.1rem;
   user-select: none;
@@ -55,16 +55,25 @@ export default function SubCategoryBar(
   const [activeBtn, setActiveBtn] = useState('all');
   const [params] = useSearchParams();
   const navigate = useNavigate();
-  const categoryId = params.get('categoryId');
-  const subCategoryId = params.get('subCategoryId');
+  const categoryId = params.get('category1DepthCode');
+  const subCategoryId = params.get('category2DepthCodes');
 
   useEffect(() => {
-    if (subCategoryId === 'all') {
+    if (!subCategoryId) {
       setActiveBtn('all');
     }
-  }, [categoryId, subCategoryId]);
+  }, [subCategoryId]);
 
-  const handleNavigate = (path: string, btnId: string) => {
+  const handleNavigate = (btnId: string) => {
+    let path = '/mysize';
+
+    if (categoryId) {
+      path += `?category1DepthCode=${categoryId}`;
+    }
+    if (btnId !== 'all') {
+      path += `${categoryId ? '&' : '?'}category2DepthCodes=${btnId}`;
+    }
+
     setActiveBtn(btnId);
     navigate(path);
   };
@@ -74,7 +83,7 @@ export default function SubCategoryBar(
       <CustomButton
         active={activeBtn === 'all'}
         onClick={
-          () => handleNavigate(`/mysize?categoryId=${categoryId}&subCategoryId=all`, 'all')
+          () => handleNavigate('all')
         }
       >
         전체
@@ -84,10 +93,7 @@ export default function SubCategoryBar(
           <CustomButton
             key={subCategory.id}
             active={activeBtn === subCategory.id}
-            onClick={() => handleNavigate(
-              `/mysize?categoryId=${categoryId}&subCategoryId=${subCategory.id}`,
-              subCategory.id,
-            )}
+            onClick={() => handleNavigate(subCategory.id)}
           >
             {subCategory.name}
           </CustomButton>

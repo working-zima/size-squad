@@ -9,7 +9,8 @@ const Container = styled.div`
   position: sticky;
   top: 0%;
   height: 10.2rem;
-  z-index: 100;
+  z-index: 1000;
+  background-color: white;
 `;
 
 export default function CategoryBar() {

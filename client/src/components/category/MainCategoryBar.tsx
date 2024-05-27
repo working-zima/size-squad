@@ -94,7 +94,7 @@ export default function MainCategoryBar({
         }}
         data-id="all"
         active={activeBtn === 'all'}
-        onClick={() => handleNavigate('/mysize?categoryId=all&subCategoryId=all', 'all')}
+        onClick={() => handleNavigate('/mysize', 'all')}
       >
         <p>전체</p>
       </CustomButton>
@@ -109,7 +109,7 @@ export default function MainCategoryBar({
             active={activeBtn === category.id}
             onClick={
               () => handleNavigate(
-                `/mysize?categoryId=${category.id}&subCategoryId=all`,
+                `/mysize?category1DepthCode=${category.id}`,
                 category.id,
               )
             }
@@ -118,7 +118,10 @@ export default function MainCategoryBar({
           </CustomButton>
         ))
       )}
-      <ActiveBar left={activeBarStyle.left} width={activeBarStyle.width} />
+      <ActiveBar
+        left={activeBarStyle.left}
+        width={activeBarStyle.width}
+      />
     </Container>
   );
 }
