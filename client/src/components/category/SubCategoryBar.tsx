@@ -56,10 +56,13 @@ export default function SubCategoryBar(
   const [params] = useSearchParams();
   const navigate = useNavigate();
   const categoryId = params.get('categoryId');
+  const subCategoryId = params.get('subCategoryId');
 
   useEffect(() => {
-    setActiveBtn('all');
-  }, [categoryId]);
+    if (subCategoryId === 'all') {
+      setActiveBtn('all');
+    }
+  }, [categoryId, subCategoryId]);
 
   const handleNavigate = (path: string, btnId: string) => {
     setActiveBtn(btnId);
@@ -71,7 +74,7 @@ export default function SubCategoryBar(
       <CustomButton
         active={activeBtn === 'all'}
         onClick={
-          () => handleNavigate(`/mysize?categoryId=${categoryId}`, 'all')
+          () => handleNavigate(`/mysize?categoryId=${categoryId}&subCategoryId=all`, 'all')
         }
       >
         전체
