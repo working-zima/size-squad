@@ -13,6 +13,8 @@ const Container = styled.div`
   'header'
   'main'
   'navigationMenu';
+  margin: 0 auto;
+  /* width: ${(props) => props.theme.sizes.layoutWidth}; */
 `;
 
 const Main = styled.main`

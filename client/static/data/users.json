@@ -1,0 +1,68 @@
+{
+  "users": [
+    {
+      "id": "0BV000USE0001",
+      "name": "zimablue",
+      "email": "zimablue@example.com",
+      "password": "password",
+      "gender": "남성",
+      "height": 170,
+      "weight": 65,
+      "physicalDescription": "허벅지와 흉통이 큰편",
+      "followers": [
+        {
+          "id": "0BV000USE0002",
+          "name": "sungryul"
+        },
+        {
+          "id": "0BV000USE0003",
+          "name": "sangwoo"
+        }
+      ],
+      "following": []
+    },
+    {
+      "id": "0BV000USE0002",
+      "name": "sungryul",
+      "email": "sungryul@example.com",
+      "password": "password",
+      "gender": "여성",
+      "height": 180,
+      "weight": 75,
+      "physicalDescription": "팔 다리가 짧은 편",
+      "followers": [
+        {
+          "id": "0BV000USE0003",
+          "name": "sangwoo"
+        }
+      ],
+      "following": [
+        {
+          "id": "0BV000USE0001",
+          "name": "zimablue"
+        }
+      ]
+    },
+    {
+      "id": "0BV000USE0002",
+      "name": "sangwoo",
+      "email": "sangwoo@example.com",
+      "password": "password",
+      "gender": "남성",
+      "height": 175,
+      "weight": 90,
+      "physicalDescription": "헬스 트레이너입니다. 몸이 큽니다.",
+      "followers": [],
+      "following": [
+        {
+          "id": "0BV000USE0001",
+          "name": "zimablue"
+        },
+        {
+          "id": "0BV000USE0002",
+          "name": "sungryul"
+        }
+      ]
+    }
+  ]
+}

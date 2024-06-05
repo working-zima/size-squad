@@ -1,7 +1,7 @@
 import { singleton } from 'tsyringe';
 import { Action, Store } from 'usestore-ts';
 
-import { Category, SubCategory } from '../types';
+import { Category, SubCategoryList } from '../types';
 
 import { apiService } from '../services/ApiService';
 
@@ -10,9 +10,11 @@ import { apiService } from '../services/ApiService';
 class CategoriesStore {
   categories: Category[] = [];
 
-  subCategories: SubCategory[] = [];
+  subCategories: SubCategoryList[] = [];
 
-  async fetchCategories({ categoryId }: { categoryId?: string }) {
+  async fetchCategories({ categoryId }: {
+    categoryId?: string
+  }) {
     this.setCategories([]);
 
     const categories = await apiService.fetchCategories({ categoryId });
@@ -24,7 +26,7 @@ class CategoriesStore {
   setCategories(categories: Category[]) {
     this.categories = categories;
     this.subCategories = categories
-      .reduce<SubCategory[]>((acc, category) => [
+      .reduce<SubCategoryList[]>((acc, category) => [
         ...acc, ...category.subCategories,
       ], []);
   }

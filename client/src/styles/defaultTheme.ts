@@ -13,7 +13,8 @@ const defaultTheme = {
 
   },
   sizes: {
-    contentHorizontalPadding: '1.6rem',
+    layoutWidth: '1080px',
+    contentPadding: '1.6rem',
     contentBorderRadius: '0.1rem',
     sectionTopMargin: '2.4rem',
   },

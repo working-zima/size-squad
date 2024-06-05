@@ -1,14 +1,14 @@
 import Layout from './components/Layout';
 
 import HomePage from './pages/HomePage';
-import MySizePage from './pages/MySizePage';
+import MySizeListPage from './pages/MySizeListPage';
 
 const routes = [
   {
     element: <Layout />,
     children: [
       { path: '/', element: <HomePage /> },
-      { path: '/mysize', element: <MySizePage /> },
+      { path: '/mysize', element: <MySizeListPage /> },
     ],
   },
 ];

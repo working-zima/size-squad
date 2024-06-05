@@ -4,82 +4,75 @@
       "id": "0BV000CAT0001",
       "name": "상의",
       "subCategories": [
-        {
-          "id": "0BV000SUB0001",
-          "name": "긴소매 상의"
-        },
-        {
-          "id": "0BV000SUB0002",
-          "name": "반소매 상의"
-        }
+        "긴소매 상의",
+        "반소매 상의"
+      ],
+      "measurements": [
+        "totalLength",
+        "shoulderWidth",
+        "chestWidth",
+        "sleeveLength"
       ]
     },
     {
       "id": "0BV000CAT0002",
       "name": "아우터",
       "subCategories": [
-        {
-          "id": "0BV000SUB0003",
-          "name": "롱 아우터"
-        },
-        {
-          "id": "0BV000SUB0004",
-          "name": "레귤러 아우터"
-        },
-        {
-          "id": "0BV000SUB0005",
-          "name": "크롭 아우터"
-        }
+        "롱 아우터",
+        "레귤러 아우터",
+        "크롭 아우터"
+      ],
+      "measurements": [
+        "totalLength",
+        "shoulderWidth",
+        "chestWidth",
+        "sleeveLength"
       ]
     },
     {
       "id": "0BV000CAT0003",
       "name": "바지",
       "subCategories": [
-        {
-          "id": "0BV000SUB0006",
-          "name": "롱 팬츠"
-        },
-        {
-          "id": "0BV000SUB0007",
-          "name": "숏 팬츠"
-        }
+        "롱 팬츠", "숏 팬츠"
+      ],
+      "measurements": [
+        "totalLength",
+        "waistWidth",
+        "hipWidth",
+        "thighWidth",
+        "rise",
+        "hemWidth"
       ]
     },
     {
       "id": "0BV000CAT0004",
       "name": "스커트",
       "subCategories": [
-        {
-          "id": "0BV000SUB0008",
-          "name": "롱 스커트"
-        },
-        {
-          "id": "0BV000SUB0009",
-          "name": "미디 스커트"
-        },
-        {
-          "id": "0BV000SUB0010",
-          "name": "미니 스커트"
-        }
+        "롱 스커트",
+        "미디 스커트",
+        "미니 스커트"
+      ],
+      "measurements": [
+        "totalLength",
+        "waistWidth",
+        "hipWidth",
+        "hemWidth"
       ]
     },
     {
       "id": "0BV000CAT0005",
       "name": "원피스",
       "subCategories": [
-        {
-          "id": "0BV000SUB0011",
-          "name": "맥시 원피스"
-        },
-        {
-          "id": "0BV000SUB0012",
-          "name": "미디 원피스"
-        },
-        {
-          "id": "0BV000SUB0013",
-          "name": "미니 원피스"
-        }
+        "맥시 원피스",
+        "미디 원피스",
+        "미니 원피스"
+      ],
+      "measurements": [
+        "totalLength",
+        "shoulderWidth",
+        "chestWidth",
+        "sleeveLength",
+        "hipWidth"
       ]
     }
   ]

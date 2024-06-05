@@ -5,7 +5,9 @@ import styled, { css } from 'styled-components';
 
 import Button from '../ui/Button';
 
-import { SubCategory } from '../../types';
+import { SubCategoryList } from '../../types';
+
+import { key } from '../../utils';
 
 const Container = styled.div`
   display: flex;
@@ -46,7 +48,7 @@ const CustomButton = styled(Button)<{active: boolean}>`
 `;
 
 type SubCategoryBarProps = {
-  subCategories: SubCategory[]
+  subCategories: SubCategoryList[]
 }
 
 export default function SubCategoryBar(
@@ -89,13 +91,13 @@ export default function SubCategoryBar(
         전체
       </CustomButton>
       {!!subCategories.length && (
-        subCategories.map((subCategory) => (
+        subCategories.map((subCategory, idx) => (
           <CustomButton
-            key={subCategory.id}
-            active={activeBtn === subCategory.id}
-            onClick={() => handleNavigate(subCategory.id)}
+            key={key(subCategory, idx)}
+            active={activeBtn === key(subCategory, idx)}
+            onClick={() => handleNavigate(key(subCategory, idx))}
           >
-            {subCategory.name}
+            {subCategory}
           </CustomButton>
         ))
       )}
