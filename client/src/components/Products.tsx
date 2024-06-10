@@ -6,19 +6,34 @@ import { SubCategoryList } from '../types';
 
 import useProductsStore from '../hooks/useProductsStore';
 
+import { key } from '../utils';
+
 const Container = styled.div`
     h2 {
+    margin-bottom: 0.8rem;
     font-size: 2.4rem;
     font-weight: 500;
     line-height: 1.25;
-    padding: 0.8rem ${(props) => props.theme.sizes.contentPadding};
-    margin-bottom: 0.8rem;
   }
 `;
 
 const SectionDivider = styled.div`
   height: 10px;
   background-color: ${(props) => props.theme.colors.lineColor};
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  position: sticky;
+  padding: 0.8rem ${(props) => props.theme.sizes.contentPadding};
+
+  button {
+    margin-bottom: 0.8rem;
+    padding: 0;
+    border: none;
+    color: ${(props) => props.theme.colors.unSelectedText};
+  }
 `;
 
 type ProductsProps = {
@@ -35,9 +50,14 @@ export default function Products({ subCategory }: ProductsProps) {
   return (
     <Container>
       <SectionDivider />
-      <h2>{subCategory}</h2>
-      {filteredProduct.map((product) => (
-        <Product key={subCategory} product={product} />
+      <Wrapper>
+        <h2>{subCategory}</h2>
+      </Wrapper>
+      {filteredProduct.map((product, idx) => (
+        <Product
+          key={key(product.subCategory, idx)}
+          product={product}
+        />
       ))}
     </Container>
   );

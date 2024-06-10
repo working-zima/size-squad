@@ -2,15 +2,23 @@
   "fits": [
     {
       "id": "0BV000FIT0001",
-      "name": "slim"
+      "name": "스키니"
     },
     {
       "id": "0BV000FIT0002",
-      "name": "regular"
+      "name": "슬림"
     },
     {
       "id": "0BV000FIT0003",
-      "name": "oversized"
+      "name": "레귤러"
+    },
+    {
+      "id": "0BV000FIT0004",
+      "name": "루즈"
+    },
+    {
+      "id": "0BV000FIT0005",
+      "name": "오버 사이즈"
     }
   ]
 }

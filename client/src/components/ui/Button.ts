@@ -11,6 +11,7 @@ const Button = styled.button.attrs<ButtonProps>((props) => ({
   background: transparent;
   color: ${(props) => props.theme.colors.primaryBlack};
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 
   :disabled {
     filter: grayscale(80%);

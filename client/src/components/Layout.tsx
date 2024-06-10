@@ -12,7 +12,7 @@ const Container = styled.div`
   grid-template-areas:
   'header'
   'main'
-  'navigationMenu';
+  'footer';
   margin: 0 auto;
   /* width: ${(props) => props.theme.sizes.layoutWidth}; */
 `;

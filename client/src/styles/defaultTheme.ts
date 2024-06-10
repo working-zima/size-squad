@@ -4,7 +4,7 @@ const defaultTheme = {
     primaryBlack: '#000000',
     primaryRed: '#ff0000',
     PrimaryBlue: '#0078ff',
-    primaryTextColor: '#6e6e6e',
+    unSelectedText: '#6e6e6e',
     secondaryTextColor: '#777777',
     dividerColor: '#f9f9f9',
     lineColor: '#f3f3f3',

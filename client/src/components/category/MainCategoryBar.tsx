@@ -33,11 +33,10 @@ const CustomButton = styled(Button)<{ active: boolean }>`
   padding: 0;
   height: 100%;
   border: transparent;
-  -webkit-tap-highlight-color: transparent;
 
   p {
     font-size: 1.5rem;
-    color: ${(props) => props.theme.colors.primaryTextColor};
+    color: ${(props) => props.theme.colors.unSelectedText};
     line-height: 2.3;
     user-select: none;
 
