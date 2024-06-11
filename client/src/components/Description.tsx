@@ -13,6 +13,7 @@ import { debounce } from '../utils';
 const Container = styled.div<{ showFull: boolean }>`
   display: flex;
   justify-content: space-between;
+  align-items: start;
 
   span {
     white-space: ${(props) => (props.showFull ? 'normal' : 'nowrap')};
@@ -65,11 +66,14 @@ export default function Description({ product }: DescriptionProps) {
     <Container showFull={showFullDescription}>
       <span ref={descriptionRef}>
         {product.description}
+        <CustomButton onClick={handleDescription}>
+          {showFullDescription && '숨기기'}
+        </CustomButton>
       </span>
       {!isTruncated
     && (
       <CustomButton onClick={handleDescription}>
-        {showFullDescription ? '숨기기' : '더보기'}
+        {!showFullDescription && '더보기'}
       </CustomButton>
     )}
     </Container>

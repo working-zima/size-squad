@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Description from './Description';
 
 import { Product } from '../types';
+import useProductFormStore from '../hooks/useProductFormStore';
 
 const Container = styled.div`
   display: flex;
@@ -59,6 +60,11 @@ type InfoCardProps = {
 }
 
 export default function InfoCard({ product }: InfoCardProps) {
+  const [, store] = useProductFormStore();
+  const handleEditClick = () => {
+    store.setProduct(product);
+  };
+
   return (
     <Container>
       <InfoContainer>
@@ -71,7 +77,11 @@ export default function InfoCard({ product }: InfoCardProps) {
           </strong>
         </DetailWrapper>
         <EditDeleteWrapper>
-          <Link to="/mysize" className="edit-link">
+          <Link
+            to={`/mysize/${product.id}/edit`}
+            className="edit-link"
+            onClick={handleEditClick}
+          >
             수정
           </Link>
           <Link to="/mysize" className="delete-link">

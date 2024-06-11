@@ -18,7 +18,6 @@ class CategoriesStore {
     this.setCategories([]);
 
     const categories = await apiService.fetchCategories({ categoryId });
-
     this.setCategories(categories);
   }
 
