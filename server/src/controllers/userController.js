@@ -1,16 +1,13 @@
-const express = require("express");
 const { validationResult } = require('express-validator');
+
 const { userService } = require("../services/userService");
 
 const userController = {
-  /**
-   * 회원가입
-   */
-  getSignup: async (req, res, next) => {
+  /** 회원가입 */
+  postSignUp: async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      console.log(errors)
-      const error = new Error('Validation failed.');
+      const error = new Error('Validation failed');
       error.statusCode = 422;
       error.data = errors.array();
       return next(error);
@@ -20,15 +17,55 @@ const userController = {
         email, name, password, gender, height, weight, description
       } = req.body;
 
-      const userInfo = userService.signup(
-      {email, name, password, gender, height, weight, description}
-    )
+      userService.signUp(
+        {email, name, password, gender, height, weight, description}
+      )
 
-      res.status(201).json(userInfo);
+      res.status(201).json();
     } catch (error) {
       next(error);
     }
-  }
+  },
+
+  /** 로그인 회원 정보 조회 */
+  getMyInfo: async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const error = new Error('Validation failed');
+      error.statusCode = 403;
+      error.data = errors.array();
+      return next(error);
+    }
+    try {
+      const userAccessToken = req.headers["authorization"];
+
+      const userData = await userService.getMyInfo(userAccessToken);
+
+      res.status(200).json(userData);
+    } catch(error) {
+      next(error)
+    }
+  },
+
+    /** 로그인 회원 삭제 */
+    deleteMe: async (req, res, next) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        const error = new Error('Validation failed');
+        error.statusCode = 403;
+        error.data = errors.array();
+        return next(error);
+      }
+      try {
+        const userAccessToken = req.headers["authorization"];
+
+        await userService.deleteMe(userAccessToken);
+
+        res.status(200).json();
+      } catch(error) {
+        next(error)
+      }
+    }
 }
 
 exports.userController = userController;

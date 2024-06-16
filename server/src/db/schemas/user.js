@@ -4,7 +4,6 @@ const Types = mongoose.Types;
 
 const UserSchema = new Schema(
   {
-    // 몽고db 고유 아이디 숫자만 string으로 저장
     _id: {
       type: String,
       default: () => String(new Types.ObjectId()),
