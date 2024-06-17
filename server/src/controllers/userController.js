@@ -18,7 +18,7 @@ const userController = {
       } = req.body;
 
       userService.signUp(
-        {email, name, password, gender, height, weight, description}
+        { email, name, password, gender, height, weight, description }
       )
 
       res.status(201).json();

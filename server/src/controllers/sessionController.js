@@ -8,7 +8,7 @@ const sessionController = {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       const error = new Error('Validation failed.');
-      error.statusCode = 422;
+      error.statusCode = 400;
       error.data = errors.array();
       return next(error);
     }

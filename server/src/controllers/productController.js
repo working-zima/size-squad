@@ -1,4 +1,4 @@
-const express = require("express");
+
 
 const productController = {
   getAllProducts: async (req, res, next) => {

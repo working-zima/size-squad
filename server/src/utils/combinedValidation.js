@@ -1,36 +1,44 @@
-const { body, header } = require('express-validator');
-
 const {
-  passwordValidation, nameValidation, genderValidation, numericValidation, emailValidation
+  passwordValidation, genderValidation, numericValidation, emailValidation, tokenValidation, checkEmailDuplicate, checkNameDuplicate, isValueExist,
+  checkCategoryDuplicate,
+  paramIdValidation,
+  isCategoryExist
 } = require("./validation");
+
+/** 성별 검사 */
+const genderCombinedValidation = () => [
+  ...isValueExist('gender'),
+  ...genderValidation(),
+];
+
+/** 닉네임 검사 */
+const nameValidation = () => [
+  ...isValueExist('name'),
+  ...checkNameDuplicate()
+];
+
+/** 비밀번호 검사 */
+const passwordCombinedValidation = () => [
+  ...isValueExist('password'),
+  ...passwordValidation(),
+];
 
 /** 토큰 검사 */
 const tokenValidationRules = [
-  header('Authorization')
-    .exists().withMessage('Authorization header is missing')
-    .bail()
-    .customSanitizer(value => value.split(' ')[1]) // 'Bearer ' 이후 토큰만 추출
-    .trim()
-    .notEmpty().withMessage('Token is empty') // 토큰이 비어있는지 확인
-    .isJWT().withMessage('Invalid token') // JWT 형식 검증
+  ...tokenValidation()
 ];
 
 /** 회원가입 검사 */
 const SignupValidationRules = [
   ...emailValidation(),
-  body('email').custom(async (value, { req }) => {
-    const userDoc = await User.findByEmail(value);
-    if (userDoc) {
-      return Promise.reject('E-Mail address already exists');
-    }
-  }),
-  ...passwordValidation(),
+  ...checkEmailDuplicate(),
   ...nameValidation(),
-  ...genderValidation(),
+  ...checkNameDuplicate(),
+  ...passwordCombinedValidation(),
+  ...genderCombinedValidation(),
   ...numericValidation('height'),
   ...numericValidation('weight'),
-  body('description')
-    .notEmpty().withMessage('Description is required'),
+  ...isValueExist('description'),
 ];
 
 /** 로그인 검사 */
@@ -39,8 +47,24 @@ const SigninValidationRules = [
   ...passwordValidation(),
 ];
 
+/** 카테고리 검사 */
+const addCategoryRules = [
+  ...tokenValidation(),
+  ...isValueExist('category'),
+  ...checkCategoryDuplicate()
+]
+
+const updateCategoryRules = [
+  ...tokenValidation(),
+  ...isValueExist('category'),
+  ...paramIdValidation('categoryId'),
+  ...isCategoryExist()
+]
+
 module.exports = {
   SignupValidationRules,
   SigninValidationRules,
-  tokenValidationRules
+  tokenValidationRules,
+  addCategoryRules,
+  updateCategoryRules
 };

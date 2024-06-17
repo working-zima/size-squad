@@ -60,6 +60,7 @@ const sessionService = {
 
       return accessToken;
     } catch (error) {
+      error.statusCode = 400;
       throw error;
     }
   }
