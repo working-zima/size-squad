@@ -3,7 +3,7 @@ const { validationResult } = require('express-validator');
 const { adminService } = require('../services/adminService');
 
 const adminController = {
-  /** 로그인 */
+  /** 카테고리 등록 */
   postAddCategory: async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

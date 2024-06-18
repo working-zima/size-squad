@@ -2,6 +2,7 @@ const { body, header, param } = require('express-validator');
 
 const { User } = require('../db/models/User');
 const { Category } = require('../db/models/Category');
+const { SubCategory } = require('../db/models/SubCategory');
 
 /** 특정 필드 값의 유무 확인 */
 const isValueExist = (field) => [
@@ -91,12 +92,23 @@ const paramIdValidation = (field) => [
     .withMessage(`${field} is incorrect format`)
 ]
 
+/** 카테고리가 데이터베이스에 존재하는지 검사 */
 const isCategoryExist = () => [
   param('categoryId')
     .custom(async (value, { req }) => {
       const userDoc = await Category.findById({ _id: value });
       if (!userDoc) {
         return Promise.reject('Category doesn\'t exists');
+      }
+    })
+];
+
+const checkSubCategoryDuplicate = () => [
+  body('subCategories.*')
+    .custom(async (value, { req }) => {
+      const userDoc = await SubCategory.findBySubCategory({ subCategory: value });
+      if (userDoc) {
+        return Promise.reject('subCategory already exists');
       }
     })
 ];
@@ -112,5 +124,6 @@ module.exports = {
   isValueExist,
   checkCategoryDuplicate,
   paramIdValidation,
-  isCategoryExist
+  isCategoryExist,
+  checkSubCategoryDuplicate
 };

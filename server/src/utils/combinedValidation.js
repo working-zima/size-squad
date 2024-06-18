@@ -2,7 +2,7 @@ const {
   passwordValidation, genderValidation, numericValidation, emailValidation, tokenValidation, checkEmailDuplicate, checkNameDuplicate, isValueExist,
   checkCategoryDuplicate,
   paramIdValidation,
-  isCategoryExist
+  isCategoryExist,checkSubCategoryDuplicate
 } = require("./validation");
 
 /** 성별 검사 */
@@ -51,9 +51,11 @@ const SigninValidationRules = [
 const addCategoryRules = [
   ...tokenValidation(),
   ...isValueExist('category'),
-  ...checkCategoryDuplicate()
+  ...checkCategoryDuplicate(),
+  ...checkSubCategoryDuplicate()
 ]
 
+/* 카테고리 수정 검사 */
 const updateCategoryRules = [
   ...tokenValidation(),
   ...isValueExist('category'),

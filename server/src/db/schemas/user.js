@@ -43,6 +43,12 @@ const UserSchema = new Schema(
       type: Number,
       default: 0,
     },
+    followers: {
+      type: Array
+    },
+    following: {
+      type: Array
+    }
   },
   {
     timestamps: true,
