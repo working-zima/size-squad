@@ -40,8 +40,9 @@ const userController = {
       const userAccessToken = req.headers["authorization"];
 
       const userData = await userService.getMyInfo(userAccessToken);
+      const { role, ...userDataWithoutRole } = userData;
 
-      res.status(200).json(userData);
+      res.status(200).json(userDataWithoutRole);
     } catch(error) {
       next(error)
     }
