@@ -54,7 +54,7 @@ const tokenValidation = () => [
 /** 이메일 중복 검사 */
 const checkEmailDuplicate = () => [
   body('email').custom(async (value, { req }) => {
-    const userDoc = await User.findByEmail({ email: value });
+    const userDoc = await User.findByEmail(value);
     if (userDoc) {
       return Promise.reject('E-Mail address already exists');
     }

@@ -19,10 +19,9 @@ const User = {
   /** _id로 검색 */
   findById: async (_id) => {
     try {
-      // 생성과 수정 날짜 데이터를 제외한 _id, email, password, name만 user에 초기화
       let userData = await UserModel.findOne(
         { _id },
-        "_id email name gender height weight description role"
+        "_id email name gender height weight description role followers following"
         // mongoose document를 필요한 javascript object로 반환
       ).lean();
 
@@ -38,7 +37,6 @@ const User = {
   /** Email로 검색 */
   findByEmail: async (email) => {
     try {
-      // 생성과 수정 날짜 데이터를 제외한 _id, email, password, name만 user에 초기화
       let userData = await UserModel.findOne(
         { email },
         "_id email password name"

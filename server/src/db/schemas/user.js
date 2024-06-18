@@ -44,10 +44,12 @@ const UserSchema = new Schema(
       default: 0,
     },
     followers: {
-      type: Array
+      type: Array,
+      default: [],
     },
     following: {
-      type: Array
+      type: Array,
+      default: [],
     }
   },
   {
