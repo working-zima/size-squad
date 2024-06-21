@@ -1,4 +1,5 @@
 const { validationResult } = require('express-validator');
+const jwt = require("jsonwebtoken");
 
 const { userService } = require("../services/userService");
 const { productService } = require('../services/productService');
@@ -21,6 +22,42 @@ const userController = {
       userService.signUp(
         { email, name, password, genderId, height, weight, description }
       )
+
+      res.status(201).json();
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  /** product 등록 */
+  postAddProducts: async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const error = new Error('Validation failed');
+      error.statusCode = 422;
+      error.data = errors.array();
+      return next(error);
+    }
+    try {
+      const {
+        categoryId, subCategoryId, authorId, brand, name, genderId, size, fitId,
+        measurements, description, price
+      } = req.body;
+
+      const userAccessToken = req.headers["authorization"];
+
+      const decodedAccessToken = jwt.verify(
+        userAccessToken, process.env.JWT_SECRET_KEY
+      );
+
+      if (authorId !== decodedAccessToken.userId) {
+        throw new Error("User ID and accessToken mismatch")
+      }
+
+      productService.addProduct({
+        categoryId, subCategoryId, authorId, brand, name, genderId, size, fitId,
+        measurements, description, price
+      })
 
       res.status(201).json();
     } catch (error) {
@@ -76,6 +113,25 @@ const userController = {
     }
   },
 
+  /** 회원 product 삭제 */
+  deleteMyProduct: async (req, res, next) => {
+    try {
+      const userAccessToken = req.headers["authorization"];
+      const { productId } = req.params;
+
+      const decodedAccessToken = jwt.verify(
+        userAccessToken, process.env.JWT_SECRET_KEY
+      );
+      const userId = decodedAccessToken.userId;
+
+      productService.deleteMyProduct({ productId, userId });
+
+      res.status(200).json();
+    } catch(error) {
+      next(error);
+    }
+  },
+
   /** 로그인 회원 정보 조회 */
   getMyInfo: async (req, res, next) => {
     const errors = validationResult(req);
@@ -93,7 +149,7 @@ const userController = {
 
       res.status(200).json(userDataWithoutRole);
     } catch(error) {
-      next(error)
+      next(error);
     }
   },
 

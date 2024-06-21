@@ -91,9 +91,11 @@ const fieldsToValidate = [
   "fitId"
 ];
 
+/** product 등록 검사 */
 const createProductRules = [
   ...fieldsToValidate.flatMap(field => isValueExist(`${field}`)),
-  ...isObjectValidation("measurements")
+  ...isObjectValidation("measurements"),
+  ...tokenValidation(),
 ]
 
 module.exports = {

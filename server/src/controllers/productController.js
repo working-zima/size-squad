@@ -2,32 +2,7 @@ const { validationResult } = require('express-validator');
 const { productService } = require('../services/productService');
 
 const productController = {
-  /** product 등록 */
-  postAddProducts: async (req, res, next) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      const error = new Error('Validation failed');
-      error.statusCode = 422;
-      error.data = errors.array();
-      return next(error);
-    }
-    try {
-      const {
-        categoryId, subCategoryId, authorId, brand, name, genderId, size, fitId,
-        measurements, description, price
-      } = req.body;
-
-      productService.addProduct({
-        categoryId, subCategoryId, authorId, brand, name, genderId, size, fitId,
-        measurements, description, price
-      })
-
-      res.status(201).json();
-    } catch (error) {
-      next(error);
-    }
-  },
-
+  /** product 조회 */
   getProducts: async (req, res, next) => {
     try {
       const category1DepthCodes = req.query.category1DepthCodes;

@@ -69,6 +69,7 @@ const Product = {
     }
   },
 
+  /** 모든 product 조회 */
   findAll: async () => {
     try {
       const productData = await ProductModel.find()
@@ -119,7 +120,35 @@ const Product = {
     } catch(error) {
       throw new Error(error);
     }
-  }
+  },
+
+  findByProductId: async ({ productId }) => {
+    try {
+      const productData = await ProductModel.find({
+        _id: productId
+      })
+        .populate({ path: "categoryId", select: ["_id", "category"] })
+        .populate({ path: "subCategoryId", select: ["_id", "subCategory"] })
+        .populate({ path: "authorId", select: ["_id", "name"] })
+        .populate({ path: "genderId", select: ["_id", "gender"] })
+        .populate({ path: "fitId", select: ["_id", "fit"] })
+        .lean();
+
+      return productData;
+    } catch(error) {
+      throw new Error(error);
+    }
+  },
+
+  deleteProductByProductId: async ({productId}) => {
+    try {
+      await ProductModel.findByIdAndDelete({ _id: productId });
+
+      return;
+    } catch (error) {
+      throw new Error(error);
+    }
+  },
 }
 
 exports.Product = Product;
