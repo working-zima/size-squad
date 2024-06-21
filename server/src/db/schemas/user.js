@@ -23,9 +23,10 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
-    gender: {
+    genderId: {
       type: String,
       required: true,
+      ref: "Gender",
     },
     height: {
       type: Number,

@@ -1,6 +1,9 @@
 const express = require("express");
 
-const { addCategoryRules, updateCategoryRules } = require("../utils/combinedValidation");
+const {
+  addCategoryRules, updateCategoryRules, createFitRules,
+  createGenderRules,
+} = require("../utils/combinedValidation");
 const { adminController } = require("../controllers/adminController");
 
 const adminRouter = express.Router();
@@ -18,5 +21,19 @@ adminRouter.patch(
   updateCategoryRules,
   adminController.patchUpdateCategory
 );
+
+/* 성별에 따른 사이즈 등록 */
+adminRouter.post(
+  "/genders",
+  createGenderRules,
+  adminController.postAddGender
+)
+
+/* 핏 등록 */
+adminRouter.post(
+  "/fits",
+  createFitRules,
+  adminController.postAddFit
+)
 
 module.exports = adminRouter;

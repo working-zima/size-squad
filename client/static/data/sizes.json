@@ -1,9 +1,9 @@
 {
-  "genders": [
+  "sizes": [
     {
       "id": "0BV000SIZ000",
-      "name": "male",
-      "sizes": [
+      "gender": "male",
+      "size": [
         "ONE SIZE",
         "90(S)",
         "95(M)",
@@ -15,8 +15,8 @@
     },
     {
       "id": "0BV000SIZ0007",
-      "name": "female",
-      "sizes": [
+      "gender": "female",
+      "size": [
         "ONE SIZE",
         "44(S)",
         "55(M)",

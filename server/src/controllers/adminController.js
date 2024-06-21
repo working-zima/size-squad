@@ -26,6 +26,7 @@ const adminController = {
     }
   },
 
+  /** 카테고리 수정 */
   patchUpdateCategory: async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -46,7 +47,51 @@ const adminController = {
     } catch(error) {
       next(error);
     }
-  }
+  },
+
+  /** 사이즈 등록 */
+  postAddGender: async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const error = new Error('Validation failed.');
+      error.statusCode = 422;
+      error.data = errors.array();
+      return next(error);
+    }
+    try {
+      const { gender, size } = req.body;
+      const userAccessToken = req.headers["authorization"];
+
+      await adminService.addGender(
+        userAccessToken, { gender, size }
+      );
+
+      res.status(201).json();
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  /** 핏 등록 */
+  postAddFit: async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const error = new Error('Validation failed.');
+      error.statusCode = 422;
+      error.data = errors.array();
+      return next(error);
+    }
+    try {
+      const { fit } = req.body;
+      const userAccessToken = req.headers["authorization"];
+
+      await adminService.addFit(userAccessToken, fit);
+
+      res.status(201).json();
+    } catch (error) {
+      next(error);
+    }
+  },
 }
 
 exports.adminController = adminController;

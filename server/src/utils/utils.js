@@ -4,6 +4,7 @@ const renameId = (data, newKey) => {
   if (data) {
     const user = { [newKey]: data._id, ...data };
     delete user._id;
+
     return user;
   }
 };

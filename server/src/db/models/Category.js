@@ -16,7 +16,9 @@ const Category = {
   /** 카테고리 조회 */
   findAll: async () => {
     try {
-      const categoryData = await CategoryModel.find({});
+      const categoryData = await CategoryModel.find()
+      .populate({ path: "subCategories", select: ["_id", "subCategory"] })
+      .lean();
 
       return categoryData;
     } catch(error) {

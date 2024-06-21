@@ -22,10 +22,6 @@ const SubCategory = {
         "_id subCategory category"
       ).lean();
 
-      if (subCategoryData) {
-        subCategoryData = renameId(subCategoryData, 'subCategoryId');
-      }
-
       return subCategoryData;
     } catch(error) {
       throw new Error(error);

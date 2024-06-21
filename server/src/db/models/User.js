@@ -23,7 +23,9 @@ const User = {
         { _id },
         "_id email name gender height weight description role followers following"
         // mongoose document를 필요한 javascript object로 반환
-      ).lean();
+      )
+      .populate({ path: "genderId", select: ["_id", "gender"] })
+      .lean();
 
       // 고유 아이디 키 이름인 _id를 userId로 교체
       if (userData) userData = renameId(userData, 'userId');
@@ -41,7 +43,9 @@ const User = {
         { email },
         "_id email password name"
         // mongoose document를 필요한 javascript object로 반환
-      ).lean();
+      )
+      .populate({ path: "genderId", select: ["_id", "gender"] })
+      .lean();
 
       // 고유 아이디 키 이름인 _id를 userId로 교체
       if (userData) userData = renameId(userData, 'userId');
@@ -58,7 +62,9 @@ const User = {
       let userData = await UserModel.findOne(
         { name },
         "_id email name"
-      ).lean();
+      )
+      .populate({ path: "genderId", select: ["_id", "gender"] })
+      .lean();
 
       if (userData) userData = renameId(userData, 'userId');
     } catch (error) {

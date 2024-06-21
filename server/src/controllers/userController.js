@@ -1,6 +1,7 @@
 const { validationResult } = require('express-validator');
 
 const { userService } = require("../services/userService");
+const { productService } = require('../services/productService');
 
 const userController = {
   /** 회원가입 */
@@ -14,15 +15,63 @@ const userController = {
     }
     try {
       const {
-        email, name, password, gender, height, weight, description
+        email, name, password, genderId, height, weight, description
       } = req.body;
 
       userService.signUp(
-        { email, name, password, gender, height, weight, description }
+        { email, name, password, genderId, height, weight, description }
       )
 
       res.status(201).json();
     } catch (error) {
+      next(error);
+    }
+  },
+
+  /** 회원 product 조회 */
+  getMyProduct: async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const error = new Error('Validation failed');
+      error.statusCode = 403;
+      error.data = errors.array();
+      return next(error);
+    }
+    try {
+      const userAccessToken = req.headers["authorization"];
+      const userData = await userService.getMyInfo(userAccessToken);
+      const userId = userData.userId;
+
+      const category1DepthCodes = req.query.category1DepthCodes;
+      const category2DepthCodes = req.query.category2DepthCodes;
+
+      if(!category1DepthCodes && category2DepthCodes) {
+        throw new Error('Please provide a valid category1DepthCode.')
+      }
+
+      let productData = [];
+
+      // 서브 카테고리
+      if(category2DepthCodes) {
+        productData = await productService.getProductByUserIdAndSubCategoryId({
+          userId, subCategoryId: category2DepthCodes
+        });
+      }
+
+      // 카테고리
+      if(category1DepthCodes && !category2DepthCodes) {
+        productData = await productService.getProductByUserIdAndCategoryId({
+          userId, categoryId: category1DepthCodes
+        });
+      }
+
+      // 전체
+      if(!category1DepthCodes) {
+        productData = await productService.getProductByUserId({ userId });
+      }
+
+      res.status(201).json(productData);
+    } catch(error) {
       next(error);
     }
   },

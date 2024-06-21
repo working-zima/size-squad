@@ -3,21 +3,46 @@ const Schema = mongoose.Schema;
 const Types = mongoose.Types;
 
 const MeasurementsSchema = new Schema({
+  _id: {
+    type: String,
+    default: () => String(new Types.ObjectId())
+    // Object("66730b58c6c859c336b846c8")를 "66730b58c6c859c336b846c8" 형태로
+  },
   totalLength: {
     type: Number,
-    required: true
+    required: false
   },
   shoulderWidth: {
     type: Number,
-    required: true
+    required: false
   },
   chestWidth: {
     type: Number,
-    required: true
+    required: false
   },
   sleeveLength: {
     type: Number,
-    required: true
+    required: false
+  },
+  waistWidth: {
+    type: Number,
+    required: false
+  },
+  hipWidth: {
+    type: Number,
+    required: false
+  },
+  thighWidth: {
+    type: Number,
+    required: false
+  },
+  rise: {
+    type: Number,
+    required: false
+  },
+  hemWidth: {
+    type: Number,
+    required: false
   }
 });
 
@@ -27,19 +52,20 @@ const ProductSchema = new Schema(
       type: String,
       default: () => String(new Types.ObjectId())
     },
-    authorId: {
-      type: String,
-      required: true,
-      ref: "User",
-    },
     categoryId: {
       type: String,
       required: true,
       ref: "Category",
     },
-    subCategory: {
+    subCategoryId: {
       type: String,
       required: true,
+      ref: "SubCategory",
+    },
+    authorId: {
+      type: String,
+      required: true,
+      ref: "User",
     },
     brand: {
       type: String,
@@ -49,26 +75,36 @@ const ProductSchema = new Schema(
       type: String,
       required: true,
     },
-    size: {
+    genderId: {
       type: String,
       required: true,
+      ref: "Gender"
     },
-    measurements: {
-      type: MeasurementsSchema,
+    size: {
+      type: String,
       required: true,
     },
     fitId: {
       type: String,
       required: true,
+      ref: "Fit"
+    },
+    measurements: {
+      type: MeasurementsSchema,
+      required: true,
     },
     description: {
       type: String,
       required: false,
+    },
+    price: {
+      type: Number,
+      required: false
     }
   },
   { timestamps: true }
 )
 
-const ProductModel = mongoose.model("product", ProductSchema);
+const ProductModel = mongoose.model("Product", ProductSchema);
 
 module.exports = ProductModel;

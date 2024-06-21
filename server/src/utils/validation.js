@@ -3,12 +3,36 @@ const { body, header, param } = require('express-validator');
 const { User } = require('../db/models/User');
 const { Category } = require('../db/models/Category');
 const { SubCategory } = require('../db/models/SubCategory');
+const { Fit } = require('../db/models/Fit');
+const { Gender } = require('../db/models/Gender');
 
 /** 특정 필드 값의 유무 확인 */
 const isValueExist = (field) => [
   body(field)
+  .trim()
+  .notEmpty().withMessage(`${field} is required`)
+];
+
+/** 배열인지 검사 */
+const isArrayValidation = (field) => [
+  body(field)
+    .isArray()
+    .withMessage(`${field} must be an array`),
+]
+
+/** 객체인지 검사 */
+const isObjectValidation = (field) => [
+  body(field)
+    .isObject()
+    .withMessage(`${field} must be an object`),
+]
+
+/** 숫자 검사 */
+const numericValidation = (field) => [
+  body(field)
     .trim()
     .notEmpty().withMessage(`${field} is required`)
+    .isNumeric().withMessage(`${field} must be a number`)
 ];
 
 /** 이메일 검사 */
@@ -30,14 +54,6 @@ const genderValidation = () => [
   body('gender')
     .isIn(['male', 'female'])
     .withMessage('Gender must be either male or female')
-];
-
-/** 숫자 검사 */
-const numericValidation = (field) => [
-  body(field)
-    .trim()
-    .notEmpty().withMessage(`${field} is required`)
-    .isNumeric().withMessage(`${field} must be a number`)
 ];
 
 /** 토큰 검사 */
@@ -103,12 +119,44 @@ const isCategoryExist = () => [
     })
 ];
 
+/** subCategory 검사 */
 const checkSubCategoryDuplicate = () => [
   body('subCategories.*')
     .custom(async (value, { req }) => {
       const userDoc = await SubCategory.findBySubCategory({ subCategory: value });
       if (userDoc) {
         return Promise.reject('subCategory already exists');
+      }
+    })
+];
+
+
+/**  */
+const sizeArrayValidation = () => [
+  body('size.*')
+    .matches(/^(ONE SIZE|\d{2,3}\([A-Z0-9]+\))$/)
+    .withMessage('Invalid size format')
+]
+
+
+/** 핏 중복 검사 */
+const checkFitDuplicate = () => [
+  body('fit')
+    .custom(async (value, { req }) => {
+      const userDoc = await Fit.findByFit({ fit: value });
+      if (userDoc) {
+        return Promise.reject('Fit already exists');
+      }
+    })
+];
+
+/** 성별 중복 검사 */
+const checkGenderDuplicate = () => [
+  body('gender')
+    .custom(async (value, { req }) => {
+      const userDoc = await Gender.findByGender({ gender: value });
+      if (userDoc) {
+        return Promise.reject('Gender already exists');
       }
     })
 ];
@@ -125,5 +173,10 @@ module.exports = {
   checkCategoryDuplicate,
   paramIdValidation,
   isCategoryExist,
-  checkSubCategoryDuplicate
+  checkSubCategoryDuplicate,
+  isArrayValidation,
+  sizeArrayValidation,
+  checkFitDuplicate,
+  checkGenderDuplicate,
+  isObjectValidation
 };

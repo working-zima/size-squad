@@ -3,6 +3,8 @@ const jwt = require("jsonwebtoken");
 
 const { User } = require("../db/models/User");
 const { Token } = require('../db/models/Token');
+const { Product } = require("../db/models/Product");
+
 const { getUserIdByAccessToken } = require("../utils/utils");
 
 const SALT_ROUND = parseInt(process.env.SALT_ROUND);
@@ -37,7 +39,7 @@ const userService = {
       await Token.deleteToken(userId);
 
       return;
-    } catch (error) {
+    } catch(error) {
       return error;
     }
   },

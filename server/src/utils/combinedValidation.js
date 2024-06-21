@@ -1,8 +1,9 @@
 const {
-  passwordValidation, genderValidation, numericValidation, emailValidation, tokenValidation, checkEmailDuplicate, checkNameDuplicate, isValueExist,
-  checkCategoryDuplicate,
-  paramIdValidation,
-  isCategoryExist,checkSubCategoryDuplicate
+  passwordValidation, genderValidation, numericValidation, emailValidation,
+  tokenValidation, checkEmailDuplicate, checkNameDuplicate, isValueExist,
+  checkCategoryDuplicate, paramIdValidation, isCategoryExist,
+  checkSubCategoryDuplicate,sizeArrayValidation, isArrayValidation,
+  checkFitDuplicate, checkGenderDuplicate, isObjectValidation
 } = require("./validation");
 
 /** 성별 검사 */
@@ -55,7 +56,7 @@ const addCategoryRules = [
   ...checkSubCategoryDuplicate()
 ]
 
-/* 카테고리 수정 검사 */
+/** 카테고리 수정 검사 */
 const updateCategoryRules = [
   ...tokenValidation(),
   ...isValueExist('category'),
@@ -63,10 +64,45 @@ const updateCategoryRules = [
   ...isCategoryExist()
 ]
 
+/** 사이즈 등록 검사 */
+const createGenderRules = [
+  ...tokenValidation(),
+  ...genderValidation(),
+  ...sizeArrayValidation(),
+  ...isArrayValidation('size'),
+  ...checkGenderDuplicate()
+]
+
+/** 핏 검사 */
+const createFitRules = [
+  ...tokenValidation(),
+  ...isValueExist('fit'),
+  ...checkFitDuplicate()
+];
+
+const fieldsToValidate = [
+  "categoryId",
+  "subCategoryId",
+  "authorId",
+  "brand",
+  "name",
+  "genderId",
+  "size",
+  "fitId"
+];
+
+const createProductRules = [
+  ...fieldsToValidate.flatMap(field => isValueExist(`${field}`)),
+  ...isObjectValidation("measurements")
+]
+
 module.exports = {
   SignupValidationRules,
   SigninValidationRules,
   tokenValidationRules,
   addCategoryRules,
-  updateCategoryRules
+  updateCategoryRules,
+  createGenderRules,
+  createFitRules,
+  createProductRules
 };

@@ -14,4 +14,7 @@ userRouter.get("/me", tokenValidationRules, userController.getMyInfo);
 /* 로그인한 회원 탈퇴 */
 userRouter.delete("/", tokenValidationRules, userController.deleteMe);
 
+/* 로그인한 회원 product 조회 */
+userRouter.get("/products", tokenValidationRules, userController.getMyProduct);
+
 module.exports = userRouter;

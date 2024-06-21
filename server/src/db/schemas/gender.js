@@ -3,32 +3,27 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const Types = mongoose.Types;
 
-const CategorySchema = new Schema(
+const GenderSchema = new Schema(
   {
     _id: {
       type: String,
       default: () => String(new Types.ObjectId()),
     },
-    category: {
+    gender: {
       type: String,
       required: true,
       unique: true,
     },
-    subCategories: [{
-      type: String,
-      required: true,
-      ref: "SubCategory"
-    }],
-    measurements: {
+    size: {
       type: Array,
       required: true,
-    }
+    },
   },
   {
     timestamps: true,
   }
 )
 
-const CategoryModel = mongoose.model("Category", CategorySchema);
+const GenderModel = mongoose.model("Gender", GenderSchema);
 
-exports.CategoryModel = CategoryModel;
+exports.GenderModel = GenderModel;
