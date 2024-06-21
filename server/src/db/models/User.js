@@ -37,7 +37,7 @@ const User = {
   },
 
   /** Email로 검색 */
-  findByEmail: async (email) => {
+  findByEmail: async ({email}) => {
     try {
       let userData = await UserModel.findOne(
         { email },

@@ -1,15 +1,14 @@
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 
 const { User } = require("../db/models/User");
 const { Token } = require('../db/models/Token');
-const { Product } = require("../db/models/Product");
 
 const { getUserIdByAccessToken } = require("../utils/utils");
 
 const SALT_ROUND = parseInt(process.env.SALT_ROUND);
 
 const userService = {
+  /** 회원가입 */
   signUp: async (newUser) => {
     try {
       newUser.password = await bcrypt.hash(newUser.password, SALT_ROUND);
@@ -21,6 +20,7 @@ const userService = {
     }
   },
 
+  /** 내 정보 조회 */
   getMyInfo: async (accessToken) => {
     try {
       const userId = getUserIdByAccessToken(accessToken)
@@ -32,6 +32,7 @@ const userService = {
     }
   },
 
+  /** 내 정보 삭제 */
   deleteMe: async (accessToken) => {
     try {
       const userId = getUserIdByAccessToken(accessToken)

@@ -17,4 +17,6 @@ userRouter.delete("/", tokenValidationRules, userController.deleteMe);
 /* 로그인한 회원 product 조회 */
 userRouter.get("/products", tokenValidationRules, userController.getMyProduct);
 
+userRouter.delete("/products")
+
 module.exports = userRouter;

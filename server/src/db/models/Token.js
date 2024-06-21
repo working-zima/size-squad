@@ -57,7 +57,7 @@ const Token = {
     }
   },
 
-  deleteToken: async (userId) => {
+  deleteToken: async ({userId}) => {
     try {
       const deletedTokenInfo = await TokenModel.deleteOne({ userId });
 

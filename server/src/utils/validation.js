@@ -70,7 +70,7 @@ const tokenValidation = () => [
 /** 이메일 중복 검사 */
 const checkEmailDuplicate = () => [
   body('email').custom(async (value, { req }) => {
-    const userDoc = await User.findByEmail(value);
+    const userDoc = await User.findByEmail({ email: value });
     if (userDoc) {
       return Promise.reject('E-Mail address already exists');
     }
@@ -131,7 +131,7 @@ const checkSubCategoryDuplicate = () => [
 ];
 
 
-/**  */
+/** 사이즈 형식 검사 */
 const sizeArrayValidation = () => [
   body('size.*')
     .matches(/^(ONE SIZE|\d{2,3}\([A-Z0-9]+\))$/)

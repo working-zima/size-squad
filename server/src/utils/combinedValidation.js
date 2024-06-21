@@ -36,9 +36,9 @@ const SignupValidationRules = [
   ...nameValidation(),
   ...checkNameDuplicate(),
   ...passwordCombinedValidation(),
-  ...genderCombinedValidation(),
   ...numericValidation('height'),
   ...numericValidation('weight'),
+  ...isValueExist('genderId'),
   ...isValueExist('description'),
 ];
 

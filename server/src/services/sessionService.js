@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const { User } = require("../db/models/User");
 const { Token } = require("../db/models/Token");
@@ -6,10 +7,10 @@ const { generateJwtToken } = require("../utils/utils");
 
 const sessionService = {
   /** 로그인 */
-  signIn: async (inputEmail, inputPassword) => {
+  signIn: async ({inputEmail, inputPassword}) => {
     try {
       // 가입 여부 조회
-      const userData = await User.findByEmail(inputEmail);
+      const userData = await User.findByEmail({ email: inputEmail });
       if (!userData) throw new Error('Registered email not found');
 
       const { userId, email, password, name } = userData;
@@ -63,7 +64,22 @@ const sessionService = {
       error.statusCode = 400;
       throw error;
     }
-  }
+  },
+
+  /** 로그아웃 */
+  signOut: async ({userAccessToken}) => {
+    try {
+      const decodedAccessToken = jwt.verify(
+        userAccessToken, process.env.JWT_SECRET_KEY
+      );
+
+      await Token.deleteToken({userId: decodedAccessToken.userId});
+
+      return;
+    } catch (error) {
+      throw error;
+    }
+  },
 }
 
 exports.sessionService = sessionService;
