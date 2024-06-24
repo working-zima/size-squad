@@ -79,7 +79,7 @@ const User = {
 
       return userData;
     } catch (error) {
-      return error;
+      throw error;
     }
   },
 }

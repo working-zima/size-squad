@@ -5,6 +5,7 @@ const { Category } = require('../db/models/Category');
 const { SubCategory } = require('../db/models/SubCategory');
 const { Fit } = require('../db/models/Fit');
 const { Gender } = require('../db/models/Gender');
+const { Token } = require('../db/models/Token');
 
 /** 특정 필드 값의 유무 확인 */
 const isValueExist = (field) => [
@@ -65,6 +66,12 @@ const tokenValidation = () => [
     .trim()
     .notEmpty().withMessage('Token is empty') // 토큰이 비어있는지 확인
     .isJWT().withMessage('Invalid token') // JWT 형식 검증
+    .custom(async (value, { req }) => {
+      const userDoc = await Token.findByAccessToken({ accessToken: value });
+      if (!userDoc) {
+        return Promise.reject('AccessToken doesn\'t exists');
+      }
+    })
 ];
 
 /** 이메일 중복 검사 */

@@ -12,6 +12,12 @@ const TokenSchema = new Schema(
     refreshToken: {
       type: String,
       required: true,
+      unique: true,
+    },
+    accessToken: {
+      type: String,
+      required: true,
+      unique: true,
     },
     userId: {
       type: String,

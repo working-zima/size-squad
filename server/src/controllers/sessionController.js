@@ -25,6 +25,7 @@ const sessionController = {
     }
   },
 
+  /** 로그아웃 */
   signOut: async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -41,7 +42,22 @@ const sessionController = {
     } catch(error) {
       next(error);
     }
-  }
+  },
+
+    /** access 토큰 재발급 */
+    getReissueToken: async (req, res, next) => {
+      try {
+        const userAccessToken = req.headers["authorization"];
+
+        const newAccessToken = await sessionService.reissueToken({
+          accessToken: userAccessToken
+        });
+
+        res.status(200).json({ accessToken: newAccessToken });
+      } catch(error) {
+        next(error);
+      }
+    },
 }
 
 exports.sessionController = sessionController;

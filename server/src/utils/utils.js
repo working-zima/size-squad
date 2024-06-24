@@ -9,7 +9,7 @@ const renameId = (data, newKey) => {
   }
 };
 
-const generateJwtToken = (userId, secretKey, expiresIn) => {
+const generateJwtToken = ({ userId, secretKey, expiresIn }) => {
   return jwt.sign(
     { userId: userId },
     secretKey,

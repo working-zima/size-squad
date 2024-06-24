@@ -28,7 +28,7 @@ const userService = {
 
       return userData;
     } catch (error) {
-      return error;
+      throw error;
     }
   },
 
@@ -41,7 +41,7 @@ const userService = {
 
       return;
     } catch(error) {
-      return error;
+      throw error;
     }
   },
 }

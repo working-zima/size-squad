@@ -13,22 +13,26 @@ const sessionService = {
       const userData = await User.findByEmail({ email: inputEmail });
       if (!userData) throw new Error('Registered email not found');
 
-      const { userId, email, password, name } = userData;
+      const { userId, password } = userData;
 
       // 비밀번호 확인
       const isPasswordMatch = await bcrypt.compare(inputPassword, password);
       if (!isPasswordMatch) throw new Error('Incorrect password');
 
       // accessToken, refreshToken 동시 발급
-      let refreshToken =  generateJwtToken(
-        userId, process.env.JWT_SECRET_KEY, process.env.REFRESH_EXPIRES_IN
-      );
-      const accessToken = generateJwtToken(
-        userId, process.env.JWT_SECRET_KEY, process.env.ACCESS_EXPIRES_IN
-      );
+      const refreshToken =  generateJwtToken({
+        userId,
+        secretKey: process.env.JWT_SECRET_KEY,
+        expiresIn: process.env.REFRESH_EXPIRES_IN
+      });
+      const accessToken = generateJwtToken({
+        userId,
+        secretKey: process.env.JWT_SECRET_KEY,
+        expiresIn: process.env.ACCESS_EXPIRES_IN
+      });
 
       // 데이터 베이스에 토큰 유무 확인
-      const tokenData = await Token.findByUserId(userId);
+      const tokenData = await Token.findByUserId({ userId });
 
       // 데이터 베이스에 refresh 토큰이 있는 경우 재발급하여 데이터 베이스의 refresh 토큰과 교체
       if (!!tokenData) {
@@ -37,10 +41,10 @@ const sessionService = {
         const newValue = {};
 
         fieldToUpdate.refreshToken = "refreshToken";
-        fieldToUpdate.userId = "userId";
+        fieldToUpdate.accessToken = "accessToken";
 
         newValue.refreshToken = refreshToken;
-        newValue.userId = userId;
+        newValue.accessToken = accessToken;
 
         await Token.update({
           tokenId,
@@ -51,12 +55,7 @@ const sessionService = {
 
       // 데이터 베이스에 refresh 토큰이 없는 경우 데이터 베이스에 refresh 토큰 저장
       if (!tokenData) {
-        const newToken = {
-          refreshToken: refreshToken,
-          userId: userData.userId,
-        };
-
-        await Token.create(newToken);
+        await Token.create({ refreshToken, accessToken, userId });
       }
 
       return accessToken;
@@ -69,14 +68,43 @@ const sessionService = {
   /** 로그아웃 */
   signOut: async ({userAccessToken}) => {
     try {
-      const decodedAccessToken = jwt.verify(
-        userAccessToken, process.env.JWT_SECRET_KEY
-      );
+      const tokenData = await Token.findByAccessToken({
+        accessToken: userAccessToken
+      })
 
-      await Token.deleteToken({userId: decodedAccessToken.userId});
+      if(userAccessToken !== tokenData.accessToken) {
+        throw new Error("accessToken mismatch");
+      }
+
+      await Token.deleteToken({userId: tokenData.userId});
 
       return;
     } catch (error) {
+      throw error;
+    }
+  },
+
+  /** access 토큰 재발급 */
+  reissueToken: async ({accessToken}) => {
+    try {
+      const tokenData = await Token.findByAccessToken({
+        accessToken
+      });
+
+      if(tokenData) {
+        const accessToken = generateJwtToken({
+          userId: tokenData.userId,
+          secretKey: process.env.JWT_SECRET_KEY,
+          expiresIn: process.env.ACCESS_EXPIRES_IN
+        });
+
+        Token.create({ refreshToken, accessToken, userId :tokenData.userId })
+
+        return accessToken;
+      }
+
+      throw new Error("accessToken mismatch")
+    } catch(error) {
       throw error;
     }
   },

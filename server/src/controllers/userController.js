@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 
 const { userService } = require("../services/userService");
 const { productService } = require('../services/productService');
+const { Token } = require('../db/models/Token');
 
 const userController = {
   /** 회원가입 */
@@ -46,12 +47,12 @@ const userController = {
 
       const userAccessToken = req.headers["authorization"];
 
-      const decodedAccessToken = jwt.verify(
-        userAccessToken, process.env.JWT_SECRET_KEY
-      );
+      const tokenData = await Token.findByAccessToken({
+        accessToken: userAccessToken
+      })
 
-      if (authorId !== decodedAccessToken.userId) {
-        throw new Error("User ID and accessToken mismatch")
+      if (userAccessToken !== tokenData.accessToken) {
+        throw new Error("accessToken mismatch");
       }
 
       productService.addProduct({
@@ -119,10 +120,16 @@ const userController = {
       const userAccessToken = req.headers["authorization"];
       const { productId } = req.params;
 
-      const decodedAccessToken = jwt.verify(
-        userAccessToken, process.env.JWT_SECRET_KEY
-      );
-      const userId = decodedAccessToken.userId;
+
+      const tokenData = await Token.findByAccessToken({
+        accessToken: userAccessToken
+      })
+
+      if (userAccessToken !== tokenData.accessToken) {
+        throw new Error("accessToken mismatch");
+      }
+
+      const userId = tokenData.userId;
 
       productService.deleteMyProduct({ productId, userId });
 
@@ -153,25 +160,33 @@ const userController = {
     }
   },
 
-    /** 로그인 회원 삭제 */
-    deleteMe: async (req, res, next) => {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        const error = new Error('Validation failed');
-        error.statusCode = 403;
-        error.data = errors.array();
-        return next(error);
-      }
-      try {
-        const userAccessToken = req.headers["authorization"];
-
-        await userService.deleteMe(userAccessToken);
-
-        res.status(200).json();
-      } catch(error) {
-        next(error)
-      }
+  /** 로그인 회원 삭제 */
+  deleteMe: async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const error = new Error('Validation failed');
+      error.statusCode = 403;
+      error.data = errors.array();
+      return next(error);
     }
+    try {
+      const userAccessToken = req.headers["authorization"];
+
+      const tokenData = await Token.findByAccessToken({
+        accessToken: userAccessToken
+      })
+
+      if (userAccessToken !== tokenData.accessToken) {
+        throw new Error("accessToken mismatch");
+      }
+
+      await userService.deleteMe(userAccessToken);
+
+      res.status(200).json();
+    } catch(error) {
+      next(error);
+    }
+  },
 }
 
 exports.userController = userController;
