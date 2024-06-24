@@ -12,7 +12,7 @@ const User = {
 
       return userData;
     } catch(error) {
-      throw new Error(error);
+      throw error;
     }
   },
 

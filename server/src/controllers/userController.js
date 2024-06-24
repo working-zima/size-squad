@@ -3,7 +3,10 @@ const jwt = require("jsonwebtoken");
 
 const { userService } = require("../services/userService");
 const { productService } = require('../services/productService');
+
 const { Token } = require('../db/models/Token');
+
+const CustomError = require('../utils/CustomError');
 
 const userController = {
   /** 회원가입 */
@@ -11,7 +14,7 @@ const userController = {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       const error = new Error('Validation failed');
-      error.statusCode = 422;
+      error.statusCode = 400;
       error.data = errors.array();
       return next(error);
     }
@@ -35,7 +38,7 @@ const userController = {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       const error = new Error('Validation failed');
-      error.statusCode = 422;
+      error.statusCode = 400;
       error.data = errors.array();
       return next(error);
     }
@@ -52,7 +55,7 @@ const userController = {
       })
 
       if (userAccessToken !== tokenData.accessToken) {
-        throw new Error("accessToken mismatch");
+        throw new CustomError('Access Token mismatch', 403);
       }
 
       productService.addProduct({
@@ -71,7 +74,7 @@ const userController = {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       const error = new Error('Validation failed');
-      error.statusCode = 403;
+      error.statusCode = 400;
       error.data = errors.array();
       return next(error);
     }
@@ -84,7 +87,7 @@ const userController = {
       const category2DepthCodes = req.query.category2DepthCodes;
 
       if(!category1DepthCodes && category2DepthCodes) {
-        throw new Error('Please provide a valid category1DepthCode.')
+        throw new CustomError('Please provide a valid category1DepthCode', 501);
       }
 
       let productData = [];
@@ -108,7 +111,7 @@ const userController = {
         productData = await productService.getProductByUserId({ userId });
       }
 
-      res.status(201).json(productData);
+      res.status(200).json(productData);
     } catch(error) {
       next(error);
     }
@@ -126,7 +129,7 @@ const userController = {
       })
 
       if (userAccessToken !== tokenData.accessToken) {
-        throw new Error("accessToken mismatch");
+        throw new CustomError('Access Token mismatch', 403);
       }
 
       const userId = tokenData.userId;
@@ -144,7 +147,7 @@ const userController = {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       const error = new Error('Validation failed');
-      error.statusCode = 403;
+      error.statusCode = 400;
       error.data = errors.array();
       return next(error);
     }
@@ -165,7 +168,7 @@ const userController = {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       const error = new Error('Validation failed');
-      error.statusCode = 403;
+      error.statusCode = 400;
       error.data = errors.array();
       return next(error);
     }
@@ -177,7 +180,7 @@ const userController = {
       })
 
       if (userAccessToken !== tokenData.accessToken) {
-        throw new Error("accessToken mismatch");
+        throw new CustomError('Access Token mismatch', 403);
       }
 
       await userService.deleteMe(userAccessToken);

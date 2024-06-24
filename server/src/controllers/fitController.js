@@ -5,7 +5,7 @@ const fitController = {
     try {
       const fitData = await Fit.findAll()
 
-      return res.status(201).json(fitData);
+      return res.status(200).json(fitData);
     } catch(error) {
       next(error);
     }

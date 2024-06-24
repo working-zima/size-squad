@@ -1,5 +1,6 @@
-const { validationResult } = require('express-validator');
 const { productService } = require('../services/productService');
+
+const CustomError = require('../utils/CustomError');
 
 const productController = {
   /** product 조회 */
@@ -9,7 +10,7 @@ const productController = {
       const category2DepthCodes = req.query.category2DepthCodes;
 
       if(!category1DepthCodes && category2DepthCodes) {
-        throw new Error('Please provide a valid category1DepthCode.')
+        throw new CustomError('Please provide a valid category1DepthCode', 501);
       }
 
       let productData = [];
@@ -33,7 +34,7 @@ const productController = {
         productData = await productService.getProducts();
       }
 
-      res.status(201).json(productData);
+      res.status(200).json(productData);
     } catch(error) {
       next(error);
     }

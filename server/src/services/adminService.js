@@ -4,6 +4,7 @@ const { Gender } = require("../db/models/Gender");
 const { SubCategory } = require("../db/models/SubCategory");
 const { User } = require("../db/models/User");
 
+const CustomError = require("../utils/CustomError");
 const { getUserIdByAccessToken } = require("../utils/utils");
 
 const adminService = {
@@ -14,7 +15,7 @@ const adminService = {
       const userData = await User.findById(userId);
 
       if(!userData.role) {
-        throw new Error('Unauthorized access');
+        throw new CustomError('Access Token mismatch', 403);
       }
 
       categoryData.subCategories = await Promise.all(
@@ -37,7 +38,7 @@ const adminService = {
       const userData = await User.findById(userId);
 
       if(!userData.role) {
-        throw new Error('Unauthorized access');
+        throw new CustomError('Unauthorized access', 403);
       }
 
       const filter = { _id: categoryId };
@@ -56,7 +57,7 @@ const adminService = {
       const userData = await User.findById(userId);
 
       if(!userData.role) {
-        throw new Error('Unauthorized access');
+        throw new CustomError('Unauthorized access', 403);
       }
 
       await Gender.create(sizeData);
@@ -73,7 +74,7 @@ const adminService = {
       const userData = await User.findById(userId);
 
       if(!userData.role) {
-        throw new Error('Unauthorized access');
+        throw new CustomError('Unauthorized access', 403);
       }
 
       await Fit.create({fit});

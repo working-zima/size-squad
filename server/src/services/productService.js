@@ -24,9 +24,9 @@ const productService = {
   },
 
   /** userId로 product 조회 */
-  getProductByUserId: async ({userId}) => {
+  getProductByUserId: async ({ userId }) => {
     try {
-      const productData = await Product.findByUserId({userId});
+      const productData = await Product.findByUserId({ userId });
 
       return productData;
     } catch(error) {
@@ -35,7 +35,7 @@ const productService = {
   },
 
   /** categoryId와 userId로 product 조회 */
-  getProductByUserIdAndCategoryId: async ({userId, categoryId}) => {
+  getProductByUserIdAndCategoryId: async ({ userId, categoryId }) => {
     try {
       const productData = await Product.findByUserIdAndCategoryId({
         userId, categoryId
@@ -48,7 +48,7 @@ const productService = {
   },
 
   /** subCategoryId와 userId로 product 조회 */
-  getProductByUserIdAndSubCategoryId: async ({userId, subCategoryId}) => {
+  getProductByUserIdAndSubCategoryId: async ({ userId, subCategoryId }) => {
 
     try {
       const productData = await Product.findByUserIdAndSubCategoryId({
@@ -93,7 +93,7 @@ const productService = {
       const productData = await Product.findByProductId({ productId });
 
       if(productData[0].authorId._id !== userId) {
-        throw new Error("User ID and accessToken mismatch")
+        throw new CustomError('Access Token mismatch', 403);
       }
 
       await Product.deleteProductByProductId({ productId })

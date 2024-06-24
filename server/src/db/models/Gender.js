@@ -7,7 +7,7 @@ const Gender = {
 
       return;
     } catch(error) {
-      throw new Error(error);
+      throw error;
     }
   },
 
@@ -17,7 +17,7 @@ const Gender = {
 
       return genderData;
     } catch(error) {
-      throw new Error(error);
+      throw error;
     }
   },
 };

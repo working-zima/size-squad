@@ -9,20 +9,22 @@ const Category = {
 
       return;
     } catch(error) {
-      throw new Error(error);
+      throw error;
     }
   },
 
   /** 카테고리 조회 */
   findAll: async () => {
     try {
-      const categoryData = await CategoryModel.find()
+      const categoryData = await CategoryModel.find(
+        {}, "_id category subCategories measurements"
+      )
       .populate({ path: "subCategories", select: ["_id", "subCategory"] })
       .lean();
 
       return categoryData;
     } catch(error) {
-      throw new Error(error);
+      throw error;
     }
   },
 

@@ -10,14 +10,14 @@ const Product = {
 
       return;
     } catch(error) {
-      throw new Error(error);
+      throw error;
     }
   },
 
   /** userId로 product list 가져오기 */
-  findByUserId: async ({userId}) => {
+  findByUserId: async ({ userId }) => {
     try {
-      const productData = await ProductModel.find({authorId: userId})
+      const productData = await ProductModel.find({ authorId: userId })
         .populate({ path: "categoryId", select: ["_id", "category"] })
         .populate({ path: "subCategoryId", select: ["_id", "subCategory"] })
         .populate({ path: "authorId", select: ["_id", "name"] })
@@ -27,12 +27,12 @@ const Product = {
 
       return productData;
     } catch(error) {
-      throw new Error(error);
+      throw error;
     }
   },
 
   /** userId와 categoryId로 product list 가져오기 */
-  findByUserIdAndCategoryId: async ({userId, categoryId}) => {
+  findByUserIdAndCategoryId: async ({ userId, categoryId }) => {
     try {
       const productData = await ProductModel.find({
         authorId: userId, categoryId
@@ -46,7 +46,7 @@ const Product = {
 
       return productData;
     } catch(error) {
-      throw new Error(error);
+      throw error;
     }
   },
 
@@ -65,7 +65,7 @@ const Product = {
 
       return productData;
     } catch(error) {
-      throw new Error(error);
+      throw error;
     }
   },
 
@@ -82,7 +82,7 @@ const Product = {
 
       return productData;
     } catch(error) {
-      throw new Error(error);
+      throw error;
     }
   },
 
@@ -99,7 +99,7 @@ const Product = {
 
       return productData;
     } catch(error) {
-      throw new Error(error);
+      throw error;
     }
   },
 
@@ -118,7 +118,7 @@ const Product = {
 
       return productData;
     } catch(error) {
-      throw new Error(error);
+      throw error;
     }
   },
 
@@ -136,17 +136,17 @@ const Product = {
 
       return productData;
     } catch(error) {
-      throw new Error(error);
+      throw error;
     }
   },
 
-  deleteProductByProductId: async ({productId}) => {
+  deleteProductByProductId: async ({ productId }) => {
     try {
       await ProductModel.findByIdAndDelete({ _id: productId });
 
       return;
     } catch (error) {
-      throw new Error(error);
+      throw error;
     }
   },
 }

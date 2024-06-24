@@ -10,7 +10,7 @@ const SubCategory = {
 
       return subCategoryData._id;
     } catch(error) {
-      throw new Error(error);
+      throw error;
     }
   },
 
@@ -24,7 +24,7 @@ const SubCategory = {
 
       return subCategoryData;
     } catch(error) {
-      throw new Error(error);
+      throw error;
     }
   },
 }

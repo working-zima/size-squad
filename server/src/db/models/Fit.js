@@ -9,7 +9,7 @@ const Fit = {
 
       return;
     } catch(error) {
-      throw new Error(error);
+      throw error;
     }
   },
 
@@ -20,7 +20,7 @@ const Fit = {
 
       return fitData;
     } catch(error) {
-      throw new Error(error);
+      throw error;
     }
   },
 

@@ -38,7 +38,7 @@ const sessionController = {
       const userAccessToken = req.headers["authorization"];
       await sessionService.signOut({userAccessToken})
 
-      res.status(201).json({});
+      res.status(200).json({});
     } catch(error) {
       next(error);
     }

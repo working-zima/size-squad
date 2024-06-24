@@ -1,9 +1,10 @@
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 
 const { User } = require("../db/models/User");
 const { Token } = require("../db/models/Token");
+
 const { generateJwtToken } = require("../utils/utils");
+const CustomError = require("../utils/CustomError");
 
 const sessionService = {
   /** 로그인 */
@@ -11,13 +12,13 @@ const sessionService = {
     try {
       // 가입 여부 조회
       const userData = await User.findByEmail({ email: inputEmail });
-      if (!userData) throw new Error('Registered email not found');
+      if (!userData) throw new CustomError('Registered email not found', 400);
 
       const { userId, password } = userData;
 
       // 비밀번호 확인
       const isPasswordMatch = await bcrypt.compare(inputPassword, password);
-      if (!isPasswordMatch) throw new Error('Incorrect password');
+      if (!isPasswordMatch) throw new CustomError('Incorrect password', 400);
 
       // accessToken, refreshToken 동시 발급
       const refreshToken =  generateJwtToken({
@@ -60,7 +61,6 @@ const sessionService = {
 
       return accessToken;
     } catch (error) {
-      error.statusCode = 400;
       throw error;
     }
   },
@@ -73,7 +73,7 @@ const sessionService = {
       })
 
       if(userAccessToken !== tokenData.accessToken) {
-        throw new Error("accessToken mismatch");
+        throw new CustomError('Access Token mismatch', 403);
       }
 
       await Token.deleteToken({userId: tokenData.userId});
@@ -103,7 +103,7 @@ const sessionService = {
         return accessToken;
       }
 
-      throw new Error("accessToken mismatch")
+      throw new CustomError('Access Token mismatch', 403);
     } catch(error) {
       throw error;
     }
