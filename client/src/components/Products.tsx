@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import Product from './Product';
 
-import { SubCategoryList } from '../types';
+import { SubCategorySummary } from '../types';
 
 import useProductsStore from '../hooks/useProductsStore';
 
@@ -37,28 +37,30 @@ const Wrapper = styled.div`
 `;
 
 type ProductsProps = {
-  subCategory: SubCategoryList;
+  subCategory: SubCategorySummary;
 }
 
 export default function Products({ subCategory }: ProductsProps) {
   const [{ products }] = useProductsStore();
 
   const filteredProduct = products.filter(
-    (product) => (product.subCategory === subCategory),
+    (product) => (product.subCategoryId._id === subCategory._id),
   );
 
   return (
+    !!filteredProduct.length && (
     <Container>
       <SectionDivider />
       <Wrapper>
-        <h2>{subCategory}</h2>
+        <h2>{subCategory.subCategory}</h2>
       </Wrapper>
-      {filteredProduct.map((product, idx) => (
+      {filteredProduct.map((product) => (
         <Product
-          key={key(product.subCategory, idx)}
+          key={product._id}
           product={product}
         />
       ))}
     </Container>
+    )
   );
 }

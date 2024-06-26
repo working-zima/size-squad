@@ -20,7 +20,7 @@ class CategoriesStore {
   }
 
   @Action()
-  setCategories(categories: Category[]) {
+  private setCategories(categories: Category[]) {
     this.categories = categories;
   }
 }

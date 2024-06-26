@@ -37,17 +37,16 @@ export default class ApiService {
     return categories;
   }
 
-  // async fetchProducts({ categoryId, subCategoryId }: {
-  //   categoryId?: string, subCategoryId?: string
-  // } = {}): Promise<Product[]> {
-  //   const { data } = await this.instance.get('/products.json', {
-  //     params: { categoryId, subCategoryId },
-  //   });
+  async fetchProducts({ categoryId, subCategoryId }: {
+    categoryId?: string, subCategoryId?: string
+  } = {}): Promise<Product[]> {
+    const { data } = await this.instance.get('/products', {
+      params: { categoryId, subCategoryId },
+    });
+    const { products } = data;
 
-  //   const { products } = data;
-
-  //   return products;
-  // }
+    return products;
+  }
 }
 
 export const apiService = new ApiService();

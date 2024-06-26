@@ -5,9 +5,7 @@ import styled, { css } from 'styled-components';
 
 import Button from '../ui/Button';
 
-import { Category, SubCategorySummary } from '../../types';
-
-import { key } from '../../utils';
+import { SubCategorySummary } from '../../types';
 
 const Container = styled.div`
   display: flex;
@@ -47,11 +45,11 @@ const CustomButton = styled(Button)<{active: boolean}>`
 `;
 
 type SubCategoryBarProps = {
-  categories: Category[];
+  subCategories: SubCategorySummary[];
 }
 
 export default function SubCategoryBar(
-  { categories }: SubCategoryBarProps,
+  { subCategories }: SubCategoryBarProps,
 ) {
   const [activeBtn, setActiveBtn] = useState('all');
   const [params] = useSearchParams();
@@ -59,15 +57,6 @@ export default function SubCategoryBar(
   const categoryId = params.get('category1DepthCode');
   const subCategoryId = params.get('category2DepthCodes');
 
-  const allSubCategories = categories.reduce<SubCategorySummary[]>(
-    (acc, category) => [...acc, ...category.subCategories], []
-  );
-
-  const subCategories = categoryId
-  ? categories.find(category => category._id === categoryId)?.subCategories || []
-  : allSubCategories;
-
-  // 활성화 버튼 선택, 기본은 'all'
   useEffect(() => {
     if (!subCategoryId) {
       setActiveBtn('all');
@@ -78,11 +67,11 @@ export default function SubCategoryBar(
     let path = '/mysize';
 
     if (!!categoryId) {
-      path += `?category1DepthCode=${categoryId}`;
+      path = `${path}?category1DepthCode=${categoryId}`;
     }
 
     if (btnId !== 'all') {
-      path += `${categoryId ? '&' : '?'}category2DepthCodes=${btnId}`;
+      path = `${path}${categoryId ? '&' : '?'}category2DepthCodes=${btnId}`;
     }
 
     setActiveBtn(btnId);
@@ -98,10 +87,10 @@ export default function SubCategoryBar(
         전체
       </CustomButton>
       {!!subCategories.length && (
-        subCategories.map((subCategory, idx) => (
+        subCategories.map(subCategory => (
           <CustomButton
-            key={key(subCategory.subCategory, idx)}
-            active={activeBtn === key(subCategory.subCategory, idx)}
+            key={subCategory._id}
+            active={activeBtn === subCategory._id}
             onClick={() => handleNavigate(subCategory._id)}
           >
             {subCategory.subCategory}

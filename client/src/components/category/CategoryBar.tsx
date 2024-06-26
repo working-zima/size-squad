@@ -4,6 +4,7 @@ import MainCategoryBar from './MainCategoryBar';
 import SubCategoryBar from './SubCategoryBar';
 
 import useCategoriesStore from '../../hooks/useCategoriesStore';
+import { Category, SubCategorySummary } from '../../types';
 
 const Container = styled.div`
   position: sticky;
@@ -13,13 +14,19 @@ const Container = styled.div`
   background-color: white;
 `;
 
-export default function CategoryBar() {
-  const [{ categories }] = useCategoriesStore();
+type CategoryBarProps = {
+  categories: Category[];
+  subCategories: SubCategorySummary[];
+}
+
+export default function CategoryBar({
+    categories, subCategories
+  }: CategoryBarProps) {
 
   return (
     <Container>
       <MainCategoryBar categories={categories} />
-      <SubCategoryBar categories={categories} />
+      <SubCategoryBar subCategories={subCategories} />
     </Container>
 
   );

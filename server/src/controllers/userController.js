@@ -83,31 +83,31 @@ const userController = {
       const userData = await userService.getMyInfo(userAccessToken);
       const userId = userData._id;
 
-      const category1DepthCodes = req.query.category1DepthCodes;
-      const category2DepthCodes = req.query.category2DepthCodes;
+      const categoryId = req.query.categoryId;
+      const subCategoryId = req.query.subCategoryId;
 
-      if(!category1DepthCodes && category2DepthCodes) {
+      if(!categoryId && subCategoryId) {
         throw new CustomError('Please provide a valid category1DepthCode', 501);
       }
 
       let productData = [];
 
       // 서브 카테고리
-      if(category2DepthCodes) {
+      if(subCategoryId) {
         productData = await productService.getProductByUserIdAndSubCategoryId({
-          userId, subCategoryId: category2DepthCodes
+          userId, subCategoryId: subCategoryId
         });
       }
 
       // 카테고리
-      if(category1DepthCodes && !category2DepthCodes) {
+      if(categoryId && !subCategoryId) {
         productData = await productService.getProductByUserIdAndCategoryId({
-          userId, categoryId: category1DepthCodes
+          userId, categoryId: categoryId
         });
       }
 
       // 전체
-      if(!category1DepthCodes) {
+      if(!categoryId) {
         productData = await productService.getProductByUserId({ userId });
       }
 

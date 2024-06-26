@@ -3,11 +3,6 @@ const Schema = mongoose.Schema;
 const Types = mongoose.Types;
 
 const MeasurementsSchema = new Schema({
-  _id: {
-    type: String,
-    default: () => String(new Types.ObjectId())
-    // Object("66730b58c6c859c336b846c8")를 "66730b58c6c859c336b846c8" 형태로
-  },
   totalLength: {
     type: Number,
     required: false
@@ -44,7 +39,7 @@ const MeasurementsSchema = new Schema({
     type: Number,
     required: false
   }
-});
+}, { _id: false });
 
 const ProductSchema = new Schema(
   {

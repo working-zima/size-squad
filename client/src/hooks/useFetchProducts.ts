@@ -14,7 +14,7 @@ export default function useFetchProducts({
 
   useEffect(() => {
     store.fetchProducts({ categoryId, subCategoryId });
-  }, [categoryId, store]);
+  }, [categoryId, subCategoryId, store]);
 
   return { products };
 }

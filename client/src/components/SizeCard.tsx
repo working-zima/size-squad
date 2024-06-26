@@ -45,7 +45,7 @@ type SizeCardProps = {
 export default function SizeCard({ product }: SizeCardProps) {
   const keys = Object.keys(product.measurements);
   const values = Object.values(product.measurements);
-
+  console.log(product)
   return (
     <Container>
       <table>

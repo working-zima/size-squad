@@ -6,31 +6,26 @@ const productController = {
   /** product 조회 */
   getProducts: async (req, res, next) => {
     try {
-      const category1DepthCodes = req.query.category1DepthCodes;
-      const category2DepthCodes = req.query.category2DepthCodes;
-
-      if(!category1DepthCodes && category2DepthCodes) {
-        throw new CustomError('Please provide a valid category1DepthCode', 501);
-      }
-
+      const categoryId = req.query.categoryId;
+      const subCategoryId = req.query.subCategoryId;
       let productData = [];
 
       // 서브 카테고리
-      if(category2DepthCodes) {
+      if(subCategoryId) {
         productData = await productService.getProductBySubCategoryId({
-          subCategoryId: category2DepthCodes
+          subCategoryId
         });
       }
 
       // 카테고리
-      if(category1DepthCodes && !category2DepthCodes) {
+      if(categoryId && !subCategoryId) {
         productData = await productService.getProductByCategoryId({
-          categoryId: category1DepthCodes
+          categoryId
         });
       }
 
       // 전체
-      if(!category1DepthCodes) {
+      if(!categoryId && !subCategoryId) {
         productData = await productService.getProducts();
       }
 
