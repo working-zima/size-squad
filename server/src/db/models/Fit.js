@@ -1,7 +1,5 @@
 const { FitModel } = require("../schemas/fit");
 
-const { renameId } = require("../../utils/utils");
-
 const Fit = {
   create: async (newFit) => {
     try {
@@ -32,7 +30,6 @@ const Fit = {
         { fit },
         "_id fit"
       ).lean();
-      if (fitData) fitData = renameId(fitData, 'fitId');
 
       return fitData;
     } catch (error) {

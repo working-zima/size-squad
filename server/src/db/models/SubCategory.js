@@ -1,4 +1,3 @@
-const { renameId } = require("../../utils/utils");
 const { SubCategoryModel } = require("../schemas/subCategory");
 
 const SubCategory = {

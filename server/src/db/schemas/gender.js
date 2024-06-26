@@ -19,9 +19,8 @@ const GenderSchema = new Schema(
       required: true,
     },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true },
+  { versionKey : false }
 )
 
 const GenderModel = mongoose.model("Gender", GenderSchema);

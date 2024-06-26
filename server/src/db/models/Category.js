@@ -1,4 +1,3 @@
-const { renameId } = require("../../utils/utils");
 const { CategoryModel } = require("../schemas/category");
 
 const Category = {
@@ -36,8 +35,6 @@ const Category = {
         "_id category subCategories measurements"
       ).lean();
 
-      if (categoryData) categoryData = renameId(categoryData, 'categoryId');
-
       return categoryData;
     } catch (error) {
       throw error;
@@ -51,7 +48,6 @@ const Category = {
         { category },
         "_id category subCategories measurements"
       ).lean();
-      if (categoryData) categoryData = renameId(categoryData, 'categoryId');
 
       return categoryData;
     } catch (error) {

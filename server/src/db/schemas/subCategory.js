@@ -19,9 +19,8 @@ const SubCategorySchema = new Schema(
       required: true,
     },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true },
+  { versionKey : false }
 )
 
 const SubCategoryModel = mongoose.model("SubCategory", SubCategorySchema);

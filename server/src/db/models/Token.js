@@ -1,15 +1,11 @@
 const { TokenModel } = require("../schemas/token");
 
-const { renameId } = require("../../utils/utils");
-
 const Token = {
   create: async ({ refreshToken, accessToken, userId }) => {
     try {
       let tokenData = await TokenModel.create({
         refreshToken, accessToken, userId
       });
-
-      if (tokenData) tokenData = renameId(tokenData._doc, 'tokenId');
 
       return tokenData;
     } catch (error) {
@@ -51,7 +47,6 @@ const Token = {
         "_id refreshToken userId"
       ).lean();
 
-      if (tokenData) tokenData = renameId(tokenData, 'tokenId');
       if (!tokenData) tokenData = null;
 
       return tokenData;

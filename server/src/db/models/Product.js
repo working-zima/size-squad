@@ -1,7 +1,5 @@
 const ProductModel = require("../schemas/product");
 
-const { renameId } = require("../../utils/utils");
-
 const Product = {
   /** 서브 카테고리 생성 */
   create: async (newProduct) => {
@@ -17,7 +15,10 @@ const Product = {
   /** userId로 product list 가져오기 */
   findByUserId: async ({ userId }) => {
     try {
-      const productData = await ProductModel.find({ authorId: userId })
+      const productData = await ProductModel.find(
+        { authorId: userId },
+        "_id categoryId subCategoryId authorId brand name genderId size fitId measurements description price"
+      )
         .populate({ path: "categoryId", select: ["_id", "category"] })
         .populate({ path: "subCategoryId", select: ["_id", "subCategory"] })
         .populate({ path: "authorId", select: ["_id", "name"] })
@@ -34,9 +35,10 @@ const Product = {
   /** userId와 categoryId로 product list 가져오기 */
   findByUserIdAndCategoryId: async ({ userId, categoryId }) => {
     try {
-      const productData = await ProductModel.find({
-        authorId: userId, categoryId
-      })
+      const productData = await ProductModel.find(
+        { authorId: userId, categoryId },
+        "_id categoryId subCategoryId authorId brand name genderId size fitId measurements description price"
+      )
         .populate({ path: "categoryId", select: ["_id", "category"] })
         .populate({ path: "subCategoryId", select: ["_id", "subCategory"] })
         .populate({ path: "authorId", select: ["_id", "name"] })
@@ -53,9 +55,10 @@ const Product = {
   /** userId와 categoryId로 product list 가져오기 */
   findByUserIdAndSubCategoryId: async ({ userId, subCategoryId }) => {
     try {
-      const productData = await ProductModel.find({
-        authorId: userId, subCategoryId
-      })
+      const productData = await ProductModel.find(
+        { authorId: userId, subCategoryId },
+        "_id categoryId subCategoryId authorId brand name genderId size fitId measurements description price"
+      )
         .populate({ path: "categoryId", select: ["_id", "category"] })
         .populate({ path: "subCategoryId", select: ["_id", "subCategory"] })
         .populate({ path: "authorId", select: ["_id", "name"] })
@@ -72,7 +75,9 @@ const Product = {
   /** 모든 product 조회 */
   findAll: async () => {
     try {
-      const productData = await ProductModel.find()
+      const productData = await ProductModel.find({},
+        "_id categoryId subCategoryId authorId brand name genderId size fitId measurements description price"
+      )
         .populate({ path: "categoryId", select: ["_id", "category"] })
         .populate({ path: "subCategoryId", select: ["_id", "subCategory"] })
         .populate({ path: "authorId", select: ["_id", "name"] })
@@ -89,7 +94,10 @@ const Product = {
   /** categoryId로 product list 가져오기 */
   findByCategoryId: async ({ categoryId }) => {
     try {
-      const productData = await ProductModel.find({ categoryId })
+      const productData = await ProductModel.find(
+        { categoryId },
+        "_id categoryId subCategoryId authorId brand name genderId size fitId measurements description price"
+      )
         .populate({ path: "categoryId", select: ["_id", "category"] })
         .populate({ path: "subCategoryId", select: ["_id", "subCategory"] })
         .populate({ path: "authorId", select: ["_id", "name"] })
@@ -106,9 +114,10 @@ const Product = {
   /** subCategoryId로 product list 가져오기 */
   findBySubCategoryId: async ({ subCategoryId }) => {
     try {
-      const productData = await ProductModel.find({
-        subCategoryId
-      })
+      const productData = await ProductModel.find(
+        { subCategoryId },
+        "_id categoryId subCategoryId authorId brand name genderId size fitId measurements description price"
+      )
         .populate({ path: "categoryId", select: ["_id", "category"] })
         .populate({ path: "subCategoryId", select: ["_id", "subCategory"] })
         .populate({ path: "authorId", select: ["_id", "name"] })
@@ -124,9 +133,10 @@ const Product = {
 
   findByProductId: async ({ productId }) => {
     try {
-      const productData = await ProductModel.find({
-        _id: productId
-      })
+      const productData = await ProductModel.find(
+        { _id: productId },
+        "_id categoryId subCategoryId authorId brand name genderId size fitId measurements description price"
+      )
         .populate({ path: "categoryId", select: ["_id", "category"] })
         .populate({ path: "subCategoryId", select: ["_id", "subCategory"] })
         .populate({ path: "authorId", select: ["_id", "name"] })

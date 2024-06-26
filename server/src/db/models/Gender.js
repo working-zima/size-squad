@@ -13,7 +13,9 @@ const Gender = {
 
   findByGender: async ({gender}) => {
     try {
-      const genderData = await GenderModel.findOne({gender}).lean();
+      const genderData = await GenderModel.findOne(
+        {gender}, "_id gender size"
+      ).lean();
 
       return genderData;
     } catch(error) {

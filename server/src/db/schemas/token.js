@@ -25,9 +25,8 @@ const TokenSchema = new Schema(
       unique: true,
     },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true },
+  { versionKey : false }
 );
 
 const TokenModel = mongoose.model("Token", TokenSchema);

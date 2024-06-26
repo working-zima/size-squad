@@ -102,7 +102,8 @@ const ProductSchema = new Schema(
       required: false
     }
   },
-  { timestamps: true }
+  { timestamps: true },
+  { versionKey : false}
 )
 
 const ProductModel = mongoose.model("Product", ProductSchema);

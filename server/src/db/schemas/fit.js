@@ -15,9 +15,8 @@ const FitSchema = new Schema(
       unique: true,
     },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true },
+  { versionKey : false }
 )
 
 const FitModel = mongoose.model("Fit", FitSchema);
