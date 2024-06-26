@@ -100,20 +100,20 @@ export default function MainCategoryBar({
       {!!categories.length && (
         categories.map((category, idx) => (
           <CustomButton
-            key={category.id}
+            key={category._id}
             ref={(el) => {
               buttonsRef.current[idx + 1] = el;
             }}
-            data-id={category.id}
-            active={activeBtn === category.id}
+            data-id={category._id}
+            active={activeBtn === category._id}
             onClick={
               () => handleNavigate(
-                `/mysize?category1DepthCode=${category.id}`,
-                category.id,
+                `/mysize?category1DepthCode=${category._id}`,
+                category._id,
               )
             }
           >
-            <p>{category.name}</p>
+            <p>{category.category}</p>
           </CustomButton>
         ))
       )}

@@ -20,14 +20,14 @@ export default function MySizeListPage() {
   useFetchCategories({ categoryId });
   useFetchProducts({ categoryId, subCategoryId });
 
-  const [{ subCategories }] = useCategoriesStore();
+  // const [{ subCategories }] = useCategoriesStore();
 
   return (
     <Container>
       <CategoryBar />
-      {subCategories.map((subCategory) => (
+      {/* {subCategories.map((subCategory) => (
         <Products key={subCategory} subCategory={subCategory} />
-      ))}
+      ))} */}
     </Container>
   );
 }

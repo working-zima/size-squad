@@ -1,6 +1,21 @@
-export type GenderId = {
+export type GenderSummary = {
   _id: string;
   gender: 'female' | 'male';
+}
+
+export type SubCategorySummary = {
+  _id: string;
+  subCategory: string;
+}
+
+export type FitSummary = {
+  _id: string;
+  fit: string;
+}
+
+export type CategorySummary = {
+  _id: string;
+  category: string;
 }
 
 export type User = {
@@ -8,7 +23,7 @@ export type User = {
   name: string;
   email: string;
   password: string;
-  genderId: GenderId;
+  genderId: GenderSummary;
   height: number;
   weight: number;
   description: string;
@@ -16,31 +31,11 @@ export type User = {
   following: Pick<User, '_id' | 'name'>[];
 };
 
-export type SubCategoryId = {
-  _id: string;
-  subCategory: string;
-}
-
 export type Category = {
   _id: string;
   category: string;
-  subCategories: SubCategoryId;
+  subCategories: SubCategorySummary[];
   measurements: string[];
-}
-
-export type Fit = {
-  _id: string;
-  fit: string;
-}
-
-export type CategoryId = {
-  _id: string;
-  category: string;
-}
-
-export type FitId = {
-  _id: string;
-  fit: string;
 }
 
 export type Measurements = {
@@ -58,11 +53,11 @@ export type Measurements = {
 
 export type Product = {
   _id: string;
-  categoryId: CategoryId;
-  subCategoryId: SubCategoryId;
-  genderId: GenderId;
+  categoryId: CategorySummary;
+  subCategoryId: SubCategorySummary;
+  genderId: GenderSummary;
   size: string;
-  fitId: FitId;
+  fitId: FitSummary;
   measurements: Measurements;
   description: string;
   price: number;

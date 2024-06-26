@@ -1,7 +1,7 @@
 import { singleton } from 'tsyringe';
 import { Action, Store } from 'usestore-ts';
 
-import { Category, SubCategoryList } from '../types';
+import { Category, SubCategorySummary } from '../types';
 
 import { apiService } from '../services/ApiService';
 
@@ -9,8 +9,6 @@ import { apiService } from '../services/ApiService';
 @Store()
 class CategoriesStore {
   categories: Category[] = [];
-
-  subCategories: SubCategoryList[] = [];
 
   async fetchCategories({ categoryId }: {
     categoryId?: string
@@ -24,10 +22,6 @@ class CategoriesStore {
   @Action()
   setCategories(categories: Category[]) {
     this.categories = categories;
-    this.subCategories = categories
-      .reduce<SubCategoryList[]>((acc, category) => [
-        ...acc, ...category.subCategories,
-      ], []);
   }
 }
 

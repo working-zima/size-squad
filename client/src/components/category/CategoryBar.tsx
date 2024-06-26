@@ -14,12 +14,12 @@ const Container = styled.div`
 `;
 
 export default function CategoryBar() {
-  const [{ categories, subCategories }] = useCategoriesStore();
+  const [{ categories }] = useCategoriesStore();
 
   return (
     <Container>
       <MainCategoryBar categories={categories} />
-      <SubCategoryBar subCategories={subCategories} />
+      <SubCategoryBar categories={categories} />
     </Container>
 
   );

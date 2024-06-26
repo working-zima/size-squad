@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { Category, SubCategoryList } from '../types';
+import { Category, SubCategorySummary } from '../types';
 
 import useCategoriesStore from './useCategoriesStore';
 
@@ -11,7 +11,7 @@ import useCategoriesStore from './useCategoriesStore';
  */
 export default function useFetchCategories({ categoryId } : {
   categoryId?: string;
-}): {categories: Category[], subCategories: SubCategoryList[]} {
+}): {categories: Category[], subCategories: SubCategorySummary[]} {
   const [{ categories, subCategories }, store] = useCategoriesStore();
 
   useEffect(() => {
