@@ -14,7 +14,7 @@ const sessionService = {
       const userData = await User.findByEmail({ email: inputEmail });
       if (!userData) throw new CustomError('Registered email not found', 400);
 
-      const { userId, password } = userData;
+      const { _id, password } = userData;
 
       // 비밀번호 확인
       const isPasswordMatch = await bcrypt.compare(inputPassword, password);
@@ -22,18 +22,18 @@ const sessionService = {
 
       // accessToken, refreshToken 동시 발급
       const refreshToken =  generateJwtToken({
-        userId,
+        userId: _id,
         secretKey: process.env.JWT_SECRET_KEY,
         expiresIn: process.env.REFRESH_EXPIRES_IN
       });
       const accessToken = generateJwtToken({
-        userId,
+        userId: _id,
         secretKey: process.env.JWT_SECRET_KEY,
         expiresIn: process.env.ACCESS_EXPIRES_IN
       });
 
       // 데이터 베이스에 토큰 유무 확인
-      const tokenData = await Token.findByUserId({ userId });
+      const tokenData = await Token.findByUserId({ userId: _id });
 
       // 데이터 베이스에 refresh 토큰이 있는 경우 재발급하여 데이터 베이스의 refresh 토큰과 교체
       if (!!tokenData) {
@@ -56,7 +56,7 @@ const sessionService = {
 
       // 데이터 베이스에 refresh 토큰이 없는 경우 데이터 베이스에 refresh 토큰 저장
       if (!tokenData) {
-        await Token.create({ refreshToken, accessToken, userId });
+        await Token.create({ refreshToken, accessToken, userId: _id });
       }
 
       return accessToken;
@@ -92,15 +92,19 @@ const sessionService = {
       });
 
       if(tokenData) {
-        const accessToken = generateJwtToken({
+        const newAccessToken = generateJwtToken({
           userId: tokenData.userId,
           secretKey: process.env.JWT_SECRET_KEY,
           expiresIn: process.env.ACCESS_EXPIRES_IN
         });
 
-        Token.create({ refreshToken, accessToken, userId :tokenData.userId })
+        const newTokenData = await Token.update({
+          tokenId: tokenData._id,
+          refreshToken: tokenData.refreshToken,
+          accessToken: newAccessToken,
+        })
 
-        return accessToken;
+        return newTokenData.accessToken;
       }
 
       throw new CustomError('Access Token mismatch', 403);

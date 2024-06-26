@@ -13,13 +13,13 @@ const sessionController = {
       return next(error);
     }
     try {
-      const {email, password} = req.body;
+      const { email, password } = req.body;
 
       const accessToken = await sessionService.signIn({
         inputEmail: email, inputPassword: password
       });
 
-      res.status(201).json({'accessToken': accessToken});
+      res.status(201).json({ 'accessToken': accessToken });
     } catch(error) {
       next(error);
     }

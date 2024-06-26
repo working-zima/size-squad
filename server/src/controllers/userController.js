@@ -81,7 +81,7 @@ const userController = {
     try {
       const userAccessToken = req.headers["authorization"];
       const userData = await userService.getMyInfo(userAccessToken);
-      const userId = userData.userId;
+      const userId = userData._id;
 
       const category1DepthCodes = req.query.category1DepthCodes;
       const category2DepthCodes = req.query.category2DepthCodes;

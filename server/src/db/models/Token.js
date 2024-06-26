@@ -16,21 +16,13 @@ const Token = {
   /**
    * refresh token 업데이트
    */
-  update: async ({ tokenId, fieldToUpdate, newValue }) => {
+  update: async ({ tokenId, accessToken, newValue }) => {
     try {
-      const filter = { _id: tokenId };
-      const update = {
-        [fieldToUpdate.refreshToken]: newValue.refreshToken,
-        [fieldToUpdate.accessToken]: newValue.accessToken,
-      };
-
       // 업데이트 전 데이터를 리턴하지 말고 업데이트 후 데이터를 리턴
-      const option = { returnOriginal: false };
-
       const newToken = await TokenModel.findOneAndUpdate(
-        filter,
-        update,
-        option
+        { _id: tokenId },
+        { accessToken },
+        { returnOriginal: false }
       ).lean();
 
       return newToken;
@@ -59,7 +51,7 @@ const Token = {
     try {
       const tokenData = await TokenModel.findOne(
         { accessToken },
-        "accessToken userId"
+        "accessToken refreshToken userId"
       )
       .lean()
 

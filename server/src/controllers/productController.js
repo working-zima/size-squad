@@ -34,7 +34,7 @@ const productController = {
         productData = await productService.getProducts();
       }
 
-      res.status(200).json(productData);
+      res.status(200).json({ products: productData });
     } catch(error) {
       next(error);
     }

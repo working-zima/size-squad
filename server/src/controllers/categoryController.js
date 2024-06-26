@@ -7,7 +7,7 @@ const categoryController = {
       const categoryData = await Category.findAll();
 
       // Access Token이 올바름
-      res.status(200).json(categoryData);
+      res.status(200).json({ categories: categoryData });
     } catch (error) {
       next(error);
     }
