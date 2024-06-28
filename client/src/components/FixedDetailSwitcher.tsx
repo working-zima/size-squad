@@ -25,6 +25,7 @@ const CustomButton = styled(Button)`
   color: ${(props) => props.theme.colors.primaryWhite};
   line-height: 20px;
   background-color: ${(props) => props.theme.colors.primaryBlack};
+  user-select: none;
 `;
 
 export default function FixedDetailSwitcher() {

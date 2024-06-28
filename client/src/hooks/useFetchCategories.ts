@@ -9,14 +9,13 @@ import useCategoriesStore from './useCategoriesStore';
  * @param categoryId
  * @returns `{categories, subCategories}`
  */
-export default function useFetchCategories({ categoryId } : {
-  categoryId?: string;
-}): {categories: Category[], subCategories: SubCategorySummary[]} {
-  const [{ categories, subCategories }, store] = useCategoriesStore();
+export default function useFetchCategories()
+: {categories: Category[]} {
+  const [{ categories }, store] = useCategoriesStore();
 
   useEffect(() => {
-    store.fetchCategories({ categoryId });
-  }, [categoryId, store]);
+    store.fetchCategories();
+  }, [store]);
 
-  return { categories, subCategories };
+  return { categories };
 }

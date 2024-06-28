@@ -26,6 +26,11 @@ const GlobalStyle = createGlobalStyle`
     list-style: none;
   }
 
+  a {
+    text-decoration: none;
+    color: black;
+  }
+
   :lang(ko) {
     h1, h2, h3 {
       word-break: keep-all;

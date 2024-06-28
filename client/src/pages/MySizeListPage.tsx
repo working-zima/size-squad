@@ -21,7 +21,8 @@ export default function MySizeListPage() {
   const subCategoryId = params.get('category2DepthCodes') ?? undefined;
   const [{ categories }] = useCategoriesStore();
 
-  useFetchCategories({ categoryId });
+  useFetchCategories();
+  // 회원가입 기능 생성 후 users/product로 받아오는 로직으로 변경할 것
   useFetchProducts({ categoryId, subCategoryId });
 
   const allSubCategories = categories.reduce<SubCategorySummary[]>(

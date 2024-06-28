@@ -1,8 +1,9 @@
 import Layout from './components/Layout';
 
 import HomePage from './pages/HomePage';
-import MySizeEditPage from './pages/MySizeEditPage';
 import MySizeListPage from './pages/MySizeListPage';
+import MySizeNewPage from './components/mySize/MySizeNewPage';
+import MySizeEditPage from './pages/MySizeEditPage';
 
 const routes = [
   {
@@ -10,6 +11,7 @@ const routes = [
     children: [
       { path: '/', element: <HomePage /> },
       { path: '/mysize', element: <MySizeListPage /> },
+      { path: '/mysize/new', element: <MySizeNewPage /> },
       { path: '/mysize/:id/edit', element: <MySizeEditPage /> },
     ],
   },

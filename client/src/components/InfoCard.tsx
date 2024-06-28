@@ -40,10 +40,6 @@ const EditDeleteWrapper = styled.div`
   font-weight: bold;
   -webkit-tap-highlight-color: transparent;
 
-  a {
-    text-decoration: none;
-  }
-
   .edit-link {
     color: ${(props) => props.theme.colors.primaryBlack};
     margin-right: 1rem;
@@ -78,7 +74,7 @@ export default function InfoCard({ product }: InfoCardProps) {
         </DetailWrapper>
         <EditDeleteWrapper>
           <Link
-            to={`/mysize/${product.id}/edit`}
+            to={`/mysize/${product._id}/edit`}
             className="edit-link"
             onClick={handleEditClick}
           >

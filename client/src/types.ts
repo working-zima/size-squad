@@ -18,6 +18,11 @@ export type CategorySummary = {
   category: string;
 }
 
+export type AuthorSummary = {
+  _id: string;
+  name: string;
+}
+
 export type User = {
   _id: string;
   name: string;
@@ -53,6 +58,9 @@ export type Measurements = {
 
 export type Product = {
   _id: string;
+  authorId: AuthorSummary;
+  name: string;
+  brand: string;
   categoryId: CategorySummary;
   subCategoryId: SubCategorySummary;
   genderId: GenderSummary;

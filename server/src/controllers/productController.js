@@ -3,7 +3,7 @@ const { productService } = require('../services/productService');
 const CustomError = require('../utils/CustomError');
 
 const productController = {
-  /** product 조회 */
+  /** product 리스트 조회 */
   getProducts: async (req, res, next) => {
     try {
       const categoryId = req.query.categoryId;
@@ -30,6 +30,15 @@ const productController = {
       }
 
       res.status(200).json({ products: productData });
+    } catch(error) {
+      next(error);
+    }
+  },
+
+  /** 개별 product 조회 */
+  getProduct: async () => {
+    try {
+
     } catch(error) {
       next(error);
     }

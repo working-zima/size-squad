@@ -10,12 +10,10 @@ import { apiService } from '../services/ApiService';
 class CategoriesStore {
   categories: Category[] = [];
 
-  async fetchCategories({ categoryId }: {
-    categoryId?: string
-  }) {
+  async fetchCategories() {
     this.setCategories([]);
 
-    const categories = await apiService.fetchCategories({ categoryId });
+    const categories = await apiService.fetchCategories();
     this.setCategories(categories);
   }
 

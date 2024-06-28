@@ -24,14 +24,13 @@ const Container = styled.header`
     font-size: 2.5rem;
 
     a {
-      text-decoration: none;
       color: black;
       user-select: none;
     }
   }
 `;
 
-export default function Header() {
+export default function LayoutHeader() {
   const location = useLocation();
   const isEditPage = /^\/mysize\/.*\/edit$/.test(location.pathname);
 
