@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom';
+import { useRouteError, useSearchParams } from 'react-router-dom';
 
 import styled from 'styled-components';
 
@@ -10,6 +10,7 @@ import useCategoriesStore from '../hooks/useCategoriesStore';
 import useFetchProducts from '../hooks/useFetchProducts';
 
 import { SubCategorySummary } from '../types';
+import { useEffect } from 'react';
 
 const Container = styled.div`
   padding-bottom: 24px;
@@ -20,6 +21,7 @@ export default function MySizeListPage() {
   const categoryId = params.get('category1DepthCode') ?? undefined;
   const subCategoryId = params.get('category2DepthCodes') ?? undefined;
   const [{ categories }] = useCategoriesStore();
+  const error = useRouteError() as Error;
 
   useFetchCategories();
   // 회원가입 기능 생성 후 users/product로 받아오는 로직으로 변경할 것

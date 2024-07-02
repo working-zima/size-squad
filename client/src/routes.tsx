@@ -7,6 +7,7 @@ import MySizeListPage from './pages/MySizeListPage';
 import MySizeNewPage from './components/mySize/MySizeNewPage';
 import MySizeEditPage from './pages/MySizeEditPage';
 import NetworkErrorPage from './pages/NetworkErrorPage';
+import MyPage from './pages/MyPage';
 
 const routes = [
   {
@@ -18,7 +19,8 @@ const routes = [
       { path: '/mysize', element: <MySizeListPage /> },
       { path: '/mysize/new', element: <MySizeNewPage /> },
       { path: '/mysize/:id/edit', element: <MySizeEditPage /> },
-      { path: '/error/network', element: <NetworkErrorPage />}
+      { path: '/error/network', element: <NetworkErrorPage />},
+      { path: '/mypage', element: <MyPage />},
     ],
   },
 ];

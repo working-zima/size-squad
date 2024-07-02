@@ -1,5 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { Category, Product } from '../types';
+
+import { Category, Product, User } from '../types';
 
 const MOCK_BASE_URL = 'http://localhost:5000';
 
@@ -86,7 +87,7 @@ export default class ApiService {
       this.logOnDev(`[API] | Error ${error.toString()}`);
       this.onError(0, `에러가 발생했습니다. ${error.toString()}`);
     }
-    console.log(`check`)
+
     return Promise.reject(error);
   };
 
@@ -124,6 +125,12 @@ export default class ApiService {
     const { products } = data;
 
     return products;
+  }
+
+  async fetchCurrentUser(): Promise<User[]> {
+    const { data } = await this.instance.get('/users/me');
+    const { user } = data;
+    return user;
   }
 
   async login({email, password}: {

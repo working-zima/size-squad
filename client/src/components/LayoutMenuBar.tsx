@@ -5,6 +5,9 @@ import { CiUser, CiHome, CiEdit } from "react-icons/ci";
 
 import FixedDetailSwitcher from './FixedDetailSwitcher';
 
+import useAccessToken from '../hooks/useAccessToken';
+import { useEffect } from 'react';
+
 const Container = styled.div.attrs({ className: 'LayoutMenuBar' })`
   grid-area: menu;
   z-index: 550;
@@ -53,6 +56,8 @@ const Menu = styled.nav`
 `;
 
 export default function LayoutMenuBar() {
+  const { accessToken } = useAccessToken();
+
   return (
     <Container>
       <FixedDetailSwitcher />
@@ -67,20 +72,20 @@ export default function LayoutMenuBar() {
               홈
             </span>
           </Link>
-          <Link to="/">
-            <div>
-              <CiUser size="24"/>
-            </div>
-            <span>
-              마이
-            </span>
-          </Link>
           <Link to="/mysize/new">
             <div>
               <CiEdit size="24"/>
             </div>
             <span>
               작성
+            </span>
+          </Link>
+          <Link to={!!accessToken ? "/mypage" : "/login"}>
+            <div>
+              <CiUser size="24"/>
+            </div>
+            <span>
+              마이
             </span>
           </Link>
         </Menu>

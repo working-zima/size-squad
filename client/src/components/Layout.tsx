@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import LayoutHeader from './LayoutHeader';
 import LayoutMenuBar from './LayoutMenuBar';
+import useCheckAccessToken from '../hooks/useCheckAccessToken';
 
 const Container = styled.div`
   display: grid;
@@ -18,19 +19,20 @@ const Container = styled.div`
   /* width: ${(props) => props.theme.sizes.layoutWidth}; */
 `;
 
-
 const Main = styled.main`
   grid-area: main;
 `;
 
 const LayoutFooter = styled.footer`
   grid-area: footer;
-  background-color: ${props => props.theme.colors.tertiaryGrey};
+  background-color: ${props => props.theme.colors.borderColor};
   padding: 26px 16px 0px;
   border-top: solid rgb(242, 244, 247);
 `;
 
 export default function Layout() {
+  useCheckAccessToken();
+
   return (
     <Container>
       <LayoutHeader />

@@ -14,7 +14,7 @@ const Container = styled.div`
 
   table {
     thead {
-      border-bottom: 1px solid ${(props) => props.theme.colors.tertiaryGrey};
+      border-bottom: 1px solid ${(props) => props.theme.colors.borderColor};
     }
 
     th {
@@ -27,7 +27,7 @@ const Container = styled.div`
       &:first-child {
         position: sticky;
         left: 0px;
-        border-right: 1px solid ${(props) => props.theme.colors.tertiaryGrey};
+        border-right: 1px solid ${(props) => props.theme.colors.borderColor};
       }
     }
 

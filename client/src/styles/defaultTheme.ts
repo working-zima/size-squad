@@ -8,7 +8,7 @@ const defaultTheme = {
     secondaryTextColor: '#777777',
     dividerColor: '#f9f9f9',
     lineColor: '#f3f3f3',
-    tertiaryGrey: '#d1d1d1',
+    borderColor: '#C2C4C8',
     buttonBorderColor: '#e5e5e5',
 
   },
@@ -17,6 +17,7 @@ const defaultTheme = {
     contentPadding: '1.6rem',
     contentBorderRadius: '0.1rem',
     sectionTopMargin: '2.4rem',
+    labelWidth: '10rem',
   },
 };
 

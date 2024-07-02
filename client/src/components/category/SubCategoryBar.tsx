@@ -27,16 +27,17 @@ const CustomButton = styled(Button)<{active: boolean}>`
   height: 3.4rem;
   margin-right: 0.4rem;
   padding: 0.5rem 1.2rem;
+  border: 1px solid ${(props) => props.theme.colors.buttonBorderColor};
   border-radius: 100px;
   font-size: 1.3rem;
   line-height: 2.1rem;
   user-select: none;
 
   ${(props) => props.active && css`
-    border: black;
-    background-color: black;
+    border: ${props => props.theme.colors.primaryBlack};
+    background-color: ${props => props.theme.colors.primaryBlack};
     font-weight: 700;
-    color: white;
+    color: ${props => props.theme.colors.primaryWhite};
   `}
 
   &:last-child {
