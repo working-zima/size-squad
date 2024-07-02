@@ -16,7 +16,7 @@ const Token = {
   /**
    * refresh token 업데이트
    */
-  update: async ({ tokenId, accessToken, newValue }) => {
+  update: async ({ tokenId, accessToken }) => {
     try {
       // 업데이트 전 데이터를 리턴하지 말고 업데이트 후 데이터를 리턴
       const newToken = await TokenModel.findOneAndUpdate(
@@ -38,7 +38,6 @@ const Token = {
         { userId },
         "_id refreshToken userId"
       ).lean();
-
       if (!tokenData) tokenData = null;
 
       return tokenData;

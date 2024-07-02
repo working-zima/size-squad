@@ -36,7 +36,7 @@ const productController = {
   },
 
   /** 개별 product 조회 */
-  getProduct: async () => {
+  getProduct: async (req, res, next) => {
     try {
 
     } catch(error) {

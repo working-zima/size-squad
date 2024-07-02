@@ -37,20 +37,11 @@ const sessionService = {
 
       // 데이터 베이스에 refresh 토큰이 있는 경우 재발급하여 데이터 베이스의 refresh 토큰과 교체
       if (!!tokenData) {
-        const tokenId = tokenData.tokenId;
-        const fieldToUpdate = {};
-        const newValue = {};
-
-        fieldToUpdate.refreshToken = "refreshToken";
-        fieldToUpdate.accessToken = "accessToken";
-
-        newValue.refreshToken = refreshToken;
-        newValue.accessToken = accessToken;
+        const tokenId = tokenData._id;
 
         await Token.update({
           tokenId,
-          fieldToUpdate,
-          newValue,
+          accessToken,
         });
       }
 
