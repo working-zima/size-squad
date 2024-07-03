@@ -13,7 +13,9 @@ export default class ApiService {
 
   constructor() {
     // 응답 인터셉트
-    this.instance.interceptors.response.use(this.onResponse, this.onErrorResponse);
+    this.instance.interceptors.response.use(
+      this.onResponse, this.onErrorResponse
+    );
   }
 
   logOnDev = (message: string) => {
@@ -44,7 +46,9 @@ export default class ApiService {
 
       // 네트워크 오류 처리
       if (!error.response) {
-        this.logOnDev(`[API] ${method?.toUpperCase()} ${url} | Network Error: ${message}`);
+        this.logOnDev(
+          `[API] ${method?.toUpperCase()} ${url} | Network Error: ${message}`
+        );
 
         this.onError(undefined, "네트워크 오류입니다.");
         return Promise.reject(error);

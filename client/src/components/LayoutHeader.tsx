@@ -1,13 +1,17 @@
 import { Link, useLocation } from 'react-router-dom';
 
 import styled from 'styled-components';
+import { LiaAngleLeftSolid } from "react-icons/lia";
+
 import BackSpace from './ui/BackSpace';
+import { TITLE } from '../constants';
 
 const Container = styled.header`
   grid-area: header;
-  justify-content: center;
-  align-items: center;
   display: flex;
+  justify-content: space-between;
+  flex-basis: 40px;
+  align-items: center;
   padding: 0 1rem;
   background-color: ${(props) => props.theme.colors.dividerColor};
 
@@ -21,7 +25,7 @@ const Container = styled.header`
   }
 
   h2 {
-    font-size: 2.5rem;
+  font-size: 2.5rem;
 
     a {
       color: black;
@@ -30,19 +34,34 @@ const Container = styled.header`
   }
 `;
 
+const Blank = styled.div`
+  flex-basis: 40px;
+`
+
+
 export default function LayoutHeader() {
   const location = useLocation();
-  const isEditPage = /^\/mysize\/.*\/edit$/.test(location.pathname);
+
+  const defaultTitle = 'Size Squad';
+  const pageTitle = TITLE[location.pathname] || defaultTitle;
 
   return (
     <Container>
       <h1>사이즈 스쿼드</h1>
-      {isEditPage
-        ? (<BackSpace />) : (
-          <h2>
-            <Link to="/">Size Squad</Link>
-          </h2>
-        )}
+      {pageTitle !==  'Size Squad' ? (
+          <BackSpace>
+            <LiaAngleLeftSolid size="24"/>
+          </BackSpace>
+        ) : (
+          <Blank/>
+        )
+      }
+      <h2>
+        <Link to="/">
+          {pageTitle}
+        </Link>
+      </h2>
+      <Blank/>
     </Container>
   );
 }

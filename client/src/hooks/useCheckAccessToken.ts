@@ -9,11 +9,9 @@ export default function useCheckAccessToken(): void {
 
   useEffect(() => {
     const fetchCurrentUser = async () => {
-      console.log(`useCheckAccessToken: `, accessToken)
       try {
         await apiService.fetchCurrentUser();
       } catch (error) {
-        console.log(`useCheckAccessToken error`, error)
         setAccessToken('');
       }
     };

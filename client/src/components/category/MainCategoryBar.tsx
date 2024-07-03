@@ -16,7 +16,7 @@ const Container = styled.div`
   padding: 0 0.4rem;
   overflow: auto hidden;
   white-space: nowrap;
-  border-bottom: 1px solid ${((props) => props.theme.colors.lineColor)};
+  border-bottom: 1px solid ${(props) => props.theme.colors.lineColor};
   scrollbar-width: none;
   -ms-overflow-style: none;
 
@@ -36,7 +36,7 @@ const CustomButton = styled(Button)<{ active: boolean }>`
 
   p {
     font-size: 1.5rem;
-    color: ${(props) => props.theme.colors.unSelectedText};
+    color: ${props => props.theme.colors.unSelectedText};
     line-height: 2.3;
     user-select: none;
 

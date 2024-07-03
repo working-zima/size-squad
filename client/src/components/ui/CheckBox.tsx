@@ -13,6 +13,7 @@ const Container = styled.div`
   input {
     width: 20px;
     height: 20px;
+    accent-color: ${(props) => props.theme.colors.primaryBlack};
   }
 
   label {

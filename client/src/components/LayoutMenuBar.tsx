@@ -1,12 +1,11 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import styled from 'styled-components';
-import { CiUser, CiHome, CiEdit } from "react-icons/ci";
+import { CiUser, CiHome, CiEdit, CiLogin } from "react-icons/ci";
 
 import FixedDetailSwitcher from './FixedDetailSwitcher';
 
 import useAccessToken from '../hooks/useAccessToken';
-import { useEffect } from 'react';
 
 const Container = styled.div.attrs({ className: 'LayoutMenuBar' })`
   grid-area: menu;
@@ -56,15 +55,21 @@ const Menu = styled.nav`
 `;
 
 export default function LayoutMenuBar() {
+  const location = useLocation();
   const { accessToken } = useAccessToken();
+
+  if (location.pathname === '/login') {return null}
 
   return (
     <Container>
-      <FixedDetailSwitcher />
+      {location.pathname === '/mysize'
+        ? <FixedDetailSwitcher />
+        : null
+      }
       <MenuWrap>
         <h2>Navigation Menu</h2>
         <Menu>
-          <Link to="/">
+          <Link to="/mysize">
             <div>
               <CiHome size="24"/>
             </div>
@@ -81,12 +86,25 @@ export default function LayoutMenuBar() {
             </span>
           </Link>
           <Link to={!!accessToken ? "/mypage" : "/login"}>
-            <div>
-              <CiUser size="24"/>
-            </div>
-            <span>
-              마이
-            </span>
+          {!!accessToken ? (
+              <>
+                <div>
+                  <CiUser size="24"/>
+                </div>
+                <span>
+                  마이
+                </span>
+              </>
+            ) : (
+              <>
+                <div>
+                  <CiLogin size="24"/>
+                </div>
+                <span>
+                  로그인
+                </span>
+              </>
+            )}
           </Link>
         </Menu>
       </MenuWrap>

@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import LayoutHeader from './LayoutHeader';
 import LayoutMenuBar from './LayoutMenuBar';
 import useCheckAccessToken from '../hooks/useCheckAccessToken';
+import LayoutFooter from './LayoutFooter';
 
 const Container = styled.div`
   display: grid;
@@ -23,13 +24,6 @@ const Main = styled.main`
   grid-area: main;
 `;
 
-const LayoutFooter = styled.footer`
-  grid-area: footer;
-  background-color: ${props => props.theme.colors.borderColor};
-  padding: 26px 16px 0px;
-  border-top: solid rgb(242, 244, 247);
-`;
-
 export default function Layout() {
   useCheckAccessToken();
 
@@ -39,9 +33,7 @@ export default function Layout() {
       <Main>
         <Outlet />
       </Main>
-      <LayoutFooter>
-        footer
-      </LayoutFooter>
+      <LayoutFooter />
       <LayoutMenuBar />
     </Container>
   );

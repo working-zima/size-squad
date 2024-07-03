@@ -10,5 +10,20 @@ export const MEASUREMENT_MESSAGES: Record<string, string> = {
   hemWidth: '밑단단면',
 };
 
+type Titles = {
+  '/': string;
+  '/login': string;
+  '/mysize/edit': string;
+  [key: string]: string;
+};
+
+
+export const TITLE: Titles = {
+  '/': 'Size Squad',
+  '/mysize': 'Size Squad',
+  '/login': 'Sign In',
+  '/mysize/edit': 'Edit My Size',
+}
+
 // TODO: delete this!
 export default {};
