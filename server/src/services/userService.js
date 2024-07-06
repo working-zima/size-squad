@@ -32,6 +32,32 @@ const userService = {
     }
   },
 
+  getIdByEmail: async ({email}) => {
+    try {
+      const userData = await User.findByEmail({ email })
+      const { _id } = userData
+
+      return _id;
+    } catch (error) {
+      error.statusCode = 400;
+      error.message = 'Email not found'
+      throw error;
+    }
+  },
+
+  getIdByName: async ({name}) => {
+    try {
+      const userData = await User.findByName({ name })
+      const { _id } = userData
+
+      return _id;
+    } catch (error) {
+      error.statusCode = 400;
+      error.message = 'Name not found'
+      throw error;
+    }
+  },
+
   /** 내 정보 삭제 */
   deleteMe: async (accessToken) => {
     try {

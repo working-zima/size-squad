@@ -7,6 +7,7 @@ const { productService } = require('../services/productService');
 const { Token } = require('../db/models/Token');
 
 const CustomError = require('../utils/CustomError');
+const { User } = require('../db/models/User');
 
 const userController = {
   /** 회원가입 */
@@ -117,8 +118,60 @@ const userController = {
     }
   },
 
+  /** 로그인 회원 정보 조회 */
+  getMyInfo: async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const error = new Error('Validation failed');
+      error.statusCode = 400;
+      error.data = errors.array();
+      return next(error);
+    }
+    try {
+      const userAccessToken = req.headers["authorization"];
+
+      const userData = await userService.getMyInfo(userAccessToken);
+      const { role, ...userDataWithoutRole } = userData;
+
+      res.status(200).json(userDataWithoutRole);
+    } catch(error) {
+      next(error);
+    }
+  },
+
+  /** 이메일 조회 */
+  getIdByEmail: async (req, res, next) => {
+    try {
+      const { email } = req.params;
+      const id = await userService.getIdByEmail({ email });
+
+      res.status(200).json(id);
+    } catch(error) {
+      next(error);
+    }
+  },
+
+  /** 이메일 조회 */
+  getIdByName: async (req, res, next) => {
+    try {
+      const { name } = req.params;
+      const id = await userService.getIdByName({ name });
+
+      res.status(200).json(id);
+    } catch(error) {
+      next(error);
+    }
+  },
+
   /** 회원 product 삭제 */
   deleteMyProduct: async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const error = new Error('Validation failed');
+      error.statusCode = 400;
+      error.data = errors.array();
+      return next(error);
+    }
     try {
       const userAccessToken = req.headers["authorization"];
       const { productId } = req.params;
@@ -137,27 +190,6 @@ const userController = {
       productService.deleteMyProduct({ productId, userId });
 
       res.status(200).json();
-    } catch(error) {
-      next(error);
-    }
-  },
-
-  /** 로그인 회원 정보 조회 */
-  getMyInfo: async (req, res, next) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      const error = new Error('Validation failed');
-      error.statusCode = 400;
-      error.data = errors.array();
-      return next(error);
-    }
-    try {
-      const userAccessToken = req.headers["authorization"];
-
-      const userData = await userService.getMyInfo(userAccessToken);
-      const { role, ...userDataWithoutRole } = userData;
-
-      res.status(200).json(userDataWithoutRole);
     } catch(error) {
       next(error);
     }

@@ -38,4 +38,9 @@ userRouter.delete(
   "/product/:productId", tokenValidationRules, userController.deleteMyProduct
 )
 
+/* 이메일 조회 */
+userRouter.get(
+  "/:email", userController.getIdByEmail
+)
+
 module.exports = userRouter;
