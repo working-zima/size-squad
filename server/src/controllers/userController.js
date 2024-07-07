@@ -139,25 +139,25 @@ const userController = {
     }
   },
 
-  /** 이메일 조회 */
+  /** 이메일로 id 조회 */
   getIdByEmail: async (req, res, next) => {
     try {
       const { email } = req.params;
       const id = await userService.getIdByEmail({ email });
 
-      res.status(200).json(id);
+      res.status(200).json({ id });
     } catch(error) {
       next(error);
     }
   },
 
-  /** 이메일 조회 */
+  /** 닉네임으로 id 조회 */
   getIdByName: async (req, res, next) => {
     try {
       const { name } = req.params;
       const id = await userService.getIdByName({ name });
 
-      res.status(200).json(id);
+      res.status(200).json({ id });
     } catch(error) {
       next(error);
     }

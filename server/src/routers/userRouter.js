@@ -38,9 +38,15 @@ userRouter.delete(
   "/product/:productId", tokenValidationRules, userController.deleteMyProduct
 )
 
+// 수정해야 됨
 /* 이메일 조회 */
 userRouter.get(
-  "/:email", userController.getIdByEmail
+  "/email-valid/:email", userController.getIdByEmail
+)
+
+/* 닉네임으로 조회 */
+userRouter.get(
+  "/name-valid/:name", userController.getIdByName
 )
 
 module.exports = userRouter;

@@ -52,8 +52,14 @@ const userService = {
 
       return _id;
     } catch (error) {
-      error.statusCode = 400;
-      error.message = 'Name not found'
+      if(
+        error.message ===
+        "Cannot destructure property '_id' of 'userData' as it is null."
+      ){
+        error.statusCode = 200;
+        error.message = 'Name not found'
+      }
+
       throw error;
     }
   },

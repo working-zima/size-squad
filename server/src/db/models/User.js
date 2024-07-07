@@ -49,13 +49,14 @@ const User = {
   /** Name으로 검색 */
   findByName: async ({name}) => {
     try {
-      let userData = await UserModel.findOne(
+      const userData = await UserModel.findOne(
         { name },
         "_id email name"
       )
       .populate({ path: "genderId", select: ["_id", "gender"] })
       .lean();
 
+      return userData;
     } catch (error) {
       throw error;
     }
