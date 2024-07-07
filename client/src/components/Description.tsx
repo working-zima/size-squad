@@ -8,7 +8,7 @@ import Button from './ui/Button';
 
 import { Product } from '../types';
 
-import { debounce } from '../utils';
+import { debounceCallback } from '../utils';
 
 const Container = styled.div<{ showFull: boolean }>`
   display: flex;
@@ -49,7 +49,7 @@ export default function Description({ product }: DescriptionProps) {
     }
   };
 
-  const debouncedCheckTruncated = debounce(checkTruncated, 100);
+  const debouncedCheckTruncated = debounceCallback(checkTruncated);
 
   useEffect(() => {
     checkTruncated();

@@ -17,12 +17,13 @@ type Titles = {
   [key: string]: string;
 };
 
-
 export const TITLE: Titles = {
   '/': 'Size Squad',
   '/mysize': 'Size Squad',
   '/login': 'Sign In',
-  '/mysize/edit': 'Edit My Size',
+  '/signup': 'Sign Up',
+  '/mysize/edit': 'Edit',
+  '/mysize/new': 'New'
 }
 
 // TODO: delete this!

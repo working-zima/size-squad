@@ -12,10 +12,10 @@ const Container = styled.div`
   grid-template-rows: 50px auto auto 50px;
   grid-template-columns: 100%;
   grid-template-areas:
-  'header'
-  'main'
-  'footer'
-  'menu';
+    'header'
+    'main'
+    'footer'
+    'menu';
   margin: 0 auto;
   /* width: ${(props) => props.theme.sizes.layoutWidth}; */
 `;

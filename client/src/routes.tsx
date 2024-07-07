@@ -3,6 +3,7 @@ import Layout from './components/Layout';
 import ErrorPage from './pages/ErrorPage';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
+import SignupPage from './pages/SignupPage';
 import MySizeListPage from './pages/MySizeListPage';
 import MySizeNewPage from './components/mySize/MySizeNewPage';
 import MySizeEditPage from './pages/MySizeEditPage';
@@ -16,6 +17,7 @@ const routes = [
     children: [
       { path: '/', element: <HomePage /> },
       { path: '/login', element: <LoginPage /> },
+      { path: '/signup', element: <SignupPage /> },
       { path: '/mysize', element: <MySizeListPage /> },
       { path: '/mysize/new', element: <MySizeNewPage /> },
       { path: '/mysize/:id/edit', element: <MySizeEditPage /> },

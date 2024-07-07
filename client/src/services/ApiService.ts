@@ -40,6 +40,7 @@ export default class ApiService {
   };
 
   onErrorResponse = async (error: AxiosError | Error) => {
+    console.log(`error: `, error)
     if (axios.isAxiosError(error)) {
       const { message } = error;
       const { method, url } = error.config as AxiosRequestConfig;
@@ -57,7 +58,9 @@ export default class ApiService {
       const { status, statusText } = error.response as AxiosResponse;
 
       this.logOnDev(
-        `[API] ${method?.toUpperCase()} ${url} | Error ${status} ${statusText} | ${message}`
+        `[API] ${method?.toUpperCase()} ${url}
+        | Error ${status} ${statusText}
+        | ${message}`
       );
 
       switch (status) {
@@ -120,7 +123,7 @@ export default class ApiService {
     return categories;
   }
 
-  async fetchProducts({ categoryId, subCategoryId }: {
+  async fetchProducts({ categoryId, subCategoryId } : {
     categoryId?: string, subCategoryId?: string
   } = {}): Promise<Product[]> {
     const { data } = await this.instance.get('/products', {
@@ -134,15 +137,47 @@ export default class ApiService {
   async fetchCurrentUser(): Promise<User[]> {
     const { data } = await this.instance.get('/users/me');
     const { user } = data;
+
     return user;
   }
 
-  async login({email, password}: {
+  async checkUsername({ name } : {
+    name: string
+  }): Promise<string> {
+    const { data } = await this.instance.get(`/users/name-valid/${name}`)
+    const { id } = data
+
+    return id;
+  }
+
+  // async fetchGender(): Promise<{
+
+  // }
+
+  async login({email, password} : {
     email: string, password: string
   }): Promise<string> {
     const { data } = await this.instance.post('/session', { email, password });
     const { accessToken } = data;
 
+    return accessToken;
+  }
+
+  async signup({
+    email, name, password, gender, height, weight, description
+  } : {
+    email: string;
+    name: string;
+    password: string;
+    gender: 'male' | 'female' | "";
+    height: string;
+    weight: string;
+    description: string;
+  }): Promise<string> {
+    const { data } = await this.instance.post('/users', {
+      email, name, password, gender, height, weight, description
+    });
+    const { accessToken } = data;
     return accessToken;
   }
 }

@@ -12,7 +12,11 @@ const Container = styled.footer`
 export default function LayoutFooter() {
   const location = useLocation();
 
-  if (location.pathname === '/login') {return null}
+  const noFooterPaths = ['/login', '/signup'];
+
+  if (noFooterPaths.includes(location.pathname)) {
+    return null
+  }
 
   return (
     <Container>

@@ -22,15 +22,15 @@ const CheckBoxWrapper = styled.div`
   margin-top: 1.2rem;
 `
 
-type MemberButtonProps = {
+type LoginButtonProps = {
   valid: boolean;
   isAutoLogin: boolean;
   toggleAutoLogin: () => void;
 }
 
-export function MemberButton({
+export function LoginButton({
   valid, isAutoLogin, toggleAutoLogin
-}: MemberButtonProps) {
+}: LoginButtonProps) {
   return (
     <>
       <ButtonWrapper>

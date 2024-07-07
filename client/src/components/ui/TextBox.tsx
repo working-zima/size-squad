@@ -1,16 +1,32 @@
 import React, { useRef } from 'react';
 
 import styled from 'styled-components';
+import { RequiredStar } from '../../utils/RequiredStar';
 
-const Container = styled.div`
-  width: 100%;
+type ContainerProps = {
+  required: boolean;
+}
 
+const Container = styled.div<ContainerProps>`
   label {
-    overflow: hidden;
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    margin: -1px;
+    display: inline-block;
+    margin: 12px 0 4px;
+    font-size: 1.4rem;
+
+    ${(props) => props.required && RequiredStar('after')}
+  }
+`;
+
+const TextBoxWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid ${props => props.theme.colors.borderColor};
+  border-radius: 6px;
+  margin-top: .8rem;
+
+  &:focus-within {
+    border-color: ${props => props.theme.colors.primaryBlack};
   }
 
   input {
@@ -26,45 +42,73 @@ const Container = styled.div`
   }
 
   input:focus {
-    outline: none; /* 추가된 focus 스타일 */
+    outline: none;
   }
-`;
+
+  input::placeholder  {
+    color: ${props => props.theme.colors.unSelectedText};
+  }
+
+  button {
+    display: flex;
+    padding: 0;
+    margin: 0 6px 0 6px;
+  }
+`
 
 type TextBoxProps = {
-  label: string;
+  label?: string;
   placeholder?: string;
-  type?: 'text' | 'number' | 'password' | 'tel'; // ...and more types...
-  value: string;
-  onChange?: (value: string) => void;
+  type?: 'text' | 'number' | 'password' | 'tel';
+  value: string | number;
   readOnly?: boolean;
+  children?: React.ReactNode;
+  required?: boolean;
+  onChangeString?: (value: string) => void;
+  onChangeNumber?: (value: number) => void;
 }
 
 export default function TextBox({
-  label, placeholder = undefined, type = 'text', value,
-  onChange = undefined, readOnly = false,
+  label = '',
+  placeholder = undefined,
+  type = 'text',
+  value,
+  children,
+  readOnly = false,
+  required = false,
+  onChangeString = undefined,
+  onChangeNumber = undefined
 }: TextBoxProps) {
   const id = useRef(`textbox-${Math.random().toString().slice(2)}`);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (!onChange) {
+    if (type === 'number' && onChangeNumber) {
+      onChangeNumber(Number(event.target.value));
       return;
     }
-    onChange(event.target.value);
+    if (onChangeString) {
+      onChangeString(event.target.value);
+    }
   };
 
   return (
-    <Container>
-      <label htmlFor={id.current}>
-        {label}
-      </label>
-      <input
-        id={id.current}
-        type={type}
-        placeholder={placeholder}
-        value={value}
-        onChange={handleChange}
-        readOnly={readOnly}
-      />
+    <Container required={required}>
+      {!!label && (
+        <label htmlFor={id.current}>
+          {label}
+        </label>)
+      }
+      <TextBoxWrapper>
+        <input
+          id={id.current}
+          type={type}
+          placeholder={placeholder}
+          value={value}
+          onChange={handleChange}
+          readOnly={readOnly}
+        />
+        {children}
+      </TextBoxWrapper>
     </Container>
   );
 }

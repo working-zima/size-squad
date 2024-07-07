@@ -14,7 +14,7 @@ export function key(value: string, index: number) {
  * @param delay
  * @returns `fn()`
  */
-export function debounce<T extends(...args: unknown[]) => void>(
+export function debounceCallback<T extends(...args: unknown[]) => void>(
   callback: T, delay = 300) {
   let timerId: ReturnType<typeof setTimeout> | null = null;
 

@@ -1,34 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 
 import styled from 'styled-components';
 
+import { LoginInput } from './LoginInput';
+import { LoginButton } from './LoginButton';
+import { LoginUtils } from './LoginUtils';
+
+import useAutoLoginStore from '../../hooks/useAutoLoginStore';
 import useAccessToken from '../../hooks/useAccessToken';
 import useLoginFormStore from '../../hooks/useLoginFormStore';
 
-import useAutoLoginStore from '../../hooks/useAutoLoginStore';
-import { MemberInput } from './MemberInput';
-import { MemberButton } from './MemberButton';
-
 const Container = styled.div.attrs({ className: 'MemberWrapper' })`
   padding: 20px ${props => props.theme.sizes.contentPadding} 0;
+  user-select: none;
 
   h2 {
     display: none;
   }
 `;
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 28px;
-  width: 100%;
-
-  a {
-    color: ${props => props.theme.colors.unSelectedText};
-    text-decoration-line: underline;
-  }
-`
 
 const Divider = styled.div`
   display: flex;
@@ -82,6 +71,10 @@ export default function LoginForm() {
     store.changePassword(value);
   };
 
+  const handleResetPassword = () => {
+    store.changePassword('');
+  }
+
   const handleResetEmail = () => {
     store.changeEmail('');
   }
@@ -101,7 +94,7 @@ export default function LoginForm() {
     <Container>
       <h2>로그인</h2>
       <form onSubmit={handleSubmit}>
-        <MemberInput
+        <LoginInput
           email={email}
           password={password}
           isShowPw={isShowPw}
@@ -109,8 +102,9 @@ export default function LoginForm() {
           handleChangePassword={handleChangePassword}
           handleResetEmail={handleResetEmail}
           handleShowPassword={handleShowPassword}
+          handleResetPassword={handleResetPassword}
           />
-        <MemberButton
+        <LoginButton
           valid={valid}
           isAutoLogin={isAutoLogin}
           toggleAutoLogin={toggleAutoLogin }
@@ -118,21 +112,8 @@ export default function LoginForm() {
         <Divider>
           또는
         </Divider>
-        {error && (
-          <>
-            <p>로그인 실패</p>
-            <div>{error}</div>
-          </>
-        )}
-        <ButtonWrapper>
-          <p>
-            <Link to="/signup">
-              회원 가입
-            </Link>
-          </p>
-        </ButtonWrapper>
+        <LoginUtils error={error}/>
       </form>
     </Container>
   );
 }
-

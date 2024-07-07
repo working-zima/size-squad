@@ -27,7 +27,7 @@ const Container = styled.header`
   h2 {
   font-size: 2.5rem;
 
-    a {
+    p {
       color: black;
       user-select: none;
     }
@@ -37,7 +37,6 @@ const Container = styled.header`
 const Blank = styled.div`
   flex-basis: 40px;
 `
-
 
 export default function LayoutHeader() {
   const location = useLocation();
@@ -57,9 +56,9 @@ export default function LayoutHeader() {
         )
       }
       <h2>
-        <Link to="/">
+        <p>
           {pageTitle}
-        </Link>
+        </p>
       </h2>
       <Blank/>
     </Container>

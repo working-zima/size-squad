@@ -6,6 +6,7 @@ import { CiUser, CiHome, CiEdit, CiLogin } from "react-icons/ci";
 import FixedDetailSwitcher from './FixedDetailSwitcher';
 
 import useAccessToken from '../hooks/useAccessToken';
+import { TITLE } from '../constants';
 
 const Container = styled.div.attrs({ className: 'LayoutMenuBar' })`
   grid-area: menu;
@@ -58,7 +59,7 @@ export default function LayoutMenuBar() {
   const location = useLocation();
   const { accessToken } = useAccessToken();
 
-  if (location.pathname === '/login') {return null}
+  if (TITLE[location.pathname] !== 'Size Squad') {return null}
 
   return (
     <Container>
