@@ -1,14 +1,15 @@
 const cors = require("cors");
 const express = require("express");
 
-const productRouter = require("./routers/productRouter");
 const sessionRouter = require("./routers/sessionRouter");
+const adminRouter = require("./routers/adminRouter");
 const userRouter = require("./routers/userRouter");
+const categoryRouter = require("./routers/categoryRouter");
+const productRouter = require("./routers/productRouter");
+const fitRouter = require("./routers/fitRouter");
+const genderRouter = require("./routers/genderRouter");
 
 const { errorMiddleware } = require("./middlewares/errorMiddleware");
-const adminRouter = require("./routers/adminRouter");
-const categoryRouter = require("./routers/categoryRouter");
-const fitRouter = require("./routers/fitRouter");
 
 /* 앱을 만듦 */
 const app = express();
@@ -18,12 +19,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 /* 라우터 */
-app.use('/products', productRouter);
-app.use('/categories', categoryRouter);
-app.use('/admin', adminRouter);
 app.use('/session', sessionRouter);
+app.use('/admin', adminRouter);
 app.use('/users', userRouter);
+app.use('/categories', categoryRouter);
+app.use('/products', productRouter);
 app.use('/fits', fitRouter);
+app.use('/genders', genderRouter);
 
 /* 에러 처리 미들웨어 */
 app.use(errorMiddleware);

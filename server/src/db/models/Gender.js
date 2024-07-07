@@ -22,6 +22,16 @@ const Gender = {
       throw error;
     }
   },
+
+  findAll: async () => {
+    try {
+      const genderData = await GenderModel.find({}, "_id gender size").lean();
+
+      return genderData;
+    } catch (error) {
+      throw error;
+    }
+  }
 };
 
 exports.Gender = Gender;

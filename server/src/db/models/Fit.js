@@ -24,9 +24,8 @@ const Fit = {
 
   /** fit으로 검색 */
   findByFit: async ({fit}) => {
-
     try {
-      let fitData = await FitModel.findOne(
+      const fitData = await FitModel.findOne(
         { fit },
         "_id fit"
       ).lean();
