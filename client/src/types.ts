@@ -43,6 +43,12 @@ export type Category = {
   measurements: string[];
 }
 
+export type Gender = {
+  _id: string;
+  gender: string;
+  size: string[];
+}
+
 export type Measurements = {
   _id: string;
   totalLength?: number;

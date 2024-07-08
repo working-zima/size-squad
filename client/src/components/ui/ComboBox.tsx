@@ -3,6 +3,8 @@ import React, { useRef } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
   margin-block: .5rem;
 
   label,
@@ -12,11 +14,37 @@ const Container = styled.div`
 
   label {
     display: inline-block;
-    width: ${(props) => props.theme.sizes.contentPadding};
-    padding-right: .5rem;
-    text-align: right;
+    margin: 12px 0 4px;
+    font-size: 1.4rem;
   }
 `;
+
+const SelectWrapper = styled.div`
+  border: 1px solid ${props => props.theme.colors.borderColor};
+  border-radius: 6px;
+  margin-top: .8rem;
+  height: 50px;
+  outline: none;
+
+  &:focus-within {
+    border-color: ${props => props.theme.colors.primaryBlack};
+  }
+
+  select {
+    box-sizing: border-box;
+    border: none;
+    border-radius: 6px;
+    width: calc(100% - 16px);
+    height: 100%;
+    margin: 0 8px;
+    font-size: 1.6rem;
+    color: ${props => props.theme.colors.unSelectedText};
+  }
+
+  select:focus {
+    outline: none;
+  }
+`
 
 type ComboBoxProps<T> = {
   label: string;
@@ -27,6 +55,15 @@ type ComboBoxProps<T> = {
   onChange: (item: T | null) => void;
 }
 
+/**
+ *
+ * @param label 콤보박스에 사용될 라벨
+ * @param selectedItem 선택된 초기값
+ * @param items 선택지 객체 배열
+ * @param itemToId 선택된 값의 id를 정하는 함수. 예시: (item) => item?._id || ''
+ * @param itemToText 선택된 값의 텍스트를 정하는 함수. 예시: (item) => item?.name || ''
+ * @param onChange 선택된 값이 바뀔 때 발생할 함수. 예시: (value) => value && store.changeCategory(value)
+ */
 export default function ComboBox<T>({
   label, selectedItem, items, itemToId, itemToText, onChange,
 }: ComboBoxProps<T>) {
@@ -43,17 +80,19 @@ export default function ComboBox<T>({
       <label htmlFor={id.current}>
         {label}
       </label>
-      <select
-        id={id.current}
-        onChange={handleChange}
-        value={itemToId(selectedItem)}
-      >
-        {items.map((item) => (
-          <option key={itemToId(item)} value={itemToId(item)}>
-            {itemToText(item)}
-          </option>
-        ))}
-      </select>
+      <SelectWrapper>
+        <select
+          id={id.current}
+          onChange={handleChange}
+          value={itemToId(selectedItem)}
+        >
+          {items.map((item) => (
+            <option key={itemToId(item)} value={itemToId(item)}>
+              {itemToText(item)}
+            </option>
+          ))}
+        </select>
+      </SelectWrapper>
     </Container>
   );
 }

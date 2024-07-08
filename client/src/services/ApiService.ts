@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
-import { Category, Product, User } from '../types';
+import { Category, Gender, Product, User } from '../types';
 
 const MOCK_BASE_URL = 'http://localhost:5000';
 
@@ -145,14 +145,17 @@ export default class ApiService {
     name: string
   }): Promise<string> {
     const { data } = await this.instance.get(`/users/name-valid/${name}`)
-    const { id } = data
+    const { id } = data;
 
     return id;
   }
 
-  // async fetchGender(): Promise<{
+  async fetchGender(): Promise<Gender[]> {
+    const { data } = await this.instance.get('genders');
+    const { genders } = data;
 
-  // }
+    return genders;
+  }
 
   async login({email, password} : {
     email: string, password: string
@@ -169,7 +172,7 @@ export default class ApiService {
     email: string;
     name: string;
     password: string;
-    gender: 'male' | 'female' | "";
+    gender: string;
     height: string;
     weight: string;
     description: string;

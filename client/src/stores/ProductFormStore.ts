@@ -6,6 +6,7 @@ import {
 } from '../types';
 import { apiService } from '../services/ApiService';
 
+// 수정 필요
 @singleton()
 @Store()
 class ProductFormStore {
@@ -34,21 +35,10 @@ class ProductFormStore {
   done = false;
 
   @Action()
-  async fetchProduct({ productId }: {
-    productId: string
-  }) {
-    const product = await apiService.fetchProducts({ productId });
-
-    return product;
-  }
-
-  @Action()
   reset() {
     this.productId = '';
     this.category = null;
     this.name = '';
-    this.price = '';
-    this.options = [];
     this.description = '';
     this.error = false;
     this.done = false;

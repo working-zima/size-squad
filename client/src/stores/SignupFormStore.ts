@@ -3,6 +3,8 @@ import { singleton } from "tsyringe";
 import { Action, Store } from "usestore-ts";
 
 import { apiService } from "../services/ApiService";
+import { Gender } from "../types";
+import { nullGender } from "../nullObject";
 
 @singleton()
 @Store()
@@ -11,13 +13,13 @@ class SignupFormStore {
   name = '';
   password = '';
   passwordConfirmation = '';
-  gender: 'male' | 'female' | '' = '';
+  gender: Gender = nullGender
   height = "";
   weight = "";
   description = '';
-  error = false;
   accessToken = '';
   isNameDuplicated = false;
+  error = false;
 
   get valid() {
     return this.isEmail(this.email)
@@ -56,7 +58,7 @@ class SignupFormStore {
   }
 
   @Action()
-  changeGender(gender: 'male' | 'female' | '') {
+  changeGender(gender: Gender) {
     this.gender = gender;
   }
 
@@ -96,12 +98,13 @@ class SignupFormStore {
     this.name = '';
     this.password = '';
     this.passwordConfirmation = '';
-    this.gender = '';
+    this.gender = nullGender;
     this.height = '';
     this.weight = '';
     this.description = '';
     this.error = false;
     this.accessToken = '';
+    this.isNameDuplicated = false;
   }
 
   async checkUsername(name: string) {
@@ -120,7 +123,7 @@ class SignupFormStore {
         email: this.email,
         name: this.name,
         password: this.password,
-        gender: this.gender,
+        gender: this.gender?._id || '',
         height: this.height,
         weight: this.weight,
         description: this.description,

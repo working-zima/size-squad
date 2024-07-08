@@ -1,13 +1,29 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import SignUpForm from "../components/signUp/SignUpForm";
 
 import useSignupFormStore from "../hooks/useSignupFormStore";
-import { useNavigate } from "react-router-dom";
+import useFetchGender from "../hooks/useFetchGender";
+
+import { nullGender } from "../nullObject";
 
 export default function SignupPage() {
   const navigate = useNavigate();
 
   const [{ accessToken }, store] = useSignupFormStore();
+
+  const { genderList, error, loading } = useFetchGender();
+  const addNullObjectGenderList = [nullGender, ...genderList]
+
+  useEffect(() => {
+    // if (!genderList[0]._id) {
+    //   return;
+    // }
+
+    store.reset();
+    store.changeGender(nullGender);
+  }, []);
 
   useEffect(() => {
     if (accessToken) {
@@ -16,7 +32,19 @@ export default function SignupPage() {
     }
   }, [accessToken]);
 
+  if (loading) {
+    return (
+      <p>Loading...</p>
+    );
+  }
+
+  if (error) {
+    return (
+      <p>Error!</p>
+    );
+  }
+
   return (
-    <SignUpForm />
+    <SignUpForm genderList={addNullObjectGenderList}/>
   )
 }

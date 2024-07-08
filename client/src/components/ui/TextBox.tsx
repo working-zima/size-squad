@@ -12,7 +12,7 @@ const Container = styled.div<ContainerProps>`
     display: inline-block;
     margin: 12px 0 4px;
     font-size: 1.4rem;
-
+    width: 100%;
     ${(props) => props.required && RequiredStar('after')}
   }
 `;
@@ -29,7 +29,11 @@ const TextBoxWrapper = styled.div`
     border-color: ${props => props.theme.colors.primaryBlack};
   }
 
-  input {
+  textarea {
+    resize: none;
+  }
+
+  input, textarea {
     width: 100%;
     height: 50px;
     padding: 0 8px;
@@ -41,12 +45,8 @@ const TextBoxWrapper = styled.div`
     color: ${props => props.theme.colors.primaryBlack};
   }
 
-  input:focus {
+  input, textarea:focus {
     outline: none;
-  }
-
-  input::placeholder  {
-    color: ${props => props.theme.colors.unSelectedText};
   }
 
   button {
@@ -64,6 +64,7 @@ type TextBoxProps = {
   readOnly?: boolean;
   children?: React.ReactNode;
   required?: boolean;
+  multiline?: boolean,
   onChangeString?: (value: string) => void;
   onChangeNumber?: (value: number) => void;
 }
@@ -76,6 +77,7 @@ export default function TextBox({
   children,
   readOnly = false,
   required = false,
+  multiline = false,
   onChangeString = undefined,
   onChangeNumber = undefined
 }: TextBoxProps) {
@@ -99,14 +101,14 @@ export default function TextBox({
         </label>)
       }
       <TextBoxWrapper>
-        <input
-          id={id.current}
-          type={type}
-          placeholder={placeholder}
-          value={value}
-          onChange={handleChange}
-          readOnly={readOnly}
-        />
+      {React.createElement(multiline ? 'textarea' : 'input', {
+        id: id.current,
+        type,
+        placeholder,
+        value,
+        onChange: handleChange,
+        readOnly,
+      })}
         {children}
       </TextBoxWrapper>
     </Container>

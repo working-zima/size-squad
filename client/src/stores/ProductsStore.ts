@@ -9,19 +9,31 @@ import { apiService } from '../services/ApiService';
 class ProductsStore {
   products: Product[] = [];
 
-  async fetchProducts({ categoryId, subCategoryId }: {
-    categoryId?: string, subCategoryId?: string
-  }) {
-    this.setProducts([]);
-
-    const products = await apiService.fetchProducts({ categoryId, subCategoryId });
-
-    this.setProducts(products);
-  }
+  error = false;
 
   @Action()
   private setProducts(products: Product[]) {
     this.products = products;
+  }
+
+  @Action()
+  private setError() {
+    this.error = true;
+  }
+
+  async fetchProducts({ categoryId, subCategoryId }: {
+    categoryId?: string, subCategoryId?: string
+  }) {
+    try {
+      this.setProducts([]);
+      const products = await apiService.fetchProducts({
+        categoryId, subCategoryId
+      });
+
+      this.setProducts(products);
+    } catch (error) {
+      this.setError();
+    }
   }
 }
 

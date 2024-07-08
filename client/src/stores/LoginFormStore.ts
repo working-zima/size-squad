@@ -55,7 +55,7 @@ class LoginFormStore {
       });
 
       this.setAccessToken(accessToken);
-    } catch (e) {
+    } catch (error) {
       this.setError();
     }
   }

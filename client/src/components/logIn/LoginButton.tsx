@@ -15,6 +15,10 @@ const ButtonWrapper = styled.div`
     font-weight: 600;
     border-color: ${props => props.theme.colors.primaryBlack};
     border-radius: 6px;
+
+    &:disabled {
+      background-color: ${props => props.theme.colors.unSelectedText};
+    }
   }
 `
 

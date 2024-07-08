@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
 
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { CiRead, CiCircleRemove, CiUnread } from "react-icons/ci";
 
 import TextBox from "../ui/TextBox";
 import Button from "../ui/Button";
+import ComboBox from "../ui/ComboBox";
 
 import useAccessToken from "../../hooks/useAccessToken";
 import useSignupFormStore from "../../hooks/useSignupFormStore";
 import useDebounce from "../../hooks/useDebounce";
 
 import { RequiredStar } from "../../utils/RequiredStar";
-import ComboBox from "../ui/ComboBox";
+import { Gender } from "../../types";
 
 const Container = styled.div`
   padding: 20px ${props => props.theme.sizes.contentPadding} 0;
@@ -55,7 +56,29 @@ const Metrics = styled.div`
   color: ${props => props.theme.colors.unSelectedText};
 `
 
-export default function SignUpForm() {
+const ButtonWrapper = styled.div`
+  button {
+    margin: 40px 0 20px 0;
+    width: 100%;
+    height: 48px;
+    background-color: ${props => props.theme.colors.primaryBlack};
+    color: ${props => props.theme.colors.primaryWhite};
+    font-size: 1.6rem;
+    font-weight: 600;
+    border-color: ${props => props.theme.colors.primaryBlack};
+    border-radius: 6px;
+
+    &:disabled {
+      background-color: ${props => props.theme.colors.unSelectedText};
+    }
+  }
+`
+
+type SignUpFormProps = {
+  genderList: Gender[];
+}
+
+export default function SignUpForm({ genderList }: SignUpFormProps){
   const [isShowPw, setIsShowPw] = useState({
     showPassword: false,
     showConfirmation: false
@@ -110,10 +133,6 @@ export default function SignUpForm() {
   const handleResetPasswordConfirmation = () => {
     store.changePasswordConfirmation('');
   }
-
-  const handleChangeGender = (value: 'male' | 'female' | '') => {
-    store.changeGender(value);
-  };
 
   const handleChangeHeight = (value: string) => {
     let sanitized = value.replace(/[^0-9]/g, '');
@@ -227,14 +246,14 @@ export default function SignUpForm() {
             }
           </Button>
         </TextBox>
-        {/* <ComboBox
-          label={option.name}
-          selectedItem={selectedItem}
-          items={option.items}
-          itemToId={(item) => item.id}
-          itemToText={(item) => item.name}
-          onChange={handleChange}
-        /> */}
+        <ComboBox
+          label="성별"
+          selectedItem={gender}
+          items={genderList}
+          itemToId={(item) => item._id}
+          itemToText={(item) => item.gender}
+          onChange={(value) => value && store.changeGender(value)}
+        />
         <TextBox
           label="키"
           placeholder="키를 입력해주세요."
@@ -268,14 +287,14 @@ export default function SignUpForm() {
           placeholder="체형을 입력해주세요."
           type="text"
           value={description}
+          multiline={true}
           onChangeString={handleChangeDescription}
         />
-        <textarea>
-
-        </textarea>
-        <Button type="submit" disabled={!valid}>
-          회원 가입
-        </Button>
+        <ButtonWrapper>
+          <Button type="submit" disabled={!valid}>
+            회원 가입
+          </Button>
+        </ButtonWrapper>
         {error && (
           <p>회원 가입 실패</p>
         )}
