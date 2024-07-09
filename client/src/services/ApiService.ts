@@ -141,7 +141,17 @@ export default class ApiService {
     return user;
   }
 
-  async checkUsername({ name } : {
+  async checkUserEmail({ email }: {
+    email: string
+  }): Promise<string> {
+
+    const { data } = await this.instance.get(`/users/email-valid/${email}`)
+    const { id } = data;
+
+    return id;
+  }
+
+  async checkUserName({ name } : {
     name: string
   }): Promise<string> {
     const { data } = await this.instance.get(`/users/name-valid/${name}`)

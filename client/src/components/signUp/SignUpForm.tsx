@@ -9,10 +9,12 @@ import ComboBox from "../ui/ComboBox";
 
 import useAccessToken from "../../hooks/useAccessToken";
 import useSignupFormStore from "../../hooks/useSignupFormStore";
-import useDebounce from "../../hooks/useDebounce";
 
 import { RequiredStar } from "../../utils/RequiredStar";
 import { Gender } from "../../types";
+import SignUpEmailInput from "./SignUpEmailInput";
+import SignUpNameInput from "./SignUpNameInput";
+import SignUpPassword from "./SignUpPassword";
 
 const Container = styled.div`
   padding: 20px ${props => props.theme.sizes.contentPadding} 0;
@@ -79,60 +81,17 @@ type SignUpFormProps = {
 }
 
 export default function SignUpForm({ genderList }: SignUpFormProps){
-  const [isShowPw, setIsShowPw] = useState({
-    showPassword: false,
-    showConfirmation: false
-  });
-
   const { setAccessToken } = useAccessToken();
 
   const [{
-    email, name, password, passwordConfirmation, gender, valid, height, weight, description, error, accessToken, isNameDuplicated
+    gender, valid, height, weight, description, error, accessToken
   }, store] = useSignupFormStore();
-
-  const debouncedNameInput = useDebounce(name, 500);
 
   useEffect(() => {
     if (accessToken) {
       setAccessToken(accessToken);
     }
   }, [accessToken]);
-
-  useEffect(() => {
-    store.checkUsername(debouncedNameInput);
-  }, [debouncedNameInput]);
-
-  const handleChangeEmail = (value: string) => {
-    store.changeEmail(value);
-  };
-
-  const handleResetEmail = () => {
-    store.changeEmail('');
-  }
-
-  const handleChangeName = (value: string) => {
-    store.changeName(value);
-  };
-
-  const handleResetName = () => {
-    store.changeName('');
-  }
-
-  const handleChangePassword = (value: string) => {
-    store.changePassword(value);
-  };
-
-  const handleResetPassword = () => {
-    store.changePassword('')
-  }
-
-  const handleChangePasswordConfirmation = (value: string) => {
-    store.changePasswordConfirmation(value);
-  };
-
-  const handleResetPasswordConfirmation = () => {
-    store.changePasswordConfirmation('');
-  }
 
   const handleChangeHeight = (value: string) => {
     let sanitized = value.replace(/[^0-9]/g, '');
@@ -166,13 +125,6 @@ export default function SignUpForm({ genderList }: SignUpFormProps){
     store.changeDescription(value);
   };
 
-  const handleShowPassword = () => {
-    setIsShowPw(prev => ({...prev, showPassword: !prev.showPassword}));
-  }
-
-  const handleShowConfirmation = () => {
-    setIsShowPw(prev => ({...prev, showConfirmation: !prev.showConfirmation}));
-  }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -184,68 +136,9 @@ export default function SignUpForm({ genderList }: SignUpFormProps){
       <h2>회원가입</h2>
       <div>필수항목</div>
       <Form onSubmit={handleSubmit}>
-        <TextBox
-          label="이메일"
-          placeholder="이메일을 입력해주세요."
-          value={email}
-          onChangeString={handleChangeEmail}
-          required
-        >
-        <Button onClick={handleResetEmail}>
-          {!!email && <CiCircleRemove size="18" fill='#6e6e6e'/>}
-        </Button>
-        </TextBox>
-        <TextBox
-          label="닉네임"
-          placeholder="닉네임을 입력해주세요."
-          value={name}
-          onChangeString={handleChangeName}
-          required
-        >
-        <Button onClick={handleResetName}>
-          {!!name && <CiCircleRemove size="18" fill='#6e6e6e'/>}
-        </Button>
-        </TextBox>
-        {name && (
-          <ValidTextWrapper>
-            {isNameDuplicated && "중복된 닉네임입니다."}
-          </ValidTextWrapper>
-        )}
-        <TextBox
-          label="비밀번호"
-          placeholder="8 ~ 16자리를 사용합니다."
-          type={isShowPw.showPassword ? "text" : "password"}
-          value={password}
-          onChangeString={handleChangePassword}
-          required
-        >
-          <Button onClick={handleResetPassword}>
-            {!!password && <CiCircleRemove size="18" fill='#6e6e6e'/>}
-          </Button>
-          <Button onClick={handleShowPassword}>
-            {isShowPw.showPassword
-              ? <CiRead size="18" fill='#6e6e6e'/>
-              : <CiUnread size="18" fill='#6e6e6e'/>
-            }
-          </Button>
-        </TextBox>
-        <TextBox
-          placeholder="비밀번호를 다시 입력해주세요."
-          type={isShowPw.showConfirmation ? "text" : "password"}
-          value={passwordConfirmation}
-          onChangeString={handleChangePasswordConfirmation}
-        >
-          <Button onClick={handleResetPasswordConfirmation}>
-            {!!passwordConfirmation
-              && <CiCircleRemove size="18" fill='#6e6e6e'/>}
-          </Button>
-          <Button onClick={handleShowConfirmation}>
-            {isShowPw.showConfirmation
-              ? <CiRead size="18" fill='#6e6e6e'/>
-              : <CiUnread size="18" fill='#6e6e6e'/>
-            }
-          </Button>
-        </TextBox>
+        <SignUpEmailInput />
+        <SignUpNameInput />
+        <SignUpPassword />
         <ComboBox
           label="성별"
           selectedItem={gender}

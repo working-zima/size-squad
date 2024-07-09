@@ -18,24 +18,17 @@ class SignupFormStore {
   weight = "";
   description = '';
   accessToken = '';
-  isNameDuplicated = false;
+
   error = false;
 
-  get valid() {
-    return this.isEmail(this.email)
-      && this.isPasswordValid(this.password)
-      && !!this.name
-      && this.password === this.passwordConfirmation
-  }
+  isEmailDuplicated = false;
+  isEmailInvalid = false;
 
-  private isEmail = (email: string) => {
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return emailRegex.test(email);
-  }
+  isNameDuplicated = false;
+  isNameInvalid = false;
 
-  private isPasswordValid = (password: string) => {
-    return password.length >= 8 && password.length <= 16;
-  }
+  isPasswordInvalid = false;
+  isPasswordConfirmationInvalid = false;
 
   @Action()
   changeEmail(email: string) {
@@ -78,8 +71,13 @@ class SignupFormStore {
   }
 
   @Action()
+  changeIsEmailDuplicated(isEmailDuplicated: boolean) {
+    this.isEmailDuplicated = isEmailDuplicated;
+  }
+
+  @Action()
   changeIsNameDuplicated(isNameDuplicated: boolean) {
-    this.isNameDuplicated = isNameDuplicated
+    this.isNameDuplicated = isNameDuplicated;
   }
 
   @Action()
@@ -107,13 +105,68 @@ class SignupFormStore {
     this.isNameDuplicated = false;
   }
 
-  async checkUsername(name: string) {
-    try {
-      const isDuplicated = await apiService.checkUsername({name})
-      this.changeIsNameDuplicated(!!isDuplicated)
+  get valid() {
+    return this.emailValidation(this.email)
+      && this.passwordValidation(this.password)
+      && !!this.name
+      && this.password === this.passwordConfirmation
+  }
 
-    } catch(error) {
-      this.setError();
+  private passwordValidation = (password: string) => {
+    return password.length >= 8 && password.length <= 16;
+  }
+
+  private emailValidation = (email: string) => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    return emailRegex.test(email);
+  }
+
+  @Action()
+  validateEmail(email: string) {
+    this.isEmailInvalid = this.emailValidation(email);
+  }
+
+  async validateAndCheckEmail(email: string) {
+    this.validateEmail(email);
+
+    if(this.isEmailInvalid) {
+      try {
+        const isDuplicated = await apiService.checkUserEmail({ email });
+        this.changeIsEmailDuplicated(!!isDuplicated);
+
+      } catch(error) {
+        this.setError();
+      }
+    } else {
+      this.changeIsEmailDuplicated(false);
+    }
+  }
+
+  private nameValidation = (name: string) => {
+    const nameRegex = /^[가-힣a-zA-Z0-9]{2,10}$/;
+
+    return nameRegex.test(name)
+  }
+
+  @Action()
+  validateName(name: string) {
+    this.isNameInvalid = this.nameValidation(name);
+  }
+
+  async validateAndCheckName(name: string) {
+    this.validateName(name);
+
+    if(this.isEmailInvalid) {
+      try {
+        const isDuplicated = await apiService.checkUserName({ name });
+        this.changeIsNameDuplicated(!!isDuplicated);
+
+      } catch(error) {
+        this.setError();
+      }
+    } else {
+      this.changeIsNameDuplicated(false);
     }
   }
 

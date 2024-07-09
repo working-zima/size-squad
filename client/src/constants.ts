@@ -10,6 +10,15 @@ export const MEASUREMENT_MESSAGES: Record<string, string> = {
   hemWidth: '밑단단면',
 };
 
+export const ERROR_MESSAGES = {
+  EMAIL_EMPTY_MESSAGE: '이메일을 입력해주세요.',
+  EMAIL_DUPLICATED_MESSAGE: '이미 사용된 이메일입니다.',
+  EMAIL_INVALID_MESSAGE: '유효하지 않은 이메일입니다.',
+  NAME_EMPTY_MESSAGE: '닉네임을 입력해주세요.',
+  NAME_DUPLICATED_MESSAGE: '이미 사용된 닉네임입니다.',
+  NAME_INVALID_MESSAGE: '유효하지 않은 닉네임입니다.'
+}
+
 type Titles = {
   '/': string;
   '/login': string;
