@@ -4,7 +4,7 @@ const User = {
   /** 회원 가입 */
   create: async (newUser) => {
     try {
-      let userData = await UserModel.create(newUser);
+      const userData = await UserModel.create(newUser)
 
       return userData;
     } catch(error) {
@@ -15,7 +15,7 @@ const User = {
   /** _id로 검색 */
   findById: async (_id) => {
     try {
-      let userData = await UserModel.findOne(
+      const userData = await UserModel.findOne(
         { _id },
         "_id email name gender height weight description role followers following"
         // mongoose document를 필요한 javascript object로 반환
@@ -32,7 +32,7 @@ const User = {
   /** Email로 검색 */
   findByEmail: async ({email}) => {
     try {
-      let userData = await UserModel.findOne(
+      const userData = await UserModel.findOne(
         { email },
         "_id email password name"
         // mongoose document를 필요한 javascript object로 반환

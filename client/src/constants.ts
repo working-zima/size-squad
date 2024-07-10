@@ -16,7 +16,10 @@ export const ERROR_MESSAGES = {
   EMAIL_INVALID_MESSAGE: '유효하지 않은 이메일입니다.',
   NAME_EMPTY_MESSAGE: '닉네임을 입력해주세요.',
   NAME_DUPLICATED_MESSAGE: '이미 사용된 닉네임입니다.',
-  NAME_INVALID_MESSAGE: '유효하지 않은 닉네임입니다.'
+  NAME_INVALID_MESSAGE: '한글, 영문, 숫자로 된 2 ~ 10자리를 입력해주세요.',
+  PASSWORD_INVALID_MESSAGE: '영문, 숫자, 특수문자 포함한 8 ~ 16자리를 입력해주세요.',
+  PASSWORD_EMPTY_MESSAGE: '비밀번호를 입력해주세요.',
+  CONFIRM_INVALID_MESSAGE: '비밀번호와 일치하지 않습니다.',
 }
 
 type Titles = {

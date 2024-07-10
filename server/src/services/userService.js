@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const { User } = require("../db/models/User");
 const { Token } = require('../db/models/Token');
 
-const { getUserIdByAccessToken } = require("../utils/utils");
+const { getUserIdByAccessToken, generateJwtToken } = require("../utils/utils");
 
 const SALT_ROUND = parseInt(process.env.SALT_ROUND);
 
@@ -12,9 +12,25 @@ const userService = {
   signUp: async (newUser) => {
     try {
       newUser.password = await bcrypt.hash(newUser.password, SALT_ROUND);
-      const userInfo = User.create(newUser);
 
-      return userInfo;
+      const userData = await User.create(newUser);
+      const { _id } = userData;
+      
+      // accessToken, refreshToken 동시 발급
+      const refreshToken =  generateJwtToken({
+        userId: _id,
+        secretKey: process.env.JWT_SECRET_KEY,
+        expiresIn: process.env.REFRESH_EXPIRES_IN
+      });
+      const accessToken = generateJwtToken({
+        userId: _id,
+        secretKey: process.env.JWT_SECRET_KEY,
+        expiresIn: process.env.ACCESS_EXPIRES_IN
+      });
+
+      await Token.create({ refreshToken, accessToken, userId: _id });
+
+      return accessToken;
     } catch(error) {
       throw error;
     }

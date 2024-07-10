@@ -32,7 +32,6 @@ const isObjectValidation = (field) => [
 const numericValidation = (field) => [
   body(field)
     .trim()
-    .notEmpty().withMessage(`${field} is required`)
     .isNumeric().withMessage(`${field} must be a number`)
 ];
 

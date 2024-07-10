@@ -36,10 +36,6 @@ const SignupValidationRules = [
   ...nameValidation(),
   ...checkNameDuplicate(),
   ...passwordCombinedValidation(),
-  ...numericValidation('height'),
-  ...numericValidation('weight'),
-  ...isValueExist('genderId'),
-  ...isValueExist('description'),
 ];
 
 /** 로그인 검사 */

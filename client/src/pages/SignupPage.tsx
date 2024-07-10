@@ -17,10 +17,6 @@ export default function SignupPage() {
   const addNullObjectGenderList = [nullGender, ...genderList]
 
   useEffect(() => {
-    // if (!genderList[0]._id) {
-    //   return;
-    // }
-
     store.reset();
     store.changeGender(nullGender);
   }, []);

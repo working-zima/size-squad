@@ -22,13 +22,13 @@ class SignupFormStore {
   error = false;
 
   isEmailDuplicated = false;
-  isEmailInvalid = false;
+  isEmailValid = false;
 
   isNameDuplicated = false;
-  isNameInvalid = false;
+  isNameValid = false;
 
-  isPasswordInvalid = false;
-  isPasswordConfirmationInvalid = false;
+  isPasswordValid = false;
+  isPasswordConfirmationValid = false;
 
   @Action()
   changeEmail(email: string) {
@@ -112,10 +112,6 @@ class SignupFormStore {
       && this.password === this.passwordConfirmation
   }
 
-  private passwordValidation = (password: string) => {
-    return password.length >= 8 && password.length <= 16;
-  }
-
   private emailValidation = (email: string) => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -124,13 +120,13 @@ class SignupFormStore {
 
   @Action()
   validateEmail(email: string) {
-    this.isEmailInvalid = this.emailValidation(email);
+    this.isEmailValid = this.emailValidation(email);
   }
 
   async validateAndCheckEmail(email: string) {
     this.validateEmail(email);
 
-    if(this.isEmailInvalid) {
+    if(this.isEmailValid) {
       try {
         const isDuplicated = await apiService.checkUserEmail({ email });
         this.changeIsEmailDuplicated(!!isDuplicated);
@@ -151,13 +147,13 @@ class SignupFormStore {
 
   @Action()
   validateName(name: string) {
-    this.isNameInvalid = this.nameValidation(name);
+    this.isNameValid = this.nameValidation(name);
   }
 
   async validateAndCheckName(name: string) {
     this.validateName(name);
 
-    if(this.isEmailInvalid) {
+    if(this.isEmailValid) {
       try {
         const isDuplicated = await apiService.checkUserName({ name });
         this.changeIsNameDuplicated(!!isDuplicated);
@@ -168,6 +164,22 @@ class SignupFormStore {
     } else {
       this.changeIsNameDuplicated(false);
     }
+  }
+
+  private passwordValidation = (password: string) => {
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,16}$/
+
+    return passwordRegex.test(password)
+  }
+
+  @Action()
+  validatePassword(password: string) {
+    this.isPasswordValid = this.passwordValidation(password);
+  }
+
+  @Action()
+  validatePasswordConfirmation(passwordConfirmation: string) {
+    this.isPasswordConfirmationValid = this.password === passwordConfirmation;
   }
 
   async signup() {

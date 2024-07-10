@@ -9,6 +9,7 @@ import { LoginUtils } from './LoginUtils';
 import useAutoLoginStore from '../../hooks/useAutoLoginStore';
 import useAccessToken from '../../hooks/useAccessToken';
 import useLoginFormStore from '../../hooks/useLoginFormStore';
+import Divider from '../ui/Divider';
 
 const Container = styled.div.attrs({ className: 'MemberWrapper' })`
   padding: 20px ${props => props.theme.sizes.contentPadding} 0;
@@ -18,29 +19,6 @@ const Container = styled.div.attrs({ className: 'MemberWrapper' })`
     display: none;
   }
 `;
-
-const Divider = styled.div`
-  display: flex;
-  align-items: center;
-  margin: 40px 0 28px;
-  font-size: 14px;
-
-  &::before {
-    flex: 1;
-    width: 100%;
-    margin-right: 1.6rem;
-    border-top: 1px solid ${props => props.theme.colors.borderColor};
-    content: "";
-  }
-
-  &::after {
-    flex: 1;
-    width: 100%;
-    margin-left: 1.6rem;
-    border-top: 1px solid ${props => props.theme.colors.borderColor};
-    content: "";
-  }
-`
 
 export default function LoginForm() {
   const [isShowPw, setIsShowPw] = useState(false);

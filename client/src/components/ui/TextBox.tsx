@@ -20,7 +20,7 @@ const Container = styled.div<ContainerProps>`
 type TextBoxWrapperProps = {
   isFocused: boolean;
   isTouched: boolean;
-  isInvalid: boolean;
+  isValid: boolean;
   isDuplicated: boolean;
   useBorderColor: boolean;
 };
@@ -38,7 +38,7 @@ const TextBoxWrapper = styled.div<TextBoxWrapperProps>`
   ${(props) =>
     props.useBorderColor
     && props.isFocused
-    && !props.isInvalid
+    && props.isValid
     && !props.isDuplicated
     && css`
       border-color: green;`
@@ -48,7 +48,7 @@ const TextBoxWrapper = styled.div<TextBoxWrapperProps>`
   ${(props) =>
     props.useBorderColor
       && props.isTouched
-      && (props.isInvalid || props.isDuplicated)
+      && (!props.isValid || props.isDuplicated)
       && css`
         border-color: red;
       `
@@ -67,7 +67,7 @@ const TextBoxWrapper = styled.div<TextBoxWrapperProps>`
 
   // 입력 값이 중복되지 않았으며, 유효성 검사를 통과한 상태에서 focus되지 않은 경우
   ${(props) =>
-    !props.isFocused && !props.isInvalid && !props.isDuplicated && css`
+    !props.isFocused && props.isValid && !props.isDuplicated && css`
       border-color: ${props => props.theme.colors.borderColor};`
   }
 
@@ -114,7 +114,7 @@ type TextBoxProps = {
   children?: React.ReactNode;
   required?: boolean;
   multiline?: boolean,
-  isInvalid?: boolean,
+  isValid?: boolean,
   isDuplicated?: boolean,
   useBorderColor?: boolean;
   onChangeString?: (value: string) => void;
@@ -130,7 +130,7 @@ export default function TextBox({
   readOnly = false,
   required = false,
   multiline = false,
-  isInvalid = false,
+  isValid = false,
   isDuplicated = false,
   useBorderColor = false,
   onChangeString = undefined,
@@ -165,7 +165,7 @@ export default function TextBox({
       <TextBoxWrapper
         isFocused={isFocused}
         isTouched={isTouched}
-        isInvalid={isInvalid}
+        isValid={isValid}
         isDuplicated={isDuplicated}
         useBorderColor={useBorderColor}
       >

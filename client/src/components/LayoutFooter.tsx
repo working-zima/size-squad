@@ -14,7 +14,7 @@ export default function LayoutFooter() {
 
   const noFooterPaths = ['/login', '/signup'];
 
-  if (noFooterPaths.includes(location.pathname)) {
+  if (noFooterPaths.some(path => location.pathname.startsWith(path))) {
     return null
   }
 

@@ -17,11 +17,13 @@ const Container = styled.div`
     'footer'
     'menu';
   margin: 0 auto;
-  /* width: ${(props) => props.theme.sizes.layoutWidth}; */
 `;
 
 const Main = styled.main`
   grid-area: main;
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
 `;
 
 export default function Layout() {

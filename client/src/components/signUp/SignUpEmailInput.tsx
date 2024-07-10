@@ -24,21 +24,21 @@ const ValidTextWrapper = styled.p`
 type ErrorMessageProps = {
   email: string;
   isEmailDuplicated: boolean;
-  isEmailInvalid: boolean;
+  isEmailValid: boolean;
 }
 
 const ErrorMessage = ({
-  email, isEmailDuplicated, isEmailInvalid
+  email, isEmailDuplicated, isEmailValid
 }: ErrorMessageProps) => {
   if (email === "") return ERROR_MESSAGES.EMAIL_EMPTY_MESSAGE;
   if (isEmailDuplicated) return ERROR_MESSAGES.EMAIL_DUPLICATED_MESSAGE;
-  if (!isEmailInvalid) return ERROR_MESSAGES.EMAIL_INVALID_MESSAGE;
+  if (!isEmailValid) return ERROR_MESSAGES.EMAIL_INVALID_MESSAGE;
   return null;
 };
 
 export default function SignUpEmailInput() {
   const [
-    { email, isEmailDuplicated, isEmailInvalid }, store
+    { email, isEmailDuplicated, isEmailValid }, store
   ] = useSignupFormStore();
   const [isTouched, setIsTouched] = useState(false);
 
@@ -58,7 +58,7 @@ export default function SignUpEmailInput() {
   }
 
   const errorMessage = isTouched
-    ? ErrorMessage({ email, isEmailDuplicated, isEmailInvalid }) : null;
+    ? ErrorMessage({ email, isEmailDuplicated, isEmailValid }) : null;
 
   return (
     <Container>
@@ -67,7 +67,7 @@ export default function SignUpEmailInput() {
         placeholder="이메일을 입력해주세요."
         value={email}
         onChangeString={handleChangeEmail}
-        isInvalid={!isEmailInvalid}
+        isValid={isEmailValid}
         isDuplicated={isEmailDuplicated}
         useBorderColor={true}
         required

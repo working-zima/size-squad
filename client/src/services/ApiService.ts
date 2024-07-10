@@ -182,11 +182,12 @@ export default class ApiService {
     email: string;
     name: string;
     password: string;
-    gender: string;
-    height: string;
-    weight: string;
-    description: string;
+    gender?: string;
+    height?: string;
+    weight?: string;
+    description?: string;
   }): Promise<string> {
+    console.log(email, name, password, gender, height, weight, description)
     const { data } = await this.instance.post('/users', {
       email, name, password, gender, height, weight, description
     });

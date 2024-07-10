@@ -24,11 +24,11 @@ const userController = {
         email, name, password, genderId, height, weight, description
       } = req.body;
 
-      userService.signUp(
+      const accessToken = userService.signUp(
         { email, name, password, genderId, height, weight, description }
       )
 
-      res.status(201).json();
+      res.status(201).json({accessToken});
     } catch (error) {
       next(error);
     }
