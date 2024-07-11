@@ -23,13 +23,14 @@ const Container = styled.div`
 
   p {
     line-height: 22px;
+    text-align: center;
   }
 `
 
 const CheckMark = styled.div`
   font-size: 48px;
   margin: 1rem;
-  color: ${props => props.theme.colors.unSelectedText};
+  color: ${props => props.theme.colors.PrimaryBlue};
 `;
 
 
@@ -59,7 +60,7 @@ export default function SignupCompletePage() {
   const navigate = useNavigate();
 
   const navegateHomeHandler = () => {
-    navigate("/mysize");
+    navigate("/");
   }
 
   const navegateLogInHandler = () => {
@@ -72,8 +73,7 @@ export default function SignupCompletePage() {
         <CiCircleCheck/>
       </CheckMark>
       <h1>회원가입 완료</h1>
-      <p>(닉네임)의 회원가입이</p>
-      <p>성공적으로 완료되었습니다.</p>
+      <p>회원가입이 성공적으로 완료되었습니다.<br/>로그인 후 이용해주세요.</p>
       <Divider>
         이동
       </Divider>

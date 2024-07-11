@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 
 import styled from 'styled-components';
-import { CiUser, CiHome, CiEdit, CiLogin } from "react-icons/ci";
+import { CiUser, CiHome, CiEdit, CiLogin, CiViewList } from "react-icons/ci";
 
 import FixedDetailSwitcher from './FixedDetailSwitcher';
 
@@ -70,12 +70,20 @@ export default function LayoutMenuBar() {
       <MenuWrap>
         <h2>Navigation Menu</h2>
         <Menu>
-          <Link to="/mysize">
+          <Link to="/">
             <div>
               <CiHome size="24"/>
             </div>
             <span>
               홈
+            </span>
+          </Link>
+          <Link to="/mysize">
+            <div>
+              <CiViewList size="24"/>
+            </div>
+            <span>
+              목록
             </span>
           </Link>
           <Link to="/mysize/new">

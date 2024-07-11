@@ -24,7 +24,7 @@ const CustomButton = styled(Button)`
   border-radius: 100%;
   color: ${(props) => props.theme.colors.primaryWhite};
   line-height: 20px;
-  background-color: ${(props) => props.theme.colors.primaryBlack};
+  background-color: ${(props) => props.theme.colors.primaryBlack}; opacity : 0.6;
   user-select: none;
 `;
 

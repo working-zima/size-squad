@@ -30,6 +30,15 @@ class SignupFormStore {
   isPasswordValid = false;
   isPasswordConfirmationValid = false;
 
+  get valid() {
+    return this.isEmailValid
+      && !this.isEmailDuplicated
+      && this.isNameValid
+      && !this.isNameDuplicated
+      && this.isPasswordValid
+      && this.isPasswordConfirmationValid
+  }
+
   @Action()
   changeEmail(email: string) {
     this.email = email;
@@ -105,12 +114,7 @@ class SignupFormStore {
     this.isNameDuplicated = false;
   }
 
-  get valid() {
-    return this.emailValidation(this.email)
-      && this.passwordValidation(this.password)
-      && !!this.name
-      && this.password === this.passwordConfirmation
-  }
+
 
   private emailValidation = (email: string) => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -153,7 +157,7 @@ class SignupFormStore {
   async validateAndCheckName(name: string) {
     this.validateName(name);
 
-    if(this.isEmailValid) {
+    if(this.isNameValid) {
       try {
         const isDuplicated = await apiService.checkUserName({ name });
         this.changeIsNameDuplicated(!!isDuplicated);

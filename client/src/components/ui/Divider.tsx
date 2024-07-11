@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-const Container = styled.div`
+interface ContainerProps {
+  hasChildren: boolean;
+}
+
+const Container = styled.div<ContainerProps>`
   display: flex;
   align-items: center;
   margin: 40px 0 28px;
@@ -10,7 +14,7 @@ const Container = styled.div`
   &::before {
     flex: 1;
     width: 100%;
-    margin-right: 1.6rem;
+    margin-right: ${({ hasChildren }) => (hasChildren ? '1.6rem' : '0')};
     border-top: 1px solid ${props => props.theme.colors.borderColor};
     content: "";
   }
@@ -18,15 +22,16 @@ const Container = styled.div`
   &::after {
     flex: 1;
     width: 100%;
-    margin-left: 1.6rem;
+    margin-left: ${({ hasChildren }) => (hasChildren ? '1.6rem' : '0')};
     border-top: 1px solid ${props => props.theme.colors.borderColor};
     content: "";
   }
+
 `
 
 export default function Divider({ children }: {children?: React.ReactNode}){
   return (
-    <Container>
+    <Container hasChildren={!!children}>
       {children}
     </Container>
   )
