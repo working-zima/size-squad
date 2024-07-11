@@ -26,33 +26,32 @@ const MessageBox = styled.div`
   text-align: center;
   padding: 10px;
 
-  h1 {
-    font-size: 3.6rem;
-    margin-bottom: 2.8rem;
-    color: ${props => props.theme.colors.primaryBlack};
+  h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #333;
   }
 
   p {
     font-size: 1.2em;
-    line-height: 22px;
     margin-bottom: 30px;
-    color: ${props => props.theme.colors.unSelectedText};
+    color: #666;
   }
 `;
 
-export default function AccessDeniedPage() {
+export default function NoListPage() {
 
   return (
     <Container>
-    <MessageBox>
-      <h1>로그인이 필요합니다</h1>
-      <p>서비스 이용을 위해 로그인이 필요합니다.<br/>로그인 후 이용해 주세요.</p>
-    </MessageBox>
-    <Link to='/login'>
-      <Button>
-        사이즈 입력
-      </Button>
-    </Link>
-  </Container>
-  )
-}
+      <MessageBox>
+        <h2>입력된 사이즈가 없습니다</h2>
+        <p>서비스 이용을 위해 사이즈를 입력해 주세요.</p>
+      </MessageBox>
+      <Link to='/mysize/new'>
+        <Button>
+          사이즈 입력
+        </Button>
+      </Link>
+    </Container>
+  );
+};

@@ -120,6 +120,7 @@ export default class ApiService {
       params: { categoryId },
     });
     const { categories } = data;
+
     return categories;
   }
 
@@ -127,6 +128,17 @@ export default class ApiService {
     categoryId?: string, subCategoryId?: string
   } = {}): Promise<Product[]> {
     const { data } = await this.instance.get('/products', {
+      params: { categoryId, subCategoryId },
+    });
+    const { products } = data;
+
+    return products;
+  }
+
+  async fetchMyProducts({ categoryId, subCategoryId } : {
+    categoryId?: string, subCategoryId?: string
+  } = {}): Promise<Product[]> {
+    const { data } = await this.instance.get('/users/product', {
       params: { categoryId, subCategoryId },
     });
     const { products } = data;

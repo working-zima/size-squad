@@ -87,14 +87,11 @@ const userController = {
       const categoryId = req.query.categoryId;
       const subCategoryId = req.query.subCategoryId;
 
-      if(!categoryId && subCategoryId) {
-        throw new CustomError('Please provide a valid category1DepthCode', 501);
-      }
-
       let productData = [];
 
       // 서브 카테고리
       if(subCategoryId) {
+        console.log(`서브: `)
         productData = await productService.getProductByUserIdAndSubCategoryId({
           userId, subCategoryId: subCategoryId
         });
@@ -102,13 +99,15 @@ const userController = {
 
       // 카테고리
       if(categoryId && !subCategoryId) {
+        console.log(`카테고리: `)
         productData = await productService.getProductByUserIdAndCategoryId({
           userId, categoryId: categoryId
         });
       }
 
       // 전체
-      if(!categoryId) {
+      if(!categoryId && !subCategoryId) {
+
         productData = await productService.getProductByUserId({ userId });
       }
 

@@ -1,17 +1,17 @@
-import { useRouteError, useSearchParams, Link } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 import styled from 'styled-components';
 
 import CategoryBar from '../components/category/CategoryBar';
 import Products from '../components/Products';
+import AccessDeniedPage from './AccessDeniedPage';
+
+import { SubCategorySummary } from '../types';
 
 import useAccessToken from '../hooks/useAccessToken';
 import useFetchCategories from '../hooks/useFetchCategories';
-import useCategoriesStore from '../hooks/useCategoriesStore';
 import useFetchProducts from '../hooks/useFetchProducts';
-
-import { SubCategorySummary } from '../types';
-import AccessDeniedPage from './AccessDeniedPage';
+import NoListPage from './NoListPage';
 
 const Container = styled.div`
   padding-bottom: 24px;
@@ -19,22 +19,21 @@ const Container = styled.div`
 
 export default function MySizeListPage() {
   const { accessToken } = useAccessToken();
+
   const [params] = useSearchParams();
   const categoryId = params.get('category1DepthCode') ?? undefined;
   const subCategoryId = params.get('category2DepthCodes') ?? undefined;
-  const [{ categories }] = useCategoriesStore();
-  const error = useRouteError() as Error;
 
-  useFetchCategories();
-  // 회원가입 기능 생성 후 users/product로 받아오는 로직으로 변경할 것
-  useFetchProducts({ categoryId, subCategoryId });
+  const { categories } = useFetchCategories();
+  const { products } = useFetchProducts({ categoryId, subCategoryId });
 
   const allSubCategories = categories.reduce<SubCategorySummary[]>(
     (acc, category) => [...acc, ...category.subCategories], []
   );
 
   const subCategories = categoryId
-  ? categories.find(category => category._id === categoryId)?.subCategories || []
+  ? categories
+    .find(category => category._id === categoryId)?.subCategories || []
   : allSubCategories;
 
   if (!accessToken) {
@@ -43,11 +42,24 @@ export default function MySizeListPage() {
     );
   }
 
+  if(!products.length) {
+    return (
+      <Container>
+        <CategoryBar categories={categories} subCategories={subCategories}/>
+        <NoListPage/>
+      </Container>
+    )
+  }
+
   return (
     <Container>
       <CategoryBar categories={categories} subCategories={subCategories}/>
       {subCategories.map((subCategory) => (
-        <Products key={subCategory._id} subCategory={subCategory} />
+        <Products
+          key={subCategory._id}
+          subCategory={subCategory}
+          products={products}
+        />
       ))}
     </Container>
   );

@@ -26,7 +26,7 @@ class ProductsStore {
   }) {
     try {
       this.setProducts([]);
-      const products = await apiService.fetchProducts({
+      const products = await apiService.fetchMyProducts({
         categoryId, subCategoryId
       });
 
