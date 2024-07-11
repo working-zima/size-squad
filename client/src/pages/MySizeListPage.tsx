@@ -1,22 +1,24 @@
-import { useRouteError, useSearchParams } from 'react-router-dom';
+import { useRouteError, useSearchParams, Link } from 'react-router-dom';
 
 import styled from 'styled-components';
 
 import CategoryBar from '../components/category/CategoryBar';
 import Products from '../components/Products';
 
+import useAccessToken from '../hooks/useAccessToken';
 import useFetchCategories from '../hooks/useFetchCategories';
 import useCategoriesStore from '../hooks/useCategoriesStore';
 import useFetchProducts from '../hooks/useFetchProducts';
 
 import { SubCategorySummary } from '../types';
-import { useEffect } from 'react';
+import AccessDeniedPage from './AccessDeniedPage';
 
 const Container = styled.div`
   padding-bottom: 24px;
 `;
 
 export default function MySizeListPage() {
+  const { accessToken } = useAccessToken();
   const [params] = useSearchParams();
   const categoryId = params.get('category1DepthCode') ?? undefined;
   const subCategoryId = params.get('category2DepthCodes') ?? undefined;
@@ -34,6 +36,12 @@ export default function MySizeListPage() {
   const subCategories = categoryId
   ? categories.find(category => category._id === categoryId)?.subCategories || []
   : allSubCategories;
+
+  if (!accessToken) {
+    return (
+      <AccessDeniedPage />
+    );
+  }
 
   return (
     <Container>

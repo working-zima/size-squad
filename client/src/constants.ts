@@ -23,9 +23,6 @@ export const ERROR_MESSAGES = {
 }
 
 type Titles = {
-  '/': string;
-  '/login': string;
-  '/mysize/edit': string;
   [key: string]: string;
 };
 
@@ -34,8 +31,9 @@ export const TITLE: Titles = {
   '/mysize': 'Size Squad',
   '/login': 'Sign In',
   '/signup': 'Sign Up',
-  '/mysize/edit': 'Edit',
-  '/mysize/new': 'New'
+  '/mysize/edit': 'Edit Size',
+  '/mysize/new': 'New Size',
+  '/mypage': 'My Page'
 }
 
 // TODO: delete this!

@@ -1,10 +1,10 @@
 const defaultTheme = {
   colors: {
     primaryWhite: '#FFFFFF',
-    primaryBlack: '#000000',
+    primaryBlack: '#333',
     primaryRed: '#ff0000',
     PrimaryBlue: '#0078ff',
-    unSelectedText: '#6e6e6e',
+    unSelectedText: '#666',
     secondaryTextColor: '#777777',
     dividerColor: '#f9f9f9',
     lineColor: '#f3f3f3',
@@ -18,6 +18,7 @@ const defaultTheme = {
     contentBorderRadius: '0.1rem',
     sectionTopMargin: '2.4rem',
     labelWidth: '10rem',
+    borderRadius: '6px'
   },
 };
 

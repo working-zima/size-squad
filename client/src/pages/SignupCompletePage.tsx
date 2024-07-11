@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { CiCircleCheck } from "react-icons/ci";
 
-import Divider from "../components/ui/Divider";
 import Button from "../components/ui/Button";
 
 const Container = styled.div`
@@ -13,6 +12,17 @@ const Container = styled.div`
   justify-content: center;
   padding: 0 1rem;
   height: calc(100vh - 150px);
+`
+
+const CheckMark = styled.div`
+  font-size: 48px;
+  margin: 1rem;
+  color: ${props => props.theme.colors.PrimaryBlue};
+`;
+
+const MessageBox = styled.div`
+  text-align: center;
+  padding: 10px;
 
   h1 {
     display: flex;
@@ -22,17 +32,12 @@ const Container = styled.div`
   }
 
   p {
+    color: ${props => props.theme.colors.unSelectedText};
+    font-size: 1.2em;
     line-height: 22px;
     text-align: center;
   }
 `
-
-const CheckMark = styled.div`
-  font-size: 48px;
-  margin: 1rem;
-  color: ${props => props.theme.colors.PrimaryBlue};
-`;
-
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -72,11 +77,10 @@ export default function SignupCompletePage() {
       <CheckMark>
         <CiCircleCheck/>
       </CheckMark>
-      <h1>회원가입 완료</h1>
-      <p>회원가입이 성공적으로 완료되었습니다.<br/>로그인 후 이용해주세요.</p>
-      <Divider>
-        이동
-      </Divider>
+      <MessageBox>
+        <h1>회원가입 완료</h1>
+        <p>회원가입이 성공적으로 완료되었습니다.<br/>로그인 후 이용해 주세요.</p>
+      </MessageBox>
       <ButtonContainer>
         <Button onClick={navegateHomeHandler}>홈으로</Button>
         <Button onClick={navegateLogInHandler}>로그인</Button>

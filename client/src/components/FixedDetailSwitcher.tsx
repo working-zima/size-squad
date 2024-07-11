@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Button from './ui/Button';
 
 import useViewModeStore from '../hooks/useViewModeStore';
+import useAccessToken from '../hooks/useAccessToken';
 
 const Container = styled.div`
   display: flex;
@@ -29,7 +30,12 @@ const CustomButton = styled(Button)`
 `;
 
 export default function FixedDetailSwitcher() {
+  const { accessToken } = useAccessToken();
   const [{ isDescriptionView }, store] = useViewModeStore();
+
+  if (!accessToken) {
+    return null;
+  }
 
   return (
     <Container>
