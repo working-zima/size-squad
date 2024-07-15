@@ -20,10 +20,10 @@ const userController = {
       return next(error);
     }
     try {
+
       const {
         email, name, password, genderId, height, weight, description
       } = req.body;
-
       const accessToken = userService.signUp(
         { email, name, password, genderId, height, weight, description }
       )
@@ -132,7 +132,7 @@ const userController = {
       const userData = await userService.getMyInfo(userAccessToken);
       const { role, ...userDataWithoutRole } = userData;
 
-      res.status(200).json(userDataWithoutRole);
+      res.status(200).json({ user: userDataWithoutRole });
     } catch(error) {
       next(error);
     }

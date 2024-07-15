@@ -27,7 +27,7 @@ export function LoginInput({
         label=""
         placeholder="이메일"
         value={email}
-        onChangeString={handleChangeEmail}
+        onChange={handleChangeEmail}
       >
         <Button onClick={handleResetEmail}>
           {!!email && <CiCircleRemove size="18" fill='#6e6e6e'/>}
@@ -38,7 +38,7 @@ export function LoginInput({
         placeholder="비밀번호"
         type={isShowPw ? "text" : "password"}
         value={password}
-        onChangeString={handleChangePassword}
+        onChange={handleChangePassword}
       >
         <Button onClick={handleResetPassword}>
           {!!password && <CiCircleRemove size="18" fill='#6e6e6e'/>}

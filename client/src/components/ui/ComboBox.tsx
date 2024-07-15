@@ -20,6 +20,7 @@ const Container = styled.div`
 `;
 
 const SelectWrapper = styled.div`
+  display: flex;
   border: 1px solid ${props => props.theme.colors.borderColor};
   border-radius: 6px;
   margin-top: .8rem;
@@ -56,7 +57,6 @@ type ComboBoxProps<T> = {
 }
 
 /**
- *
  * @param label 콤보박스에 사용될 라벨
  * @param selectedItem 선택된 초기값
  * @param items 선택지 객체 배열

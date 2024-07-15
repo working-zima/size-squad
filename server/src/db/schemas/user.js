@@ -29,11 +29,11 @@ const UserSchema = new Schema(
       ref: "Gender",
     },
     height: {
-      type: String,
+      type: Number,
       required: false,
     },
     weight: {
-      type: String,
+      type: Number,
       required: false,
     },
     description: {

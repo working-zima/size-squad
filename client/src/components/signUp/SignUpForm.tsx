@@ -47,13 +47,6 @@ const Form = styled.form`
   }
 `
 
-const ValidTextWrapper = styled.p`
-  margin-top: 4px;
-  font-size: 1.2rem;
-  line-height: 16px;
-  color: #e72a1d;
-`
-
 const Metrics = styled.div`
   color: ${props => props.theme.colors.unSelectedText};
 `
@@ -77,10 +70,10 @@ const ButtonWrapper = styled.div`
 `
 
 type SignUpFormProps = {
-  genderList: Gender[];
+  genders: Gender[];
 }
 
-export default function SignUpForm({ genderList }: SignUpFormProps){
+export default function SignUpForm({ genders }: SignUpFormProps){
   const { setAccessToken } = useAccessToken();
 
   const [{
@@ -142,7 +135,7 @@ export default function SignUpForm({ genderList }: SignUpFormProps){
         <ComboBox
           label="성별"
           selectedItem={gender}
-          items={genderList}
+          items={genders}
           itemToId={(item) => item._id}
           itemToText={(item) => item.gender}
           onChange={(value) => value && store.changeGender(value)}
@@ -152,7 +145,7 @@ export default function SignUpForm({ genderList }: SignUpFormProps){
           placeholder="키를 입력해주세요."
           type="text"
           value={height}
-          onChangeString={handleChangeHeight}
+          onChange={handleChangeHeight}
         >
         <Metrics>
           <span>cm</span>
@@ -166,7 +159,7 @@ export default function SignUpForm({ genderList }: SignUpFormProps){
           placeholder="몸무게를 입력해주세요."
           type="text"
           value={weight}
-          onChangeString={handleChangeWeight}
+          onChange={handleChangeWeight}
         >
         <Metrics>
           <span>kg</span>
@@ -181,7 +174,7 @@ export default function SignUpForm({ genderList }: SignUpFormProps){
           type="text"
           value={description}
           multiline={true}
-          onChangeString={handleChangeDescription}
+          onChange={handleChangeDescription}
         />
         <ButtonWrapper>
           <Button type="submit" disabled={!valid}>

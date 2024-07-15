@@ -24,12 +24,8 @@ export default function MySizeListPage() {
   const categoryId = params.get('category1DepthCode') ?? undefined;
   const subCategoryId = params.get('category2DepthCodes') ?? undefined;
 
-  const { categories } = useFetchCategories();
+  const { categories, allSubCategories } = useFetchCategories();
   const { products } = useFetchProducts({ categoryId, subCategoryId });
-
-  const allSubCategories = categories.reduce<SubCategorySummary[]>(
-    (acc, category) => [...acc, ...category.subCategories], []
-  );
 
   const subCategories = categoryId
   ? categories

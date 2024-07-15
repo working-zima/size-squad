@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import SignUpForm from "../components/signUp/SignUpForm";
 
 import useSignupFormStore from "../hooks/useSignupFormStore";
-import useFetchGender from "../hooks/useFetchGender";
+import useFetchGender from "../hooks/useFetchGenders";
 
 import { nullGender } from "../nullObject";
 
@@ -13,8 +13,8 @@ export default function SignupPage() {
 
   const [{ accessToken }, store] = useSignupFormStore();
 
-  const { genderList, error, loading } = useFetchGender();
-  const addNullObjectGenderList = [nullGender, ...genderList]
+  const { genders, error, loading } = useFetchGender();
+  const addNullObjectGenderList = [nullGender, ...genders]
 
   useEffect(() => {
     store.reset();
@@ -41,6 +41,6 @@ export default function SignupPage() {
   }
 
   return (
-    <SignUpForm genderList={addNullObjectGenderList}/>
+    <SignUpForm genders={addNullObjectGenderList}/>
   )
 }

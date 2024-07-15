@@ -8,24 +8,24 @@ import { nullGender } from "../nullObject";
 
 @singleton()
 @Store()
-class GenderStore {
-  genderList: Gender[] = [nullGender];
+class GendersStore {
+  genders: Gender[] = [nullGender];
 
   loading = true;
 
   error = false;
 
   @Action()
-  private startLoading() {
-    this.genderList = [nullGender];
-    this.loading = true;
+  private setGender(gender: Gender[]) {
+    this.genders = gender;
+    this.loading = false;
     this.error = false;
   }
 
   @Action()
-  private setGender(gender: Gender[]) {
-    this.genderList = gender;
-    this.loading = false;
+  private startLoading() {
+    this.genders = [nullGender];
+    this.loading = true;
     this.error = false;
   }
 
@@ -34,11 +34,11 @@ class GenderStore {
     this.error = true;
   }
 
-  async fetchGender() {
+  async fetchGenders() {
     try {
       this.startLoading();
 
-      const gender = await apiService.fetchGender();
+      const gender = await apiService.fetchGenders();
 
       this.setGender(gender);
     } catch (error) {
@@ -47,4 +47,4 @@ class GenderStore {
   }
 }
 
-export default GenderStore;
+export default GendersStore;

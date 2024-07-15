@@ -117,8 +117,7 @@ type TextBoxProps = {
   isValid?: boolean,
   isDuplicated?: boolean,
   useBorderColor?: boolean;
-  onChangeString?: (value: string) => void;
-  onChangeNumber?: (value: number) => void;
+  onChange?: (value: string) => void;
 }
 
 export default function TextBox({
@@ -133,8 +132,7 @@ export default function TextBox({
   isValid = false,
   isDuplicated = false,
   useBorderColor = false,
-  onChangeString = undefined,
-  onChangeNumber = undefined
+  onChange = undefined,
 }: TextBoxProps) {
   const [isFocused, setIsFocused] = useState(false);
   const [isTouched, setIsTouched] = useState(false);
@@ -146,13 +144,10 @@ export default function TextBox({
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsTouched(true);
-    if (type === 'number' && onChangeNumber) {
-      onChangeNumber(Number(event.target.value));
+    if (!onChange) {
       return;
     }
-    if (onChangeString) {
-      onChangeString(event.target.value);
-    }
+    onChange(event.target.value);
   };
 
   return (

@@ -29,10 +29,10 @@ type Titles = {
 export const TITLE: Titles = {
   '/': 'Size Squad',
   '/mysize': 'Size Squad',
-  '/login': 'Sign In',
-  '/signup': 'Sign Up',
-  '/mysize/edit': 'Edit Size',
-  '/mysize/new': 'New Size',
+  '/login': '로그인',
+  '/signup': '회원가입',
+  '/mysize/edit': '사이즈 수정',
+  '/mysize/new': '사이즈 등록',
   '/mypage': 'My Page'
 }
 

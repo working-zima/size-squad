@@ -66,7 +66,7 @@ export default function SignUpEmailInput() {
         label="이메일"
         placeholder="이메일을 입력해주세요."
         value={email}
-        onChangeString={handleChangeEmail}
+        onChange={handleChangeEmail}
         isValid={isEmailValid}
         isDuplicated={isEmailDuplicated}
         useBorderColor={true}

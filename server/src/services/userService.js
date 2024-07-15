@@ -15,7 +15,7 @@ const userService = {
 
       const userData = await User.create(newUser);
       const { _id } = userData;
-      
+
       // accessToken, refreshToken 동시 발급
       const refreshToken =  generateJwtToken({
         userId: _id,
@@ -41,7 +41,7 @@ const userService = {
     try {
       const userId = getUserIdByAccessToken(accessToken)
       const userData = await User.findById(userId);
-
+      console.log(userData)
       return userData;
     } catch (error) {
       throw error;

@@ -1,6 +1,22 @@
+export function append<T>(items: T[], item: T) {
+  return [...items, item];
+}
+
+export function remove<T>(items: T[], index: number) {
+  return [
+    ...items.slice(0, index),
+    ...items.slice(index + 1),
+  ];
+}
+
+export function update<T>(items: T[], index: number, f: (value: T) => T) {
+  return items.map((item, i) => (i === index ? f(item) : item));
+}
+
 /**
  * `${index}-${value}`의 형태의 key를 반환
- * @param '{value, index}'
+ * @param value
+ * @param index
  * @returns `${index}-${value}`
  */
 export function key(value: string, index: number) {
@@ -27,3 +43,4 @@ export function debounceCallback<T extends(...args: unknown[]) => void>(
     }, delay);
   };
 }
+

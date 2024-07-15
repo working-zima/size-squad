@@ -1,6 +1,6 @@
 export type GenderSummary = {
   _id: string;
-  gender: 'female' | 'male';
+  gender: string;
 }
 
 export type SubCategorySummary = {
@@ -40,7 +40,7 @@ export type Category = {
   _id: string;
   category: string;
   subCategories: SubCategorySummary[];
-  measurements: string[];
+  measurements: string[]
 }
 
 export type Gender = {
@@ -49,30 +49,49 @@ export type Gender = {
   size: string[];
 }
 
-export type Measurements = {
-  _id: string;
-  totalLength?: number;
-  shoulderWidth?: number;
-  chestWidth?: number;
-  sleeveLength?: number;
-  waistWidth?: number;
-  hipWidth?: number;
-  thighWidth?: number;
-  rise?: number;
-  hemWidth?: number;
+export type Measurement = {
+  name: string;
+  value: string;
 };
 
 export type Product = {
   _id: string;
-  authorId: AuthorSummary;
+  author: AuthorSummary;
   name: string;
   brand: string;
-  categoryId: CategorySummary;
-  subCategoryId: SubCategorySummary;
-  genderId: GenderSummary;
+  category: Category;
+  subCategory: SubCategorySummary;
+  gender: GenderSummary;
   size: string;
-  fitId: FitSummary;
-  measurements: Measurements;
+  fit: FitSummary;
+  measurements: Measurement[];
   description: string;
-  price: number;
+}
+
+export type ProductRequest = {
+  _id?: string;
+  authorId: string;
+  name: string;
+  brand: string;
+  categoryId: string;
+  subCategoryId: string;
+  genderId: string;
+  size: string;
+  fitId: string;
+  measurements: Measurement[];
+  description: string;
+}
+
+export type ProductResponse = {
+  _id: string;
+  author: AuthorSummary;
+  name: string;
+  brand: string;
+  category: CategorySummary;
+  subCategory: string[];
+  gender: GenderSummary;
+  size: string;
+  fit: FitSummary;
+  measurements: Measurement;
+  description: string;
 }

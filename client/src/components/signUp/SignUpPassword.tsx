@@ -106,7 +106,7 @@ export default function SignUpPassword() {
           placeholder="영문, 숫자, 특수문자 포함한 8 ~ 16자리를 사용합니다."
           type={isShowPw.showPassword ? "text" : "password"}
           value={password}
-          onChangeString={handleChangePassword}
+          onChange={handleChangePassword}
           isValid={isPasswordValid}
           useBorderColor={true}
           required
@@ -129,7 +129,7 @@ export default function SignUpPassword() {
           placeholder="비밀번호를 다시 입력해주세요."
           type={isShowPw.showConfirmation ? "text" : "password"}
           value={passwordConfirmation}
-          onChangeString={handleChangePasswordConfirmation}
+          onChange={handleChangePasswordConfirmation}
           isValid={isPasswordConfirmationValid}
           useBorderColor={true}
           required

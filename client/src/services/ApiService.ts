@@ -1,6 +1,8 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
-import { Category, Gender, Product, User } from '../types';
+import {
+  Category, FitSummary, Gender, Product, ProductRequest, User
+} from '../types';
 
 const MOCK_BASE_URL = 'http://localhost:5000';
 
@@ -124,7 +126,16 @@ export default class ApiService {
     return categories;
   }
 
-  async fetchProducts({ categoryId, subCategoryId } : {
+  async createProduct({
+    authorId, name, brand, categoryId, subCategoryId, genderId, size, fitId, measurements, description,
+  }: ProductRequest): Promise<void> {
+    await this.instance.post('/products', {
+      authorId, name, brand, categoryId, subCategoryId, genderId, size, fitId,
+      measurements, description
+    });
+  }
+
+  async fetchProducts({ categoryId, subCategoryId }: {
     categoryId?: string, subCategoryId?: string
   } = {}): Promise<Product[]> {
     const { data } = await this.instance.get('/products', {
@@ -135,7 +146,7 @@ export default class ApiService {
     return products;
   }
 
-  async fetchMyProducts({ categoryId, subCategoryId } : {
+  async fetchMyProducts({ categoryId, subCategoryId }: {
     categoryId?: string, subCategoryId?: string
   } = {}): Promise<Product[]> {
     const { data } = await this.instance.get('/users/product', {
@@ -146,7 +157,7 @@ export default class ApiService {
     return products;
   }
 
-  async fetchCurrentUser(): Promise<User[]> {
+  async fetchCurrentUser(): Promise<User> {
     const { data } = await this.instance.get('/users/me');
     const { user } = data;
 
@@ -172,7 +183,14 @@ export default class ApiService {
     return id;
   }
 
-  async fetchGender(): Promise<Gender[]> {
+  async fetchFits(): Promise<FitSummary[]> {
+    const { data } = await this.instance.get('fits');
+    const { fits } = data;
+
+    return fits
+  }
+
+  async fetchGenders(): Promise<Gender[]> {
     const { data } = await this.instance.get('genders');
     const { genders } = data;
 
@@ -189,18 +207,18 @@ export default class ApiService {
   }
 
   async signup({
-    email, name, password, gender, height, weight, description
+    email, name, password, genderId, height, weight, description
   } : {
     email: string;
     name: string;
     password: string;
-    gender?: string;
-    height?: string;
-    weight?: string;
+    genderId?: string;
+    height?: number;
+    weight?: number;
     description?: string;
   }): Promise<string> {
     const { data } = await this.instance.post('/users', {
-      email, name, password, gender, height, weight, description
+      email, name, password, genderId, height, weight, description
     });
     const { accessToken } = data;
 

@@ -114,8 +114,6 @@ class SignupFormStore {
     this.isNameDuplicated = false;
   }
 
-
-
   private emailValidation = (email: string) => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -192,12 +190,11 @@ class SignupFormStore {
         email: this.email,
         name: this.name,
         password: this.password,
-        gender: this.gender?._id || '',
-        height: this.height,
-        weight: this.weight,
+        genderId: this.gender?._id || '',
+        height: Number(this.height),
+        weight: Number(this.weight),
         description: this.description,
       });
-
       this.setAccessToken(accessToken);
     } catch (error) {
       this.setError();

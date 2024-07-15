@@ -1,5 +1,4 @@
 import { container } from 'tsyringe';
-
 import { useStore } from 'usestore-ts';
 
 import LoginFormStore from '../stores/LoginFormStore';

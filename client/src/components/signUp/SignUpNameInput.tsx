@@ -67,7 +67,7 @@ export default function SignUpNameInput() {
           label="닉네임"
           placeholder="닉네임을 입력해주세요."
           value={name}
-          onChangeString={handleChangeName}
+          onChange={handleChangeName}
           isValid={isNameValid}
           isDuplicated={isNameDuplicated}
           useBorderColor={true}

@@ -10,9 +10,10 @@ import { apiService } from '../services/ApiService';
 class CategoriesStore {
   categories: Category[] = [];
 
+  allSubCategories: SubCategorySummary[] = [];
+
   async fetchCategories() {
     this.setCategories([]);
-
     const categories = await apiService.fetchCategories();
     this.setCategories(categories);
   }
@@ -20,6 +21,9 @@ class CategoriesStore {
   @Action()
   private setCategories(categories: Category[]) {
     this.categories = categories;
+    this.allSubCategories = categories.reduce<SubCategorySummary[]>(
+      (acc, category) => [...acc, ...category.subCategories], []
+    )
   }
 }
 

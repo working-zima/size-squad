@@ -2,8 +2,6 @@ import { singleton } from 'tsyringe';
 
 import { Store, Action } from 'usestore-ts';
 
-import { apiService } from '../services/ApiService';
-
 @singleton()
 @Store()
 class AutoLoginStore {
