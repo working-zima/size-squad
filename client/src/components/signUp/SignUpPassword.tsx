@@ -43,9 +43,12 @@ type ConfirmErrorMessageProps = {
 }
 
 const ConfirmErrorMessage = ({
-  passwordConfirmation, isPasswordConfirmationValid
+  isPasswordConfirmationValid
 }: ConfirmErrorMessageProps) => {
-  if (!isPasswordConfirmationValid) return ERROR_MESSAGES.CONFIRM_INVALID_MESSAGE;
+  if (!isPasswordConfirmationValid) {
+    return ERROR_MESSAGES.CONFIRM_INVALID_MESSAGE;
+  }
+
   return null;
 };
 
@@ -92,10 +95,12 @@ export default function SignUpPassword() {
   }
 
   const passwordErrorMessage = isTouched.passwordIsTouched
-  ? PasswordErrorMessage({ password, isPasswordValid }) : null;
+    ? PasswordErrorMessage({ password, isPasswordValid })
+    : null;
 
   const confirmErrorMessage = isTouched.confirmIsTouched
-  ? ConfirmErrorMessage({ passwordConfirmation, isPasswordConfirmationValid }) : null;
+    ? ConfirmErrorMessage({ passwordConfirmation, isPasswordConfirmationValid })
+    : null;
 
 
   return (
