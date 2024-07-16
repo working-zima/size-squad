@@ -3,6 +3,7 @@ const express = require("express");
 const {
   addCategoryRules, updateCategoryRules, createFitRules,
   createGenderRules,
+  tokenValidationRules,
 } = require("../utils/combinedValidation");
 const { adminController } = require("../controllers/adminController");
 
@@ -34,6 +35,12 @@ adminRouter.post(
   "/fits",
   createFitRules,
   adminController.postAddFit
+)
+
+adminRouter.post(
+  "/sizes",
+  tokenValidationRules,
+  adminController.postAddSize
 )
 
 module.exports = adminRouter;

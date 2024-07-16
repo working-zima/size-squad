@@ -25,7 +25,6 @@ const Product = {
         .populate({ path: "genderId", select: ["_id", "gender"] })
         .populate({ path: "fitId", select: ["_id", "fit"] })
         .lean();
-        console.log(`전체: `, productData)
       return productData;
     } catch(error) {
       throw error;

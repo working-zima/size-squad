@@ -39,9 +39,8 @@ const userService = {
   /** 내 정보 조회 */
   getMyInfo: async (accessToken) => {
     try {
-      const userId = getUserIdByAccessToken(accessToken)
+      const userId = getUserIdByAccessToken({ accessToken })
       const userData = await User.findById(userId);
-      console.log(userData)
       return userData;
     } catch (error) {
       throw error;
@@ -89,7 +88,7 @@ const userService = {
   /** 내 정보 삭제 */
   deleteMe: async (accessToken) => {
     try {
-      const userId = getUserIdByAccessToken(accessToken)
+      const userId = getUserIdByAccessToken({ accessToken })
       await User.deleteUser(userId);
       await Token.deleteToken(userId);
 

@@ -3,16 +3,18 @@ import { Action, Store } from 'usestore-ts';
 
 import {
   AuthorSummary, Category, FitSummary, GenderSummary, Measurement,
-  Product, SubCategorySummary
+  Product, Size, SubCategorySummary
 } from '../types';
 
 import {
   nullAuthorSummary, nullCateogry, nullFitSummary, nullGender,
+  nullSize,
   nullSubCategorySummary
 } from '../nullObject';
 
 import { apiService } from '../services/ApiService';
-import { append, update } from '../utils';
+
+import { append, inputSanitizer, update } from '../utils';
 
 @singleton()
 @Store()
@@ -31,7 +33,7 @@ class ProductFormStore {
 
   gender: GenderSummary = nullGender;
 
-  size = '';
+  size: Size = nullSize;
 
   fit: FitSummary = nullFitSummary;
 
@@ -41,9 +43,24 @@ class ProductFormStore {
 
   currentSubCategories: SubCategorySummary[] = [];
 
+  isBrandValid = false;
+
   error = false;
 
   done = false;
+
+  get valid() {
+    return this.isBrandValid
+  }
+
+  private brandValidation = (brand: string) => {
+    return brand.length < 28 && brand.length > 0;
+  }
+
+  @Action()
+  validateEmail(brand: string) {
+    this.isBrandValid = this.brandValidation(brand);
+  }
 
   @Action()
   reset() {
@@ -54,7 +71,7 @@ class ProductFormStore {
     this.category = nullCateogry;
     this.subCategory = nullSubCategorySummary;
     this.gender = nullGender;
-    this.size = '';
+    this.size = nullSize;
     this.fit = nullFitSummary;
     this.measurements = [];
     this.description = '';
@@ -110,7 +127,7 @@ class ProductFormStore {
   }
 
   @Action()
-  changeSize(size: string) {
+  changeSize(size: Size) {
     this.size = size;
   }
 
@@ -136,19 +153,11 @@ class ProductFormStore {
 
   @Action()
   changeMeasurementValue(index: number, value: string) {
-    let sanitized = value.replace(/[^0-9.]/g, '');
-
-    const parts = sanitized.split('.');
-
-    console.log(`changeMeasurementValue: `, parts);
-
-    if (sanitized.length > 3) {
-      sanitized = sanitized.slice(0, 4);
-    }
+    const sanitizedValue = inputSanitizer(value)
 
     this.measurements = update(this.measurements, index, (measurement) => ({
       ...measurement,
-      value: sanitized,
+      value: sanitizedValue,
     }));
   }
 
@@ -182,9 +191,12 @@ class ProductFormStore {
         categoryId: this.category?._id || '',
         subCategoryId: this.subCategory?._id || '',
         genderId: this.gender?._id || '',
-        size: this.size,
+        sizeId: this.size._id || '',
         fitId: this.fit?._id || '',
-        measurements: this.measurements,
+        measurements: this.measurements.map(measurement => ({
+          name: measurement.name,
+          value: Number(measurement.value)
+        })),
         description: this.description,
       });
 

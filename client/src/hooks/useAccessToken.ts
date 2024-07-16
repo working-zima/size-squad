@@ -9,12 +9,11 @@ import useAutoLoginStore from './useAutoLoginStore';
 export default function useAccessToken() {
   const [{ isAutoLogin }] = useAutoLoginStore();
 
-  const [localAccessToken, setLocalAccessToken] = useLocalStorage(
-    'accessToken', ''
-  );
-  const [sessionAccessToken, setSessionAccessToken] = useSessionStorage(
-    'accessToken', ''
-  );
+  const [localAccessToken, setLocalAccessToken]
+    = useLocalStorage('accessToken', '');
+
+  const [sessionAccessToken, setSessionAccessToken]
+    = useSessionStorage('accessToken', '');
 
   const accessToken = isAutoLogin ? localAccessToken : sessionAccessToken;
 

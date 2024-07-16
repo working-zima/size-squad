@@ -91,7 +91,6 @@ const userController = {
 
       // 서브 카테고리
       if(subCategoryId) {
-        console.log(`서브: `)
         productData = await productService.getProductByUserIdAndSubCategoryId({
           userId, subCategoryId: subCategoryId
         });
@@ -99,7 +98,6 @@ const userController = {
 
       // 카테고리
       if(categoryId && !subCategoryId) {
-        console.log(`카테고리: `)
         productData = await productService.getProductByUserIdAndCategoryId({
           userId, categoryId: categoryId
         });
@@ -130,6 +128,7 @@ const userController = {
       const userAccessToken = req.headers["authorization"];
 
       const userData = await userService.getMyInfo(userAccessToken);
+
       const { role, ...userDataWithoutRole } = userData;
 
       res.status(200).json({ user: userDataWithoutRole });

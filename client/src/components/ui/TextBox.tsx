@@ -143,10 +143,12 @@ export default function TextBox({
   const handleBlur = () => setIsFocused(false);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+
     setIsTouched(true);
-    if (!onChange) {
-      return;
-    }
+
+    if (!onChange) return;
+
     onChange(event.target.value);
   };
 
@@ -155,8 +157,8 @@ export default function TextBox({
       {!!label && (
         <label htmlFor={id.current}>
           {label}
-        </label>)
-      }
+        </label>
+      )}
       <TextBoxWrapper
         isFocused={isFocused}
         isTouched={isTouched}

@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-import styled, { css } from "styled-components";
-import { CiRead, CiCircleRemove, CiUnread } from "react-icons/ci";
+import styled from "styled-components";
+import { CiCircleRemove } from "react-icons/ci";
 
 import TextBox from "../ui/TextBox";
 import Button from "../ui/Button";
@@ -87,13 +87,13 @@ export default function SignUpForm({ genders }: SignUpFormProps){
   }, [accessToken]);
 
   const handleChangeHeight = (value: string) => {
-    let sanitized = value.replace(/[^0-9]/g, '');
+    let sanitizedValue = value.replace(/[^0-9]/g, '');
 
-    if (sanitized.length > 3) {
-      sanitized = sanitized.slice(0, 3);
+    if (sanitizedValue.length > 3) {
+      sanitizedValue = sanitizedValue.slice(0, 3);
     }
 
-    store.changeHeight(sanitized);
+    store.changeHeight(sanitizedValue);
   };
 
   const handleResetHeight = () => {
@@ -101,13 +101,13 @@ export default function SignUpForm({ genders }: SignUpFormProps){
   }
 
   const handleChangeWeight = (value: string) => {
-    let sanitized = value.replace(/[^0-9]/g, '');
+    let sanitizedValue = value.replace(/[^0-9]/g, '');
 
-    if (sanitized.length > 3) {
-      sanitized = sanitized.slice(0, 3);
+    if (sanitizedValue.length > 3) {
+      sanitizedValue = sanitizedValue.slice(0, 3);
     }
 
-    store.changeWeight(sanitized);
+    store.changeWeight(sanitizedValue);
   };
 
   const handleResetWeight = () => {

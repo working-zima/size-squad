@@ -14,11 +14,11 @@ const adminController = {
     }
     try {
       const { category, subCategories, measurements } = req.body;
-      const userAccessToken = req.headers["authorization"];
+      const accessToken = req.headers["authorization"];
 
-      await adminService.addCategory(
-        userAccessToken, { category, subCategories, measurements }
-      );
+      const categoryData = { category, subCategories, measurements }
+
+      await adminService.addCategory({ accessToken, categoryData });
 
       res.status(201).json();
     } catch (error) {
@@ -37,10 +37,13 @@ const adminController = {
     }
     try {
       const { categoryId } = req.params;
-      const userAccessToken = req.headers["authorization"];
+      const accessToken = req.headers["authorization"];
       const { category, subCategories, measurements } = req.body;
+
+      const categoryData = {category, subCategories, measurements}
+
       await adminService.updateCategory(
-        userAccessToken, categoryId, {category, subCategories, measurements}
+        { accessToken, categoryId, categoryData }
       );
 
       res.status(201).json();
@@ -60,11 +63,10 @@ const adminController = {
     }
     try {
       const { gender, size } = req.body;
-      const userAccessToken = req.headers["authorization"];
+      const sizeData = { gender, size }
+      const accessToken = req.headers["authorization"];
 
-      await adminService.addGender(
-        userAccessToken, { gender, size }
-      );
+      await adminService.addGender({ accessToken, sizeData });
 
       res.status(201).json();
     } catch (error) {
@@ -83,15 +85,36 @@ const adminController = {
     }
     try {
       const { fit } = req.body;
-      const userAccessToken = req.headers["authorization"];
+      const accessToken = req.headers["authorization"];
 
-      await adminService.addFit(userAccessToken, fit);
+      await adminService.addFit({ accessToken, fit });
 
       res.status(201).json();
     } catch (error) {
       next(error);
     }
   },
+
+  /** 사이즈 등록 */
+  postAddSize: async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const error = new Error('Validation failed.');
+      error.statusCode = 422;
+      error.data = errors.array();
+      return next(error);
+    }
+    try {
+      const { size, genderId, type } = req.body;
+      const accessToken = req.headers["authorization"];
+
+      await adminService.addSize({ accessToken, size, genderId, type  });
+
+      res.status(201).json();
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 exports.adminController = adminController;

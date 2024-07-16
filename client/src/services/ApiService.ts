@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 import {
-  Category, FitSummary, Gender, Product, ProductRequest, User
+  Category, FitSummary, Gender, Product, ProductRequest, Size, User
 } from '../types';
 
 const MOCK_BASE_URL = 'http://localhost:5000';
@@ -127,10 +127,10 @@ export default class ApiService {
   }
 
   async createProduct({
-    authorId, name, brand, categoryId, subCategoryId, genderId, size, fitId, measurements, description,
+    authorId, name, brand, categoryId, subCategoryId, genderId, sizeId, fitId, measurements, description,
   }: ProductRequest): Promise<void> {
     await this.instance.post('/products', {
-      authorId, name, brand, categoryId, subCategoryId, genderId, size, fitId,
+      authorId, name, brand, categoryId, subCategoryId, genderId, sizeId, fitId,
       measurements, description
     });
   }
@@ -195,6 +195,13 @@ export default class ApiService {
     const { genders } = data;
 
     return genders;
+  }
+
+  async fetchSizes(): Promise<Size[]> {
+    const { data } = await this.instance.get('sizes');
+    const { sizes } = data;
+
+    return sizes;
   }
 
   async login({email, password} : {

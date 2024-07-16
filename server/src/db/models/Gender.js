@@ -1,9 +1,9 @@
 const { GenderModel } = require("../schemas/gender");
 
 const Gender = {
-  create: async (newSize) => {
+  create: async ({ gender }) => {
     try {
-      await GenderModel.create(newSize);
+      await GenderModel.create(gender);
 
       return;
     } catch(error) {
@@ -11,10 +11,10 @@ const Gender = {
     }
   },
 
-  findByGender: async ({gender}) => {
+  findByGender: async ({ gender }) => {
     try {
       const genderData = await GenderModel.findOne(
-        {gender}, "_id gender size"
+        {gender}, "_id gender"
       ).lean();
 
       return genderData;
@@ -25,7 +25,7 @@ const Gender = {
 
   findAll: async () => {
     try {
-      const genderData = await GenderModel.find({}, "_id gender size").lean();
+      const genderData = await GenderModel.find({}, "_id gender").lean();
 
       return genderData;
     } catch (error) {

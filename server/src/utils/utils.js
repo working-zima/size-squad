@@ -20,7 +20,7 @@ const generateJwtToken = ({ userId, secretKey, expiresIn }) => {
   );
 }
 
-const getUserIdByAccessToken = (accessToken) => {
+const getUserIdByAccessToken = ({ accessToken }) => {
   const jwtDecoded = jwt.verify(accessToken, process.env.JWT_SECRET_KEY);
   return jwtDecoded.userId;
 }

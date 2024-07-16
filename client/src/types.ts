@@ -46,13 +46,24 @@ export type Category = {
 export type Gender = {
   _id: string;
   gender: string;
-  size: string[];
 }
 
 export type Measurement = {
   name: string;
   value: string;
 };
+
+export type MeasurementRequest = {
+  name: string;
+  value: number;
+}
+
+export type Size = {
+  _id: string;
+  size: string;
+  genderId: Gender;
+  type: string;
+}
 
 export type Product = {
   _id: string;
@@ -62,7 +73,7 @@ export type Product = {
   category: Category;
   subCategory: SubCategorySummary;
   gender: GenderSummary;
-  size: string;
+  size: Size;
   fit: FitSummary;
   measurements: Measurement[];
   description: string;
@@ -76,9 +87,9 @@ export type ProductRequest = {
   categoryId: string;
   subCategoryId: string;
   genderId: string;
-  size: string;
+  sizeId: string;
   fitId: string;
-  measurements: Measurement[];
+  measurements: MeasurementRequest[];
   description: string;
 }
 

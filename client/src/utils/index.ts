@@ -9,6 +9,12 @@ export function remove<T>(items: T[], index: number) {
   ];
 }
 
+/**
+ * `items`의 `index`에 있는 값을 `callback`의 반환 값으로 업데이트
+ * @param items
+ * @param index
+ * @param callback
+ */
 export function update<T>(items: T[], index: number, f: (value: T) => T) {
   return items.map((item, i) => (i === index ? f(item) : item));
 }
@@ -44,3 +50,26 @@ export function debounceCallback<T extends(...args: unknown[]) => void>(
   };
 }
 
+export function inputSanitizer(value: string) {
+  let sanitizedValue = value.replace(/[^0-9.]/g, '');
+
+  // '.'으로 시작하는 경우 앞에 '0' 붙임
+  if (sanitizedValue.startsWith('.')) sanitizedValue = '0' + sanitizedValue;
+
+  const parts = sanitizedValue.split('.');
+
+  if (parts.length > 2) {
+    sanitizedValue = parts[0] + '.' + parts.slice(1).join('').slice(0, 1);
+  }
+
+  //  정수 부분 3자리 제한
+  if (parts[0].length > 3) sanitizedValue = sanitizedValue.slice(0, 3);
+
+  // 소수 부분이 1자리 제한
+  if (parts.length === 2 && parts[1].length > 1) {
+    parts[1] = parts[1].slice(0, 1);
+    sanitizedValue = `${parts[0]}.${parts[1]}`;
+  }
+
+  return sanitizedValue;
+}

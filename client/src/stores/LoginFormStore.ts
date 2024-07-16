@@ -53,7 +53,6 @@ class LoginFormStore {
         email: this.email,
         password: this.password,
       });
-
       this.setAccessToken(accessToken);
     } catch (error) {
       this.setError();

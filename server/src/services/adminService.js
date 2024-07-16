@@ -1,6 +1,7 @@
 const { Category } = require("../db/models/Category");
 const { Fit } = require("../db/models/Fit");
 const { Gender } = require("../db/models/Gender");
+const { Size } = require("../db/models/Size");
 const { SubCategory } = require("../db/models/SubCategory");
 const { User } = require("../db/models/User");
 
@@ -9,9 +10,9 @@ const { getUserIdByAccessToken } = require("../utils/utils");
 
 const adminService = {
   /** 카테고리 등록 */
-  addCategory: async (accessToken, categoryData) => {
+  addCategory: async ({ accessToken, categoryData }) => {
     try {
-      const userId = getUserIdByAccessToken(accessToken);
+      const userId = getUserIdByAccessToken({ accessToken });
       const userData = await User.findById(userId);
 
       if(!userData.role) {
@@ -32,9 +33,9 @@ const adminService = {
     }
   },
 
-  updateCategory: async (accessToken, categoryId, categoryData) => {
+  updateCategory: async ({ accessToken, categoryId, categoryData }) => {
     try {
-      const userId = getUserIdByAccessToken(accessToken);
+      const userId = getUserIdByAccessToken({ accessToken });
       const userData = await User.findById(userId);
 
       if(!userData.role) {
@@ -51,9 +52,9 @@ const adminService = {
     }
   },
 
-  addGender: async (accessToken, sizeData) => {
+  addGender: async ({ accessToken, sizeData }) => {
     try {
-      const userId = getUserIdByAccessToken(accessToken);
+      const userId = getUserIdByAccessToken({ accessToken });
       const userData = await User.findById(userId);
 
       if(!userData.role) {
@@ -68,16 +69,34 @@ const adminService = {
     }
   },
 
-  addFit: async (accessToken, fit) => {
+  addFit: async ({ accessToken, fit }) => {
     try {
-      const userId = getUserIdByAccessToken(accessToken);
+      const userId = getUserIdByAccessToken({ accessToken });
       const userData = await User.findById(userId);
 
       if(!userData.role) {
         throw new CustomError('Unauthorized access', 403);
       }
 
-      await Fit.create({fit});
+      await Fit.create({ fit });
+
+      return;
+    } catch(error) {
+      throw error;
+    }
+  },
+
+  addSize: async ({ accessToken, size, genderId, type  }) => {
+    try {
+      const userId = getUserIdByAccessToken({ accessToken });
+      const userData = await User.findById(userId);
+      const newSize = { size, genderId, type }
+
+      if(!userData.role) {
+        throw new CustomError('Unauthorized access', 403);
+      }
+
+      await Size.create({ newSize })
 
       return;
     } catch(error) {
