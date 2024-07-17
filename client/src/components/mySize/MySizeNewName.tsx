@@ -8,6 +8,11 @@ import Button from '../ui/Button';
 export default function MySizeNewName() {
   const [{ name }, store] = useProductFormStore();
 
+  const handleChangeName = (value: string) => {
+    store.changeName(value);
+    store.validateName(value);
+  }
+
   const handleResetName = () => {
     store.changeName('');
   }
@@ -18,7 +23,7 @@ export default function MySizeNewName() {
       placeholder="품번 또는 상품명을 입력해주세요."
       type="text"
       value={name}
-      onChange={(value) => store.changeName(value)}
+      onChange={(value) => handleChangeName(value)}
     >
       <Button onClick={handleResetName}>
         {!!name && <CiCircleRemove size="18" fill='#6e6e6e'/>}

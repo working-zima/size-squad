@@ -14,6 +14,7 @@ export default function MySizeNewDescription() {
       label="후기"
       placeholder="후기를 입력해주세요."
       type="text"
+      maxLength={100}
       value={description}
       multiline={true}
       onChange={handleChangeDescription}

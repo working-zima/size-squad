@@ -33,6 +33,7 @@ export default function SignUpHeightInput() {
       placeholder="키를 입력해주세요."
       type="text"
       value={height}
+      maxLength={3}
       onChange={handleChangeHeight}
     >
       <Metrics>

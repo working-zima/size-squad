@@ -69,7 +69,7 @@ type MySizeNewFormProps = {
 export default function MySizeNewForm({
   categories, genders, fits, sizes, onComplete
 }: MySizeNewFormProps) {
-  const [{ category: selectedCategory, description, error, done, valid
+  const [{ category: selectedCategory, error, done, valid
   }, store] = useProductFormStore();
 
   const measurement = categories
@@ -85,14 +85,16 @@ export default function MySizeNewForm({
     store.resetMeasurements();
 
     measurement.forEach((measurement, idx) => {
+      console.log(`MySizeNewForm: `,measurement)
       store.addMeasurement();
       store.changeMeasurementName(idx, measurement);
     });
 
   }, [selectedCategory, store]);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    await store.create();
   };
 
   return (

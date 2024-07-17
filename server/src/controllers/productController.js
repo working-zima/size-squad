@@ -35,6 +35,42 @@ const productController = {
     }
   },
 
+  postProduct: async (req, res, next) => {
+    try {
+      const {
+        authorId,
+        name,
+        brand,
+        categoryId,
+        subCategoryId,
+        genderId,
+        sizeId,
+        fitId,
+        measurements,
+        description,
+      } = req.body;
+
+      const newProduct = {
+        authorId,
+        name,
+        brand,
+        categoryId,
+        subCategoryId,
+        genderId,
+        sizeId,
+        fitId,
+        measurements,
+        description,
+      }
+
+      productService.addProduct({ newProduct })
+
+      res.status(200).json({});
+    } catch(error) {
+      next(error);
+    }
+  },
+
   /** 개별 product 조회 */
   getProduct: async (req, res, next) => {
     try {

@@ -2,9 +2,10 @@ const { Product } = require("../db/models/Product");
 
 const productService = {
   /** product 등록 */
-  addProduct: async (newProduct) => {
+  addProduct: async ({ newProduct }) => {
     try {
-      await Product.create(newProduct)
+
+      await Product.create({ newProduct })
 
       return;
     } catch(error) {

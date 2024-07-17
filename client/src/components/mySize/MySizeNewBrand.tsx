@@ -10,7 +10,7 @@ export default function MySizeNewBrand() {
 
   const handleChangeBrand = (value: string) => {
     store.changeBrand(value);
-    store.validateEmail(value);
+    store.validateBrand(value);
   }
 
   const handleResetBrand = () => {

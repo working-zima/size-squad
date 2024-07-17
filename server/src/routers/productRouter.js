@@ -7,6 +7,9 @@ const { productController } = require("../controllers/productController");
 /** product 조회 */
 productRouter.get("/", productController.getProducts);
 
+productRouter.post("/", productController.postProduct)
+
 productRouter.get("/:productId", productController.getProducts);
+
 
 module.exports = productRouter;

@@ -14,7 +14,7 @@ import {
 
 import { apiService } from '../services/ApiService';
 
-import { append, inputSanitizer, update } from '../utils';
+import { append, sanitizeMeasurementInput, update } from '../utils';
 
 @singleton()
 @Store()
@@ -43,14 +43,20 @@ class ProductFormStore {
 
   currentSubCategories: SubCategorySummary[] = [];
 
-  isBrandValid = false;
-
   error = false;
 
   done = false;
 
+  private isBrandValid = false;
+
+  private isNameValid = false;
+
+  private isMeasurementValid = false;
+
   get valid() {
     return this.isBrandValid
+      && this.isNameValid
+      && this.isMeasurementValid
   }
 
   private brandValidation = (brand: string) => {
@@ -58,8 +64,26 @@ class ProductFormStore {
   }
 
   @Action()
-  validateEmail(brand: string) {
+  validateBrand(brand: string) {
     this.isBrandValid = this.brandValidation(brand);
+  }
+
+  private nameValidation = (name: string) => {
+    return name.length < 30 && name.length > 0;
+  }
+
+  @Action()
+  validateName(name: string) {
+    this.isNameValid = this.nameValidation(name)
+  }
+
+  private measurementValidation = () => {
+    return this.measurements.every(measurement => measurement.value.length > 0);
+  }
+
+  @Action()
+  validateMeasurement() {
+    this.isMeasurementValid = this.measurementValidation();
   }
 
   @Action()
@@ -153,17 +177,19 @@ class ProductFormStore {
 
   @Action()
   changeMeasurementValue(index: number, value: string) {
-    const sanitizedValue = inputSanitizer(value)
+    const sanitizedValue = sanitizeMeasurementInput(value)
 
     this.measurements = update(this.measurements, index, (measurement) => ({
       ...measurement,
       value: sanitizedValue,
     }));
+    this.validateMeasurement();
   }
 
   @Action()
   resetMeasurements() {
     this.measurements = [];
+    this.validateMeasurement();
   }
 
 

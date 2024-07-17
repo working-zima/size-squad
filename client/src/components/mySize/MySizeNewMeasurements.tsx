@@ -15,6 +15,10 @@ const Metrics = styled.div`
 export default function MySizeNewMeasurements() {
   const [{ measurements }, store] = useProductFormStore();
 
+  const handleChangeMeasurement = (index: number, value: string) => {
+    store.changeMeasurementValue(index, value)
+  }
+
   const handleResetMeasurement = (index: number) => {
     store.changeMeasurementValue(index, '')
   }
@@ -29,7 +33,7 @@ export default function MySizeNewMeasurements() {
             placeholder={`${measurement.name}을 입력해주세요.`}
             type="text"
             value={measurement.value}
-            onChange={(value) => store.changeMeasurementValue(index, value)}
+            onChange={(value) => handleChangeMeasurement(index, value)}
           >
             <Metrics>
               <span>cm</span>

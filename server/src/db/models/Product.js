@@ -2,7 +2,7 @@ const ProductModel = require("../schemas/product");
 
 const Product = {
   /** 서브 카테고리 생성 */
-  create: async (newProduct) => {
+  create: async ({ newProduct }) => {
     try {
       await ProductModel.create(newProduct)
 

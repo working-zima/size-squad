@@ -50,7 +50,8 @@ export function debounceCallback<T extends(...args: unknown[]) => void>(
   };
 }
 
-export function inputSanitizer(value: string) {
+/** 정수 3자리, 소수 1자리 제한 */
+export function sanitizeMeasurementInput(value: string) {
   let sanitizedValue = value.replace(/[^0-9.]/g, '');
 
   // '.'으로 시작하는 경우 앞에 '0' 붙임
@@ -58,12 +59,19 @@ export function inputSanitizer(value: string) {
 
   const parts = sanitizedValue.split('.');
 
+  // .이 한 개 이상일 경우 처리
   if (parts.length > 2) {
-    sanitizedValue = parts[0] + '.' + parts.slice(1).join('').slice(0, 1);
+    `${sanitizedValue = parts[0]}.${parts.slice(1).join('').slice(0, 1)}`;
   }
 
-  //  정수 부분 3자리 제한
-  if (parts[0].length > 3) sanitizedValue = sanitizedValue.slice(0, 3);
+  // 정수 부분 3자리 제한
+  if (parts[0].length > 3 && parts[1]) {
+    sanitizedValue = [parts[0].slice(0, 3), parts[1]].join('.')
+  };
+
+  if (parts[0].length > 3 && !parts[1]) {
+    sanitizedValue = sanitizedValue.slice(0, 3)
+  }
 
   // 소수 부분이 1자리 제한
   if (parts.length === 2 && parts[1].length > 1) {

@@ -11,8 +11,6 @@ import useAccessToken from "../hooks/useAccessToken";
 import useFetchGender from "../hooks/useFetchGenders";
 import useFetchUser from "../hooks/useFetchUser";
 import useFetchFits from "../hooks/useFetchFits";
-
-import { nullFitSummary, nullGender, nullSize } from "../nullObject";
 import useFetchSize from "../hooks/useFetchSize";
 
 export default function MySizeNewPage() {
@@ -25,11 +23,11 @@ export default function MySizeNewPage() {
   const { gender } = useFetchUser()
   const { fits } = useFetchFits()
   const { sizes } = useFetchSize()
-
   const [, store] = useProductFormStore();
 
-  const addNullObjectGenders = [nullGender, ...genders]
-  const addNullObjectFits = [nullFitSummary, ...fits]
+  useEffect(() => {
+    store.reset();
+  }, []);
 
   useEffect(() => {
     if (!categories.length) return;
@@ -37,7 +35,7 @@ export default function MySizeNewPage() {
 
     store.changeCategory(categories[0]);
     store.changeSubCategory(categories[0].subCategories[0]);
-  }, [store, categories]);
+  }, [store, categories, gender]);
 
   const handleComplete = () => {
     navigate('/mysize');
@@ -57,7 +55,7 @@ export default function MySizeNewPage() {
     <MySizeNewForm
       categories={categories}
       genders={genders}
-      fits={addNullObjectFits}
+      fits={fits}
       sizes={sizes}
       onComplete={handleComplete}
     />

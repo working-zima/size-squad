@@ -47,6 +47,19 @@ const ProductSchema = new Schema(
       type: String,
       default: () => String(new Types.ObjectId())
     },
+    authorId: {
+      type: String,
+      required: true,
+      ref: "User",
+    },
+    name: {
+      type: String,
+      required: true,
+    },
+    brand: {
+      type: String,
+      required: true,
+    },
     categoryId: {
       type: String,
       required: true,
@@ -57,25 +70,12 @@ const ProductSchema = new Schema(
       required: true,
       ref: "SubCategory",
     },
-    authorId: {
-      type: String,
-      required: true,
-      ref: "User",
-    },
-    brand: {
-      type: String,
-      required: true,
-    },
-    name: {
-      type: String,
-      required: true,
-    },
     genderId: {
       type: String,
       required: true,
       ref: "Gender"
     },
-    size: {
+    sizeId: {
       type: String,
       required: true,
     },
@@ -92,10 +92,6 @@ const ProductSchema = new Schema(
       type: String,
       required: false,
     },
-    price: {
-      type: Number,
-      required: false
-    }
   },
   { timestamps: true },
   { versionKey : false}
