@@ -85,9 +85,8 @@ export default function MySizeNewForm({
     store.resetMeasurements();
 
     measurement.forEach((measurement, idx) => {
-      console.log(`MySizeNewForm: `,measurement)
       store.addMeasurement();
-      store.changeMeasurementName(idx, measurement);
+      store.changeMeasurementAndId(idx, measurement._id, measurement.measurement);
     });
 
   }, [selectedCategory, store]);

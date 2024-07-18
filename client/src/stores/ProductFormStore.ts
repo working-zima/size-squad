@@ -162,15 +162,16 @@ class ProductFormStore {
 
   @Action()
   addMeasurement() {
-    const measurement = { name: '', value: '' };
+    const measurement = { _id: '', name: '', value: '' };
 
     this.measurements = append(this.measurements, measurement);
   }
 
   @Action()
-  changeMeasurementName(index: number, name: string) {
+  changeMeasurementAndId(index: number, _id: string, name: string) {
     this.measurements = update(this.measurements, index, (measurement) => ({
       ...measurement,
+      _id,
       name,
     }));
   }

@@ -19,10 +19,11 @@ const CategorySchema = new Schema(
       required: true,
       ref: "SubCategory"
     }],
-    measurements: {
-      type: Array,
+    measurements: [{
+      type: String,
       required: true,
-    }
+      ref: "Measurement"
+    }]
   },
   { timestamps: true },
   { versionKey : false }

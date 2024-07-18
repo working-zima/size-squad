@@ -23,6 +23,11 @@ export type AuthorSummary = {
   name: string;
 }
 
+export type MeasurementSummary = {
+  _id: string;
+  measurement: string;
+}
+
 export type User = {
   _id: string;
   name: string;
@@ -40,7 +45,7 @@ export type Category = {
   _id: string;
   category: string;
   subCategories: SubCategorySummary[];
-  measurements: string[]
+  measurements: MeasurementSummary[]
 }
 
 export type Gender = {
@@ -49,6 +54,7 @@ export type Gender = {
 }
 
 export type Measurement = {
+  _id: string;
   name: string;
   value: string;
 };

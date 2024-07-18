@@ -15,6 +15,7 @@ class CategoriesStore {
   async fetchCategories() {
     this.setCategories([]);
     const categories = await apiService.fetchCategories();
+
     this.setCategories(categories);
   }
 

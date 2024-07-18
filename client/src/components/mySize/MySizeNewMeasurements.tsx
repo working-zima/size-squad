@@ -8,6 +8,8 @@ import { key } from '../../utils';
 import TextBox from '../ui/TextBox';
 import Button from '../ui/Button';
 
+import { MEASUREMENT_MESSAGES } from '../../constants';
+
 const Metrics = styled.div`
   color: ${props => props.theme.colors.unSelectedText};
 `
@@ -29,8 +31,8 @@ export default function MySizeNewMeasurements() {
         .map((measurement, index) => (
           <TextBox
             key={key(measurement.name, index)}
-            label={measurement.name}
-            placeholder={`${measurement.name}을 입력해주세요.`}
+            label={MEASUREMENT_MESSAGES[measurement.name]}
+            placeholder={`${MEASUREMENT_MESSAGES[measurement.name]}을 입력해주세요.`}
             type="text"
             value={measurement.value}
             onChange={(value) => handleChangeMeasurement(index, value)}

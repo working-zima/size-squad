@@ -9,6 +9,7 @@ const productRouter = require("./routers/productRouter");
 const fitRouter = require("./routers/fitRouter");
 const genderRouter = require("./routers/genderRouter");
 const sizeRouter = require("./routers/sizeRouter");
+const measurementRouter = require("./routers/measurementRouter");
 
 const { errorMiddleware } = require("./middlewares/errorMiddleware");
 
@@ -28,6 +29,7 @@ app.use('/products', productRouter);
 app.use('/fits', fitRouter);
 app.use('/genders', genderRouter);
 app.use('/sizes', sizeRouter);
+app.use('/measurements', measurementRouter);
 
 /* 에러 처리 미들웨어 */
 app.use(errorMiddleware);

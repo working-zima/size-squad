@@ -1,6 +1,7 @@
 const { Category } = require("../db/models/Category");
 const { Fit } = require("../db/models/Fit");
 const { Gender } = require("../db/models/Gender");
+const { Measurement } = require("../db/models/Measurement");
 const { Size } = require("../db/models/Size");
 const { SubCategory } = require("../db/models/SubCategory");
 const { User } = require("../db/models/User");
@@ -97,6 +98,23 @@ const adminService = {
       }
 
       await Size.create({ newSize })
+
+      return;
+    } catch(error) {
+      throw error;
+    }
+  },
+
+  addMeasurement: async ({ accessToken, measurement }) => {
+    try {
+      const userId = getUserIdByAccessToken({ accessToken });
+      const userData = await User.findById(userId);
+
+      if(!userData.role) {
+        throw new CustomError('Unauthorized access', 403);
+      }
+
+      await Measurement.create({ measurement })
 
       return;
     } catch(error) {

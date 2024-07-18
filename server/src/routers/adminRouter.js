@@ -37,10 +37,18 @@ adminRouter.post(
   adminController.postAddFit
 )
 
+/** 사이즈 등록 */
 adminRouter.post(
   "/sizes",
   tokenValidationRules,
   adminController.postAddSize
+)
+
+/** 치수 등록 */
+adminRouter.post(
+  "/measurements",
+  tokenValidationRules,
+  adminController.postAddMeasurements
 )
 
 module.exports = adminRouter;

@@ -114,6 +114,27 @@ const adminController = {
     } catch (error) {
       next(error);
     }
+  },
+
+  /** 사이즈 등록 */
+  postAddMeasurements: async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const error = new Error('Validation failed.');
+      error.statusCode = 422;
+      error.data = errors.array();
+      return next(error);
+    }
+    try {
+      const { measurement } = req.body;
+      const accessToken = req.headers["authorization"];
+
+      await adminService.addMeasurement({ accessToken, measurement });
+
+      res.status(201).json();
+    } catch (error) {
+      next(error);
+    }
   }
 }
 
