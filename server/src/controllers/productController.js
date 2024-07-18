@@ -1,4 +1,8 @@
+const { validationResult } = require('express-validator');
+
 const { productService } = require('../services/productService');
+
+const { Token } = require('../db/models/Token');
 
 const CustomError = require('../utils/CustomError');
 
@@ -35,38 +39,37 @@ const productController = {
     }
   },
 
-  postProduct: async (req, res, next) => {
+  /** product 등록 */
+  postAddProducts: async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const error = new Error('Validation failed');
+      error.statusCode = 400;
+      error.data = errors.array();
+      return next(error);
+    }
     try {
       const {
-        authorId,
-        name,
-        brand,
-        categoryId,
-        subCategoryId,
-        genderId,
-        sizeId,
-        fitId,
-        measurements,
-        description,
+        categoryId, subCategoryId, brand, name, genderId, sizeId, fitId,
+        measurements, description
       } = req.body;
 
-      const newProduct = {
-        authorId,
-        name,
-        brand,
-        categoryId,
-        subCategoryId,
-        genderId,
-        sizeId,
-        fitId,
-        measurements,
-        description,
+      const requestAccessToken = req.headers["authorization"];
+
+      const { userId, accessToken } = await Token.findByAccessToken({
+        accessToken: requestAccessToken
+      })
+
+      if (requestAccessToken !== accessToken) {
+        throw new CustomError('Access Token mismatch', 403);
       }
+
+      const newProduct = { authorId: userId, categoryId, subCategoryId, brand, name, genderId, sizeId, fitId, measurements, description}
 
       productService.addProduct({ newProduct })
 
-      res.status(200).json({});
-    } catch(error) {
+      res.status(201).json();
+    } catch (error) {
       next(error);
     }
   },

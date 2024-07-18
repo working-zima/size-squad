@@ -34,42 +34,6 @@ const userController = {
     }
   },
 
-  /** product 등록 */
-  postAddProducts: async (req, res, next) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      const error = new Error('Validation failed');
-      error.statusCode = 400;
-      error.data = errors.array();
-      return next(error);
-    }
-    try {
-      const {
-        categoryId, subCategoryId, authorId, brand, name, genderId, size, fitId,
-        measurements, description, price
-      } = req.body;
-
-      const userAccessToken = req.headers["authorization"];
-
-      const tokenData = await Token.findByAccessToken({
-        accessToken: userAccessToken
-      })
-
-      if (userAccessToken !== tokenData.accessToken) {
-        throw new CustomError('Access Token mismatch', 403);
-      }
-
-      productService.addProduct({
-        categoryId, subCategoryId, authorId, brand, name, genderId, size, fitId,
-        measurements, description, price
-      })
-
-      res.status(201).json();
-    } catch (error) {
-      next(error);
-    }
-  },
-
   /** 회원 product 조회 */
   getMyProduct: async (req, res, next) => {
     const errors = validationResult(req);

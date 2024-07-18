@@ -23,11 +23,6 @@ userRouter.delete(
   "/", tokenValidationRules, userController.deleteMe
 );
 
-/** product 등록 */
-userRouter.post(
-  "/product", createProductRules, userController.postAddProducts
-);
-
 /* 로그인한 회원 product 조회 */
 userRouter.get(
   "/product", tokenValidationRules, userController.getMyProduct
@@ -38,7 +33,6 @@ userRouter.delete(
   "/product/:productId", tokenValidationRules, userController.deleteMyProduct
 )
 
-// 수정해야 됨
 /* 이메일 조회 */
 userRouter.get(
   "/email-valid/:email", userController.getIdByEmail

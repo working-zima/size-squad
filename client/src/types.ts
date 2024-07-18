@@ -60,7 +60,7 @@ export type Measurement = {
 };
 
 export type MeasurementRequest = {
-  name: string;
+  measurementId: string;
   value: number;
 }
 

@@ -221,13 +221,13 @@ class ProductFormStore {
         sizeId: this.size._id || '',
         fitId: this.fit?._id || '',
         measurements: this.measurements.map(measurement => ({
-          name: measurement.name,
+          measurementId: measurement._id || '',
           value: Number(measurement.value)
         })),
         description: this.description,
       });
 
-      this.setDone();
+      // this.setDone();
     } catch (e) {
       this.setError();
     }

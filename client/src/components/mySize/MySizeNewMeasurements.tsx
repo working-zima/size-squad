@@ -30,7 +30,7 @@ export default function MySizeNewMeasurements() {
       {measurements && measurements
         .map((measurement, index) => (
           <TextBox
-            key={key(measurement.name, index)}
+            key={measurement._id}
             label={MEASUREMENT_MESSAGES[measurement.name]}
             placeholder={`${MEASUREMENT_MESSAGES[measurement.name]}을 입력해주세요.`}
             type="text"

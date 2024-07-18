@@ -4,7 +4,6 @@ const productService = {
   /** product 등록 */
   addProduct: async ({ newProduct }) => {
     try {
-
       await Product.create({ newProduct })
 
       return;

@@ -2,44 +2,18 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const Types = mongoose.Types;
 
-const MeasurementsSchema = new Schema({
-  totalLength: {
-    type: Number,
-    required: false
+const measurementSchema = new Schema({
+  measurementId: {
+    type: String,
+    required: true,
+    ref: "Measurement"
   },
-  shoulderWidth: {
+  value: {
     type: Number,
-    required: false
-  },
-  chestWidth: {
-    type: Number,
-    required: false
-  },
-  sleeveLength: {
-    type: Number,
-    required: false
-  },
-  waistWidth: {
-    type: Number,
-    required: false
-  },
-  hipWidth: {
-    type: Number,
-    required: false
-  },
-  thighWidth: {
-    type: Number,
-    required: false
-  },
-  rise: {
-    type: Number,
-    required: false
-  },
-  hemWidth: {
-    type: Number,
-    required: false
+    required: true
   }
 }, { _id: false });
+
 
 const ProductSchema = new Schema(
   {
@@ -78,16 +52,14 @@ const ProductSchema = new Schema(
     sizeId: {
       type: String,
       required: true,
+      ref: "Size"
     },
     fitId: {
       type: String,
       required: true,
       ref: "Fit"
     },
-    measurements: {
-      type: MeasurementsSchema,
-      required: true,
-    },
+    measurements: [measurementSchema],
     description: {
       type: String,
       required: false,
