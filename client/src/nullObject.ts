@@ -1,17 +1,15 @@
 import {
-  AuthorSummary, Category, FitSummary, Gender, Size, SubCategorySummary
+  AuthorSummary, Category, CategorySummary, FitSummary, GenderSummary, Size, SubCategorySummary
 } from "./types";
 
-export const nullGender: Gender = {
+export const nullGender: GenderSummary = {
   _id: '',
   gender: '성별을 고르세요.',
 };
 
-export const nullCateogry: Category = {
+export const nullCateogry: CategorySummary = {
   _id: '',
   category: '',
-  measurements: [],
-  subCategories: [{_id: '', subCategory: ''}],
 }
 
 export const nullSubCategorySummary: SubCategorySummary = {

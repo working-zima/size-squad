@@ -2,10 +2,11 @@ import ComboBox from "../ui/ComboBox";
 
 import useSignupFormStore from "../../hooks/useSignupFormStore";
 
-import { Gender } from "../../types";
+import { GenderSummary } from "../../types";
+import { GENDER_MESSAGES } from "../../constants";
 
 type SignUpGenderInputProps = {
-  genders: Gender[];
+  genders: GenderSummary[];
 }
 
 export default function SignUpGenderInput({ genders }: SignUpGenderInputProps) {
@@ -16,8 +17,8 @@ export default function SignUpGenderInput({ genders }: SignUpGenderInputProps) {
       label="성별"
       selectedItem={gender}
       items={genders}
-      itemToId={(item) => item._id}
-      itemToText={(item) => item.gender}
+      itemToId={(item) => item?._id}
+      itemToText={(item) => GENDER_MESSAGES[item?.name]}
       onChange={(value) => value && store.changeGender(value)}
     />
   )

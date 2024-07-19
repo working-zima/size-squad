@@ -2,8 +2,8 @@ import { singleton } from 'tsyringe';
 import { Action, Store } from 'usestore-ts';
 
 import {
-  AuthorSummary, Category, FitSummary, GenderSummary, Measurement,
-  Product, Size, SubCategorySummary
+  AuthorSummary, Category, CategorySummary, FitSummary, GenderSummary, Measurement,
+  Product, Size, SizeSummary, SubCategorySummary
 } from '../types';
 
 import {
@@ -27,13 +27,13 @@ class ProductFormStore {
 
   brand = '';
 
-  category: Category = nullCateogry;
+  category: CategorySummary = nullCateogry;
 
   subCategory: SubCategorySummary = nullSubCategorySummary;
 
   gender: GenderSummary = nullGender;
 
-  size: Size = nullSize;
+  size: SizeSummary = nullSize;
 
   fit: FitSummary = nullFitSummary;
 
@@ -126,17 +126,17 @@ class ProductFormStore {
   }
 
   @Action()
-  changeBrand(brand: string) {
-    this.brand = brand;
-  }
-
-  @Action()
   changeName(name: string) {
     this.name = name;
   }
 
   @Action()
-  changeCategory(category: Category) {
+  changeBrand(brand: string) {
+    this.brand = brand;
+  }
+
+  @Action()
+  changeCategory(category: CategorySummary) {
     this.category = category;
   }
 
@@ -152,7 +152,8 @@ class ProductFormStore {
 
   @Action()
   changeSize(size: Size) {
-    this.size = size;
+    // console.log(size)
+    // this.size = {_id: size._id, size: size.size};
   }
 
   @Action()
@@ -212,16 +213,17 @@ class ProductFormStore {
   async create() {
     try {
       await apiService.createProduct({
-        authorId: this.author?._id || '',
+        author: this.author?._id || '',
         brand: this.brand,
         name: this.name,
-        categoryId: this.category?._id || '',
-        subCategoryId: this.subCategory?._id || '',
-        genderId: this.gender?._id || '',
-        sizeId: this.size._id || '',
-        fitId: this.fit?._id || '',
+        category: this.category?._id || '',
+        subCategory: this.subCategory?._id || '',
+        gender: this.gender?._id || '',
+        size: this.size._id || '',
+        fit: this.fit?._id || '',
         measurements: this.measurements.map(measurement => ({
-          measurementId: measurement._id || '',
+          _id: measurement._id || '',
+          measurement: measurement.name,
           value: Number(measurement.value)
         })),
         description: this.description,

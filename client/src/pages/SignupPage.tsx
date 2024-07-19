@@ -14,11 +14,10 @@ export default function SignupPage() {
   const [{ accessToken }, store] = useSignupFormStore();
 
   const { genders, error, loading } = useFetchGender();
-  const addNullObjectGenderList = [nullGender, ...genders]
 
   useEffect(() => {
     store.reset();
-    store.changeGender(nullGender);
+    store.changeGender(genders[0]);
   }, []);
 
   useEffect(() => {
@@ -41,6 +40,6 @@ export default function SignupPage() {
   }
 
   return (
-    <SignUpForm genders={addNullObjectGenderList}/>
+    <SignUpForm genders={genders}/>
   )
 }

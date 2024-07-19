@@ -7,7 +7,7 @@ import Button from "../ui/Button";
 import useAccessToken from "../../hooks/useAccessToken";
 import useSignupFormStore from "../../hooks/useSignupFormStore";
 
-import { Gender } from "../../types";
+import { GenderSummary } from "../../types";
 
 import { RequiredStar } from "../../utils/RequiredStar";
 
@@ -69,7 +69,7 @@ const ButtonWrapper = styled.div`
 `
 
 type SignUpFormProps = {
-  genders: Gender[];
+  genders: GenderSummary[];
 }
 
 export default function SignUpForm({ genders }: SignUpFormProps){

@@ -10,6 +10,11 @@ export const MEASUREMENT_MESSAGES: Record<string, string> = {
   hemWidth: '밑단단면',
 };
 
+export const GENDER_MESSAGES: Record<string, string> = {
+  male: '남성',
+  female: '여성',
+};
+
 export const ERROR_MESSAGES = {
   EMAIL_EMPTY_MESSAGE: '이메일을 입력해주세요.',
   EMAIL_DUPLICATED_MESSAGE: '이미 사용된 이메일입니다.',

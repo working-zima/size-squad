@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import Description from './Description';
 
-import { Product } from '../types';
+import { Product, ProductResponse } from '../types';
 import useProductFormStore from '../hooks/useProductFormStore';
 
 const Container = styled.div`
@@ -52,7 +52,7 @@ const EditDeleteWrapper = styled.div`
 `;
 
 type InfoCardProps = {
-  product: Product;
+  product: ProductResponse;
 }
 
 export default function InfoCard({ product }: InfoCardProps) {

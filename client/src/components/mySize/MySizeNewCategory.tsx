@@ -13,6 +13,10 @@ export default function MySizeNewCategory({
 }: MySizeNewCategoryProps) {
   const [{ category, subCategory }, store] = useProductFormStore();
 
+
+  const subCategories = categories
+    .find(elem => (elem._id === category._id))?.subCategories || []
+
   return (
     <>
       <ComboBox
@@ -26,7 +30,7 @@ export default function MySizeNewCategory({
       <ComboBox
         label="세부 카테고리 (카테고리를 먼저 고르세요.)"
         selectedItem={subCategory}
-        items={category.subCategories}
+        items={subCategories}
         itemToId={(item) => item?._id || ''}
         itemToText={(item) => item?.subCategory || ''}
         onChange={(value) => value && store.changeSubCategory(value)}

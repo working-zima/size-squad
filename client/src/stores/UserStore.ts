@@ -1,7 +1,7 @@
 import { singleton } from "tsyringe";
 import { Action, Store } from "usestore-ts";
 import { apiService } from "../services/ApiService";
-import { Gender, GenderSummary, User } from "../types";
+import { GenderSummary, User } from "../types";
 import { nullGender } from "../nullObject";
 
 @singleton()

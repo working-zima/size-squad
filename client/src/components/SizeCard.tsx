@@ -43,12 +43,38 @@ type SizeCardProps = {
 }
 
 export default function SizeCard({ product }: SizeCardProps) {
-  const keys = Object.keys(product.measurements);
-  const values = Object.values(product.measurements);
-
+  // const keys = Object.keys(product.measurements);
+  // const values = Object.values(product.measurements);
+  console.log(`SizeCard: `, product)
   return (
     <Container>
       <table>
+        <thead>
+          <tr>
+            <th>
+              사이즈 (CM)
+            </th>
+            {product.measurements.map((measurement) => (
+              <th key={measurement.measurement}>{MEASUREMENT_MESSAGES[key]}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>
+              {product.size.size}
+            </th>
+            {values.map((value) => (
+              <td key={value._id}>{value.name}</td>
+            ))}
+          </tr>
+        </tbody>
+      </table>
+    </Container>
+  );
+}
+
+      {/* <table>
         <thead>
           <tr>
             <th>
@@ -62,14 +88,11 @@ export default function SizeCard({ product }: SizeCardProps) {
         <tbody>
           <tr>
             <th>
-              {product.size}
+              {product.size.size}
             </th>
             {values.map((value) => (
-              <td key={value}>{value}</td>
+              <td key={value._id}>{value.name}</td>
             ))}
           </tr>
         </tbody>
-      </table>
-    </Container>
-  );
-}
+      </table> */}

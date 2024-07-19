@@ -1,21 +1,16 @@
 export type GenderSummary = {
   _id: string;
-  gender: string;
+  name: string;
 }
 
 export type SubCategorySummary = {
   _id: string;
-  subCategory: string;
+  name: string;
 }
 
 export type FitSummary = {
   _id: string;
-  fit: string;
-}
-
-export type CategorySummary = {
-  _id: string;
-  category: string;
+  name: string;
 }
 
 export type AuthorSummary = {
@@ -25,7 +20,12 @@ export type AuthorSummary = {
 
 export type MeasurementSummary = {
   _id: string;
-  measurement: string;
+  name: string;
+}
+
+export type SizeSummary = {
+  _id: string;
+  name: string;
 }
 
 export type User = {
@@ -48,9 +48,9 @@ export type Category = {
   measurements: MeasurementSummary[]
 }
 
-export type Gender = {
+export type CategorySummary = {
   _id: string;
-  gender: string;
+  category: string;
 }
 
 export type Measurement = {
@@ -59,16 +59,11 @@ export type Measurement = {
   value: string;
 };
 
-export type MeasurementRequest = {
-  measurementId: string;
-  value: number;
-}
-
 export type Size = {
   _id: string;
   size: string;
-  genderId: Gender;
-  type: string;
+  genderId?: GenderSummary;
+  type?: string;
 }
 
 export type Product = {
@@ -79,36 +74,42 @@ export type Product = {
   category: Category;
   subCategory: SubCategorySummary;
   gender: GenderSummary;
-  size: Size;
+  size: SizeSummary;
   fit: FitSummary;
   measurements: Measurement[];
   description: string;
 }
 
+export type MeasurementRequest = {
+  _id: string;
+  measurement: string;
+  value: number;
+}
+
 export type ProductRequest = {
   _id?: string;
-  authorId: string;
+  author: string;
   name: string;
   brand: string;
-  categoryId: string;
-  subCategoryId: string;
-  genderId: string;
-  sizeId: string;
-  fitId: string;
+  category: string;
+  subCategory: string;
+  gender: string;
+  size: string;
+  fit: string;
   measurements: MeasurementRequest[];
   description: string;
 }
 
 export type ProductResponse = {
   _id: string;
-  author: AuthorSummary;
+  authorId: AuthorSummary;
   name: string;
   brand: string;
-  category: CategorySummary;
-  subCategory: string[];
+  categoryId: CategorySummary;
+  subCategoryId: SubCategorySummary;
   gender: GenderSummary;
-  size: string;
-  fit: FitSummary;
-  measurements: Measurement;
+  sizeId: Size;
+  fitId: FitSummary;
+  measurements: Measurement[];
   description: string;
 }

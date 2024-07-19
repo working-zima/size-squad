@@ -28,7 +28,7 @@ const userService = {
         expiresIn: process.env.ACCESS_EXPIRES_IN
       });
 
-      await Token.create({ refreshToken, accessToken, userId: _id });
+      await Token.create({ refreshToken, accessToken, user: _id });
 
       return accessToken;
     } catch(error) {

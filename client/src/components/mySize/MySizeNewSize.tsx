@@ -14,7 +14,7 @@ export default function MySizeNewSize({ sizes }: MySizeNewSizeProps) {
   const [{ gender, size }, store] = useProductFormStore();
 
   let genderList = sizes
-    .filter(size => size.genderId._id === gender._id && size.type === '의류');
+    .filter(size => size.genderId?._id === gender._id && size.type === '의류');
 
   if(!genderList.length) genderList = [nullSize];
 

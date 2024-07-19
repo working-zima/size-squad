@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import ProductComponent from './Product';
 
-import { Product, SubCategorySummary } from '../types';
+import { Product, ProductResponse, SubCategorySummary } from '../types';
 
 import { key } from '../utils';
 
@@ -36,7 +36,7 @@ const Wrapper = styled.div`
 
 type ProductsProps = {
   subCategory: SubCategorySummary;
-  products: Product[];
+  products: ProductResponse[];
 }
 
 export default function Products({ subCategory, products }: ProductsProps) {

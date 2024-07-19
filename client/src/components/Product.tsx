@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import SizeCard from './SizeCard';
 import InfoCard from './InfoCard';
 
-import { Product } from '../types';
+import { Product, ProductResponse } from '../types';
 
 import useViewModeStore from '../hooks/useViewModeStore';
 
@@ -22,7 +22,7 @@ const Container = styled.div`
 `;
 
 type ProductProps = {
-  product: Product;
+  product: ProductResponse;
 }
 
 export default function Product({

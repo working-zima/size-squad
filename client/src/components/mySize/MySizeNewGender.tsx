@@ -1,11 +1,11 @@
-import { Gender } from '../../types';
+import { GenderSummary } from '../../types';
 
 import useProductFormStore from '../../hooks/useProductFormStore';
 
 import ComboBox from '../ui/ComboBox';
 
 type MySizeNewGenderProps = {
-  genders: Gender[];
+  genders: GenderSummary[];
 }
 
 export default function MySizeNewGender({ genders }: MySizeNewGenderProps) {

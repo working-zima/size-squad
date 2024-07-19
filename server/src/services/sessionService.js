@@ -22,18 +22,18 @@ const sessionService = {
 
       // accessToken, refreshToken 동시 발급
       const refreshToken =  generateJwtToken({
-        userId: _id,
+        user: _id,
         secretKey: process.env.JWT_SECRET_KEY,
         expiresIn: process.env.REFRESH_EXPIRES_IN
       });
       const accessToken = generateJwtToken({
-        userId: _id,
+        user: _id,
         secretKey: process.env.JWT_SECRET_KEY,
         expiresIn: process.env.ACCESS_EXPIRES_IN
       });
 
       // 데이터 베이스에 토큰 유무 확인
-      const tokenData = await Token.findByUserId({ userId: _id });
+      const tokenData = await Token.findByUserId({ user: _id });
 
       // 데이터 베이스에 refresh 토큰이 있는 경우 재발급하여 데이터 베이스의 refresh 토큰과 교체
       if (!!tokenData) {
@@ -47,7 +47,7 @@ const sessionService = {
 
       // 데이터 베이스에 refresh 토큰이 없는 경우 데이터 베이스에 refresh 토큰 저장
       if (!tokenData) {
-        await Token.create({ refreshToken, accessToken, userId: _id });
+        await Token.create({ refreshToken, accessToken, user: _id });
       }
 
       return accessToken;
@@ -67,7 +67,7 @@ const sessionService = {
         throw new CustomError('Access Token mismatch', 403);
       }
 
-      await Token.deleteToken({userId: tokenData.userId});
+      await Token.deleteToken({user: tokenData.user});
 
       return;
     } catch (error) {
@@ -84,7 +84,7 @@ const sessionService = {
 
       if(tokenData) {
         const newAccessToken = generateJwtToken({
-          userId: tokenData.userId,
+          user: tokenData.user,
           secretKey: process.env.JWT_SECRET_KEY,
           expiresIn: process.env.ACCESS_EXPIRES_IN
         });

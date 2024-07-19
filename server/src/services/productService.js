@@ -24,9 +24,9 @@ const productService = {
   },
 
   /** userId로 product 조회 */
-  getProductByUserId: async ({ userId }) => {
+  getProductByUserId: async ({ user }) => {
     try {
-      const productData = await Product.findByUserId({ userId });
+      const productData = await Product.findByUserId({ user });
 
       return productData;
     } catch(error) {

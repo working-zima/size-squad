@@ -33,8 +33,12 @@ export default function MySizeNewPage() {
     if (!categories.length) return;
     if (!!gender._id) store.changeGender(gender);
 
-    store.changeCategory(categories[0]);
+    store.changeSize(sizes[0])
+
+    const { _id, category } = categories[0];
+    store.changeCategory({ _id, category });
     store.changeSubCategory(categories[0].subCategories[0]);
+
   }, [store, categories, gender]);
 
   const handleComplete = () => {

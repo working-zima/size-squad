@@ -11,7 +11,7 @@ import MySizeNewFit from './MySizeNewFit';
 import MySizeNewMeasurements from './MySizeNewMeasurements';
 import MySizeNewDescription from './MySizeNewDescription';
 
-import { Category, FitSummary, Gender, Size } from '../../types';
+import { Category, FitSummary, GenderSummary, Size } from '../../types';
 
 import useProductFormStore from '../../hooks/useProductFormStore';
 
@@ -60,7 +60,7 @@ const ButtonWrapper = styled.div`
 
 type MySizeNewFormProps = {
   categories: Category[];
-  genders: Gender[];
+  genders: GenderSummary[];
   fits: FitSummary[]
   sizes: Size[]
   onComplete: () => void;
@@ -104,7 +104,7 @@ export default function MySizeNewForm({
         <MySizeNewName />
         <MySizeNewCategory categories={categories} />
         <MySizeNewGender genders={genders} />
-        <MySizeNewSize sizes={sizes} />
+        {/* <MySizeNewSize sizes={sizes} /> */}
         <MySizeNewFit fits={fits} />
         <MySizeNewMeasurements />
         <MySizeNewDescription />

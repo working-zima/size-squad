@@ -3,7 +3,7 @@ import { singleton } from "tsyringe";
 import { Action, Store } from "usestore-ts";
 
 import { apiService } from "../services/ApiService";
-import { Gender } from "../types";
+import { GenderSummary } from "../types";
 import { nullGender } from "../nullObject";
 
 @singleton()
@@ -17,7 +17,7 @@ class SignupFormStore {
 
   passwordConfirmation = '';
 
-  gender: Gender = nullGender;
+  gender: GenderSummary = nullGender;
 
   height = "";
 
@@ -48,6 +48,81 @@ class SignupFormStore {
       && !this.isNameDuplicated
       && this.isPasswordValid
       && this.isPasswordConfirmationValid
+  }
+
+  @Action()
+  changeEmail(email: string) {
+    this.email = email;
+  }
+
+  @Action()
+  changeName(name: string) {
+    this.name = name;
+  }
+
+  @Action()
+  changePassword(password: string) {
+    this.password = password;
+  }
+
+  @Action()
+  changePasswordConfirmation(password: string) {
+    this.passwordConfirmation = password;
+  }
+
+  @Action()
+  changeGender(gender: GenderSummary) {
+    this.gender = gender;
+  }
+
+  @Action()
+  changeHeight(height: string) {
+    this.height = height;
+  }
+
+  @Action()
+  changeWeight(weight: string) {
+    this.weight = weight;
+  }
+
+  @Action()
+  changeDescription(description: string) {
+    this.description = description;
+  }
+
+  @Action()
+  changeIsEmailDuplicated(isEmailDuplicated: boolean) {
+    this.isEmailDuplicated = isEmailDuplicated;
+  }
+
+  @Action()
+  changeIsNameDuplicated(isNameDuplicated: boolean) {
+    this.isNameDuplicated = isNameDuplicated;
+  }
+
+  @Action()
+  private setAccessToken(accessToken: string) {
+    this.accessToken = accessToken;
+  }
+
+  @Action()
+  private setError() {
+    this.error = true;
+  }
+
+  @Action()
+  reset() {
+    this.email = '';
+    this.name = '';
+    this.password = '';
+    this.passwordConfirmation = '';
+    this.gender = nullGender;
+    this.height = '';
+    this.weight = '';
+    this.description = '';
+    this.error = false;
+    this.accessToken = '';
+    this.isNameDuplicated = false;
   }
 
   private emailValidation = (email: string) => {
@@ -120,88 +195,13 @@ class SignupFormStore {
     this.isPasswordConfirmationValid = this.password === passwordConfirmation;
   }
 
-  @Action()
-  changeEmail(email: string) {
-    this.email = email;
-  }
-
-  @Action()
-  changeName(name: string) {
-    this.name = name;
-  }
-
-  @Action()
-  changePassword(password: string) {
-    this.password = password;
-  }
-
-  @Action()
-  changePasswordConfirmation(password: string) {
-    this.passwordConfirmation = password;
-  }
-
-  @Action()
-  changeGender(gender: Gender) {
-    this.gender = gender;
-  }
-
-  @Action()
-  changeHeight(height: string) {
-    this.height = height;
-  }
-
-  @Action()
-  changeWeight(weight: string) {
-    this.weight = weight;
-  }
-
-  @Action()
-  changeDescription(description: string) {
-    this.description = description;
-  }
-
-  @Action()
-  changeIsEmailDuplicated(isEmailDuplicated: boolean) {
-    this.isEmailDuplicated = isEmailDuplicated;
-  }
-
-  @Action()
-  changeIsNameDuplicated(isNameDuplicated: boolean) {
-    this.isNameDuplicated = isNameDuplicated;
-  }
-
-  @Action()
-  private setAccessToken(accessToken: string) {
-    this.accessToken = accessToken;
-  }
-
-  @Action()
-  private setError() {
-    this.error = true;
-  }
-
-  @Action()
-  reset() {
-    this.email = '';
-    this.name = '';
-    this.password = '';
-    this.passwordConfirmation = '';
-    this.gender = nullGender;
-    this.height = '';
-    this.weight = '';
-    this.description = '';
-    this.error = false;
-    this.accessToken = '';
-    this.isNameDuplicated = false;
-  }
-
   async signup() {
     try {
       const accessToken = await apiService.signup({
         email: this.email,
         name: this.name,
         password: this.password,
-        genderId: this.gender?._id || '',
+        gender: this.gender?._id || '',
         height: Number(this.height),
         weight: Number(this.weight),
         description: this.description,

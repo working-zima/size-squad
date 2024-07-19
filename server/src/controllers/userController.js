@@ -22,10 +22,10 @@ const userController = {
     try {
 
       const {
-        email, name, password, genderId, height, weight, description
+        email, name, password, gender, height, weight, description
       } = req.body;
       const accessToken = userService.signUp(
-        { email, name, password, genderId, height, weight, description }
+        { email, name, password, gender, height, weight, description }
       )
 
       res.status(201).json({accessToken});
@@ -47,7 +47,7 @@ const userController = {
 
       const userAccessToken = req.headers["authorization"];
       const userData = await userService.getMyInfo(userAccessToken);
-      const userId = userData._id;
+      const user = userData._id;
 
       const categoryId = req.query.categoryId;
       const subCategoryId = req.query.subCategoryId;
@@ -57,20 +57,20 @@ const userController = {
       // 서브 카테고리
       if(subCategoryId) {
         productData = await productService.getProductByUserIdAndSubCategoryId({
-          userId, subCategoryId: subCategoryId
+          user, subCategoryId: subCategoryId
         });
       }
 
       // 카테고리
       if(categoryId && !subCategoryId) {
         productData = await productService.getProductByUserIdAndCategoryId({
-          userId, categoryId: categoryId
+          user, categoryId: categoryId
         });
       }
 
       // 전체
       if(!categoryId && !subCategoryId) {
-        productData = await productService.getProductByUserId({ userId });
+        productData = await productService.getProductByUserId({ user });
       }
 
       res.status(200).json({products: productData});

@@ -9,9 +9,9 @@ const renameId = (data, newKey) => {
   }
 };
 
-const generateJwtToken = ({ userId, secretKey, expiresIn }) => {
+const generateJwtToken = ({ user, secretKey, expiresIn }) => {
   return jwt.sign(
-    { userId: userId },
+    { user },
     secretKey,
     {
       expiresIn: expiresIn
@@ -22,7 +22,7 @@ const generateJwtToken = ({ userId, secretKey, expiresIn }) => {
 
 const getUserIdByAccessToken = ({ accessToken }) => {
   const jwtDecoded = jwt.verify(accessToken, process.env.JWT_SECRET_KEY);
-  return jwtDecoded.userId;
+  return jwtDecoded.user;
 }
 
 module.exports = {

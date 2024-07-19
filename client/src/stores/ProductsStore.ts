@@ -1,18 +1,18 @@
 import { singleton } from 'tsyringe';
 import { Action, Store } from 'usestore-ts';
 
-import { Product } from '../types';
+import { Product, ProductResponse } from '../types';
 import { apiService } from '../services/ApiService';
 
 @singleton()
 @Store()
 class ProductsStore {
-  products: Product[] = [];
+  products: ProductResponse[] = [];
 
   error = false;
 
   @Action()
-  private setProducts(products: Product[]) {
+  private setProducts(products: ProductResponse[]) {
     this.products = products;
   }
 

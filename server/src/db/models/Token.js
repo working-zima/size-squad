@@ -1,10 +1,10 @@
 const { TokenModel } = require("../schemas/token");
 
 const Token = {
-  create: async ({ refreshToken, accessToken, userId }) => {
+  create: async ({ refreshToken, accessToken, user }) => {
     try {
       let tokenData = await TokenModel.create({
-        refreshToken, accessToken, user: userId
+        refreshToken, accessToken, user
       });
 
       return tokenData;
@@ -32,10 +32,10 @@ const Token = {
   },
 
   /** userId로 데이터 검색 */
-  findByUserId: async ({ userId }) => {
+  findByUserId: async ({ user }) => {
     try {
       let tokenData = await TokenModel.findOne(
-        { user: userId },
+        { user },
         "_id refreshToken user"
       ).lean();
       if (!tokenData) tokenData = null;
@@ -61,9 +61,9 @@ const Token = {
   },
 
   /** refresh 토큰 삭제 */
-  deleteToken: async ({userId}) => {
+  deleteToken: async ({ user }) => {
     try {
-      const deletedTokenInfo = await TokenModel.deleteOne({ user: userId });
+      const deletedTokenInfo = await TokenModel.deleteOne({ user });
 
       return deletedTokenInfo;
     } catch(error) {
