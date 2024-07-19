@@ -2,9 +2,9 @@ const { MeasurementModel } = require("../schemas/measurement");
 
 const Measurement = {
   /** 치수 생성 */
-  create: async (newMeasurement) => {
+  create: async ({ name }) => {
     try {
-      await MeasurementModel.create(newMeasurement);
+      await MeasurementModel.create({ name });
 
       return;
     } catch(error) {
@@ -14,7 +14,7 @@ const Measurement = {
 
   findAll: async () => {
     try {
-      const measurementData = await MeasurementModel.find({}, "_id measurement");
+      const measurementData = await MeasurementModel.find({}, "_id name");
 
       return measurementData;
     } catch(error) {

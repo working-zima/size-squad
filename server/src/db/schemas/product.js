@@ -3,10 +3,14 @@ const Schema = mongoose.Schema;
 const Types = mongoose.Types;
 
 const measurementSchema = new Schema({
-  measurementId: {
+  _id: {
     type: String,
     required: true,
     ref: "Measurement"
+  },
+  name: {
+    type: String,
+    required: true,
   },
   value: {
     type: Number,
@@ -21,7 +25,7 @@ const ProductSchema = new Schema(
       type: String,
       default: () => String(new Types.ObjectId())
     },
-    authorId: {
+    author: {
       type: String,
       required: true,
       ref: "User",
@@ -34,27 +38,27 @@ const ProductSchema = new Schema(
       type: String,
       required: true,
     },
-    categoryId: {
+    category: {
       type: String,
       required: true,
       ref: "Category",
     },
-    subCategoryId: {
+    subCategory: {
       type: String,
       required: true,
       ref: "SubCategory",
     },
-    genderId: {
+    gender: {
       type: String,
       required: true,
       ref: "Gender"
     },
-    sizeId: {
+    size: {
       type: String,
       required: true,
       ref: "Size"
     },
-    fitId: {
+    fit: {
       type: String,
       required: true,
       ref: "Fit"

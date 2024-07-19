@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const Types = mongoose.Types;
 
-const MeasurementSchema = new Schema(
+const TypeSchema = new Schema(
   {
     _id: {
       type: String,
@@ -13,12 +13,14 @@ const MeasurementSchema = new Schema(
       type: String,
       required: true,
       unique: true,
-    }
+    },
   },
-  { timestamps: true },
-  { versionKey : false }
-)
+  {
+    timestamps: true,
+    versionKey : false
+  }
+);
 
-const MeasurementModel = mongoose.model("Measurement", MeasurementSchema);
+const TypeModel = mongoose.model("Type", TypeSchema);
 
-exports.MeasurementModel = MeasurementModel;
+exports.TypeModel = TypeModel;

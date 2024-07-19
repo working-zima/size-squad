@@ -9,18 +9,16 @@ const SubCategorySchema = new Schema(
       type: String,
       default: () => String(new Types.ObjectId()),
     },
-    subCategory: {
+    name: {
       type: String,
       required: true,
       unique: true,
     },
-    category: {
-      type: String,
-      required: true,
-    },
   },
-  { timestamps: true },
-  { versionKey : false }
+  {
+    timestamps: true,
+    versionKey : false
+  }
 )
 
 const SubCategoryModel = mongoose.model("SubCategory", SubCategorySchema);

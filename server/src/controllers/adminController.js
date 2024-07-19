@@ -13,11 +13,10 @@ const adminController = {
       return next(error);
     }
     try {
-      const { category, subCategories, measurements } = req.body;
+      const { name, type, subCategories, measurements } = req.body;
       const accessToken = req.headers["authorization"];
 
-      const categoryData = { category, subCategories, measurements }
-
+      const categoryData = { name, type, subCategories, measurements }
       await adminService.addCategory({ accessToken, categoryData });
 
       res.status(201).json();
@@ -38,9 +37,9 @@ const adminController = {
     try {
       const { categoryId } = req.params;
       const accessToken = req.headers["authorization"];
-      const { category, subCategories, measurements } = req.body;
+      const { name, type, subCategories, measurements } = req.body;
 
-      const categoryData = {category, subCategories, measurements}
+      const categoryData = {name, type, subCategories, measurements}
 
       await adminService.updateCategory(
         { accessToken, categoryId, categoryData }
@@ -52,7 +51,28 @@ const adminController = {
     }
   },
 
-  /** 사이즈 등록 */
+  /** 서브카테고리 등록 */
+  postAddSubCategory: async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const error = new Error('Validation failed.');
+      error.statusCode = 422;
+      error.data = errors.array();
+      return next(error);
+    }
+    try {
+      const { name } = req.body;
+      const accessToken = req.headers["authorization"];
+
+      await adminService.addSubCategory({ accessToken, name });
+
+      res.status(201).json();
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  /** 성별 등록 */
   postAddGender: async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -62,11 +82,10 @@ const adminController = {
       return next(error);
     }
     try {
-      const { gender, size } = req.body;
-      const sizeData = { gender, size }
+      const { name } = req.body;
       const accessToken = req.headers["authorization"];
 
-      await adminService.addGender({ accessToken, sizeData });
+      await adminService.addGender({ accessToken, name });
 
       res.status(201).json();
     } catch (error) {
@@ -84,10 +103,10 @@ const adminController = {
       return next(error);
     }
     try {
-      const { fit } = req.body;
+      const { name } = req.body;
       const accessToken = req.headers["authorization"];
 
-      await adminService.addFit({ accessToken, fit });
+      await adminService.addFit({ accessToken, name });
 
       res.status(201).json();
     } catch (error) {
@@ -105,10 +124,10 @@ const adminController = {
       return next(error);
     }
     try {
-      const { size, genderId, type } = req.body;
+      const { name, gender, type } = req.body;
       const accessToken = req.headers["authorization"];
 
-      await adminService.addSize({ accessToken, size, genderId, type  });
+      await adminService.addSize({ accessToken, name, gender, type  });
 
       res.status(201).json();
     } catch (error) {
@@ -116,7 +135,7 @@ const adminController = {
     }
   },
 
-  /** 사이즈 등록 */
+  /** 치수 등록 */
   postAddMeasurements: async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -126,10 +145,31 @@ const adminController = {
       return next(error);
     }
     try {
-      const { measurement } = req.body;
+      const { name } = req.body;
       const accessToken = req.headers["authorization"];
 
-      await adminService.addMeasurement({ accessToken, measurement });
+      await adminService.addMeasurement({ accessToken, name });
+
+      res.status(201).json();
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  /** 타입 등록 */
+  postAddTypes: async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const error = new Error('Validation failed.');
+      error.statusCode = 422;
+      error.data = errors.array();
+      return next(error);
+    }
+    try {
+      const { name } = req.body;
+      const accessToken = req.headers["authorization"];
+
+      await adminService.addTypes({ accessToken, name });
 
       res.status(201).json();
     } catch (error) {

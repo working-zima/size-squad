@@ -30,6 +30,7 @@ const productController = {
 
       // 전체
       if(!categoryId && !subCategoryId) {
+
         productData = await productService.getProducts();
       }
 

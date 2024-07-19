@@ -9,14 +9,16 @@ const FitSchema = new Schema(
       type: String,
       default: () => String(new Types.ObjectId()),
     },
-    fit: {
+    name: {
       type: String,
       required: true,
       unique: true,
     },
   },
-  { timestamps: true },
-  { versionKey : false }
+  {
+    timestamps: true,
+    versionKey : false
+  }
 )
 
 const FitModel = mongoose.model("Fit", FitSchema);

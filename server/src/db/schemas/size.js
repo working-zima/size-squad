@@ -9,11 +9,11 @@ const SizeSchema = new Schema(
       type: String,
       default: () => String(new Types.ObjectId()),
     },
-    size: {
+    name: {
       type: String,
       required: true,
     },
-    genderId: {
+    gender: {
       type: String,
       required: true,
       ref: "Gender"

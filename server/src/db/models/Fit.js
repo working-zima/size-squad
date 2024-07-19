@@ -1,9 +1,9 @@
 const { FitModel } = require("../schemas/fit");
 
 const Fit = {
-  create: async (newFit) => {
+  create: async ({ name }) => {
     try {
-      await FitModel.create(newFit);
+      await FitModel.create({ name });
 
       return;
     } catch(error) {
@@ -14,7 +14,7 @@ const Fit = {
   /** fit 리스트 조회 */
   findAll: async () => {
     try {
-      const fitData = await FitModel.find({}, "_id fit");
+      const fitData = await FitModel.find({}, "_id name");
 
       return fitData;
     } catch(error) {
@@ -27,7 +27,7 @@ const Fit = {
     try {
       const fitData = await FitModel.findOne(
         { fit },
-        "_id fit"
+        "_id name"
       ).lean();
 
       return fitData;

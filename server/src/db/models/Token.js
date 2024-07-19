@@ -4,7 +4,7 @@ const Token = {
   create: async ({ refreshToken, accessToken, userId }) => {
     try {
       let tokenData = await TokenModel.create({
-        refreshToken, accessToken, userId
+        refreshToken, accessToken, user: userId
       });
 
       return tokenData;
@@ -35,8 +35,8 @@ const Token = {
   findByUserId: async ({ userId }) => {
     try {
       let tokenData = await TokenModel.findOne(
-        { userId },
-        "_id refreshToken userId"
+        { user: userId },
+        "_id refreshToken user"
       ).lean();
       if (!tokenData) tokenData = null;
 
@@ -50,7 +50,7 @@ const Token = {
     try {
       const tokenData = await TokenModel.findOne(
         { accessToken },
-        "accessToken refreshToken userId"
+        "accessToken refreshToken user"
       )
       .lean()
 
@@ -63,7 +63,7 @@ const Token = {
   /** refresh 토큰 삭제 */
   deleteToken: async ({userId}) => {
     try {
-      const deletedTokenInfo = await TokenModel.deleteOne({ userId });
+      const deletedTokenInfo = await TokenModel.deleteOne({ user: userId });
 
       return deletedTokenInfo;
     } catch(error) {

@@ -2,12 +2,11 @@ const { SubCategoryModel } = require("../schemas/subCategory");
 
 const SubCategory = {
   /** 서브 카테고리 생성 */
-  create: async (newSubCategory) => {
+  create: async ({ name }) => {
     try {
-      const subCategoryData = await SubCategoryModel
-        .create(newSubCategory)
+      const subCategoryData = await SubCategoryModel.create({ name })
 
-      return subCategoryData._id;
+      return subCategoryData;
     } catch(error) {
       throw error;
     }
@@ -18,7 +17,7 @@ const SubCategory = {
     try {
       let subCategoryData = await SubCategoryModel.findOne(
         { subCategory: subCategory },
-        "_id subCategory category"
+        "_id name"
       ).lean();
 
       return subCategoryData;

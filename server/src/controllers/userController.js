@@ -44,6 +44,7 @@ const userController = {
       return next(error);
     }
     try {
+
       const userAccessToken = req.headers["authorization"];
       const userData = await userService.getMyInfo(userAccessToken);
       const userId = userData._id;
@@ -69,11 +70,10 @@ const userController = {
 
       // 전체
       if(!categoryId && !subCategoryId) {
-
         productData = await productService.getProductByUserId({ userId });
       }
 
-      res.status(200).json(productData);
+      res.status(200).json({products: productData});
     } catch(error) {
       next(error);
     }

@@ -14,8 +14,8 @@ const Size = {
   findAll: async () => {
     try {
       const genderData = await SizeModel
-        .find({}, "_id genderId size type")
-        .populate({ path: "genderId", select: ["_id", "gender"] })
+        .find({}, "_id name gender type")
+        .populate({ path: "gender", select: ["_id", "gender"] })
         .lean();
 
       return genderData;

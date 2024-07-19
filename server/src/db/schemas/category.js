@@ -9,10 +9,14 @@ const CategorySchema = new Schema(
       type: String,
       default: () => String(new Types.ObjectId()),
     },
-    category: {
+    name: {
       type: String,
       required: true,
       unique: true,
+    },
+    type: {
+      type: String,
+      required: true,
     },
     subCategories: [{
       type: String,

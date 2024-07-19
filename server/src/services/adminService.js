@@ -4,6 +4,7 @@ const { Gender } = require("../db/models/Gender");
 const { Measurement } = require("../db/models/Measurement");
 const { Size } = require("../db/models/Size");
 const { SubCategory } = require("../db/models/SubCategory");
+const { Type } = require("../db/models/Type");
 const { User } = require("../db/models/User");
 
 const CustomError = require("../utils/CustomError");
@@ -20,13 +21,31 @@ const adminService = {
         throw new CustomError('Access Token mismatch', 403);
       }
 
-      categoryData.subCategories = await Promise.all(
-        categoryData.subCategories.map(async (subCategory) => {
-          return await SubCategory.create(
-            {subCategory, category: categoryData.category});
-        }))
+      // categoryData.subCategories = await Promise.all(
+      //   categoryData.subCategories.map(async (subCategory) => {
+      //     return await SubCategory.create(
+      //       {name: subCategory, category: categoryData.name});
+      //   }))
 
       await Category.create(categoryData);
+
+      return;
+    } catch(error) {
+      throw error;
+    }
+  },
+
+  /** 서브카테고리 등록 */
+  addSubCategory: async ({ accessToken, name }) => {
+    try {
+      const userId = getUserIdByAccessToken({ accessToken });
+      const userData = await User.findById(userId);
+
+      if(!userData.role) {
+        throw new CustomError('Access Token mismatch', 403);
+      }
+
+      await SubCategory.create({ name });
 
       return;
     } catch(error) {
@@ -53,7 +72,7 @@ const adminService = {
     }
   },
 
-  addGender: async ({ accessToken, sizeData }) => {
+  addGender: async ({ accessToken, name }) => {
     try {
       const userId = getUserIdByAccessToken({ accessToken });
       const userData = await User.findById(userId);
@@ -62,7 +81,7 @@ const adminService = {
         throw new CustomError('Unauthorized access', 403);
       }
 
-      await Gender.create(sizeData);
+      await Gender.create({ name });
 
       return;
     } catch(error) {
@@ -70,7 +89,7 @@ const adminService = {
     }
   },
 
-  addFit: async ({ accessToken, fit }) => {
+  addFit: async ({ accessToken, name }) => {
     try {
       const userId = getUserIdByAccessToken({ accessToken });
       const userData = await User.findById(userId);
@@ -79,7 +98,7 @@ const adminService = {
         throw new CustomError('Unauthorized access', 403);
       }
 
-      await Fit.create({ fit });
+      await Fit.create({ name });
 
       return;
     } catch(error) {
@@ -87,11 +106,11 @@ const adminService = {
     }
   },
 
-  addSize: async ({ accessToken, size, genderId, type  }) => {
+  addSize: async ({ accessToken, name, gender, type  }) => {
     try {
       const userId = getUserIdByAccessToken({ accessToken });
       const userData = await User.findById(userId);
-      const newSize = { size, genderId, type }
+      const newSize = { name, gender, type }
 
       if(!userData.role) {
         throw new CustomError('Unauthorized access', 403);
@@ -105,7 +124,7 @@ const adminService = {
     }
   },
 
-  addMeasurement: async ({ accessToken, measurement }) => {
+  addMeasurement: async ({ accessToken, name }) => {
     try {
       const userId = getUserIdByAccessToken({ accessToken });
       const userData = await User.findById(userId);
@@ -114,7 +133,24 @@ const adminService = {
         throw new CustomError('Unauthorized access', 403);
       }
 
-      await Measurement.create({ measurement })
+      await Measurement.create({ name })
+
+      return;
+    } catch(error) {
+      throw error;
+    }
+  },
+
+  addTypes: async ({ accessToken, name }) => {
+    try {
+      const userId = getUserIdByAccessToken({ accessToken });
+      const userData = await User.findById(userId);
+
+      if(!userData.role) {
+        throw new CustomError('Unauthorized access', 403);
+      }
+
+      await Type.create({ name })
 
       return;
     } catch(error) {

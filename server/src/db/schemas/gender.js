@@ -9,14 +9,16 @@ const GenderSchema = new Schema(
       type: String,
       default: () => String(new Types.ObjectId()),
     },
-    gender: {
+    name: {
       type: String,
       required: true,
       unique: true,
     },
   },
-  { timestamps: true },
-  { versionKey : false }
+  {
+    timestamps: true,
+    versionKey : false
+  }
 )
 
 const GenderModel = mongoose.model("Gender", GenderSchema);

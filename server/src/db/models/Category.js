@@ -17,8 +17,8 @@ const Category = {
     try {
       const categoryData = await CategoryModel.find(
         {}, "_id category subCategories measurements"
-      ).populate({ path: "subCategories", select: ["_id", "subCategory"] })
-        .populate({ path: "measurements", select: ["_id", "measurement"]})
+      ).populate({ path: "subCategories", select: ["_id", "name"] })
+        .populate({ path: "measurements", select: ["_id", "name"]})
         .lean();
 
       return categoryData;
@@ -31,9 +31,9 @@ const Category = {
   findById: async ({_id}) => {
     try {
       let categoryData = await CategoryModel.findOne(
-        { _id }, "_id category subCategories measurements"
-      ).populate({ path: "subCategories", select: ["_id", "subCategory"] })
-        .populate({ path: "measurements", select: ["_id", "measurement"]})
+        { _id }, "_id name subCategories measurements"
+      ).populate({ path: "subCategories", select: ["_id", "name"] })
+        .populate({ path: "measurements", select: ["_id", "name"]})
         .lean();
 
       return categoryData;
@@ -46,10 +46,10 @@ const Category = {
   findByCategory: async ({category}) => {
     try {
       let categoryData = await CategoryModel.findOne(
-        { category },
-        "_id category subCategories measurements"
-      ).populate({ path: "subCategories", select: ["_id", "subCategory"] })
-        .populate({ path: "measurements", select: ["_id", "measurement"]})
+        { name: category },
+        "_id name subCategories measurements"
+      ).populate({ path: "subCategories", select: ["_id", "name"] })
+        .populate({ path: "measurements", select: ["_id", "name"]})
         .lean();
 
       return categoryData;

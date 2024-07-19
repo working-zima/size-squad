@@ -23,7 +23,7 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
-    genderId: {
+    gender: {
       type: String,
       required: false,
       ref: "Gender",

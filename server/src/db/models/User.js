@@ -20,7 +20,7 @@ const User = {
         "_id email name gender height weight description role followers following"
         // mongoose document를 필요한 javascript object로 반환
       )
-      .populate({ path: "genderId", select: ["_id", "gender"] })
+      .populate({ path: "gender", select: ["_id", "gender"] })
       .lean();
 
       return userData;
@@ -37,7 +37,7 @@ const User = {
         "_id email password name"
         // mongoose document를 필요한 javascript object로 반환
       )
-      .populate({ path: "genderId", select: ["_id", "gender"] })
+      .populate({ path: "gender", select: ["_id", "gender"] })
       .lean();
 
       return userData;
@@ -53,7 +53,7 @@ const User = {
         { name },
         "_id email name"
       )
-      .populate({ path: "genderId", select: ["_id", "gender"] })
+      .populate({ path: "gender", select: ["_id", "gender"] })
       .lean();
 
       return userData;
