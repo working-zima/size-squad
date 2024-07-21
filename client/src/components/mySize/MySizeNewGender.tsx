@@ -1,15 +1,14 @@
-import { GenderSummary } from '../../types';
-
-import useProductFormStore from '../../hooks/useProductFormStore';
-
 import ComboBox from '../ui/ComboBox';
 
-type MySizeNewGenderProps = {
-  genders: GenderSummary[];
-}
+import useProductFormStore from '../../hooks/useProductFormStore';
+import useInitialDataStore from '../../hooks/useInitialDataStore';
 
-export default function MySizeNewGender({ genders }: MySizeNewGenderProps) {
+import { GENDER_MESSAGES } from '../../constants';
+
+
+export default function MySizeNewGender() {
   const [{ gender }, store] = useProductFormStore();
+  const [{ genders }] = useInitialDataStore()
 
   return (
     <ComboBox
@@ -18,8 +17,8 @@ export default function MySizeNewGender({ genders }: MySizeNewGenderProps) {
       items={genders}
       itemToId={(item) => item?._id || ''}
       itemToText={(item) => item?._id
-        ? `${item?.gender}용`
-        : item?.gender || ''
+        ? `${GENDER_MESSAGES[item?.name]}용`
+        : item?.name || ''
       }
       onChange={(value) => value && store.changeGender(value)}
     />

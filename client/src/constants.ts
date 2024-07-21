@@ -15,7 +15,40 @@ export const GENDER_MESSAGES: Record<string, string> = {
   female: '여성',
 };
 
-export const ERROR_MESSAGES = {
+export const CATEGORY_MESSAGES: Record<string, string> = {
+  tops: '상의',
+  outwears: '아우터',
+  pants: '바지',
+  dresses: '원피스',
+  skirts: '스커트',
+};
+
+export const FIT_MESSAGES: Record<string, string> = {
+  skinny: '스키니',
+  slim: '슬림',
+  regular: '레귤러',
+  relaxed: '루즈',
+  oversized: '오버',
+};
+
+
+export const SUBCATEGORY_MESSAGES: Record<string, string> = {
+  shortSleeves: '반소매 상의',
+  longSleeves: '긴소매 상의',
+  longOutwears: '롱 아우터',
+  midiOutwears: '미디 아우터',
+  shortOutwears: '숏 아우터',
+  longPants: '긴바지',
+  shorts: '반바지',
+  miniSkirts: '미니 스커트',
+  midiSkirts: '미디 스커트',
+  longSkirts: '롱 스커트',
+  miniDresses: '미니 원피스',
+  midiDresses: '미디 원피스',
+  maxiDresses: '맥시 원피스',
+};
+
+export const ERROR_MESSAGES: Record<string, string> = {
   EMAIL_EMPTY_MESSAGE: '이메일을 입력해주세요.',
   EMAIL_DUPLICATED_MESSAGE: '이미 사용된 이메일입니다.',
   EMAIL_INVALID_MESSAGE: '유효하지 않은 이메일입니다.',

@@ -51,13 +51,13 @@ const productController = {
     }
     try {
       const {
-        categoryId, subCategoryId, brand, name, genderId, sizeId, fitId,
+        author, name, brand, category, subCategory, gender, size, fit,
         measurements, description
       } = req.body;
 
       const requestAccessToken = req.headers["authorization"];
 
-      const { userId, accessToken } = await Token.findByAccessToken({
+      const { user, accessToken } = await Token.findByAccessToken({
         accessToken: requestAccessToken
       })
 
@@ -65,8 +65,10 @@ const productController = {
         throw new CustomError('Access Token mismatch', 403);
       }
 
-      const newProduct = { authorId: userId, categoryId, subCategoryId, brand, name, genderId, sizeId, fitId, measurements, description}
-
+      const newProduct = {
+        author: user, name, brand, category, subCategory, gender, size, fit,
+        measurements, description
+      }
       productService.addProduct({ newProduct })
 
       res.status(201).json();

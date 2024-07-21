@@ -1,30 +1,32 @@
-import { Size } from '../../types';
-
+import { useEffect } from 'react';
+import useInitialDataStore from '../../hooks/useInitialDataStore';
 import useProductFormStore from '../../hooks/useProductFormStore';
 
 import { nullSize } from '../../nullObject';
 
 import ComboBox from '../ui/ComboBox';
 
-type MySizeNewSizeProps = {
-  sizes: Size[]
-}
-
-export default function MySizeNewSize({ sizes }: MySizeNewSizeProps) {
+export default function MySizeNewSize() {
   const [{ gender, size }, store] = useProductFormStore();
+  const [{ sizes }] = useInitialDataStore()
 
-  let genderList = sizes
-    .filter(size => size.genderId?._id === gender._id && size.type === '의류');
+  let sizeList = sizes.filter(sizeElem => {
+    return sizeElem.gender._id === gender._id && sizeElem.type._id
+  });
 
-  if(!genderList.length) genderList = [nullSize];
+  useEffect(() => {
+    store.changeSize(sizeList[0]);
+  }, [gender])
+
+  if(!sizeList.length) sizeList = [nullSize];
 
   return (
     <ComboBox
-      label="사이즈 (성별을 먼저 고르세요.)"
+      label="사이즈"
       selectedItem={size}
-      items={genderList}
+      items={sizeList}
       itemToId={(item) => item?._id || ''}
-      itemToText={(item) => item?.size || ''}
+      itemToText={(item) => item?.name || ''}
       onChange={(value) => value && store.changeSize(value)}
     />
   )

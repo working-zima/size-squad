@@ -3,13 +3,13 @@ import { Action, Store } from "usestore-ts";
 
 import { apiService } from "../services/ApiService";
 
-import { FitSummary } from "../types";
-import { nullFitSummary } from "../nullObject";
+import { nullSummary } from "../nullObject";
+import { Summary } from "../types";
 
 @singleton()
 @Store()
 class FitsStore {
-  fits = [nullFitSummary];
+  fits = [nullSummary];
 
   loading = true;
 
@@ -18,7 +18,7 @@ class FitsStore {
   done = false;
 
   @Action()
-  private setGender(fits: FitSummary[]) {
+  private setGender(fits: Summary[]) {
     this.fits = fits;
     this.loading = false;
     this.error = false;
@@ -26,7 +26,7 @@ class FitsStore {
 
   @Action()
   private startLoading() {
-    this.fits = [nullFitSummary];
+    this.fits = [nullSummary];
     this.loading = true;
     this.error = false;
   }

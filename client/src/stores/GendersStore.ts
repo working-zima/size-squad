@@ -1,22 +1,22 @@
 import { singleton } from "tsyringe";
 import { Action, Store } from "usestore-ts";
 
-import { GenderSummary } from "../types";
+import { Summary } from "../types";
 
 import { apiService } from "../services/ApiService";
-import { nullGender } from "../nullObject";
+import { nullSummary } from "../nullObject";
 
 @singleton()
 @Store()
 class GendersStore {
-  genders: GenderSummary[] = [];
+  genders: Summary[] = [];
 
   loading = true;
 
   error = false;
 
   @Action()
-  private setGender(gender: GenderSummary[]) {
+  private setGender(gender: Summary[]) {
     this.genders = gender;
     this.loading = false;
     this.error = false;
@@ -24,7 +24,7 @@ class GendersStore {
 
   @Action()
   private startLoading() {
-    this.genders = [nullGender];
+    this.genders = [nullSummary];
     this.loading = true;
     this.error = false;
   }

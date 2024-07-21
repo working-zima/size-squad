@@ -1,8 +1,8 @@
 import { singleton } from "tsyringe";
 import { Action, Store } from "usestore-ts";
 import { apiService } from "../services/ApiService";
-import { GenderSummary, User } from "../types";
-import { nullGender } from "../nullObject";
+import { Summary, User } from "../types";
+import { nullSummary } from "../nullObject";
 
 @singleton()
 @Store()
@@ -15,7 +15,7 @@ class UserStore {
 
   password = '';
 
-  gender:GenderSummary = nullGender;
+  gender: Summary = nullSummary;
 
   height = 0;
 
@@ -39,7 +39,7 @@ class UserStore {
     this.email = user.email;
     this.name = user.name;
     this.password = user.password;
-    this.gender = user.genderId;
+    this.gender = user.gender;
     this.height = user.height;
     this.weight = user.weight;
     this.description = user.description;

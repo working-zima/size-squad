@@ -1,9 +1,10 @@
+import { useEffect } from 'react';
+
 import styled from 'styled-components';
 import { CiCircleRemove } from 'react-icons/ci';
 
 import useProductFormStore from '../../hooks/useProductFormStore';
-
-import { key } from '../../utils';
+import useInitialDataStore from '../../hooks/useInitialDataStore';
 
 import TextBox from '../ui/TextBox';
 import Button from '../ui/Button';
@@ -15,15 +16,27 @@ const Metrics = styled.div`
 `
 
 export default function MySizeNewMeasurements() {
-  const [{ measurements }, store] = useProductFormStore();
+  const [{ category, measurements }, store] = useProductFormStore();
+  const [{ categories }] = useInitialDataStore();
 
   const handleChangeMeasurement = (index: number, value: string) => {
-    store.changeMeasurementValue(index, value)
+    store.changeMeasurementValue(index, value);
   }
 
   const handleResetMeasurement = (index: number) => {
-    store.changeMeasurementValue(index, '')
+    store.changeMeasurementValue(index, '');
   }
+
+  const selectedMeasurements = categories
+    .find((categoryElem) => categoryElem._id === category._id)?.measurements || [];
+
+  useEffect(() => {
+    store.resetMeasurements()
+    selectedMeasurements.forEach((measurement, idx) => {
+      store.addMeasurement();
+      store.changeMeasurementAndId(idx, measurement._id, measurement.name);
+    });
+  }, [category, store])
 
   return (
     <>

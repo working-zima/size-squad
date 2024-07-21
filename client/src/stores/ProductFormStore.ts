@@ -1,16 +1,9 @@
 import { singleton } from 'tsyringe';
 import { Action, Store } from 'usestore-ts';
 
-import {
-  AuthorSummary, Category, CategorySummary, FitSummary, GenderSummary, Measurement,
-  Product, Size, SizeSummary, SubCategorySummary
-} from '../types';
+import { Summary, Measurement, Product, Size } from '../types';
 
-import {
-  nullAuthorSummary, nullCateogry, nullFitSummary, nullGender,
-  nullSize,
-  nullSubCategorySummary
-} from '../nullObject';
+import { nullSummary, nullSize } from '../nullObject';
 
 import { apiService } from '../services/ApiService';
 
@@ -21,27 +14,29 @@ import { append, sanitizeMeasurementInput, update } from '../utils';
 class ProductFormStore {
   productId= '';
 
-  author: AuthorSummary = nullAuthorSummary;
+  author: Summary = nullSummary;
 
   name = '';
 
   brand = '';
 
-  category: CategorySummary = nullCateogry;
+  type: Summary = nullSummary;
 
-  subCategory: SubCategorySummary = nullSubCategorySummary;
+  category: Summary = nullSummary;
 
-  gender: GenderSummary = nullGender;
+  subCategory: Summary = nullSummary;
 
-  size: SizeSummary = nullSize;
+  gender: Summary = nullSummary;
 
-  fit: FitSummary = nullFitSummary;
+  size: Summary = nullSize;
+
+  fit: Summary = nullSummary;
 
   measurements: Measurement[] = []
 
   description = '';
 
-  currentSubCategories: SubCategorySummary[] = [];
+  currentSubCategories: Summary[] = [];
 
   error = false;
 
@@ -89,14 +84,14 @@ class ProductFormStore {
   @Action()
   reset() {
     this.productId = '';
-    this.author = nullAuthorSummary;
+    this.author = nullSummary;
     this.brand = '';
     this.name = '';
-    this.category = nullCateogry;
-    this.subCategory = nullSubCategorySummary;
-    this.gender = nullGender;
+    this.category = nullSummary;
+    this.subCategory = nullSummary;
+    this.gender = nullSummary;
     this.size = nullSize;
-    this.fit = nullFitSummary;
+    this.fit = nullSummary;
     this.measurements = [];
     this.description = '';
     this.error = false;
@@ -121,7 +116,7 @@ class ProductFormStore {
   }
 
   @Action()
-  changeAuthor(author: AuthorSummary) {
+  changeAuthor(author: Summary) {
     this.author = author;
   }
 
@@ -136,35 +131,38 @@ class ProductFormStore {
   }
 
   @Action()
-  changeCategory(category: CategorySummary) {
+  changeCategory(category: Summary) {
     this.category = category;
   }
 
   @Action()
-  changeSubCategory(subCategory: SubCategorySummary) {
+  changeSubCategory(subCategory: Summary) {
     this.subCategory = subCategory;
   }
 
   @Action()
-  changeGender(gender: GenderSummary) {
+  changeType(type: Summary) {
+    this.type = type;
+  }
+
+  @Action()
+  changeGender(gender: Summary) {
     this.gender = gender;
   }
 
   @Action()
-  changeSize(size: Size) {
-    // console.log(size)
-    // this.size = {_id: size._id, size: size.size};
+  changeSize(size: Summary) {
+    this.size = size;
   }
 
   @Action()
-  changeFit(fit: FitSummary) {
+  changeFit(fit: Summary) {
     this.fit = fit;
   }
 
   @Action()
   addMeasurement() {
     const measurement = { _id: '', name: '', value: '' };
-
     this.measurements = append(this.measurements, measurement);
   }
 
@@ -214,8 +212,8 @@ class ProductFormStore {
     try {
       await apiService.createProduct({
         author: this.author?._id || '',
-        brand: this.brand,
         name: this.name,
+        brand: this.brand,
         category: this.category?._id || '',
         subCategory: this.subCategory?._id || '',
         gender: this.gender?._id || '',
@@ -223,13 +221,13 @@ class ProductFormStore {
         fit: this.fit?._id || '',
         measurements: this.measurements.map(measurement => ({
           _id: measurement._id || '',
-          measurement: measurement.name,
+          name: measurement.name,
           value: Number(measurement.value)
         })),
         description: this.description,
       });
 
-      // this.setDone();
+      this.setDone();
     } catch (e) {
       this.setError();
     }

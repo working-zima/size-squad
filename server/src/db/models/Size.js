@@ -15,7 +15,8 @@ const Size = {
     try {
       const genderData = await SizeModel
         .find({}, "_id name gender type")
-        .populate({ path: "gender", select: ["_id", "gender"] })
+        .populate({ path: "gender", select: ["_id", "name"] })
+        .populate({ path: "type", select: ["_id", "name"] })
         .lean();
 
       return genderData;

@@ -16,9 +16,10 @@ const Category = {
   findAll: async () => {
     try {
       const categoryData = await CategoryModel.find(
-        {}, "_id category subCategories measurements"
+        {}, "_id name type category subCategories measurements"
       ).populate({ path: "subCategories", select: ["_id", "name"] })
         .populate({ path: "measurements", select: ["_id", "name"]})
+        .populate({ path: "type", select: ["_id", "name"]})
         .lean();
 
       return categoryData;
@@ -31,9 +32,10 @@ const Category = {
   findById: async ({_id}) => {
     try {
       let categoryData = await CategoryModel.findOne(
-        { _id }, "_id name subCategories measurements"
+        { _id }, "_id name type subCategories measurements"
       ).populate({ path: "subCategories", select: ["_id", "name"] })
         .populate({ path: "measurements", select: ["_id", "name"]})
+        .populate({ path: "type", select: ["_id", "name"]})
         .lean();
 
       return categoryData;
@@ -47,9 +49,10 @@ const Category = {
     try {
       let categoryData = await CategoryModel.findOne(
         { name: category },
-        "_id name subCategories measurements"
+        "_id name type subCategories measurements"
       ).populate({ path: "subCategories", select: ["_id", "name"] })
         .populate({ path: "measurements", select: ["_id", "name"]})
+        .populate({ path: "type", select: ["_id", "name"]})
         .lean();
 
       return categoryData;

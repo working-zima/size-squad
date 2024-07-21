@@ -21,6 +21,7 @@ const SizeSchema = new Schema(
     type: {
       type: String,
       required: true,
+      ref: "Type"
     }
   },
   { timestamps: true },

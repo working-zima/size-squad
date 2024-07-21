@@ -17,6 +17,7 @@ const CategorySchema = new Schema(
     type: {
       type: String,
       required: true,
+      ref: "Type"
     },
     subCategories: [{
       type: String,

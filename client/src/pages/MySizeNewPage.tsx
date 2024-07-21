@@ -5,49 +5,54 @@ import AccessDeniedPage from "./AccessDeniedPage";
 
 import MySizeNewForm from "../components/mySize/MySizeNewForm";
 
-import useFetchCategories from "../hooks/useFetchCategories"
-import useProductFormStore from "../hooks/useProductFormStore";
 import useAccessToken from "../hooks/useAccessToken";
-import useFetchGender from "../hooks/useFetchGenders";
 import useFetchUser from "../hooks/useFetchUser";
-import useFetchFits from "../hooks/useFetchFits";
-import useFetchSize from "../hooks/useFetchSize";
+import useFetchInitialData from "../hooks/useFetchInitialData";
+import useProductFormStore from "../hooks/useProductFormStore";
 
 export default function MySizeNewPage() {
   const navigate = useNavigate();
 
   const { accessToken } = useAccessToken();
-
-  const { categories } = useFetchCategories()
-  const { genders } = useFetchGender();
   const { gender } = useFetchUser()
-  const { fits } = useFetchFits()
-  const { sizes } = useFetchSize()
+  const { categories, genders, fits, sizes } = useFetchInitialData()
   const [, store] = useProductFormStore();
 
   useEffect(() => {
     store.reset();
-  }, []);
+  }, [])
 
   useEffect(() => {
-    if (!categories.length) return;
-    if (!!gender._id) store.changeGender(gender);
+    if (!categories[0]._id && !gender._id) return;
 
-    store.changeSize(sizes[0])
+    const {_id, name, type, subCategories} = categories[0];
+    store.changeCategory({ _id, name });
+    store.changeSubCategory(subCategories[0])
+    store.changeType(type);
+    store.changeGender(gender);
 
-    const { _id, category } = categories[0];
-    store.changeCategory({ _id, category });
-    store.changeSubCategory(categories[0].subCategories[0]);
+    const sizeList = sizes
+      .filter(sizeElem => (
+        sizeElem.gender._id === gender._id && sizeElem.type._id === type._id
+      ));
+    store.changeSize({_id: sizeList[0]?._id, name: sizeList[0]?.name});
 
-  }, [store, categories, gender]);
+    store.changeFit(fits[2]);
+
+    store.resetMeasurements()
+    categories[0].measurements.forEach((measurement, idx) => {
+      store.addMeasurement();
+      store.changeMeasurementAndId(idx, measurement._id, measurement.name);
+    });
+  }, [store, categories, genders, fits, sizes, gender]);
 
   const handleComplete = () => {
     navigate('/mysize');
   };
 
-  if (!categories.length) {
-    return null;
-  }
+  // if (!initialData) {
+  //   return null;
+  // }
 
   if (!accessToken) {
     return (
@@ -57,10 +62,6 @@ export default function MySizeNewPage() {
 
   return (
     <MySizeNewForm
-      categories={categories}
-      genders={genders}
-      fits={fits}
-      sizes={sizes}
       onComplete={handleComplete}
     />
   );

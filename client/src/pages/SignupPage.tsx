@@ -6,8 +6,6 @@ import SignUpForm from "../components/signUp/SignUpForm";
 import useSignupFormStore from "../hooks/useSignupFormStore";
 import useFetchGender from "../hooks/useFetchGenders";
 
-import { nullGender } from "../nullObject";
-
 export default function SignupPage() {
   const navigate = useNavigate();
 

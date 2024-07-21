@@ -3,8 +3,8 @@ import { singleton } from "tsyringe";
 import { Action, Store } from "usestore-ts";
 
 import { apiService } from "../services/ApiService";
-import { GenderSummary } from "../types";
-import { nullGender } from "../nullObject";
+import { Summary } from "../types";
+import { nullSummary } from "../nullObject";
 
 @singleton()
 @Store()
@@ -17,7 +17,7 @@ class SignupFormStore {
 
   passwordConfirmation = '';
 
-  gender: GenderSummary = nullGender;
+  gender: Summary = nullSummary;
 
   height = "";
 
@@ -71,7 +71,7 @@ class SignupFormStore {
   }
 
   @Action()
-  changeGender(gender: GenderSummary) {
+  changeGender(gender: Summary) {
     this.gender = gender;
   }
 
@@ -116,7 +116,7 @@ class SignupFormStore {
     this.name = '';
     this.password = '';
     this.passwordConfirmation = '';
-    this.gender = nullGender;
+    this.gender = nullSummary;
     this.height = '';
     this.weight = '';
     this.description = '';

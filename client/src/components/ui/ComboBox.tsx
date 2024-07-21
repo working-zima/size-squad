@@ -72,6 +72,7 @@ export default function ComboBox<T>({
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const { value } = event.target;
     const selected = items.find((item) => itemToId(item) === value);
+
     onChange(selected ?? null);
   };
 

@@ -11,8 +11,6 @@ import MySizeNewFit from './MySizeNewFit';
 import MySizeNewMeasurements from './MySizeNewMeasurements';
 import MySizeNewDescription from './MySizeNewDescription';
 
-import { Category, FitSummary, GenderSummary, Size } from '../../types';
-
 import useProductFormStore from '../../hooks/useProductFormStore';
 
 import Button from '../ui/Button';
@@ -59,37 +57,19 @@ const ButtonWrapper = styled.div`
 `
 
 type MySizeNewFormProps = {
-  categories: Category[];
-  genders: GenderSummary[];
-  fits: FitSummary[]
-  sizes: Size[]
   onComplete: () => void;
 }
 
-export default function MySizeNewForm({
-  categories, genders, fits, sizes, onComplete
-}: MySizeNewFormProps) {
-  const [{ category: selectedCategory, error, done, valid
-  }, store] = useProductFormStore();
-
-  const measurement = categories
-    .find(category => category._id === selectedCategory._id)?.measurements || [];
+export default function MySizeNewForm({ onComplete }: MySizeNewFormProps) {
+  const [
+    { category: selectedCategory, error, done, valid }, store
+  ] = useProductFormStore();
 
   useEffect(() => {
     if (done) {
       onComplete();
     }
   }, [done]);
-
-  useEffect(() => {
-    store.resetMeasurements();
-
-    measurement.forEach((measurement, idx) => {
-      store.addMeasurement();
-      store.changeMeasurementAndId(idx, measurement._id, measurement.measurement);
-    });
-
-  }, [selectedCategory, store]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -102,10 +82,10 @@ export default function MySizeNewForm({
       <Form onSubmit={handleSubmit}>
         <MySizeNewBrand />
         <MySizeNewName />
-        <MySizeNewCategory categories={categories} />
-        <MySizeNewGender genders={genders} />
-        {/* <MySizeNewSize sizes={sizes} /> */}
-        <MySizeNewFit fits={fits} />
+        <MySizeNewCategory />
+        <MySizeNewGender />
+        <MySizeNewSize />
+        <MySizeNewFit />
         <MySizeNewMeasurements />
         <MySizeNewDescription />
         <ButtonWrapper>

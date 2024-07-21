@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 import {
-  Category, FitSummary, GenderSummary, Product, ProductRequest, ProductResponse, Size, User
+  Category, Summary, Product, ProductRequest, ProductResponse, Size, User
 } from '../types';
 
 const MOCK_BASE_URL = 'http://localhost:5000';
@@ -115,6 +115,10 @@ export default class ApiService {
     this.accessToken = accessToken;
   }
 
+  async createProduct(newProduct: ProductRequest): Promise<void> {
+    await this.instance.post('/products', newProduct);
+  }
+
   async fetchCategories({ categoryId }: {
     categoryId? : string
   } = {}): Promise<Category[]> {
@@ -124,15 +128,6 @@ export default class ApiService {
     const { categories } = data;
 
     return categories;
-  }
-
-  async createProduct({
-    authorId, name, brand, categoryId, subCategoryId, genderId, sizeId, fitId, measurements, description,
-  }: ProductRequest): Promise<void> {
-    await this.instance.post('/products', {
-      authorId, name, brand, categoryId, subCategoryId, genderId, sizeId, fitId,
-      measurements, description
-    });
   }
 
   async fetchProducts({ categoryId, subCategoryId }: {
@@ -183,22 +178,22 @@ export default class ApiService {
     return id;
   }
 
-  async fetchFits(): Promise<FitSummary[]> {
-    const { data } = await this.instance.get('fits');
+  async fetchFits(): Promise<Summary[]> {
+    const { data } = await this.instance.get('/fits');
     const { fits } = data;
 
     return fits
   }
 
-  async fetchGenders(): Promise<GenderSummary[]> {
-    const { data } = await this.instance.get('genders');
+  async fetchGenders(): Promise<Summary[]> {
+    const { data } = await this.instance.get('/genders');
     const { genders } = data;
 
     return genders;
   }
 
   async fetchSizes(): Promise<Size[]> {
-    const { data } = await this.instance.get('sizes');
+    const { data } = await this.instance.get('/sizes');
     const { sizes } = data;
 
     return sizes;
@@ -230,6 +225,13 @@ export default class ApiService {
     const { accessToken } = data;
 
     return accessToken;
+  }
+
+  async fetchInitialData() {
+    const { data } = await this.instance.get('/initialData')
+    const { initialData } = data;
+
+    return initialData;
   }
 }
 

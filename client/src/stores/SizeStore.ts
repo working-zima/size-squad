@@ -3,11 +3,12 @@ import { Action, Store } from "usestore-ts";
 
 import { Size } from "../types";
 import { apiService } from "../services/ApiService";
+import { nullSize } from "../nullObject";
 
 @singleton()
 @Store()
 class SizeStore {
-  sizes: Size[] = [];
+  sizes: Size[] = [nullSize];
 
   loading = true;
 
