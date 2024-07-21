@@ -73,14 +73,14 @@ export type ProductRequest = {
 
 export type ProductResponse = {
   _id: string;
-  authorId: Summary;
+  author: Summary;
   name: string;
   brand: string;
-  categoryId: Summary;
-  subCategoryId: Summary;
+  category: Summary;
+  subCategory: Summary;
   gender: Summary;
-  sizeId: Size;
-  fitId: Summary;
+  size: Size;
+  fit: Summary;
   measurements: Measurement[];
   description: string;
 }

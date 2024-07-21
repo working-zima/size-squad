@@ -50,9 +50,9 @@ export default function MySizeNewPage() {
     navigate('/mysize');
   };
 
-  // if (!initialData) {
-  //   return null;
-  // }
+  if (!categories[0]._id) {
+    return null;
+  }
 
   if (!accessToken) {
     return (

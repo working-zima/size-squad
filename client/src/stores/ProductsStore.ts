@@ -1,7 +1,7 @@
 import { singleton } from 'tsyringe';
 import { Action, Store } from 'usestore-ts';
 
-import { Product, ProductResponse } from '../types';
+import { ProductResponse } from '../types';
 import { apiService } from '../services/ApiService';
 
 @singleton()

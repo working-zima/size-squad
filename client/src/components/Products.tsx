@@ -2,9 +2,9 @@ import styled from 'styled-components';
 
 import ProductComponent from './Product';
 
-import { Product, ProductResponse, SubCategorySummary } from '../types';
+import { ProductResponse, Summary } from '../types';
 
-import { key } from '../utils';
+import { SUBCATEGORY_MESSAGES } from '../constants';
 
 const Container = styled.div`
     h2 {
@@ -35,13 +35,13 @@ const Wrapper = styled.div`
 `;
 
 type ProductsProps = {
-  subCategory: SubCategorySummary;
+  subCategory: Summary;
   products: ProductResponse[];
 }
 
 export default function Products({ subCategory, products }: ProductsProps) {
   const filteredProduct = products.filter(
-    (product) => (product.subCategoryId._id === subCategory._id),
+    (product) => (product.subCategory._id === subCategory._id),
   );
 
   return (
@@ -49,7 +49,7 @@ export default function Products({ subCategory, products }: ProductsProps) {
     <Container>
       <SectionDivider />
       <Wrapper>
-        <h2>{subCategory.subCategory}</h2>
+        <h2>{SUBCATEGORY_MESSAGES[subCategory.name]}</h2>
       </Wrapper>
       {filteredProduct.map((product) => (
         <ProductComponent

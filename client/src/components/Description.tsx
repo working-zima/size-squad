@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import Button from './ui/Button';
 
-import { Product } from '../types';
+import { ProductResponse } from '../types';
 
 import { debounceCallback } from '../utils';
 
@@ -31,7 +31,7 @@ const CustomButton = styled(Button)`
 `;
 
 type DescriptionProps = {
-  product: Product;
+  product: ProductResponse;
 }
 
 export default function Description({ product }: DescriptionProps) {

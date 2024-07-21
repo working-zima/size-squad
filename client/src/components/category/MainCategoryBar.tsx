@@ -7,6 +7,8 @@ import Button from '../ui/Button';
 
 import { Category } from '../../types';
 
+import { CATEGORY_MESSAGES } from '../../constants';
+
 const Container = styled.div`
   display: flex;
   align-items: center;
@@ -113,7 +115,7 @@ export default function MainCategoryBar({
               )
             }
           >
-            <p>{category.category}</p>
+            <p>{CATEGORY_MESSAGES[category.name]}</p>
           </CustomButton>
         ))
       )}

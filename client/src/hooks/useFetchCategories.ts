@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import useCategoriesStore from './useCategoriesStore';
-import { Category, SubCategorySummary } from '../types';
+import { Category, Summary } from '../types';
 
 /**
  * categories를 fetch하는 역할
@@ -9,7 +9,7 @@ import { Category, SubCategorySummary } from '../types';
  */
 export default function useFetchCategories(): {
   categories: Category[],
-  allSubCategories: SubCategorySummary[],
+  allSubCategories: Summary[],
 } {
   const [
     { categories, allSubCategories }, store

@@ -13,7 +13,7 @@ const productController = {
       const categoryId = req.query.categoryId;
       const subCategoryId = req.query.subCategoryId;
       let productData = [];
-
+      console.log(categoryId, subCategoryId)
       // 서브 카테고리
       if(subCategoryId) {
         productData = await productService.getProductBySubCategoryId({

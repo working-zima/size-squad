@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 import {
-  Category, Summary, Product, ProductRequest, ProductResponse, Size, User
+  Category, Summary, ProductResponse, ProductRequest, Size, User
 } from '../types';
 
 const MOCK_BASE_URL = 'http://localhost:5000';
@@ -132,7 +132,7 @@ export default class ApiService {
 
   async fetchProducts({ categoryId, subCategoryId }: {
     categoryId?: string, subCategoryId?: string
-  } = {}): Promise<Product[]> {
+  } = {}): Promise<ProductResponse[]> {
     const { data } = await this.instance.get('/products', {
       params: { categoryId, subCategoryId },
     });

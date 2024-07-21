@@ -13,16 +13,16 @@ const Product = {
   },
 
   /** userId로 product list 가져오기 */
-  findByUserId: async ({ userId }) => {
+  findByUserId: async ({ user }) => {
     try {
-      const productData = await ProductModel.find({ author: userId },
+      const productData = await ProductModel.find({ author: user },
         "_id author name brand category subCategory gender size fit measurements description"
-        ).populate({ path: "category", select: ["_id", "category"] })
-        .populate({ path: "subCategory", select: ["_id", "subCategory"] })
+        ).populate({ path: "category", select: ["_id", "name"] })
+        .populate({ path: "subCategory", select: ["_id", "name"] })
         .populate({ path: "author", select: ["_id", "name"] })
-        .populate({ path: "gender", select: ["_id", "gender"] })
-        .populate({ path: "fit", select: ["_id", "fit"] })
-        .populate({ path: "size", select: ["_id", "size"] })
+        .populate({ path: "gender", select: ["_id", "name"] })
+        .populate({ path: "fit", select: ["_id", "name"] })
+        .populate({ path: "size", select: ["_id", "name"] })
         .lean();
 
       return productData;
@@ -32,17 +32,17 @@ const Product = {
   },
 
   /** userId와 categoryId로 product list 가져오기 */
-  findByUserIdAndCategoryId: async ({ userId, categoryId }) => {
+  findByUserIdAndCategoryId: async ({ user, category }) => {
     try {
       const productData = await ProductModel.find(
-        { author: userId, category: categoryId },
+        { author: user, category },
         "_id author name brand category subCategory gender size fit measurements description"
-        ).populate({ path: "category", select: ["_id", "category"] })
-        .populate({ path: "subCategory", select: ["_id", "subCategory"] })
+        ).populate({ path: "category", select: ["_id", "name"] })
+        .populate({ path: "subCategory", select: ["_id", "name"] })
         .populate({ path: "author", select: ["_id", "name"] })
-        .populate({ path: "gender", select: ["_id", "gender"] })
-        .populate({ path: "fit", select: ["_id", "fit"] })
-        .populate({ path: "size", select: ["_id", "size"] })
+        .populate({ path: "gender", select: ["_id", "name"] })
+        .populate({ path: "fit", select: ["_id", "name"] })
+        .populate({ path: "size", select: ["_id", "name"] })
         .lean();
 
       return productData;
@@ -52,17 +52,17 @@ const Product = {
   },
 
   /** userId와 categoryId로 product list 가져오기 */
-  findByUserIdAndSubCategoryId: async ({ userId, subCategoryId }) => {
+  findByUserIdAndSubCategoryId: async ({ user, subCategory }) => {
     try {
       const productData = await ProductModel.find(
-        { author: userId, subCategory: subCategoryId },
+        { author: user, subCategory },
         "_id author name brand category subCategory gender size fit measurements description"
-        ).populate({ path: "category", select: ["_id", "category"] })
-        .populate({ path: "subCategory", select: ["_id", "subCategory"] })
+        ).populate({ path: "category", select: ["_id", "name"] })
+        .populate({ path: "subCategory", select: ["_id", "name"] })
         .populate({ path: "author", select: ["_id", "name"] })
-        .populate({ path: "gender", select: ["_id", "gender"] })
-        .populate({ path: "fit", select: ["_id", "fit"] })
-        .populate({ path: "size", select: ["_id", "size"] })
+        .populate({ path: "gender", select: ["_id", "name"] })
+        .populate({ path: "fit", select: ["_id", "name"] })
+        .populate({ path: "size", select: ["_id", "name"] })
         .lean();
 
       return productData;
@@ -76,12 +76,12 @@ const Product = {
     try {
       const productData = await ProductModel.find({},
         "_id author name brand category subCategory gender size fit measurements description"
-        ).populate({ path: "category", select: ["_id", "category"] })
-        .populate({ path: "subCategory", select: ["_id", "subCategory"] })
+        ).populate({ path: "category", select: ["_id", "name"] })
+        .populate({ path: "subCategory", select: ["_id", "name"] })
         .populate({ path: "author", select: ["_id", "name"] })
-        .populate({ path: "gender", select: ["_id", "gender"] })
-        .populate({ path: "fit", select: ["_id", "fit"] })
-        .populate({ path: "size", select: ["_id", "size"] })
+        .populate({ path: "gender", select: ["_id", "name"] })
+        .populate({ path: "fit", select: ["_id", "name"] })
+        .populate({ path: "size", select: ["_id", "name"] })
         .lean();
 
       return productData;
@@ -95,12 +95,12 @@ const Product = {
     try {
       const productData = await ProductModel.find({ category: categoryId },
         "_id author name brand category subCategory gender size fit measurements description"
-        ).populate({ path: "category", select: ["_id", "category"] })
-        .populate({ path: "subCategory", select: ["_id", "subCategory"] })
+        ).populate({ path: "category", select: ["_id", "name"] })
+        .populate({ path: "subCategory", select: ["_id", "name"] })
         .populate({ path: "author", select: ["_id", "name"] })
-        .populate({ path: "gender", select: ["_id", "gender"] })
-        .populate({ path: "fit", select: ["_id", "fit"] })
-        .populate({ path: "size", select: ["_id", "size"] })
+        .populate({ path: "gender", select: ["_id", "name"] })
+        .populate({ path: "fit", select: ["_id", "name"] })
+        .populate({ path: "size", select: ["_id", "name"] })
         .lean();
 
       return productData;
@@ -114,12 +114,12 @@ const Product = {
     try {
       const productData = await ProductModel.find({ subCategory: subCategoryId },
         "_id author name brand category subCategory gender size fit measurements description"
-        ).populate({ path: "category", select: ["_id", "category"] })
-        .populate({ path: "subCategory", select: ["_id", "subCategory"] })
+        ).populate({ path: "category", select: ["_id", "name"] })
+        .populate({ path: "subCategory", select: ["_id", "name"] })
         .populate({ path: "author", select: ["_id", "name"] })
-        .populate({ path: "gender", select: ["_id", "gender"] })
-        .populate({ path: "fit", select: ["_id", "fit"] })
-        .populate({ path: "size", select: ["_id", "size"] })
+        .populate({ path: "gender", select: ["_id", "name"] })
+        .populate({ path: "fit", select: ["_id", "name"] })
+        .populate({ path: "size", select: ["_id", "name"] })
         .lean();
 
       return productData;
@@ -132,12 +132,12 @@ const Product = {
     try {
       const productData = await ProductModel.find({ _id: productId },
         "_id author name brand category subCategory gender size fit measurements description"
-        ).populate({ path: "category", select: ["_id", "category"] })
-        .populate({ path: "subCategory", select: ["_id", "subCategory"] })
+        ).populate({ path: "category", select: ["_id", "name"] })
+        .populate({ path: "subCategory", select: ["_id", "name"] })
         .populate({ path: "author", select: ["_id", "name"] })
-        .populate({ path: "gender", select: ["_id", "gender"] })
-        .populate({ path: "fit", select: ["_id", "fit"] })
-        .populate({ path: "size", select: ["_id", "size"] })
+        .populate({ path: "gender", select: ["_id", "name"] })
+        .populate({ path: "fit", select: ["_id", "name"] })
+        .populate({ path: "size", select: ["_id", "name"] })
         .lean();
 
       return productData;

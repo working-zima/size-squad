@@ -1,7 +1,7 @@
 import { singleton } from 'tsyringe';
 import { Action, Store } from 'usestore-ts';
 
-import { Summary, Measurement, Product, Size } from '../types';
+import { Summary, Measurement, ProductResponse } from '../types';
 
 import { nullSummary, nullSize } from '../nullObject';
 
@@ -99,7 +99,7 @@ class ProductFormStore {
   }
 
   @Action()
-  setProduct(product: Product) {
+  setProduct(product: ProductResponse) {
     this.productId = product._id;
     this.author = product.author;
     this.brand = product.brand;

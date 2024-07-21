@@ -35,10 +35,10 @@ const productService = {
   },
 
   /** categoryId와 userId로 product 조회 */
-  getProductByUserIdAndCategoryId: async ({ userId, categoryId }) => {
+  getProductByUserIdAndCategoryId: async ({ user, category }) => {
     try {
       const productData = await Product.findByUserIdAndCategoryId({
-        userId, categoryId
+        user, category
       });
 
       return productData;
@@ -48,11 +48,11 @@ const productService = {
   },
 
   /** subCategoryId와 userId로 product 조회 */
-  getProductByUserIdAndSubCategoryId: async ({ userId, subCategoryId }) => {
+  getProductByUserIdAndSubCategoryId: async ({ user, subCategory }) => {
 
     try {
       const productData = await Product.findByUserIdAndSubCategoryId({
-        userId, subCategoryId
+        user, subCategory
       });
 
       return productData;

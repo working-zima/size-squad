@@ -6,8 +6,6 @@ import CategoryBar from '../components/category/CategoryBar';
 import Products from '../components/Products';
 import AccessDeniedPage from './AccessDeniedPage';
 
-import { SubCategorySummary } from '../types';
-
 import useAccessToken from '../hooks/useAccessToken';
 import useFetchCategories from '../hooks/useFetchCategories';
 import useFetchProducts from '../hooks/useFetchProducts';

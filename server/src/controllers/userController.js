@@ -47,6 +47,7 @@ const userController = {
 
       const userAccessToken = req.headers["authorization"];
       const userData = await userService.getMyInfo(userAccessToken);
+
       const user = userData._id;
 
       const categoryId = req.query.categoryId;
@@ -57,14 +58,14 @@ const userController = {
       // 서브 카테고리
       if(subCategoryId) {
         productData = await productService.getProductByUserIdAndSubCategoryId({
-          user, subCategoryId: subCategoryId
+          user, subCategory: subCategoryId
         });
       }
 
       // 카테고리
       if(categoryId && !subCategoryId) {
         productData = await productService.getProductByUserIdAndCategoryId({
-          user, categoryId: categoryId
+          user, category: categoryId
         });
       }
 

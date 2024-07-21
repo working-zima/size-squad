@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import SizeCard from './SizeCard';
 import InfoCard from './InfoCard';
 
-import { Product, ProductResponse } from '../types';
+import { ProductResponse } from '../types';
 
 import useViewModeStore from '../hooks/useViewModeStore';
 

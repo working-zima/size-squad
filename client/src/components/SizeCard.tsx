@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import { MEASUREMENT_MESSAGES } from '../constants';
 
-import { Product } from '../types';
+import { ProductResponse } from '../types';
 
 const Container = styled.div`
   display: flex;
@@ -39,13 +39,13 @@ const Container = styled.div`
 `;
 
 type SizeCardProps = {
-  product: Product;
+  product: ProductResponse;
 }
 
 export default function SizeCard({ product }: SizeCardProps) {
-  // const keys = Object.keys(product.measurements);
-  // const values = Object.values(product.measurements);
   console.log(`SizeCard: `, product)
+  const values = Object.values(product.measurements);
+
   return (
     <Container>
       <table>
@@ -55,17 +55,19 @@ export default function SizeCard({ product }: SizeCardProps) {
               사이즈 (CM)
             </th>
             {product.measurements.map((measurement) => (
-              <th key={measurement.measurement}>{MEASUREMENT_MESSAGES[key]}</th>
+              <th key={measurement._id}>
+                {MEASUREMENT_MESSAGES[measurement.name]}
+              </th>
             ))}
           </tr>
         </thead>
         <tbody>
           <tr>
             <th>
-              {product.size.size}
+              {product.size.name}
             </th>
             {values.map((value) => (
-              <td key={value._id}>{value.name}</td>
+              <td key={value._id}>{value.value}</td>
             ))}
           </tr>
         </tbody>
@@ -73,26 +75,3 @@ export default function SizeCard({ product }: SizeCardProps) {
     </Container>
   );
 }
-
-      {/* <table>
-        <thead>
-          <tr>
-            <th>
-              사이즈 (CM)
-            </th>
-            {keys.map((key) => (
-              <th key={key}>{MEASUREMENT_MESSAGES[key]}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th>
-              {product.size.size}
-            </th>
-            {values.map((value) => (
-              <td key={value._id}>{value.name}</td>
-            ))}
-          </tr>
-        </tbody>
-      </table> */}

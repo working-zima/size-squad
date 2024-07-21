@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import Description from './Description';
 
-import { Product, ProductResponse } from '../types';
+import { ProductResponse } from '../types';
 import useProductFormStore from '../hooks/useProductFormStore';
 
 const Container = styled.div`

@@ -5,7 +5,9 @@ import styled, { css } from 'styled-components';
 
 import Button from '../ui/Button';
 
-import { SubCategorySummary } from '../../types';
+import { Summary } from '../../types';
+
+import { SUBCATEGORY_MESSAGES } from '../../constants';
 
 const Container = styled.div`
   display: flex;
@@ -46,7 +48,7 @@ const CustomButton = styled(Button)<{active: boolean}>`
 `;
 
 type SubCategoryBarProps = {
-  subCategories: SubCategorySummary[];
+  subCategories: Summary[];
 }
 
 export default function SubCategoryBar(
@@ -94,7 +96,7 @@ export default function SubCategoryBar(
             active={activeBtn === subCategory._id}
             onClick={() => handleNavigate(subCategory._id)}
           >
-            {subCategory.subCategory}
+            {SUBCATEGORY_MESSAGES[subCategory.name]}
           </CustomButton>
         ))
       )}
