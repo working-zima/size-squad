@@ -61,9 +61,7 @@ type MySizeNewFormProps = {
 }
 
 export default function MySizeNewForm({ onComplete }: MySizeNewFormProps) {
-  const [
-    { category: selectedCategory, error, done, valid }, store
-  ] = useProductFormStore();
+  const [{ error, done, valid }, store] = useProductFormStore();
 
   useEffect(() => {
     if (done) {

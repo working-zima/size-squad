@@ -3,7 +3,7 @@ import { Action, Store } from 'usestore-ts';
 
 import { Summary, Measurement, ProductResponse } from '../types';
 
-import { nullSummary, nullSize } from '../nullObject';
+import { nullSummary } from '../nullObject';
 
 import { apiService } from '../services/ApiService';
 
@@ -28,7 +28,7 @@ class ProductFormStore {
 
   gender: Summary = nullSummary;
 
-  size: Summary = nullSize;
+  size: Summary = nullSummary;
 
   fit: Summary = nullSummary;
 
@@ -37,6 +37,8 @@ class ProductFormStore {
   description = '';
 
   currentSubCategories: Summary[] = [];
+
+  loading = true;
 
   error = false;
 
@@ -79,40 +81,6 @@ class ProductFormStore {
   @Action()
   validateMeasurement() {
     this.isMeasurementValid = this.measurementValidation();
-  }
-
-  @Action()
-  reset() {
-    this.productId = '';
-    this.author = nullSummary;
-    this.brand = '';
-    this.name = '';
-    this.category = nullSummary;
-    this.subCategory = nullSummary;
-    this.gender = nullSummary;
-    this.size = nullSize;
-    this.fit = nullSummary;
-    this.measurements = [];
-    this.description = '';
-    this.error = false;
-    this.done = false;
-  }
-
-  @Action()
-  setProduct(product: ProductResponse) {
-    this.productId = product._id;
-    this.author = product.author;
-    this.brand = product.brand;
-    this.name = product.name;
-    this.category = product.category;
-    this.subCategory = product.subCategory;
-    this.gender = product.gender;
-    this.size = product.size;
-    this.fit = product.fit;
-    this.measurements = product.measurements;
-    this.description = product.description;
-    this.error = false;
-    this.done = false;
   }
 
   @Action()
@@ -199,13 +167,61 @@ class ProductFormStore {
   }
 
   @Action()
-  private setError() {
-    this.error = true;
+  reset() {
+    this.productId = '';
+    this.author = nullSummary;
+    this.brand = '';
+    this.name = '';
+    this.category = nullSummary;
+    this.subCategory = nullSummary;
+    this.gender = nullSummary;
+    this.size = nullSummary;
+    this.fit = nullSummary;
+    this.measurements = [];
+    this.description = '';
+    this.error = false;
+    this.done = false;
+  }
+
+  @Action()
+  setProduct(product: ProductResponse) {
+    this.productId = product._id;
+    this.author = product.author;
+    this.brand = product.brand;
+    this.name = product.name;
+    this.category = product.category;
+    this.subCategory = product.subCategory;
+    this.gender = product.gender;
+    this.size = product.size;
+    this.fit = product.fit;
+    this.measurements = product.measurements.map(measurement => ({
+      _id: measurement?._id || '',
+      name: measurement.name,
+      value: String(measurement.value)
+    }));
+    this.description = product.description;
+    this.error = false;
+    this.done = false;
+    this.loading = false;
+  }
+
+  @Action()
+  private startLoading() {
+    this.reset()
+    this.error = false;
+    this.loading = true;
   }
 
   @Action()
   private setDone() {
     this.done = true;
+  }
+
+  @Action()
+  private setError() {
+    this.reset()
+    this.error = true;
+    this.loading = false;
   }
 
   async create() {
@@ -229,6 +245,43 @@ class ProductFormStore {
 
       this.setDone();
     } catch (e) {
+      this.setError();
+    }
+  }
+
+  async update() {
+    try {
+      await apiService.updateProduct({
+        _id: this.productId,
+        author: this.author?._id || '',
+        name: this.name,
+        brand: this.brand,
+        category: this.category?._id || '',
+        subCategory: this.subCategory?._id || '',
+        gender: this.gender?._id || '',
+        size: this.size._id || '',
+        fit: this.fit?._id || '',
+        measurements: this.measurements.map(measurement => ({
+          _id: measurement?._id || '',
+          name: measurement.name,
+          value: Number(measurement.value)
+        })),
+        description: this.description,
+      });
+
+      this.setDone();
+    } catch (e) {
+      this.setError();
+    }
+  }
+
+  async fetchProduct({ productId }: { productId: string }) {
+    this.startLoading();
+    try {
+      const product = await apiService.fetchProduct({ productId });
+
+      this.setProduct(product);
+    } catch (error) {
       this.setError();
     }
   }

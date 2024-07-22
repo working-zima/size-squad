@@ -7,13 +7,13 @@ import { apiService } from '../services/ApiService';
 @singleton()
 @Store()
 class LoginFormStore {
+  accessToken = '';
+
   email = '';
 
   password = '';
 
   error = false;
-
-  accessToken = '';
 
   get valid() {
     return this.email.includes('@') && !!this.password;

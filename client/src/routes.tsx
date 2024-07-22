@@ -6,7 +6,6 @@ import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import SignupCompletePage from './pages/SignupCompletePage';
 import MySizeListPage from './pages/MySizeListPage';
-
 import MySizeEditPage from './pages/MySizeEditPage';
 import NetworkErrorPage from './pages/NetworkErrorPage';
 import MyPage from './pages/MyPage';

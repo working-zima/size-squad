@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import useInitialDataStore from '../../hooks/useInitialDataStore';
 import useProductFormStore from '../../hooks/useProductFormStore';
 
@@ -7,16 +6,12 @@ import { nullSize } from '../../nullObject';
 import ComboBox from '../ui/ComboBox';
 
 export default function MySizeNewSize() {
-  const [{ gender, size }, store] = useProductFormStore();
+  const [{ gender, size, type }, store] = useProductFormStore();
   const [{ sizes }] = useInitialDataStore()
 
   let sizeList = sizes.filter(sizeElem => {
-    return sizeElem.gender._id === gender._id && sizeElem.type._id
+    return sizeElem.gender._id === gender._id && sizeElem.type._id === type._id
   });
-
-  useEffect(() => {
-    store.changeSize(sizeList[0]);
-  }, [gender])
 
   if(!sizeList.length) sizeList = [nullSize];
 

@@ -119,15 +119,9 @@ export default class ApiService {
     await this.instance.post('/products', newProduct);
   }
 
-  async fetchCategories({ categoryId }: {
-    categoryId? : string
-  } = {}): Promise<Category[]> {
-    const { data } = await this.instance.get('/categories', {
-      params: { categoryId },
-    });
-    const { categories } = data;
-
-    return categories;
+  async updateProduct(product: ProductRequest): Promise<void> {
+    const productId = product._id
+    await this.instance.patch(`/products/${productId}`, { product })
   }
 
   async fetchProducts({ categoryId, subCategoryId }: {
@@ -139,6 +133,25 @@ export default class ApiService {
     const { products } = data;
 
     return products;
+  }
+
+  async fetchProduct({ productId }: { productId: string })
+  : Promise<ProductResponse> {
+    const { data } = await this.instance.get(`/products/${productId}`);
+    const { product } = data;
+
+    return product;
+  }
+
+  async fetchCategories({ categoryId }: {
+    categoryId? : string
+  } = {}): Promise<Category[]> {
+    const { data } = await this.instance.get('/categories', {
+      params: { categoryId },
+    });
+    const { categories } = data;
+
+    return categories;
   }
 
   async fetchMyProducts({ categoryId, subCategoryId }: {

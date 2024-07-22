@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import styled from 'styled-components';
 import { CiCircleRemove } from 'react-icons/ci';
@@ -18,10 +18,7 @@ const Metrics = styled.div`
 export default function MySizeNewMeasurements() {
   const [{ category, measurements }, store] = useProductFormStore();
   const [{ categories }] = useInitialDataStore();
-
-  const handleChangeMeasurement = (index: number, value: string) => {
-    store.changeMeasurementValue(index, value);
-  }
+  const [prevCategoryId, setPrevCategoryId] = useState(category._id);
 
   const handleResetMeasurement = (index: number) => {
     store.changeMeasurementValue(index, '');
@@ -30,13 +27,17 @@ export default function MySizeNewMeasurements() {
   const selectedMeasurements = categories
     .find((categoryElem) => categoryElem._id === category._id)?.measurements || [];
 
+  // 카테고리 변경시에만 작동
   useEffect(() => {
-    store.resetMeasurements()
-    selectedMeasurements.forEach((measurement, idx) => {
-      store.addMeasurement();
-      store.changeMeasurementAndId(idx, measurement._id, measurement.name);
-    });
-  }, [category, store])
+    if (category._id !== prevCategoryId) {
+      store.resetMeasurements();
+      selectedMeasurements.forEach((measurement, idx) => {
+        store.addMeasurement();
+        store.changeMeasurementAndId(idx, measurement._id, measurement.name);
+      });
+      setPrevCategoryId(category._id);
+    }
+  }, [category._id, selectedMeasurements, prevCategoryId, store]);
 
   return (
     <>
@@ -48,7 +49,7 @@ export default function MySizeNewMeasurements() {
             placeholder={`${MEASUREMENT_MESSAGES[measurement.name]}을 입력해주세요.`}
             type="text"
             value={measurement.value}
-            onChange={(value) => handleChangeMeasurement(index, value)}
+            onChange={(value) => store.changeMeasurementValue(index, value)}
           >
             <Metrics>
               <span>cm</span>

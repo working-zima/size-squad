@@ -1,62 +1,30 @@
-import { useEffect } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import styled from 'styled-components';
+import MySizeEditForm from '../components/mySize/MySizeEditForm';
 
-import useProductsStore from '../hooks/useProductsStore';
-import useProductFormStore from '../hooks/useProductFormStore';
-import ComboBox from '../components/ui/ComboBox';
-import useCategoriesStore from '../hooks/useCategoriesStore';
-import useFetchProducts from '../hooks/useFetchProducts';
-import useFetchCategories from '../hooks/useFetchCategories';
-
-const Container = styled.div`
-  h2 {
-    margin-bottom: 2rem;
-    font-size: 2rem;
-  }
-
-  [type=submit] {
-    display: block;
-    margin-block: 1rem;
-  }
-`;
-
-type FormValues = {
-  name: string;
-};
+import useFetchProductForm from '../hooks/useFetchProductForm';
+import useFetchInitialData from '../hooks/useFetchInitialData';
 
 export default function MySizeEditPage() {
-  // const categoryId = category?.id;
+  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   useFetchCategories({ categoryId });
-  // }, []);
+  const params = useParams();
+  const productId = String(params.id);
 
-  // const [{
-  //   productId, author, name, brand, category, subCategory, size, fits,
-  //   measurements, description, error, done,
-  // }, store] = useProductFormStore();
+  useFetchInitialData()
+  const { product } = useFetchProductForm({ productId })
 
-  // const [{ categories, subCategories }] = useCategoriesStore();
+  const handleComplete = () => {
+    // navigate(`/products/${productId}`);
+  };
 
-  // const handleSubmit = async (data: FormValues) => {
-
-  // };
+  if (product.loading) {
+    return (
+      <p>Loading...</p>
+    );
+  }
 
   return (
-    <Container>
-      <h2>Edit Size</h2>
-      {/* <form>
-        <ComboBox
-          label="카테고리"
-          selectedItem={category}
-          items={categories}
-          itemToId={(item) => item?.id || ''}
-          itemToText={(item) => item?.name || ''}
-          onChange={(value) => value && store.changeCategory(value)}
-        />
-      </form> */}
-    </Container>
+    <MySizeEditForm onComplete={handleComplete}/>
   );
 }

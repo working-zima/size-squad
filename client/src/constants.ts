@@ -69,7 +69,7 @@ export const TITLE: Titles = {
   '/mysize': 'Size Squad',
   '/login': '로그인',
   '/signup': '회원가입',
-  '/mysize/edit': '사이즈 수정',
+  '/mysize/:id/edit': '사이즈 수정',
   '/mysize/new': '사이즈 등록',
   '/mypage': 'My Page'
 }

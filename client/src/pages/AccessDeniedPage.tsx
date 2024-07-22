@@ -50,7 +50,7 @@ export default function AccessDeniedPage() {
     </MessageBox>
     <Link to='/login'>
       <Button>
-        사이즈 입력
+        로그인
       </Button>
     </Link>
   </Container>

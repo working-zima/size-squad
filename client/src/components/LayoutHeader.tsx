@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useMatch } from 'react-router-dom';
 
 import styled from 'styled-components';
 import { LiaAngleLeftSolid } from "react-icons/lia";
@@ -42,7 +42,14 @@ export default function LayoutHeader() {
   const location = useLocation();
 
   const defaultTitle = 'Size Squad';
-  const pageTitle = TITLE[location.pathname] || defaultTitle;
+
+  const isEditPage = useMatch('/mysize/:id/edit');
+
+  let pageTitle = TITLE[location.pathname] || defaultTitle;
+
+  if (isEditPage) {
+    pageTitle = TITLE['/mysize/:id/edit'];
+  }
 
   return (
     <Container>
