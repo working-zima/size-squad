@@ -78,14 +78,14 @@ export default function MySizeNewForm({ onComplete }: MySizeNewFormProps) {
     <Container>
       <h2>New Product</h2>
       <Form onSubmit={handleSubmit}>
-        <MySizeNewBrand />
-        <MySizeNewName />
+        {/* <MySizeNewBrand /> */}
+        {/* <MySizeNewName /> */}
         <MySizeNewCategory />
-        <MySizeNewGender />
-        <MySizeNewSize />
-        <MySizeNewFit />
-        <MySizeNewMeasurements />
-        <MySizeNewDescription />
+        {/* <MySizeNewGender /> */}
+        {/* <MySizeNewSize /> */}
+        {/* <MySizeNewFit /> */}
+        {/* <MySizeNewMeasurements /> */}
+        {/* <MySizeNewDescription /> */}
         <ButtonWrapper>
           <Button type="submit" disabled={!valid}>
             등록

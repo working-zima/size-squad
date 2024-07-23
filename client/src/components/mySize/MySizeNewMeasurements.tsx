@@ -36,8 +36,9 @@ export default function MySizeNewMeasurements() {
         store.changeMeasurementAndId(idx, measurement._id, measurement.name);
       });
       setPrevCategoryId(category._id);
+      store.validateMeasurement();
     }
-  }, [category._id, selectedMeasurements, prevCategoryId, store]);
+  }, [category._id]);
 
   return (
     <>

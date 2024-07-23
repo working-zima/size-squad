@@ -16,35 +16,37 @@ export default function MySizeNewPage() {
   const { accessToken } = useAccessToken();
   const { gender } = useFetchUser()
   const { categories, genders, fits, sizes } = useFetchInitialData()
-  const [, store] = useProductFormStore();
+  const [{subCategory}, store] = useProductFormStore();
 
   useEffect(() => {
     store.reset();
   }, [])
 
-  useEffect(() => {
-    if (!categories[0]._id && !gender._id) return;
+  useEffect(() => {})
 
-    const {_id, name, type, subCategories} = categories[0];
-    store.changeCategory({ _id, name });
-    store.changeSubCategory(subCategories[0])
-    store.changeType(type);
-    store.changeGender(gender);
+  // useEffect(() => {
+  //   if (!categories[0]._id && !gender._id) return;
 
-    const sizeList = sizes
-      .filter(sizeElem => (
-        sizeElem.gender._id === gender._id && sizeElem.type._id === type._id
-      ));
-    store.changeSize({_id: sizeList[0]?._id, name: sizeList[0]?.name});
+  //   const {_id, name, type, subCategories} = categories[0];
+  //   store.changeCategory({ _id, name });
+  //   store.changeSubCategory(subCategories[0])
+  //   store.changeType(type);
+  //   store.changeGender(gender);
 
-    store.changeFit(fits[2]);
+  //   const sizeList = sizes
+  //     .filter(sizeElem => (
+  //       sizeElem.gender._id === gender._id && sizeElem.type._id === type._id
+  //     ));
+  //   store.changeSize({_id: sizeList[0]?._id, name: sizeList[0]?.name});
 
-    store.resetMeasurements()
-    categories[0].measurements.forEach((measurement, idx) => {
-      store.addMeasurement();
-      store.changeMeasurementAndId(idx, measurement._id, measurement.name);
-    });
-  }, [store, categories, genders, fits, sizes, gender]);
+  //   store.changeFit(fits[2]);
+
+  //   store.resetMeasurements()
+  //   categories[0].measurements.forEach((measurement, idx) => {
+  //     store.addMeasurement();
+  //     store.changeMeasurementAndId(idx, measurement._id, measurement.name);
+  //   });
+  // }, [store, categories, genders, fits, sizes, gender]);
 
   const handleComplete = () => {
     navigate('/mysize');

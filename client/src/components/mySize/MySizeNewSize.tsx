@@ -10,7 +10,7 @@ export default function MySizeNewSize() {
   const [{ sizes }] = useInitialDataStore()
 
   let sizeList = sizes.filter(sizeElem => {
-    return sizeElem.gender._id === gender._id && sizeElem.type._id === type._id
+    return sizeElem.gender._id === gender._id
   });
 
   if(!sizeList.length) sizeList = [nullSize];

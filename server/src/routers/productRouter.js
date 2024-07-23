@@ -11,7 +11,14 @@ productRouter.get("/", productController.getProducts);
 /** product 등록 */
 productRouter.post("/", tokenValidationRules, productController.postAddProducts)
 
-productRouter.get("/:productId", productController.getProducts);
+/** productId로 조회 */
+productRouter.get("/:productId", productController.getProduct);
 
+/** productId에 해당하는 데이터 수정 */
+productRouter.patch(
+  "/:productId",
+  tokenValidationRules,
+  productController.patchProduct
+)
 
 module.exports = productRouter;

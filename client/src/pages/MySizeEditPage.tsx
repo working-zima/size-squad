@@ -2,23 +2,24 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import MySizeEditForm from '../components/mySize/MySizeEditForm';
 
-import useFetchProductForm from '../hooks/useFetchProductForm';
 import useFetchInitialData from '../hooks/useFetchInitialData';
+import useProductFormStore from '../hooks/useProductFormStore';
+import useFetchProductForm from '../hooks/useFetchProductForm';
 
 export default function MySizeEditPage() {
   const navigate = useNavigate();
-
   const params = useParams();
-  const productId = String(params.id);
+  const productId = String(params.id)
 
-  useFetchInitialData()
-  const { product } = useFetchProductForm({ productId })
+  useFetchProductForm({ productId });
+  useFetchInitialData();
+  const [{loading}] = useProductFormStore();
 
   const handleComplete = () => {
-    // navigate(`/products/${productId}`);
+    navigate(`/mysize`);
   };
 
-  if (product.loading) {
+  if (loading) {
     return (
       <p>Loading...</p>
     );

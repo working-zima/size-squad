@@ -1,7 +1,7 @@
 import { singleton } from 'tsyringe';
 import { Action, Store } from 'usestore-ts';
 
-import { Summary, Measurement, ProductResponse } from '../types';
+import { Summary, Measurement, ProductResponse, } from '../types';
 
 import { nullSummary } from '../nullObject';
 
@@ -135,11 +135,12 @@ class ProductFormStore {
   }
 
   @Action()
-  changeMeasurementAndId(index: number, _id: string, name: string) {
+  changeMeasurementAndId(index: number, _id: string, name: string, value: string = '') {
     this.measurements = update(this.measurements, index, (measurement) => ({
       ...measurement,
       _id,
       name,
+      value
     }));
   }
 
@@ -157,7 +158,6 @@ class ProductFormStore {
   @Action()
   resetMeasurements() {
     this.measurements = [];
-    this.validateMeasurement();
   }
 
 
@@ -185,8 +185,8 @@ class ProductFormStore {
 
   @Action()
   setProduct(product: ProductResponse) {
-    this.productId = product._id;
-    this.author = product.author;
+    this.productId = product._id || '';
+    this.author = product.author || nullSummary;
     this.brand = product.brand;
     this.name = product.name;
     this.category = product.category;
@@ -200,9 +200,14 @@ class ProductFormStore {
       value: String(measurement.value)
     }));
     this.description = product.description;
+
     this.error = false;
     this.done = false;
     this.loading = false;
+
+    this.validateBrand(product.brand);
+    this.validateName(product.name);
+    this.validateMeasurement()
   }
 
   @Action()
@@ -251,6 +256,7 @@ class ProductFormStore {
 
   async update() {
     try {
+
       await apiService.updateProduct({
         _id: this.productId,
         author: this.author?._id || '',
@@ -281,6 +287,7 @@ class ProductFormStore {
       const product = await apiService.fetchProduct({ productId });
 
       this.setProduct(product);
+
     } catch (error) {
       this.setError();
     }

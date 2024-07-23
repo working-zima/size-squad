@@ -3,31 +3,28 @@ import ComboBox from '../ui/ComboBox';
 import useProductFormStore from '../../hooks/useProductFormStore';
 import useInitialDataStore from '../../hooks/useInitialDataStore';
 
-import { nullSummary } from '../../nullObject';
+import { nullCategory, nullSummary } from '../../nullObject';
 
 import { CATEGORY_MESSAGES, SUBCATEGORY_MESSAGES } from '../../constants';
-import { Category } from '../../types';
+import { Summary } from '../../types';
 import { useEffect } from 'react';
-
 
 export default function MySizeNewCategory() {
   const [{ category, subCategory }, store] = useProductFormStore();
   const [{ categories }] = useInitialDataStore()
 
-  // 카테고리에 맞는 서브카테고리 목록 변경
-  const subCategories = categories
-    .find(categoryElem => categoryElem._id === category._id)?.subCategories
-      || [nullSummary];
+  let subCategories = categories
+    .find(categoryObj => categoryObj._id === category._id)?.subCategories;
 
-  // 카테고리가 바뀔 때 마다 타입과 서브카테고리를 변경
+  if(!subCategories?.length) subCategories = [nullSummary];
+
   useEffect(() => {
-    const type = categories
-      .find(categoryElem => (categoryElem._id === category._id))?.type
-      || nullSummary;
+    const selectedCategory = categories
+    .find(categoryObj => categoryObj._id === category._id) || nullCategory;
 
-    store.changeType(type);
-    store.changeSubCategory(subCategories[0]);
-  }, [category, categories, store])
+    store.changeSubCategory(selectedCategory?.subCategories[0])
+    store.changeType(selectedCategory?.type)
+  }, [category])
 
   return (
     <>
@@ -37,9 +34,8 @@ export default function MySizeNewCategory() {
         items={categories}
         itemToId={(item) => item?._id || ''}
         itemToText={(item) => CATEGORY_MESSAGES[item?.name] || ''}
-        onChange={(value) => value && store.changeCategory(
-          {_id: value._id, name: value.name}
-        )}
+        onChange={(value) => value
+          && store.changeCategory({_id: value._id, name: value.name})}
       />
       <ComboBox
         label="세부 카테고리"

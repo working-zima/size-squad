@@ -70,6 +70,7 @@ export default function MySizeEditForm({ onComplete }: MySizeEditFormProps) {
 
   useEffect(() => {
     if (product.done) {
+      store.reset();
       onComplete();
     }
   }, [product.done]);

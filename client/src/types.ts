@@ -42,7 +42,7 @@ export type Product = {
   author: Summary;
   name: string;
   brand: string;
-  category: Category;
+  category: Summary;
   subCategory: Summary;
   gender: Summary;
   size: Summary;
@@ -72,8 +72,8 @@ export type ProductRequest = {
 }
 
 export type ProductResponse = {
-  _id: string;
-  author: Summary;
+  _id?: string;
+  author?: Summary;
   name: string;
   brand: string;
   category: Summary;

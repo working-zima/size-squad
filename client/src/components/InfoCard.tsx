@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import Description from './Description';
 
-import { ProductResponse } from '../types';
+import { Product } from '../types';
 import useProductFormStore from '../hooks/useProductFormStore';
 
 const Container = styled.div`
@@ -52,14 +52,11 @@ const EditDeleteWrapper = styled.div`
 `;
 
 type InfoCardProps = {
-  product: ProductResponse;
+  product: Product;
 }
 
 export default function InfoCard({ product }: InfoCardProps) {
   const [, store] = useProductFormStore();
-  const handleEditClick = () => {
-    store.setProduct(product);
-  };
 
   return (
     <Container>
@@ -76,7 +73,6 @@ export default function InfoCard({ product }: InfoCardProps) {
           <Link
             to={`/mysize/${product._id}/edit`}
             className="edit-link"
-            onClick={handleEditClick}
           >
             수정
           </Link>

@@ -12,6 +12,37 @@ const Product = {
     }
   },
 
+  update: async ({ product, productId }) => {
+    try {
+      await ProductModel.findByIdAndUpdate(
+        productId,
+        { ...product },
+        { new: true }
+      );
+
+      return;
+    } catch(error) {
+      throw error;
+    }
+  },
+
+  findByProductId: async ({ productId }) => {
+    try {
+      const productData = await ProductModel.find({ _id: productId },
+        "_id author name brand category subCategory gender size fit measurements description"
+        ).populate({ path: "category", select: ["_id", "name"] })
+        .populate({ path: "subCategory", select: ["_id", "name"] })
+        .populate({ path: "author", select: ["_id", "name"] })
+        .populate({ path: "gender", select: ["_id", "name"] })
+        .populate({ path: "fit", select: ["_id", "name"] })
+        .populate({ path: "size", select: ["_id", "name"] })
+        .lean();
+      return productData;
+    } catch(error) {
+      throw error;
+    }
+  },
+
   /** userId로 product list 가져오기 */
   findByUserId: async ({ user }) => {
     try {
@@ -113,24 +144,6 @@ const Product = {
   findBySubCategoryId: async ({ subCategoryId }) => {
     try {
       const productData = await ProductModel.find({ subCategory: subCategoryId },
-        "_id author name brand category subCategory gender size fit measurements description"
-        ).populate({ path: "category", select: ["_id", "name"] })
-        .populate({ path: "subCategory", select: ["_id", "name"] })
-        .populate({ path: "author", select: ["_id", "name"] })
-        .populate({ path: "gender", select: ["_id", "name"] })
-        .populate({ path: "fit", select: ["_id", "name"] })
-        .populate({ path: "size", select: ["_id", "name"] })
-        .lean();
-
-      return productData;
-    } catch(error) {
-      throw error;
-    }
-  },
-
-  findByProductId: async ({ productId }) => {
-    try {
-      const productData = await ProductModel.find({ _id: productId },
         "_id author name brand category subCategory gender size fit measurements description"
         ).populate({ path: "category", select: ["_id", "name"] })
         .populate({ path: "subCategory", select: ["_id", "name"] })

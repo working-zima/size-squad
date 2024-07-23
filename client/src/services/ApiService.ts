@@ -119,9 +119,17 @@ export default class ApiService {
     await this.instance.post('/products', newProduct);
   }
 
-  async updateProduct(product: ProductRequest): Promise<void> {
-    const productId = product._id
-    await this.instance.patch(`/products/${productId}`, { product })
+  async updateProduct({
+    _id, author, name, brand, category, subCategory, gender, size, fit,
+    measurements, description
+  }: ProductRequest): Promise<void> {
+    const productId = _id
+    const product = {
+      author, name, brand, category, subCategory, gender, size, fit,
+      measurements, description
+    }
+
+    await this.instance.patch(`/products/${productId}`, product);
   }
 
   async fetchProducts({ categoryId, subCategoryId }: {
