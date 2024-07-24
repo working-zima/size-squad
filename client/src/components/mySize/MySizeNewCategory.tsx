@@ -14,13 +14,17 @@ export default function MySizeNewCategory() {
   const [{ categories }] = useInitialDataStore()
 
   let subCategories = categories
-    .find(categoryObj => categoryObj._id === category._id)?.subCategories;
+    .find(cat => cat._id === category._id)?.subCategories;
 
   if(!subCategories?.length) subCategories = [nullSummary];
 
   useEffect(() => {
+    const isAvailableSubs = categories.find(cat => cat._id === category._id)?.subCategories.some(subCat => subCat._id === subCategory._id)
+
+    if (isAvailableSubs) return;
+
     const selectedCategory = categories
-    .find(categoryObj => categoryObj._id === category._id) || nullCategory;
+    .find(cat => cat._id === category._id) || nullCategory;
 
     store.changeSubCategory(selectedCategory?.subCategories[0])
     store.changeType(selectedCategory?.type)

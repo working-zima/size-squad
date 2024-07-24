@@ -16,13 +16,21 @@ export default function MySizeNewPage() {
   const { accessToken } = useAccessToken();
   const { gender } = useFetchUser()
   const { categories, genders, fits, sizes } = useFetchInitialData()
-  const [{subCategory}, store] = useProductFormStore();
+  const [{productId}, store] = useProductFormStore();
 
   useEffect(() => {
     store.reset();
   }, [])
 
-  useEffect(() => {})
+  useEffect(() => {
+    if (!categories[0]._id || productId) return;
+
+    store.changeCategory(categories[0]);
+
+
+    store.changeGender(gender);
+    console.log(`MySizeNewPage: `, gender)
+  }, [categories, gender, store])
 
   // useEffect(() => {
   //   if (!categories[0]._id && !gender._id) return;
@@ -51,10 +59,6 @@ export default function MySizeNewPage() {
   const handleComplete = () => {
     navigate('/mysize');
   };
-
-  if (!categories[0]._id) {
-    return null;
-  }
 
   if (!accessToken) {
     return (
