@@ -25,16 +25,19 @@ export default function MySizeNewMeasurements() {
   }
 
   const selectedMeasurements = categories
-    .find((categoryElem) => categoryElem._id === category._id)?.measurements || [];
+    .find((categoryElem) => categoryElem._id === category._id)?.measurements
+      || [];
 
   // 카테고리 변경시에만 작동
   useEffect(() => {
     if (category._id !== prevCategoryId) {
       store.resetMeasurements();
+
       selectedMeasurements.forEach((measurement, idx) => {
         store.addMeasurement();
         store.changeMeasurementAndId(idx, measurement._id, measurement.name);
       });
+
       setPrevCategoryId(category._id);
       store.validateMeasurement();
     }

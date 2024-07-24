@@ -19,7 +19,9 @@ export default function MySizeNewCategory() {
   if(!subCategories?.length) subCategories = [nullSummary];
 
   useEffect(() => {
-    const isAvailableSubs = categories.find(cat => cat._id === category._id)?.subCategories.some(subCat => subCat._id === subCategory._id)
+    const isAvailableSubs = categories
+      .find(cat => cat._id === category._id)?.subCategories
+      .some(subCat => subCat._id === subCategory._id);
 
     if (isAvailableSubs) return;
 

@@ -256,7 +256,6 @@ class ProductFormStore {
 
   async update() {
     try {
-
       await apiService.updateProduct({
         _id: this.productId,
         author: this.author?._id || '',

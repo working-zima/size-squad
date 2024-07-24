@@ -16,7 +16,7 @@ export default function MySizeNewPage() {
   const { accessToken } = useAccessToken();
   const { gender } = useFetchUser()
   const { categories, genders, fits, sizes } = useFetchInitialData()
-  const [{productId}, store] = useProductFormStore();
+  const [{ productId }, store] = useProductFormStore();
 
   useEffect(() => {
     store.reset();
@@ -24,12 +24,24 @@ export default function MySizeNewPage() {
 
   useEffect(() => {
     if (!categories[0]._id || productId) return;
+    store.reset()
 
     store.changeCategory(categories[0]);
-
-
     store.changeGender(gender);
-    console.log(`MySizeNewPage: `, gender)
+    store.changeFit(fits[0]);
+
+    const sizeList = sizes.filter(sizeElem => {
+      return sizeElem.gender._id === gender._id
+    });
+    store.changeSize(sizeList[0]);
+
+    categories[0].measurements.forEach((measurement, idx) => {
+      store.addMeasurement();
+      store.changeMeasurementAndId(idx, measurement._id, measurement.name);
+    });
+
+
+
   }, [categories, gender, store])
 
   // useEffect(() => {
