@@ -5,7 +5,7 @@ import { FIT_MESSAGES } from "../../constants";
 
 import ComboBox from "../ui/ComboBox";
 
-export default function MySizeNewFit() {
+export default function MySizeFitBox() {
   const [{ fit }, store] = useProductFormStore();
   const [{fits}] = useInitialDataStore()
 

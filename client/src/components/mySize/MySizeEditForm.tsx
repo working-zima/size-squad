@@ -2,14 +2,14 @@ import React, { useEffect } from 'react'
 
 import styled from 'styled-components';
 
-import MySizeNewBrand from '../mySize/MySizeNewBrand';
-import MySizeNewName from '../mySize/MySizeNewName';
-import MySizeNewCategory from '../mySize/MySizeNewCategory';
-import MySizeNewGender from '../mySize/MySizeNewGender';
-import MySizeNewSize from '../mySize/MySizeNewSize';
-import MySizeNewFit from '../mySize/MySizeNewFit';
-import MySizeNewMeasurements from '../mySize/MySizeNewMeasurements';
-import MySizeNewDescription from '../mySize/MySizeNewDescription';
+import MySizeBrandInput from '../mySize/MySizeBrandInput';
+import MySizeNameInput from './MySizeNameInput';
+import MySizeCategoryBox from './MySizeCategoryBox';
+import MySizeGenderBox from './MySizeGenderBox';
+import MySizeSizeBox from './MySizeSizeBox';
+import MySizeFitBox from './MySizeFitBox';
+import MySizeMeasurementsInput from './MySizeMeasurementsInput';
+import MySizeDescriptionInput from './MySizeDescriptionInput';
 
 import useProductFormStore from '../../hooks/useProductFormStore';
 
@@ -79,14 +79,14 @@ export default function MySizeEditForm({ onComplete }: MySizeEditFormProps) {
     <Container>
     <h2>Edit Size</h2>
     <Form onSubmit={handleSubmit}>
-      <MySizeNewBrand />
-      <MySizeNewName />
-      <MySizeNewCategory />
-      <MySizeNewGender />
-      <MySizeNewSize />
-      <MySizeNewFit />
-      <MySizeNewMeasurements />
-      <MySizeNewDescription />
+      <MySizeBrandInput />
+      <MySizeNameInput />
+      <MySizeCategoryBox />
+      <MySizeGenderBox />
+      <MySizeSizeBox />
+      <MySizeFitBox />
+      <MySizeMeasurementsInput />
+      <MySizeDescriptionInput />
       <ButtonWrapper>
         <Button type="submit" disabled={!product.valid}>
           등록

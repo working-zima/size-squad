@@ -5,7 +5,7 @@ import useProductFormStore from '../../hooks/useProductFormStore';
 import TextBox from '../ui/TextBox';
 import Button from '../ui/Button';
 
-export default function MySizeNewName() {
+export default function MySizeNameInput() {
   const [{ name }, store] = useProductFormStore();
 
   const handleChangeName = (value: string) => {

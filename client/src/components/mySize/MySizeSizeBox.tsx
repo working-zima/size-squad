@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import useInitialDataStore from '../../hooks/useInitialDataStore';
 import useProductFormStore from '../../hooks/useProductFormStore';
 
@@ -6,7 +5,7 @@ import { nullSize } from '../../nullObject';
 
 import ComboBox from '../ui/ComboBox';
 
-export default function MySizeNewSize() {
+export default function MySizeSizeBox() {
   const [{ gender, size, type }, store] = useProductFormStore();
   const [{ sizes }] = useInitialDataStore()
 

@@ -57,9 +57,10 @@ type ComboBoxProps<T> = {
 }
 
 /**
- * @param label 콤보박스에 사용될 라벨
- * @param selectedItem 선택된 초기값
- * @param items 선택지 객체 배열
+ * @param { object } props
+ * @param { string } props.label - 콤보박스에 사용될 라벨
+ * @param { T } props.selectedItem - 선택된 초기값
+ * @param { T[] } props.items - 선택지 객체 배열
  * @param itemToId 선택된 값의 id를 정하는 함수. 예시: (item) => item?._id || ''
  * @param itemToText 선택된 값의 텍스트를 정하는 함수. 예시: (item) => item?.name || ''
  * @param onChange 선택된 값이 바뀔 때 발생할 함수. 예시: (value) => value && store.changeCategory(value)

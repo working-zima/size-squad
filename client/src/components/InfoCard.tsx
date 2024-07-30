@@ -1,11 +1,14 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import styled from 'styled-components';
 
 import Description from './Description';
+import { ConfirmTrigger } from './ui/modal/ModalTrigger';
 
-import { Product } from '../types';
-import useProductFormStore from '../hooks/useProductFormStore';
+import { ProductResponse } from '../types';
+
+import useModal from '../hooks/useModal';
 
 const Container = styled.div`
   display: flex;
@@ -52,14 +55,16 @@ const EditDeleteWrapper = styled.div`
 `;
 
 type InfoCardProps = {
-  product: Product;
+  product: ProductResponse;
 }
 
 export default function InfoCard({ product }: InfoCardProps) {
-  const [, store] = useProductFormStore();
+  const [confirmed, setConfirmed] = useState<boolean | null>(null)
+  const { modalRef, openModal, closeModal } = useModal()
 
   return (
     <Container>
+
       <InfoContainer>
         <DetailWrapper>
           <h3>
@@ -76,8 +81,21 @@ export default function InfoCard({ product }: InfoCardProps) {
           >
             수정
           </Link>
-          <Link to="/mysize" className="delete-link">
-            삭제
+          <Link
+            to="/mysize"
+            className="delete-link"
+          >
+            <ConfirmTrigger
+              modalRef={modalRef}
+              title={'사이즈 삭제'}
+              buttonText={'삭제'}
+              confirmed={confirmed}
+              openModal={openModal}
+              closeModal={closeModal}
+              setConfirmed={setConfirmed}
+            >
+              <p>정말로 삭제하시겠습니까?</p>
+            </ConfirmTrigger>
           </Link>
         </EditDeleteWrapper>
       </InfoContainer>

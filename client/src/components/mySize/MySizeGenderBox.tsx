@@ -6,7 +6,7 @@ import useInitialDataStore from '../../hooks/useInitialDataStore';
 import { GENDER_MESSAGES } from '../../constants';
 
 
-export default function MySizeNewGender() {
+export default function MySizeGenderBox() {
   const [{ gender }, store] = useProductFormStore();
   const [{ genders }] = useInitialDataStore()
 

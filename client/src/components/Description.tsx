@@ -31,7 +31,7 @@ const CustomButton = styled(Button)`
 `;
 
 type DescriptionProps = {
-  product: Product;
+  product: ProductResponse;
 }
 
 export default function Description({ product }: DescriptionProps) {

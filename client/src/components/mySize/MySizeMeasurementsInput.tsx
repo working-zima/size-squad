@@ -15,7 +15,7 @@ const Metrics = styled.div`
   color: ${props => props.theme.colors.unSelectedText};
 `
 
-export default function MySizeNewMeasurements() {
+export default function MySizeMeasurementsInput() {
   const [{ category, measurements }, store] = useProductFormStore();
   const [{ categories }] = useInitialDataStore();
   const [prevCategoryId, setPrevCategoryId] = useState(category._id);
@@ -28,7 +28,6 @@ export default function MySizeNewMeasurements() {
     .find((categoryElem) => categoryElem._id === category._id)?.measurements
       || [];
 
-  // 카테고리 변경시에만 작동
   useEffect(() => {
     if (category._id !== prevCategoryId) {
       store.resetMeasurements();

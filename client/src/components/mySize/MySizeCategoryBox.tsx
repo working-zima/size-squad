@@ -6,10 +6,10 @@ import useInitialDataStore from '../../hooks/useInitialDataStore';
 import { nullCategory, nullSummary } from '../../nullObject';
 
 import { CATEGORY_MESSAGES, SUBCATEGORY_MESSAGES } from '../../constants';
-import { Summary } from '../../types';
+
 import { useEffect } from 'react';
 
-export default function MySizeNewCategory() {
+export default function MySizeCategoryBox() {
   const [{ category, subCategory }, store] = useProductFormStore();
   const [{ categories }] = useInitialDataStore()
 
