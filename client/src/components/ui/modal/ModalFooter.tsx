@@ -2,12 +2,20 @@ import { ReactNode } from "react"
 import styled from "styled-components";
 
 const Container = styled.div`
-    padding: 10px 20px;
-    text-align: right;
+  display: flex;
+  justify-content: space-around;
+  padding: ${props => props.theme.sizes.contentPadding};
+  text-align: right;
+  user-select: none;
 
-    button {
-      background-color: transparent;
-    }
+  button {
+    font-size: 1.6rem;
+    font-weight: 600;
+  }
+
+  .red-button {
+    color: red;
+  }
 `
 
 const ModalFooter = ({ children }: { children: ReactNode }) => {

@@ -2,6 +2,8 @@ import { ReactNode, RefObject } from "react";
 
 import { ConfirmModal } from "./ModalComponents";
 
+import Button from "../Button";
+
 type ConfirmTriggerProps = {
   modalRef: RefObject<HTMLDialogElement>
   title: string
@@ -25,12 +27,11 @@ export const ConfirmTrigger = ({
 }: ConfirmTriggerProps
 ) => {
 
-
   return (
     <>
-      <button onClick={openModal}>
+      <Button onClick={openModal} className="delete-link">
         {buttonText}
-      </button>
+      </Button>
       <ConfirmModal
         modalRef={modalRef}
         title={title}

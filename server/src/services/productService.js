@@ -91,8 +91,7 @@ const productService = {
   deleteMyProduct: async ({ productId, userId }) => {
     try {
       const productData = await Product.findByProductId({ productId });
-
-      if(productData[0].authorId._id !== userId) {
+      if(productData[0].author._id !== userId) {
         throw new CustomError('Access Token mismatch', 403);
       }
 

@@ -2,7 +2,12 @@ import { ReactNode } from "react"
 import styled from "styled-components";
 
 const Container = styled.div`
-  padding: 20px;
+  display: flex;
+  justify-content: center;
+  padding: ${props => props.theme.sizes.contentPadding};
+  font-size: 1.4rem;
+  line-height: 20px;
+  font-weight: 400;
 `
 
 const ModalContent = ({ children }: { children: ReactNode }) => {

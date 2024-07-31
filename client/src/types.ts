@@ -72,7 +72,7 @@ export type ProductRequest = {
 }
 
 export type ProductResponse = {
-  _id?: string;
+  _id: string;
   author?: Summary;
   name: string;
   brand: string;

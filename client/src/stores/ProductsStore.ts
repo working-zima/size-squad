@@ -35,6 +35,16 @@ class ProductsStore {
       this.setError();
     }
   }
+
+  async deleteAndFetchProducts(productId: string) {
+    try {
+      await apiService.deleteMyProducts({ productId });
+      await this.fetchProducts({});
+    } catch (error) {
+      console.error('Error deleting product:', error);
+      this.setError();
+    }
+  }
 }
 
 export default ProductsStore;

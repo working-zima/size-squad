@@ -3,6 +3,7 @@ import Modal from "./Modal"
 import ModalHeader from "./ModalHeader"
 import ModalContent from "./ModalContent"
 import ModalFooter from "./ModalFooter"
+import Button from "../Button"
 
 type ConfirmModalProps = {
   modalRef: RefObject<HTMLDialogElement>
@@ -28,8 +29,8 @@ export const ConfirmModal = ({
       <ModalHeader title={title} hide={hide}/>
       <ModalContent>{children}</ModalContent>
       <ModalFooter>
-      <button onClick={onConfirm}>확인</button>
-      <button onClick={onCancel}>취소</button>
+      <Button onClick={onConfirm}>확인</Button>
+      <Button onClick={onCancel} className="red-button">취소</Button>
     </ModalFooter>
     </Modal>
   )

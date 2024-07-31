@@ -173,6 +173,12 @@ export default class ApiService {
     return products;
   }
 
+  async deleteMyProducts({ productId }: {
+    productId: string
+  }) {
+    await this.instance.delete(`/users/product/${productId}`);
+  }
+
   async fetchCurrentUser(): Promise<User> {
     const { data } = await this.instance.get('/users/me');
     const { user } = data;

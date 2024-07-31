@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import styled from 'styled-components';
@@ -9,6 +9,8 @@ import { ConfirmTrigger } from './ui/modal/ModalTrigger';
 import { ProductResponse } from '../types';
 
 import useModal from '../hooks/useModal';
+import useFetchProducts from '../hooks/useFetchProducts';
+import useProductsStore from '../hooks/useProductsStore';
 
 const Container = styled.div`
   display: flex;
@@ -50,6 +52,8 @@ const EditDeleteWrapper = styled.div`
 
   .delete-link {
     color: ${(props) => props.theme.colors.primaryRed};
+    font-weight: bold;
+    font-size: 1.2rem;
     margin-right: 1rem;
   }
 `;
@@ -61,10 +65,16 @@ type InfoCardProps = {
 export default function InfoCard({ product }: InfoCardProps) {
   const [confirmed, setConfirmed] = useState<boolean | null>(null)
   const { modalRef, openModal, closeModal } = useModal()
+  const [, store] = useProductsStore();
+
+  useEffect(() => {
+    if (!!confirmed) {
+      store.deleteAndFetchProducts(product._id);
+    }
+  }, [confirmed]);
 
   return (
     <Container>
-
       <InfoContainer>
         <DetailWrapper>
           <h3>

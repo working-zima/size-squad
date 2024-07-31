@@ -27,6 +27,7 @@ export default function MySizeNewPage() {
     store.reset()
 
     store.changeCategory(categories[0]);
+    store.changeSubCategory(categories[0].subCategories[0]);
     store.changeGender(gender);
     store.changeFit(fits[0]);
 

@@ -9,8 +9,7 @@ const Dialog = styled.dialog`
   max-height: calc(100vh - 80px);
   max-width: calc(100vw - 80px);
   min-width: 250px;
-  border: 1px solid #242424;
-  border-radius: 6px;
+  border: none;
   background-color: #fff;
   padding: 0;
   flex: 1;
@@ -18,6 +17,7 @@ const Dialog = styled.dialog`
   flex-direction: column;
   overflow: hidden;
   box-sizing: border-box;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 8px 40px;
 
   &::backdrop {
     backdrop-filter: blur(2px);

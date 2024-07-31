@@ -43,7 +43,6 @@ type SizeCardProps = {
 }
 
 export default function SizeCard({ product }: SizeCardProps) {
-  console.log(`SizeCard: `, product)
   const values = Object.values(product.measurements);
 
   return (

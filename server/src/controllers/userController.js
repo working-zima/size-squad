@@ -44,7 +44,6 @@ const userController = {
       return next(error);
     }
     try {
-
       const userAccessToken = req.headers["authorization"];
       const userData = await userService.getMyInfo(userAccessToken);
 
@@ -139,7 +138,6 @@ const userController = {
       const userAccessToken = req.headers["authorization"];
       const { productId } = req.params;
 
-
       const tokenData = await Token.findByAccessToken({
         accessToken: userAccessToken
       })
@@ -148,7 +146,7 @@ const userController = {
         throw new CustomError('Access Token mismatch', 403);
       }
 
-      const userId = tokenData.userId;
+      const userId = tokenData.user;
 
       productService.deleteMyProduct({ productId, userId });
 
@@ -179,7 +177,7 @@ const userController = {
       }
 
       await userService.deleteMe(userAccessToken);
-
+      console.log(`check`)
       res.status(200).json();
     } catch(error) {
       next(error);
