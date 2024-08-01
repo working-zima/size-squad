@@ -1,6 +1,10 @@
 import { Link } from 'react-router-dom';
 
 import styled from 'styled-components';
+import { AlertModal } from '../ui/modal/ModalComponents';
+import { AlertTrigger } from '../ui/modal/ModalTrigger';
+import useModal from '../../hooks/useModal';
+import { useEffect } from 'react';
 
 const ButtonWrapper = styled.div`
   display: flex;
@@ -17,17 +21,24 @@ const ButtonWrapper = styled.div`
 
 type LoginUtils = {
   error: boolean;
+  errorMessage: string;
 }
 
-export function LoginUtils({error}: LoginUtils) {
+export function LoginUtils({error, errorMessage}: LoginUtils) {
+  const { modalRef, openModal, closeModal } = useModal();
+
+  useEffect(() => {
+    if (error) {
+      openModal();
+    }
+  }, [error]);
+
   return (
     <>
-        {error && (
-      <>
-        <p>로그인 실패</p>
-        <div>{error}</div>
-      </>
-    )}
+    <AlertModal modalRef={modalRef} hide={closeModal}>
+      <p>로그인 실패</p>
+      <p>{errorMessage}</p>
+    </AlertModal>
     <ButtonWrapper>
       <p>
         <Link to="/signup">

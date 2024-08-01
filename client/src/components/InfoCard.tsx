@@ -64,7 +64,6 @@ type InfoCardProps = {
 
 export default function InfoCard({ product }: InfoCardProps) {
   const [confirmed, setConfirmed] = useState<boolean | null>(null)
-  const { modalRef, openModal, closeModal } = useModal()
   const [, store] = useProductsStore();
 
   useEffect(() => {
@@ -96,12 +95,9 @@ export default function InfoCard({ product }: InfoCardProps) {
             className="delete-link"
           >
             <ConfirmTrigger
-              modalRef={modalRef}
               title={'사이즈 삭제'}
               buttonText={'삭제'}
               confirmed={confirmed}
-              openModal={openModal}
-              closeModal={closeModal}
               setConfirmed={setConfirmed}
             >
               <p>정말로 삭제하시겠습니까?</p>

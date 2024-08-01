@@ -13,6 +13,8 @@ class LoginFormStore {
 
   password = '';
 
+  errorMessage = '';
+
   error = false;
 
   get valid() {
@@ -32,11 +34,13 @@ class LoginFormStore {
   @Action()
   private setAccessToken(accessToken: string) {
     this.accessToken = accessToken;
+    this.errorMessage = '';
   }
 
   @Action()
-  private setError() {
+  private setError(message: string) {
     this.error = true;
+    this.errorMessage = message;
   }
 
   @Action()
@@ -45,6 +49,7 @@ class LoginFormStore {
     this.password = '';
     this.error = false;
     this.accessToken = '';
+    this.errorMessage = '';
   }
 
   async login() {
@@ -55,7 +60,11 @@ class LoginFormStore {
       });
       this.setAccessToken(accessToken);
     } catch (error) {
-      this.setError();
+      if (error instanceof Error) {
+        this.setError(error.message);
+      } else {
+        this.setError(`알 수 없는 오류가 발생했습니다.\n 관리자에게 문의해주세요.`);
+      }
     }
   }
 }

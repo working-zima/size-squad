@@ -1,31 +1,43 @@
-import { ReactNode, RefObject } from "react";
+import { ReactNode } from "react";
 
-import { ConfirmModal } from "./ModalComponents";
+import { AlertModal, ConfirmModal } from "./ModalComponents";
 
 import Button from "../Button";
+import useModal from "../../../hooks/useModal";
+
+type AlertTriggerProps = {
+  children: ReactNode;
+  buttonText: string;
+}
+
+export const AlertTrigger = ({ children, buttonText }: AlertTriggerProps) => {
+  const { modalRef, openModal, closeModal } = useModal()
+
+  return (
+    <>
+      <Button onClick={openModal}>{buttonText}</Button>
+      <AlertModal modalRef={modalRef} children={children} hide={closeModal} />
+    </>
+  )
+}
 
 type ConfirmTriggerProps = {
-  modalRef: RefObject<HTMLDialogElement>
   title: string
   buttonText: string
   confirmed: boolean | null
   children: ReactNode;
-  openModal: () => void;
-  closeModal: () => void;
   setConfirmed: (confirm: boolean) => void;
 }
 
 export const ConfirmTrigger = ({
-  modalRef,
   title,
   buttonText,
   children,
   confirmed,
-  openModal,
   setConfirmed,
-  closeModal
 }: ConfirmTriggerProps
 ) => {
+  const { modalRef, openModal, closeModal } = useModal()
 
   return (
     <>

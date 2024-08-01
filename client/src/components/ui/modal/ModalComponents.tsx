@@ -5,6 +5,29 @@ import ModalContent from "./ModalContent"
 import ModalFooter from "./ModalFooter"
 import Button from "../Button"
 
+type AlertModalProps = {
+  modalRef: RefObject<HTMLDialogElement>
+  children: ReactNode;
+  hide: () => void
+}
+
+export const AlertModal = ({
+  modalRef,
+  children,
+  hide,
+}: AlertModalProps) => {
+  return (
+    <Modal modalRef={modalRef} hide={hide}>
+      <ModalContent>
+        <p>{children}</p>
+      </ModalContent>
+      <ModalFooter>
+        <button onClick={hide}>확인</button>
+      </ModalFooter>
+    </Modal>
+  )
+}
+
 type ConfirmModalProps = {
   modalRef: RefObject<HTMLDialogElement>
   children: ReactNode

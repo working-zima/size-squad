@@ -8,6 +8,14 @@ const Container = styled.div`
   font-size: 1.4rem;
   line-height: 20px;
   font-weight: 400;
+
+  p {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    white-space: pre-line;
+  }
 `
 
 const ModalContent = ({ children }: { children: ReactNode }) => {

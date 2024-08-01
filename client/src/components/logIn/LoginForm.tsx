@@ -26,7 +26,7 @@ export default function LoginForm() {
   const { setAccessToken } = useAccessToken();
 
   const [
-    { email, password, valid, error, accessToken }, store
+    { email, password, valid, error, errorMessage, accessToken }, store
   ] = useLoginFormStore();
 
   const [{ isAutoLogin }, AutoLoginstore] = useAutoLoginStore();
@@ -90,7 +90,7 @@ export default function LoginForm() {
         <Divider>
           또는
         </Divider>
-        <LoginUtils error={error}/>
+        <LoginUtils error={error} errorMessage={errorMessage}/>
       </form>
     </Container>
   );

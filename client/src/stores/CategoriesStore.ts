@@ -12,12 +12,9 @@ class CategoriesStore {
 
   allSubCategories: Summary[] = [];
 
-  async fetchCategories() {
-    this.setCategories([]);
-    const categories = await apiService.fetchCategories();
+  loading = true;
 
-    this.setCategories(categories);
-  }
+  error = false;
 
   @Action()
   private setCategories(categories: Category[]) {
@@ -25,6 +22,34 @@ class CategoriesStore {
     this.allSubCategories = categories.reduce<Summary[]>(
       (acc, category) => [...acc, ...category.subCategories], []
     )
+  }
+
+  @Action()
+  private startLoading() {
+    this.categories = [];
+    this.allSubCategories = [];
+    this.error = false;
+    this.loading = true;
+
+    this.error = false;
+    this.loading = false;
+  }
+
+  @Action()
+  private setError() {
+    this.error = true;
+  }
+
+  async fetchCategories() {
+    this.startLoading();
+    try {
+      this.setCategories([]);
+      const categories = await apiService.fetchCategories();
+
+      this.setCategories(categories);
+    } catch (error) {
+      this.setError();
+    }
   }
 }
 
