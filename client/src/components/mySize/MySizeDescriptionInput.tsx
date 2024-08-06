@@ -1,4 +1,5 @@
-import TextBox from '../ui/textbox/TextBox';
+import { TextareaBox } from '../ui/textbox/TextBoxComponents';
+
 import useProductFormStore from '../../hooks/useProductFormStore';
 
 export default function MySizeNewDescription() {
@@ -9,13 +10,10 @@ export default function MySizeNewDescription() {
   };
 
   return (
-    <TextBox
+    <TextareaBox
       label="후기"
       placeholder="후기를 입력해주세요."
-      type="text"
       maxLength={100}
-      value={description}
-      multiline={true}
       onChange={handleChangeDescription}
     />
   )

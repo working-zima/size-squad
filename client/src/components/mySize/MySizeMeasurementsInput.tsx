@@ -1,19 +1,11 @@
 import { useEffect, useState } from 'react';
 
-import styled from 'styled-components';
-import { CiCircleRemove } from 'react-icons/ci';
+import { TextInputBox } from '../ui/textbox/TextBoxComponents';
 
 import useProductFormStore from '../../hooks/useProductFormStore';
 import useInitialDataStore from '../../hooks/useInitialDataStore';
 
-import TextBox from '../ui/textbox/TextBox';
-import Button from '../ui/Button';
-
 import { MEASUREMENT_MESSAGES } from '../../constants';
-
-const Metrics = styled.div`
-  color: ${props => props.theme.colors.unSelectedText};
-`
 
 export default function MySizeMeasurementsInput() {
   const [{ category, measurements }, store] = useProductFormStore();
@@ -46,25 +38,19 @@ export default function MySizeMeasurementsInput() {
     <>
       {measurements && measurements
         .map((measurement, index) => (
-          <TextBox
+          <TextInputBox
             key={measurement._id}
             label={MEASUREMENT_MESSAGES[measurement.name]}
             placeholder={`${MEASUREMENT_MESSAGES[measurement.name]}을 입력해주세요.`}
             type="text"
+            maxLength={3}
             value={measurement.value}
             onChange={(value) => store.changeMeasurementValue(index, value)}
-          >
-            <Metrics>
-              <span>cm</span>
-            </Metrics>
-            <Button onClick={() => handleResetMeasurement(index)}>
-              {!!measurement.value
-                && <CiCircleRemove size="18" fill='#6e6e6e'/>
-              }
-            </Button>
-          </TextBox>
+            unitType='cm'
+            onReset={() => {handleResetMeasurement(index)}}
+          />
         )
-        )}
+      )}
     </>
   )
 }

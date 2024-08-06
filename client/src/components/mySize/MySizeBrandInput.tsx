@@ -1,9 +1,6 @@
-import { CiCircleRemove } from 'react-icons/ci';
+import { TextInputBox } from '../ui/textbox/TextBoxComponents';
 
 import useProductFormStore from '../../hooks/useProductFormStore';
-
-import TextBox from '../ui/textbox/TextBox';
-import Button from '../ui/Button';
 
 export default function MySizeBrandInput() {
   const [{ brand }, store] = useProductFormStore();
@@ -18,16 +15,13 @@ export default function MySizeBrandInput() {
   }
 
   return (
-    <TextBox
+    <TextInputBox
       label="브랜드"
       placeholder="상품의 브랜드를 입력해주세요."
       type="text"
       value={brand}
       onChange={(value) => handleChangeBrand(value)}
-    >
-      <Button onClick={handleResetBrand}>
-        {!!brand && <CiCircleRemove size="18" fill='#6e6e6e'/>}
-      </Button>
-    </TextBox>
+      onReset={handleResetBrand}
+    />
   )
 }
