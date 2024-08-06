@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 
 import styled, { css } from 'styled-components';
-import { RequiredStar } from '../../utils/RequiredStar';
+import { RequiredStar } from '../../../utils/RequiredStar';
 
 type ContainerProps = {
   required: boolean;
@@ -37,11 +37,12 @@ const TextBoxWrapper = styled.div<TextBoxWrapperProps>`
   // 입력 값이 중복되지 않았으며, 유효성 검사를 통과한 상태에서 focus될 경우
   ${(props) =>
     props.useBorderColor
-    && props.isFocused
-    && props.isValid
-    && !props.isDuplicated
-    && css`
-      border-color: green;`
+      && props.isFocused
+      && props.isValid
+      && !props.isDuplicated
+      && css`
+        border-color: green;
+      `
   }
 
   // 한번 focus된 적이 있고, 입력 값이 중복되었거나 유효성 검사를 통과하지 못한 상태일 경우
@@ -61,20 +62,26 @@ const TextBoxWrapper = styled.div<TextBoxWrapperProps>`
       && props.isFocused
       && css`
         border-color: ${props => props.theme.colors.primaryBlack};
-    `
+      `
   }
 
   // 입력 값이 중복되지 않았으며, 유효성 검사를 통과한 상태에서 focus되지 않은 경우
   ${(props) =>
-    !props.isFocused && props.isValid && !props.isDuplicated && css`
-      border-color: ${props => props.theme.colors.borderColor};`
+    !props.isFocused
+      && props.isValid
+      && !props.isDuplicated
+      && css`
+        border-color: ${props => props.theme.colors.borderColor};
+      `
   }
 
   // 색이 있는 테두리를 사용하지 않을 때 focus된 경우
   ${(props) =>
-    !props.useBorderColor && props.isFocused && css`
-      border-color: ${props => props.theme.colors.primaryBlack};
-    `
+    !props.useBorderColor
+      && props.isFocused
+      && css`
+        border-color: ${props => props.theme.colors.primaryBlack};
+      `
   }
 
   input, textarea {
@@ -126,7 +133,7 @@ type TextBoxProps = {
 export default function TextBox({
   label = '',
   placeholder = undefined,
-  type = 'text',
+  type,
   value,
   children,
   readOnly = false,
@@ -144,13 +151,10 @@ export default function TextBox({
   const id = useRef(`textbox-${Math.random().toString().slice(2)}`);
   const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
 
-
   const handleFocus = () => setIsFocused(true);
   const handleBlur = () => setIsFocused(false);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
-
     setIsTouched(true);
 
     if (!onChange) return;
@@ -164,6 +168,7 @@ export default function TextBox({
     if (maxLength && newValue.length > maxLength) {
       const beforeCursor = newValue.slice(0, cursorPosition - 1);
       const afterCursor = newValue.slice(cursorPosition);
+      console.log(beforeCursor, afterCursor)
       newValue = beforeCursor + afterCursor;
     }
 

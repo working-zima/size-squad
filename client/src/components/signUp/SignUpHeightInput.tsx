@@ -1,14 +1,6 @@
-import styled from "styled-components";
-import { CiCircleRemove } from "react-icons/ci";
-
 import useSignupFormStore from "../../hooks/useSignupFormStore";
 
-import TextBox from "../ui/TextBox";
-import Button from "../ui/Button";
-
-const Metrics = styled.div`
-  color: ${props => props.theme.colors.unSelectedText};
-`
+import { TextInputBox } from "../ui/textbox/TextBoxComponents";
 
 export default function SignUpHeightInput() {
   const [{ height }, store] = useSignupFormStore();
@@ -28,20 +20,14 @@ export default function SignUpHeightInput() {
   }
 
   return (
-    <TextBox
+    <TextInputBox
       label="키"
       placeholder="키를 입력해주세요."
-      type="text"
       value={height}
       maxLength={3}
+      unitType={'cm'}
       onChange={handleChangeHeight}
-    >
-      <Metrics>
-        <span>cm</span>
-      </Metrics>
-      <Button onClick={handleResetHeight}>
-        {!!height && <CiCircleRemove size="18" fill='#6e6e6e'/>}
-      </Button>
-    </TextBox>
+      onReset={handleResetHeight}
+    />
   )
 }

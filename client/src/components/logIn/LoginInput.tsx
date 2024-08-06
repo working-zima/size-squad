@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import { CiRead, CiUnread, CiCircleRemove } from "react-icons/ci";
 
-import TextBox from '../ui/TextBox';
+import TextBox from '../ui/textbox/TextBox';
 import Button from '../ui/Button';
 
 type LoginInputProps = {

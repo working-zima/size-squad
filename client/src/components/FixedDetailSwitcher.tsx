@@ -40,7 +40,7 @@ export default function FixedDetailSwitcher() {
   return (
     <Container>
       <CustomButton onClick={() => store.setIsDescriptionView()}>
-        {isDescriptionView ? '설명' : '치수'}
+        {isDescriptionView ? '치수' : '설명'}
       </CustomButton>
     </Container>
   );

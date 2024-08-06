@@ -120,9 +120,16 @@ class SignupFormStore {
     this.height = '';
     this.weight = '';
     this.description = '';
-    this.error = false;
+
     this.accessToken = '';
+    this.error = false;
+
     this.isNameDuplicated = false;
+    this.isEmailValid = false;
+    this.isNameDuplicated = false;
+    this.isNameValid = false;
+    this.isPasswordValid = false;
+    this.isPasswordConfirmationValid = false;
   }
 
   private emailValidation = (email: string) => {

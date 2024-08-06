@@ -7,13 +7,13 @@ import Button from "../ui/Button";
 import useAccessToken from "../../hooks/useAccessToken";
 import useSignupFormStore from "../../hooks/useSignupFormStore";
 
-import { GenderSummary } from "../../types";
+import { Summary } from "../../types";
 
 import { RequiredStar } from "../../utils/RequiredStar";
 
 import SignUpEmailInput from "./SignUpEmailInput";
 import SignUpNameInput from "./SignUpNameInput";
-import SignUpPassword from "./SignUpPassword";
+import SignUpPasswords from "./SignUpPasswords";
 import SignUpGenderInput from "./SignUpGenderInput";
 import SignUpHeightInput from "./SignUpHeightInput";
 import SignUpWeightInput from "./SignUpWeightInput";
@@ -69,7 +69,7 @@ const ButtonWrapper = styled.div`
 `
 
 type SignUpFormProps = {
-  genders: GenderSummary[];
+  genders: Summary[];
 }
 
 export default function SignUpForm({ genders }: SignUpFormProps){
@@ -95,7 +95,7 @@ export default function SignUpForm({ genders }: SignUpFormProps){
       <Form onSubmit={handleSubmit}>
         <SignUpEmailInput />
         <SignUpNameInput />
-        <SignUpPassword />
+        <SignUpPasswords />
         <SignUpGenderInput genders={genders}/>
         <SignUpHeightInput />
         <SignUpWeightInput />

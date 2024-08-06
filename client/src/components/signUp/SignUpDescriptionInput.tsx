@@ -1,21 +1,19 @@
 import useSignupFormStore from "../../hooks/useSignupFormStore";
 
-import TextBox from "../ui/TextBox";
+import { TextareaBox } from "../ui/textbox/TextBoxComponents";
 
 export default function SignUpDescriptionInput() {
-  const [{ description }, store] = useSignupFormStore();
+  const [, store] = useSignupFormStore();
 
   const handleChangeDescription = (value: string) => {
     store.changeDescription(value);
   };
 
   return (
-    <TextBox
+    <TextareaBox
       label="체형"
-      placeholder="체형을 입력해주세요."
-      type="text"
-      value={description}
-      multiline={true}
+      placeholder="체형을 100자 이내로 설명해주세요."
+      maxLength={100}
       onChange={handleChangeDescription}
     />
   )

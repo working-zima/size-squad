@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import Button from './ui/Button';
 
-import { Product, ProductResponse } from '../types';
+import { ProductResponse } from '../types';
 
 import { debounceCallback } from '../utils';
 
@@ -56,7 +56,7 @@ export default function Description({ product }: DescriptionProps) {
     window.addEventListener('resize', debouncedCheckTruncated);
 
     return () => window.removeEventListener('resize', debouncedCheckTruncated);
-  }, [product.description]);
+  }, []);
 
   const handleDescription = () => {
     setShowFullDescription(!showFullDescription);

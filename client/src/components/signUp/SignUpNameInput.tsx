@@ -6,10 +6,11 @@ import { CiCircleRemove } from "react-icons/ci";
 import useSignupFormStore from '../../hooks/useSignupFormStore';
 import useDebounce from '../../hooks/useDebounce';
 
-import TextBox from "../ui/TextBox";
+import TextBox from "../ui/textbox/TextBox";
 import Button from "../ui/Button";
 
 import { ERROR_MESSAGES } from '../../constants';
+import { TextInputBox } from '../ui/textbox/TextBoxComponents';
 
 const Container = styled.div`
   height: 11rem;
@@ -63,21 +64,23 @@ export default function SignUpNameInput() {
 
   return (
     <Container>
-      <TextBox
-          label="닉네임"
-          placeholder="닉네임을 입력해주세요."
-          value={name}
-          onChange={handleChangeName}
-          isValid={isNameValid}
-          isDuplicated={isNameDuplicated}
-          useBorderColor={true}
-          required
-      >
-        <Button onClick={handleResetName}>
-          {!!name && <CiCircleRemove size="18" fill='#6e6e6e'/>}
-        </Button>
-      </TextBox>
-      {errorMessage && <ValidTextWrapper>{errorMessage}</ValidTextWrapper>}
+      <TextInputBox
+        label="닉네임"
+        placeholder="닉네임을 입력해주세요."
+        value={name}
+        maxLength={10}
+        isValid={isNameValid}
+        isDuplicated={isNameDuplicated}
+        useBorderColor={true}
+        required
+        onChange={handleChangeName}
+        onReset={handleResetName}
+      />
+      {errorMessage && (
+        <ValidTextWrapper>
+          {errorMessage}
+        </ValidTextWrapper>
+      )}
     </Container>
   )
 }

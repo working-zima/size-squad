@@ -2,7 +2,7 @@ import { CiCircleRemove } from 'react-icons/ci';
 
 import useProductFormStore from '../../hooks/useProductFormStore';
 
-import TextBox from '../ui/TextBox';
+import TextBox from '../ui/textbox/TextBox';
 import Button from '../ui/Button';
 
 export default function MySizeBrandInput() {

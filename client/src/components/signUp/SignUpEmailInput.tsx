@@ -6,10 +6,11 @@ import { CiCircleRemove } from "react-icons/ci";
 import useSignupFormStore from "../../hooks/useSignupFormStore";
 import useDebounce from "../../hooks/useDebounce";
 
-import TextBox from "../ui/TextBox";
+import TextBox from "../ui/textbox/TextBox";
 import Button from "../ui/Button";
 
 import { ERROR_MESSAGES } from "../../constants";
+import { TextInputBox } from "../ui/textbox/TextBoxComponents";
 
 const Container = styled.div`
   height: 10rem;
@@ -62,21 +63,22 @@ export default function SignUpEmailInput() {
 
   return (
     <Container>
-      <TextBox
+      <TextInputBox
         label="이메일"
         placeholder="이메일을 입력해주세요."
         value={email}
-        onChange={handleChangeEmail}
         isValid={isEmailValid}
         isDuplicated={isEmailDuplicated}
         useBorderColor={true}
+        onChange={handleChangeEmail}
+        onReset={handleResetEmail}
         required
-      >
-      <Button onClick={handleResetEmail}>
-        {!!email && <CiCircleRemove size="18" fill='#6e6e6e'/>}
-      </Button>
-      </TextBox>
-      {errorMessage && <ValidTextWrapper>{errorMessage}</ValidTextWrapper>}
+      />
+      {errorMessage && (
+        <ValidTextWrapper>
+          {errorMessage}
+        </ValidTextWrapper>
+      )}
     </Container>
   )
 }

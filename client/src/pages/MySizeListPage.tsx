@@ -26,9 +26,9 @@ export default function MySizeListPage() {
   const { products } = useFetchProducts({ categoryId, subCategoryId });
 
   const subCategories = categoryId
-  ? categories
-    .find(category => category._id === categoryId)?.subCategories || []
-  : allSubCategories;
+    ? categories.find(category => category._id === categoryId)?.subCategories
+      || []
+    : allSubCategories;
 
   if (!accessToken) {
     return (

@@ -6,7 +6,7 @@ import { CiCircleRemove } from 'react-icons/ci';
 import useProductFormStore from '../../hooks/useProductFormStore';
 import useInitialDataStore from '../../hooks/useInitialDataStore';
 
-import TextBox from '../ui/TextBox';
+import TextBox from '../ui/textbox/TextBox';
 import Button from '../ui/Button';
 
 import { MEASUREMENT_MESSAGES } from '../../constants';

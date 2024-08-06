@@ -1,13 +1,12 @@
 import { useState } from "react";
 
 import styled from "styled-components";
-import { CiCircleRemove, CiRead, CiUnread } from "react-icons/ci";
 
 import useSignupFormStore from "../../hooks/useSignupFormStore";
 
-import TextBox from "../ui/TextBox";
-import Button from "../ui/Button";
 import { ERROR_MESSAGES } from "../../constants";
+
+import { TextInputBox } from "../ui/textbox/TextBoxComponents";
 
 const PasswordWrapper = styled.div`
   height: 105px;
@@ -53,10 +52,8 @@ const ConfirmErrorMessage = ({
 };
 
 export default function SignUpPassword() {
-  const [isShowPw, setIsShowPw] = useState({
-    showPassword: false,
-    showConfirmation: false
-  });
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
   const [isTouched, setIsTouched] = useState({
     passwordIsTouched: false,
     confirmIsTouched: false
@@ -72,9 +69,15 @@ export default function SignUpPassword() {
     store.validatePassword(value)
   };
 
-  const handleResetPassword = () => {
-    store.changePassword('')
-  }
+  const handleResetPassword = () => {store.changePassword('')}
+
+  const handleShowPassword = () => {
+    setShowPassword((prev) => !prev);
+  };
+
+  const passwordErrorMessage = isTouched.passwordIsTouched
+  ? PasswordErrorMessage({ password, isPasswordValid })
+  : null;
 
   const handleChangePasswordConfirmation = (value: string) => {
     setIsTouched(prev => ({ ...prev, confirmIsTouched: true }));
@@ -86,70 +89,48 @@ export default function SignUpPassword() {
     store.changePasswordConfirmation('');
   }
 
-  const handleShowPassword = () => {
-    setIsShowPw(prev => ({...prev, showPassword: !prev.showPassword}));
-  }
-
   const handleShowConfirmation = () => {
-    setIsShowPw(prev => ({...prev, showConfirmation: !prev.showConfirmation}));
-  }
-
-  const passwordErrorMessage = isTouched.passwordIsTouched
-    ? PasswordErrorMessage({ password, isPasswordValid })
-    : null;
+    setShowConfirmation((prev) => !prev);
+  };
 
   const confirmErrorMessage = isTouched.confirmIsTouched
     ? ConfirmErrorMessage({ passwordConfirmation, isPasswordConfirmationValid })
     : null;
 
-
   return (
     <>
       <PasswordWrapper>
-        <TextBox
+        <TextInputBox
           label="비밀번호"
-          placeholder="영문, 숫자, 특수문자 포함한 8 ~ 16자리를 사용합니다."
-          type={isShowPw.showPassword ? "text" : "password"}
+          placeholder="영문, 숫자, 특수문자 포함 8 ~ 16자리를 사용합니다."
           value={password}
+          type={showPassword ? "text" : "password"}
+          maxLength={16}
+          isShowPw={showPassword}
           onChange={handleChangePassword}
+          handleShowPassword={handleShowPassword}
           isValid={isPasswordValid}
           useBorderColor={true}
           required
-        >
-          <Button onClick={handleResetPassword}>
-            {!!password && <CiCircleRemove size="18" fill='#6e6e6e'/>}
-          </Button>
-          <Button onClick={handleShowPassword}>
-            {isShowPw.showPassword
-              ? <CiRead size="18" fill='#6e6e6e'/>
-              : <CiUnread size="18" fill='#6e6e6e'/>
-            }
-          </Button>
-        </TextBox>
+          onReset={handleResetPassword}
+        />
         {!!passwordErrorMessage
-          && <ValidTextWrapper>{passwordErrorMessage}</ValidTextWrapper>}
+          && <ValidTextWrapper>{passwordErrorMessage}</ValidTextWrapper>
+        }
       </PasswordWrapper>
       <ConfirmationWrapper>
-        <TextBox
+        <TextInputBox
           placeholder="비밀번호를 다시 입력해주세요."
-          type={isShowPw.showConfirmation ? "text" : "password"}
           value={passwordConfirmation}
+          type={showConfirmation ? "text" : "password"}
+          maxLength={16}
+          isShowPw={showConfirmation}
           onChange={handleChangePasswordConfirmation}
+          handleShowPassword={handleShowConfirmation}
           isValid={isPasswordConfirmationValid}
           useBorderColor={true}
-          required
-        >
-          <Button onClick={handleResetPasswordConfirmation}>
-            {!!passwordConfirmation
-              && <CiCircleRemove size="18" fill='#6e6e6e'/>}
-          </Button>
-          <Button onClick={handleShowConfirmation}>
-            {isShowPw.showConfirmation
-              ? <CiRead size="18" fill='#6e6e6e'/>
-              : <CiUnread size="18" fill='#6e6e6e'/>
-            }
-          </Button>
-        </TextBox>
+          onReset={handleResetPasswordConfirmation}
+        />
         {!!confirmErrorMessage
           && <ValidTextWrapper>{confirmErrorMessage}</ValidTextWrapper>}
       </ConfirmationWrapper>

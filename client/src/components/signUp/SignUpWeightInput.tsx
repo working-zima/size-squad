@@ -1,14 +1,6 @@
-import styled from "styled-components";
-import { CiCircleRemove } from "react-icons/ci";
-
 import useSignupFormStore from "../../hooks/useSignupFormStore";
 
-import TextBox from "../ui/TextBox";
-import Button from "../ui/Button";
-
-const Metrics = styled.div`
-  color: ${props => props.theme.colors.unSelectedText};
-`
+import { TextInputBox } from "../ui/textbox/TextBoxComponents";
 
 export default function SignUpWeightInput() {
   const [{ weight }, store] = useSignupFormStore();
@@ -28,19 +20,14 @@ export default function SignUpWeightInput() {
   }
 
   return (
-    <TextBox
+    <TextInputBox
       label="몸무게"
       placeholder="몸무게를 입력해주세요."
-      type="text"
       value={weight}
+      maxLength={3}
+      unitType={'kg'}
       onChange={handleChangeWeight}
-    >
-      <Metrics>
-        <span>kg</span>
-      </Metrics>
-      <Button onClick={handleResetWeight}>
-        {!!weight && <CiCircleRemove size="18" fill='#6e6e6e'/>}
-      </Button>
-    </TextBox>
+      onReset={handleResetWeight}
+    />
   )
 }

@@ -1,4 +1,4 @@
-import TextBox from '../ui/TextBox';
+import TextBox from '../ui/textbox/TextBox';
 import useProductFormStore from '../../hooks/useProductFormStore';
 
 export default function MySizeNewDescription() {
