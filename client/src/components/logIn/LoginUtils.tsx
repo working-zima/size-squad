@@ -28,9 +28,7 @@ export function LoginUtils({error, errorMessage}: LoginUtils) {
   const { modalRef, openModal, closeModal } = useModal();
 
   useEffect(() => {
-    if (error) {
-      openModal();
-    }
+    if (error) openModal();
   }, [error]);
 
   return (

@@ -1,9 +1,4 @@
-import styled from "styled-components";
-
-import { CiRead, CiUnread, CiCircleRemove } from "react-icons/ci";
-
-import TextBox from '../ui/textbox/TextBox';
-import Button from '../ui/Button';
+import { TextInputBox } from "../ui/textbox/TextBoxComponents";
 
 type LoginInputProps = {
   email: string;
@@ -23,33 +18,22 @@ export function LoginInput({
 
   return (
     <>
-      <TextBox
-        label=""
+      <TextInputBox
         placeholder="이메일"
         value={email}
         onChange={handleChangeEmail}
-      >
-        <Button onClick={handleResetEmail}>
-          {!!email && <CiCircleRemove size="18" fill='#6e6e6e'/>}
-        </Button>
-      </TextBox>
-      <TextBox
-        label=""
+        onReset={handleResetEmail}
+      />
+      <TextInputBox
         placeholder="비밀번호"
         type={isShowPw ? "text" : "password"}
         value={password}
+        maxLength={16}
+        isShowPw={isShowPw}
         onChange={handleChangePassword}
-      >
-        <Button onClick={handleResetPassword}>
-          {!!password && <CiCircleRemove size="18" fill='#6e6e6e'/>}
-        </Button>
-        <Button onClick={handleShowPassword}>
-          {isShowPw
-            ? <CiRead size="18" fill='#6e6e6e'/>
-            : <CiUnread size="18" fill='#6e6e6e'/>
-          }
-        </Button>
-      </TextBox>
+        onReset={handleResetPassword}
+        handleShowPassword={handleShowPassword}
+      />
     </>
   )
 }
