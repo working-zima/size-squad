@@ -9,7 +9,7 @@ import Button from "../Button"
 type AlertModalProps = {
   modalRef: RefObject<HTMLDialogElement>
   children: ReactNode;
-  hide: () => void
+  hide: () => void;
 }
 
 export const AlertModal = ({

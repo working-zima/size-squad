@@ -10,6 +10,7 @@ type AlertTriggerProps = {
   buttonText: string;
 }
 
+/** 모달 버튼이 필요한 경우 trigger 사용 */
 export const AlertTrigger = ({ children, buttonText }: AlertTriggerProps) => {
   const { modalRef, openModal, closeModal } = useModal()
 

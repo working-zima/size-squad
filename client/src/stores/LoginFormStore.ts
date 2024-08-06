@@ -47,12 +47,14 @@ class LoginFormStore {
   reset() {
     this.email = '';
     this.password = '';
-    this.error = false;
     this.accessToken = '';
     this.errorMessage = '';
+    this.error = false;
+    console.log(`reset`, this.error)
   }
 
   async login() {
+    console.log(`login`)
     try {
       const accessToken = await apiService.login({
         email: this.email,
@@ -60,6 +62,7 @@ class LoginFormStore {
       });
       this.setAccessToken(accessToken);
     } catch (error) {
+      console.log(error)
       if (error instanceof Error) {
         this.setError(error.message);
       } else {

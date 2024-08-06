@@ -36,7 +36,7 @@ export default function Buttons({
   onReset,
   handleShowPassword = undefined
 }: ButtonsProps) {
-  console.log(value)
+
   return (
     <Container>
       {unitType !== 'none' && (

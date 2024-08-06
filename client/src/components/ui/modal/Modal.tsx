@@ -12,6 +12,7 @@ const Dialog = styled.dialog`
   border: none;
   background-color: #fff;
   padding: 0;
+  border-radius: 3px;
   flex: 1;
   display: flex;
   flex-direction: column;
