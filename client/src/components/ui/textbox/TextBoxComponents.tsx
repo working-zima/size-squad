@@ -9,6 +9,7 @@ import Buttons from "./Buttons";
 type TextareaTextBoxProps = {
   label: string;
   placeholder: string;
+  value?: string;
   maxLength?: number;
   onChange?: (value: string) => void;
   required?: boolean;
@@ -17,6 +18,7 @@ type TextareaTextBoxProps = {
 export const TextareaBox = ({
   label,
   placeholder,
+  value,
   maxLength,
   onChange = undefined,
   required = false,
@@ -42,6 +44,7 @@ export const TextareaBox = ({
         <TextareaInput
           idRef={id}
           placeholder={placeholder}
+          defaultValue={value}
           maxLength={maxLength}
           setIsTouched={setIsTouched}
           setIsFocused={setIsFocused}

@@ -168,7 +168,6 @@ export default function TextBox({
     if (maxLength && newValue.length > maxLength) {
       const beforeCursor = newValue.slice(0, cursorPosition - 1);
       const afterCursor = newValue.slice(cursorPosition);
-      console.log(beforeCursor, afterCursor)
       newValue = beforeCursor + afterCursor;
     }
 

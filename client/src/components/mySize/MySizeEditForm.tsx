@@ -62,7 +62,7 @@ type MySizeEditFormProps = {
 
 export default function MySizeEditForm({ onComplete }: MySizeEditFormProps) {
   const [product, store] = useProductFormStore();
-  console.log(product.valid)
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     await store.update();

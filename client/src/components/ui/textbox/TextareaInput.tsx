@@ -33,6 +33,7 @@ type TextareaInputProps = {
   idRef?: RefObject<string>;
   placeholder?: string;
   lines?: number;
+  defaultValue?: string;
   maxLength?: number;
   setIsTouched: Dispatch<SetStateAction<boolean>>;
   setIsFocused: Dispatch<SetStateAction<boolean>>;
@@ -43,6 +44,7 @@ export default function TextareaInput ({
   idRef,
   placeholder = undefined,
   lines = 3,
+  defaultValue = '',
   maxLength,
   setIsTouched,
   setIsFocused,
@@ -57,6 +59,10 @@ export default function TextareaInput ({
   useEffect(() => {
     const elem = textareaRef.current;
     const cloneElem = cloneRef.current;
+
+    if (elem && defaultValue) {
+      elem.value = defaultValue; // 여기에 value 설정
+    }
 
     const handleInput = () => {
       if (!elem || !cloneElem) return;
