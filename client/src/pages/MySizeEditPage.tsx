@@ -13,7 +13,7 @@ export default function MySizeEditPage() {
 
   useFetchProductForm({ productId });
   useFetchInitialData();
-  const [{loading}] = useProductFormStore();
+  const [{ loading }] = useProductFormStore();
 
   const handleComplete = () => {
     navigate(`/mysize`);

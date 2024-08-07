@@ -40,9 +40,9 @@ type ProductsProps = {
 }
 
 export default function Products({ subCategory, products }: ProductsProps) {
-  const filteredProduct = products.filter(
-    (product) => (product.subCategory._id === subCategory._id),
-  );
+  const filteredProduct = products.filter((product) => (
+    product.subCategory && product.subCategory._id === subCategory._id
+  ));
 
   return (
     !!filteredProduct.length && (
