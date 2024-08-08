@@ -10,6 +10,8 @@ const Container = styled.div`
 
   button {
     display: flex;
+    padding: 0;
+    margin: 6px;
   }
 `
 

@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 
 import Label from "./Label";
-import TempBox from "./TempBox";
+import TextBox from "./TextBox";
 import TextareaInput from "./TextareaInput";
 import TextInput from "./TextInput";
 import Buttons from "./Buttons";
@@ -37,7 +37,7 @@ export const TextareaBox = ({
           required={required}
         />
       )}
-      <TempBox
+      <TextBox
         isTouched={isTouched}
         isFocused={isFocused}
       >
@@ -50,7 +50,7 @@ export const TextareaBox = ({
           setIsFocused={setIsFocused}
           onChange={onChange}
         />
-      </TempBox>
+      </TextBox>
     </>
   )
 }
@@ -102,7 +102,7 @@ export const TextInputBox = ({
           required={required}
         />
       )}
-      <TempBox
+      <TextBox
         isTouched={isTouched}
         isFocused={isFocused}
         isValid={isValid}
@@ -129,7 +129,7 @@ export const TextInputBox = ({
             handleShowPassword={handleShowPassword}
           />
         </>
-      </TempBox>
+      </TextBox>
     </>
   )
 }
