@@ -6,9 +6,6 @@ import { CiCircleRemove } from "react-icons/ci";
 import useSignupFormStore from "../../hooks/useSignupFormStore";
 import useDebounce from "../../hooks/useDebounce";
 
-import TextBox from "../ui/textbox/TextBox";
-import Button from "../ui/Button";
-
 import { ERROR_MESSAGES } from "../../constants";
 import { TextInputBox } from "../ui/textbox/TextBoxComponents";
 
@@ -18,7 +15,7 @@ const Container = styled.div`
 const ValidTextWrapper = styled.p`
   margin-top: 4px;
   font-size: 1.2rem;
-  line-height: 16px;
+  line-height: 1.67;
   color: #e72a1d;
 `
 

@@ -71,7 +71,7 @@ export const TITLE: Titles = {
   '/signup': '회원가입',
   '/mysize/:id/edit': '사이즈 수정',
   '/mysize/new': '사이즈 등록',
-  '/mypage': 'My Page'
+  '/mypage': '내 페이지'
 }
 
 // TODO: delete this!

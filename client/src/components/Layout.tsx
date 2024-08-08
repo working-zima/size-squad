@@ -35,7 +35,7 @@ export default function Layout() {
       <Main>
         <Outlet />
       </Main>
-      <LayoutFooter />
+      {/* <LayoutFooter /> */}
       <LayoutMenuBar />
     </Container>
   );

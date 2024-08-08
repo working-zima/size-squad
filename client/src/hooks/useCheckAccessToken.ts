@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import useAccessToken from './useAccessToken';
 
@@ -11,6 +11,7 @@ export default function useCheckAccessToken(): void {
     const fetchCurrentUser = async () => {
       try {
         await apiService.fetchCurrentUser();
+
       } catch (error) {
         setAccessToken('');
       }

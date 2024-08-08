@@ -2,20 +2,11 @@ import { useEffect } from 'react'
 import useUserStore from './useUserStore'
 
 export default function useFetchUser() {
-  const [
-    {
-      userId, email, name, gender, height, weight, description,
-      followers, following
-    }
-    , store
-  ] = useUserStore();
+  const [{ user, loading, error, done }, store] = useUserStore();
 
   useEffect(() => {
     store.fetchUser();
   }, [store])
 
-  return {
-    userId, email, name, gender, height, weight, description,
-    followers, following
-  }
+  return { user, loading, error, done }
 }

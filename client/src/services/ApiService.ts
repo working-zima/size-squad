@@ -115,23 +115,6 @@ export default class ApiService {
     this.accessToken = accessToken;
   }
 
-  async createProduct(newProduct: ProductRequest): Promise<void> {
-    await this.instance.post('/products', newProduct);
-  }
-
-  async updateProduct({
-    _id, author, name, brand, category, subCategory, gender, size, fit,
-    measurements, description
-  }: ProductRequest): Promise<void> {
-    const productId = _id
-    const product = {
-      author, name, brand, category, subCategory, gender, size, fit,
-      measurements, description
-    }
-
-    await this.instance.patch(`/products/${productId}`, product);
-  }
-
   async fetchProducts({ categoryId, subCategoryId }: {
     categoryId?: string, subCategoryId?: string
   } = {}): Promise<ProductResponse[]> {
@@ -151,79 +134,21 @@ export default class ApiService {
     return product;
   }
 
-  async fetchCategories({ categoryId }: {
-    categoryId? : string
-  } = {}): Promise<Category[]> {
-    const { data } = await this.instance.get('/categories', {
-      params: { categoryId },
-    });
-    const { categories } = data;
-
-    return categories;
+  async createProduct(newProduct: ProductRequest): Promise<void> {
+    await this.instance.post('/products', newProduct);
   }
 
-  async fetchMyProducts({ categoryId, subCategoryId }: {
-    categoryId?: string, subCategoryId?: string
-  } = {}): Promise<ProductResponse[]> {
-    const { data } = await this.instance.get('/users/product', {
-      params: { categoryId, subCategoryId },
-    });
-    const { products } = data;
+  async updateProduct({
+    _id, author, name, brand, category, subCategory, gender, size, fit,
+    measurements, description
+  }: ProductRequest): Promise<void> {
+    const productId = _id
+    const product = {
+      author, name, brand, category, subCategory, gender, size, fit,
+      measurements, description
+    }
 
-    return products;
-  }
-
-  async deleteMyProducts({ productId }: {
-    productId: string
-  }) {
-    await this.instance.delete(`/users/product/${productId}`);
-  }
-
-  async fetchCurrentUser(): Promise<User> {
-    const { data } = await this.instance.get('/users/me');
-    const { user } = data;
-
-    return user;
-  }
-
-  async checkUserEmail({ email }: {
-    email: string
-  }): Promise<string> {
-
-    const { data } = await this.instance.get(`/users/email-valid/${email}`)
-    const { id } = data;
-
-    return id;
-  }
-
-  async checkUserName({ name } : {
-    name: string
-  }): Promise<string> {
-    const { data } = await this.instance.get(`/users/name-valid/${name}`)
-    const { id } = data;
-
-    return id;
-  }
-
-  async fetchFits(): Promise<Summary[]> {
-    const { data } = await this.instance.get('/fits');
-    const { fits } = data;
-
-    return fits
-  }
-
-  async fetchGenders(): Promise<Summary[]> {
-    const { data } = await this.instance.get('/genders');
-    const { genders } = data;
-
-    return genders;
-  }
-
-  async fetchSizes(): Promise<Size[]> {
-    const { data } = await this.instance.get('/sizes');
-    const { sizes } = data;
-
-    return sizes;
+    await this.instance.patch(`/products/${productId}`, product);
   }
 
   async login({email, password} : {
@@ -254,11 +179,86 @@ export default class ApiService {
     return accessToken;
   }
 
+  async fetchCurrentUser(): Promise<User> {
+    const { data } = await this.instance.get('/users/me');
+    const { user } = data;
+
+    return user;
+  }
+
+  async checkUserEmail({ email }: {
+    email: string
+  }): Promise<string> {
+
+    const { data } = await this.instance.get(`/users/email-valid/${email}`)
+    const { id } = data;
+
+    return id;
+  }
+
+  async checkUserName({ name } : {
+    name: string
+  }): Promise<string> {
+    const { data } = await this.instance.get(`/users/name-valid/${name}`)
+    const { id } = data;
+
+    return id;
+  }
+
+  async fetchMyProducts({ categoryId, subCategoryId }: {
+    categoryId?: string, subCategoryId?: string
+  } = {}): Promise<ProductResponse[]> {
+    const { data } = await this.instance.get('/users/product', {
+      params: { categoryId, subCategoryId },
+    });
+    const { products } = data;
+
+    return products;
+  }
+
+  async deleteMyProducts({ productId }: {
+    productId: string
+  }) {
+    await this.instance.delete(`/users/product/${productId}`);
+  }
+
   async fetchInitialData() {
     const { data } = await this.instance.get('/initialData')
     const { initialData } = data;
 
     return initialData;
+  }
+
+  async fetchCategories({ categoryId }: {
+    categoryId? : string
+  } = {}): Promise<Category[]> {
+    const { data } = await this.instance.get('/categories', {
+      params: { categoryId },
+    });
+    const { categories } = data;
+
+    return categories;
+  }
+
+  async fetchFits(): Promise<Summary[]> {
+    const { data } = await this.instance.get('/fits');
+    const { fits } = data;
+
+    return fits
+  }
+
+  async fetchGenders(): Promise<Summary[]> {
+    const { data } = await this.instance.get('/genders');
+    const { genders } = data;
+
+    return genders;
+  }
+
+  async fetchSizes(): Promise<Size[]> {
+    const { data } = await this.instance.get('/sizes');
+    const { sizes } = data;
+
+    return sizes;
   }
 }
 

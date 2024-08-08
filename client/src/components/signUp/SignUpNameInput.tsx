@@ -1,13 +1,9 @@
 import { useEffect, useState } from 'react'
 
 import styled from "styled-components";
-import { CiCircleRemove } from "react-icons/ci";
 
 import useSignupFormStore from '../../hooks/useSignupFormStore';
 import useDebounce from '../../hooks/useDebounce';
-
-import TextBox from "../ui/textbox/TextBox";
-import Button from "../ui/Button";
 
 import { ERROR_MESSAGES } from '../../constants';
 import { TextInputBox } from '../ui/textbox/TextBoxComponents';

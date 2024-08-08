@@ -1,31 +1,16 @@
 import { singleton } from "tsyringe";
 import { Action, Store } from "usestore-ts";
+
 import { apiService } from "../services/ApiService";
-import { Summary, User } from "../types";
-import { nullSummary } from "../nullObject";
+
+import { User } from "../types";
+
+import { nullUser } from "../nullObject";
 
 @singleton()
 @Store()
 class UserStore {
-  userId = '';
-
-  email = '';
-
-  name = '';
-
-  password = '';
-
-  gender: Summary = nullSummary;
-
-  height = 0;
-
-  weight = 0;
-
-  description = '';
-
-  followers: Pick<User, "_id" | "name">[] = [];
-
-  following: Pick<User, "_id" | "name">[] = [];
+  user: User = nullUser;
 
   loading = true;
 
@@ -35,35 +20,37 @@ class UserStore {
 
   @Action()
   private setUser(user: User) {
-    this.userId = user._id;
-    this.email = user.email;
-    this.name = user.name;
-    this.password = user.password;
-    this.gender = user.gender;
-    this.height = user.height;
-    this.weight = user.weight;
-    this.description = user.description;
-    this.followers = user.followers;
-    this.following = user.following;
+    this.user = user;
+    this.loading = false;
+    this.error = false;
+    this.done = false;
+  }
+
+  @Action()
+  reset() {
+    this.user = nullUser;
+    this.error = false;
+    this.done = false;
   }
 
   @Action()
   private startLoading() {
+    this.reset()
     this.loading = true;
     this.error = false;
   }
 
   @Action()
   private setError() {
+    this.user = nullUser;
+    this.loading = false;
     this.error = true;
   }
 
   async fetchUser() {
     try {
       this.startLoading();
-
       const user = await apiService.fetchCurrentUser();
-
       this.setUser(user);
     } catch (error) {
       this.setError();

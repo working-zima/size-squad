@@ -39,8 +39,8 @@ export function LoginButton({
     <>
       <ButtonWrapper>
         <Button type="submit" disabled={!valid}>
-            로그인
-          </Button>
+          로그인
+        </Button>
       </ButtonWrapper>
       <CheckBoxWrapper>
         <CheckBox

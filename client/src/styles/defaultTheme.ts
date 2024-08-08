@@ -18,7 +18,8 @@ const defaultTheme = {
     contentBorderRadius: '0.1rem',
     sectionTopMargin: '2.4rem',
     labelWidth: '10rem',
-    borderRadius: '6px'
+    borderRadius: '6px',
+    lineHeight: '1.67'
   },
 };
 

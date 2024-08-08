@@ -5,6 +5,7 @@ import { LiaAngleLeftSolid } from "react-icons/lia";
 
 import BackSpace from './ui/BackSpace';
 import { TITLE } from '../constants';
+import useUserStore from '../hooks/useUserStore';
 
 const Container = styled.header`
   grid-area: header;
@@ -41,14 +42,20 @@ const Blank = styled.div`
 export default function LayoutHeader() {
   const location = useLocation();
 
+  const [{ user }] = useUserStore();
+
   const defaultTitle = 'Size Squad';
 
   const isEditPage = useMatch('/mysize/:id/edit');
+  const isMyPage = useMatch('/mypage');
 
   let pageTitle = TITLE[location.pathname] || defaultTitle;
 
   if (isEditPage) {
     pageTitle = TITLE['/mysize/:id/edit'];
+  }
+  if (isMyPage && user) {
+    pageTitle = `${user.name}님의 페이지`;  // /mypage 경로에서 사용자 이름 사용
   }
 
   return (
