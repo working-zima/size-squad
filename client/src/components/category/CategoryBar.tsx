@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import MainCategoryBar from './MainCategoryBar';
 import SubCategoryBar from './SubCategoryBar';
 
-import useCategoriesStore from '../../hooks/useCategoriesStore';
 import { Category, Summary } from '../../types';
 
 const Container = styled.div`

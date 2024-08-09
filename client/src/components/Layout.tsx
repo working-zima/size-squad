@@ -1,22 +1,33 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 
 import styled from 'styled-components';
 
 import LayoutHeader from './LayoutHeader';
 import LayoutMenuBar from './LayoutMenuBar';
-import useCheckAccessToken from '../hooks/useCheckAccessToken';
 import LayoutFooter from './LayoutFooter';
 
-const Container = styled.div`
+import useCheckAccessToken from '../hooks/useCheckAccessToken';
+
+import { TITLE } from '../constants';
+
+type ContainerProps = {
+  showMenu: boolean;
+}
+
+const Container = styled.div<ContainerProps>`
   display: grid;
-  grid-template-rows: 50px auto auto 50px;
+  grid-template-rows: ${
+    ({ showMenu }) => (showMenu ? '50px auto auto 50px' : '50px auto')
+  };
   grid-template-columns: 100%;
   grid-template-areas:
     'header'
     'main'
-    'footer'
-    'menu';
+    ${({ showMenu }) => (showMenu ? "'footer'" : '')};
+    ${({ showMenu }) => (showMenu ? "'menu'" : '')};
   margin: 0 auto;
+  width: 100vw;
+  overflow-x: hidden;
 `;
 
 const Main = styled.main`
@@ -29,14 +40,19 @@ const Main = styled.main`
 export default function Layout() {
   useCheckAccessToken();
 
+  const location = useLocation();
+
+  // 조건에 따라 menu를 보여줄지 결정
+  const showMenu = TITLE[location.pathname] === 'Size Squad';
+
   return (
-    <Container>
+    <Container showMenu={showMenu}>
       <LayoutHeader />
       <Main>
         <Outlet />
       </Main>
-      {/* <LayoutFooter /> */}
-      <LayoutMenuBar />
+      {showMenu && <LayoutFooter />}
+      {showMenu && <LayoutMenuBar />}
     </Container>
   );
 }

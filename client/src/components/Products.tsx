@@ -7,7 +7,9 @@ import { ProductResponse, Summary } from '../types';
 import { SUBCATEGORY_MESSAGES } from '../constants';
 
 const Container = styled.div`
-    h2 {
+  margin: 0 10px;
+
+  h2 {
     margin-bottom: 0.8rem;
     font-size: 2.4rem;
     font-weight: 500;
@@ -15,16 +17,11 @@ const Container = styled.div`
   }
 `;
 
-const SectionDivider = styled.div`
-  height: 10px;
-  background-color: ${(props) => props.theme.colors.lineColor};
-`;
-
-const Wrapper = styled.div`
+const SubCategoryWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   position: sticky;
-  padding: 0.8rem ${(props) => props.theme.sizes.contentPadding};
+  padding: 0.8rem 0 0 0;
 
   button {
     margin-bottom: 0.8rem;
@@ -47,10 +44,9 @@ export default function Products({ subCategory, products }: ProductsProps) {
   return (
     !!filteredProduct.length && (
     <Container>
-      <SectionDivider />
-      <Wrapper>
+      <SubCategoryWrapper>
         <h2>{SUBCATEGORY_MESSAGES[subCategory.name]}</h2>
-      </Wrapper>
+      </SubCategoryWrapper>
       {filteredProduct.map((product) => (
         <ProductComponent
           key={product._id}

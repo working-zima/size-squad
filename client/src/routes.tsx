@@ -10,6 +10,7 @@ import MySizeEditPage from './pages/MySizeEditPage';
 import NetworkErrorPage from './pages/NetworkErrorPage';
 import MyPage from './pages/MyPage';
 import MySizeNewPage from './pages/MySizeNewPage';
+import MyProfileEditPage from './pages/MyProfileEditPage';
 
 const routes = [
   {
@@ -23,8 +24,9 @@ const routes = [
       { path: '/mysize', element: <MySizeListPage /> },
       { path: '/mysize/new', element: <MySizeNewPage /> },
       { path: '/mysize/:id/edit', element: <MySizeEditPage /> },
-      { path: '/error/network', element: <NetworkErrorPage />},
       { path: '/mypage', element: <MyPage />},
+      { path: '/mypage/:id/edit', element: <MyProfileEditPage />},
+      { path: '/error/network', element: <NetworkErrorPage />},
     ],
   },
 ];

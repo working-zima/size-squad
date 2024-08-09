@@ -57,6 +57,7 @@ const ButtonMore = styled.button<ButtonMoreProps>`
   height: 5px;
   padding: 0;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 
   /* 밑 화살표 */
   &::before {

@@ -56,10 +56,10 @@ const Menu = styled.nav`
 `;
 
 export default function LayoutMenuBar() {
-  const location = useLocation();
+  // const location = useLocation();
   const { accessToken } = useAccessToken();
 
-  if (TITLE[location.pathname] !== 'Size Squad') {return null}
+  // if (TITLE[location.pathname] !== 'Size Squad') {return null}
 
   return (
     <Container>

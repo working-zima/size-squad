@@ -9,12 +9,10 @@ import useViewModeStore from '../hooks/useViewModeStore';
 
 const Container = styled.div`
   flex: 1 1 100%;
-  margin: 1rem 0;
-  padding: 1rem ${(props) => props.theme.sizes.contentPadding};
-  border-radius: 30px;
-  background-color: ${(props) => props.theme.colors.dividerColor};
+  padding: 1rem 0.1rem;
   font-size: 1.2rem;
   line-height: 1.5;
+  border-bottom: 1px solid ${(props) => props.theme.colors.dividerColor};
 
   span {
     color: ${(props) => props.theme.colors.primaryBlack}

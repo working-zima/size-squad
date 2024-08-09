@@ -14,7 +14,7 @@ const Container = styled.header`
   flex-basis: 40px;
   align-items: center;
   padding: 0 1rem;
-  background-color: ${(props) => props.theme.colors.dividerColor};
+  background-color: ${(props) => props.theme.colors.backgroundColor};
 
   h1 {
     overflow: hidden;
@@ -46,16 +46,18 @@ export default function LayoutHeader() {
 
   const defaultTitle = 'Size Squad';
 
-  const isEditPage = useMatch('/mysize/:id/edit');
+  const isEditSizePage = useMatch('/mysize/:id/edit');
+  const isEditProfilePage = useMatch('/mypage/:id/edit');
   const isMyPage = useMatch('/mypage');
 
   let pageTitle = TITLE[location.pathname] || defaultTitle;
 
-  if (isEditPage) {
-    pageTitle = TITLE['/mysize/:id/edit'];
-  }
+  if (isEditSizePage) pageTitle = TITLE['/mysize/:id/edit'];
+
+  if (isEditProfilePage) pageTitle = TITLE['/mypage/:id/edit'];
+
   if (isMyPage && user) {
-    pageTitle = `${user.name}님의 페이지`;  // /mypage 경로에서 사용자 이름 사용
+    pageTitle = `${user.name}님의 페이지`; // /mypage 경로에서 사용자 이름 사용
   }
 
   return (

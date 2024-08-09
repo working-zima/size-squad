@@ -15,7 +15,7 @@ const Container = styled.div`
   position: relative;
   width: 100%;
   height: 4.7rem;
-  padding: 0 0.4rem;
+  margin: 0 0.4rem;
   overflow: auto hidden;
   white-space: nowrap;
   border-bottom: 1px solid ${(props) => props.theme.colors.lineColor};

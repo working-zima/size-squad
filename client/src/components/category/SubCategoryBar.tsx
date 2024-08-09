@@ -13,9 +13,11 @@ const Container = styled.div`
   display: flex;
   flex-wrap: nowrap;
   overflow: auto hidden;
-  padding: 1rem;
+  margin: 0 1rem;
+  padding: 1rem 0;
   white-space: nowrap;
   scrollbar-width: none;
+  border-bottom: 1px solid ${(props) => props.theme.colors.lineColor};
 
   &::-webkit-scrollbar {
     display: none;

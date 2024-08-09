@@ -6,7 +6,8 @@ const defaultTheme = {
     PrimaryBlue: '#0078ff',
     unSelectedText: '#666',
     secondaryTextColor: '#777777',
-    dividerColor: '#f9f9f9',
+    backgroundColor: '#f9f9f9',
+    dividerColor: '#e7e9ec',
     lineColor: '#f3f3f3',
     borderColor: '#C2C4C8',
     buttonBorderColor: '#e5e5e5',
@@ -19,7 +20,7 @@ const defaultTheme = {
     sectionTopMargin: '2.4rem',
     labelWidth: '10rem',
     borderRadius: '6px',
-    lineHeight: '1.67'
+    lineHeight: '1.67',
   },
 };
 

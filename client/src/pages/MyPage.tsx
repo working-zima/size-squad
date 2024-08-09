@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
 
@@ -14,7 +14,7 @@ import { apiService } from "../services/ApiService";
 
 const Container = styled.div`
   padding: ${props => props.theme.sizes.contentPadding};
-  background-color: ${(props) => props.theme.colors.dividerColor};
+  background-color: ${(props) => props.theme.colors.backgroundColor};
 `
 
 const ProfileWrapper = styled.div`
@@ -52,10 +52,32 @@ const ButtonWrapper = styled.div`
     color: ${props => props.theme.colors.primaryBlack};
     border: 1px solid ${(props) => props.theme.colors.buttonBorderColor};
     border-radius: 4px;
+    -webkit-tap-highlight-color: transparent;
   }
 
   & > button:first-of-type {
       margin-left: 0px;
+  }
+`
+
+const ButtonLike = styled.div`
+  width: 100%;
+  height: 100%;
+  height: 34px;
+  padding: 0;
+  margin-right: 4px;
+  font-size: 1.4rem;
+  background-color: ${props => props.theme.colors.primaryWhite};
+  color: ${props => props.theme.colors.primaryBlack};
+  border: 1px solid ${(props) => props.theme.colors.buttonBorderColor};
+  border-radius: 4px;
+
+  a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
   }
 `
 
@@ -71,18 +93,12 @@ export default function MyPage() {
     navigate('/');
   };
 
-  if(loading) {
-    return (
-      <div>
-        loading
-      </div>
-    )
+  if (loading) {
+    return <div>Loading...</div>;
   }
 
   if (!accessToken) {
-    return (
-      <AccessDeniedPage />
-    );
+    return <AccessDeniedPage />;
   }
 
   return (
@@ -102,12 +118,11 @@ export default function MyPage() {
         />
       </ProfileWrapper>
       <ButtonWrapper>
-        <Button>
-          회원정보 변경
-        </Button>
-        <Button>
-          비밀번호 변경
-        </Button>
+        <ButtonLike>
+          <Link to={`/mypage/${user._id}/edit`}>
+            회원정보 변경
+          </Link>
+        </ButtonLike>
         <Button onClick={handleClickLogout}>
           로그아웃
         </Button>

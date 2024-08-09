@@ -69,9 +69,10 @@ export const TITLE: Titles = {
   '/mysize': 'Size Squad',
   '/login': '로그인',
   '/signup': '회원가입',
-  '/mysize/:id/edit': '사이즈 수정',
+  '/mysize/:id/edit': '사이즈 정보 변경',
   '/mysize/new': '사이즈 등록',
-  '/mypage': '내 페이지'
+  '/mypage': '내 페이지',
+  '/mypage/:id/edit': '회원 정보 변경'
 }
 
 // TODO: delete this!
