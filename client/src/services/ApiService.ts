@@ -160,6 +160,10 @@ export default class ApiService {
     return accessToken;
   }
 
+  async logout(): Promise<void> {
+    await this.instance.delete('/session');
+  }
+
   async signup({
     email, name, password, gender, height, weight, description
   } : {

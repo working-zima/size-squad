@@ -1,12 +1,16 @@
+import { useNavigate } from "react-router-dom";
+
 import styled from "styled-components";
 
 import AccessDeniedPage from "./AccessDeniedPage";
 
-import Button from "../components/ui/Button";
 import LineClampedText from "../components/ui/LineClamp";
+import Button from "../components/ui/Button";
 
 import useFetchUser from "../hooks/useFetchUser"
 import useAccessToken from "../hooks/useAccessToken";
+
+import { apiService } from "../services/ApiService";
 
 const Container = styled.div`
   padding: ${props => props.theme.sizes.contentPadding};
@@ -56,8 +60,16 @@ const ButtonWrapper = styled.div`
 `
 
 export default function MyPage() {
-  const { accessToken } = useAccessToken();
+  const navigate = useNavigate();
+
+  const { accessToken, setAccessToken } = useAccessToken();
   const { user, loading } = useFetchUser()
+
+  const handleClickLogout = async () => {
+    await apiService.logout();
+    setAccessToken('');
+    navigate('/');
+  };
 
   if(loading) {
     return (
@@ -72,7 +84,7 @@ export default function MyPage() {
       <AccessDeniedPage />
     );
   }
-  console.log(!!user.description)
+
   return (
     <Container>
       <ProfileWrapper>
@@ -96,7 +108,7 @@ export default function MyPage() {
         <Button>
           비밀번호 변경
         </Button>
-        <Button>
+        <Button onClick={handleClickLogout}>
           로그아웃
         </Button>
       </ButtonWrapper>
