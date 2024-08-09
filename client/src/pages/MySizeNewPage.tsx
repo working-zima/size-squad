@@ -44,6 +44,7 @@ export default function MySizeNewPage() {
   }, [categories, user.gender, store])
 
   const handleComplete = () => {
+    store.reset();
     navigate('/mysize');
   };
 

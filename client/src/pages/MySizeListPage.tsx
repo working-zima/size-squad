@@ -2,15 +2,15 @@ import { useSearchParams } from 'react-router-dom';
 
 import styled from 'styled-components';
 
+import AccessDeniedPage from './AccessDeniedPage';
+import NoListPage from './NoListPage';
+
 import CategoryBar from '../components/category/CategoryBar';
 import Products from '../components/Products';
-import AccessDeniedPage from './AccessDeniedPage';
 
 import useAccessToken from '../hooks/useAccessToken';
 import useFetchCategories from '../hooks/useFetchCategories';
 import useFetchProducts from '../hooks/useFetchProducts';
-import NoListPage from './NoListPage';
-import { useEffect } from 'react';
 
 const Container = styled.div`
   padding-bottom: 24px;
