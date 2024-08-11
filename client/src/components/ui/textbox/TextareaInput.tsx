@@ -8,7 +8,7 @@ const Container = styled.div`
 `
 
 const Textarea = styled.textarea`
-  line-height: 1;
+  line-height: 1.67;
   font-size: 1.6rem;
   width: 100%;
   resize: none;
@@ -27,6 +27,7 @@ const CloneTextarea = styled(Textarea)`
   visibility: hidden;
   opacity: 0;
   z-index: -1;
+  white-space: pre-wrap;
 `;
 
 type TextareaInputProps = {
@@ -71,12 +72,11 @@ export default function TextareaInput ({
       cloneElem.value = val;
       elem.rows = Math.min(
         Math.max(
-          Math.floor(cloneElem.scrollHeight / cloneElem.clientHeight), lines
+          Math.ceil(cloneElem.scrollHeight / cloneElem.clientHeight), lines
         ), 15
       );
 
       if (onChange) onChange(val);
-
       setIsTouched(true);
     };
 
@@ -99,7 +99,7 @@ export default function TextareaInput ({
         ref={textareaRef}
         placeholder={placeholder}
         rows={lines}
-        maxLength={maxLength}
+        // maxLength={maxLength}
         onFocus={handleFocus}
         onBlur={handleBlur}
       />
