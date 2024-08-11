@@ -7,10 +7,11 @@ import SignupPage from './pages/SignupPage';
 import SignupCompletePage from './pages/SignupCompletePage';
 import MySizeListPage from './pages/MySizeListPage';
 import MySizeEditPage from './pages/MySizeEditPage';
-import NetworkErrorPage from './pages/NetworkErrorPage';
 import MyPage from './pages/MyPage';
 import MySizeNewPage from './pages/MySizeNewPage';
 import MyProfileEditPage from './pages/MyProfileEditPage';
+import MyProfileInput from './components/myProfile/MyProfileInput';
+import NetworkErrorPage from './pages/NetworkErrorPage';
 
 const routes = [
   {
@@ -26,6 +27,7 @@ const routes = [
       { path: '/mysize/:id/edit', element: <MySizeEditPage /> },
       { path: '/mypage', element: <MyPage />},
       { path: '/mypage/:id/edit', element: <MyProfileEditPage />},
+      { path: '/mypage/:id/edit/:path', element: <MyProfileInput />},
       { path: '/error/network', element: <NetworkErrorPage />},
     ],
   },

@@ -56,13 +56,13 @@ export const TextareaBox = ({
 }
 
 type TextInputProps = {
-  label?: string;
   value: string;
+  placeholder: string;
+  label?: string;
   type?: 'text' | 'number' | 'password' | 'tel';
   maxLength?: number;
   unitType?: 'kg' | 'cm' | 'none'
   isShowPw?: boolean
-  placeholder: string;
   isValid?: boolean,
   isDuplicated?: boolean,
   useBorderColor?: boolean;
@@ -73,9 +73,9 @@ type TextInputProps = {
 }
 
 export const TextInputBox = ({
-  label,
-  placeholder,
   value,
+  placeholder,
+  label,
   type = 'text',
   maxLength,
   unitType = 'none',
