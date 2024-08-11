@@ -34,9 +34,17 @@ const ErrorMessage = ({
   return null;
 };
 
-export default function SignUpNameInput() {
+type SignUpNameInputProps = {
+  label: string;
+  placeholder: string;
+}
+
+export default function SignUpNameInput({
+  label,
+  placeholder
+}: SignUpNameInputProps) {
   const [
-    { name, isNameDuplicated, isNameValid }, store
+    { user: { name }, isNameDuplicated, isNameValid }, store
   ] = useSignupFormStore();
   const [isTouched, setIsTouched] = useState(false);
 
@@ -61,8 +69,8 @@ export default function SignUpNameInput() {
   return (
     <Container>
       <TextInputBox
-        label="닉네임"
-        placeholder="닉네임을 입력해주세요."
+        label={label}
+        placeholder={placeholder}
         value={name}
         maxLength={10}
         isValid={isNameValid}

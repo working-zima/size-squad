@@ -34,9 +34,17 @@ const ErrorMessage = ({
   return null;
 };
 
-export default function SignUpEmailInput() {
+type SignUpEmailInputProps = {
+  label: string;
+  placeholder: string;
+}
+
+export default function SignUpEmailInput({
+  label,
+  placeholder
+}: SignUpEmailInputProps) {
   const [
-    { email, isEmailDuplicated, isEmailValid }, store
+    { user: {email}, isEmailDuplicated, isEmailValid }, store
   ] = useSignupFormStore();
   const [isTouched, setIsTouched] = useState(false);
 
@@ -61,8 +69,8 @@ export default function SignUpEmailInput() {
   return (
     <Container>
       <TextInputBox
-        label="이메일"
-        placeholder="이메일을 입력해주세요."
+        label={label}
+        placeholder={placeholder}
         value={email}
         isValid={isEmailValid}
         isDuplicated={isEmailDuplicated}

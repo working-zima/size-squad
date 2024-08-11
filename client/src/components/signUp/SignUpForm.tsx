@@ -2,15 +2,6 @@ import { useEffect } from "react";
 
 import styled from "styled-components";
 
-import Button from "../ui/Button";
-
-import useAccessToken from "../../hooks/useAccessToken";
-import useSignupFormStore from "../../hooks/useSignupFormStore";
-
-import { Summary } from "../../types";
-
-import { RequiredStar } from "../../utils/RequiredStar";
-
 import SignUpEmailInput from "./SignUpEmailInput";
 import SignUpNameInput from "./SignUpNameInput";
 import SignUpPasswords from "./SignUpPasswords";
@@ -18,6 +9,15 @@ import SignUpGenderInput from "./SignUpGenderInput";
 import SignUpHeightInput from "./SignUpHeightInput";
 import SignUpWeightInput from "./SignUpWeightInput";
 import SignUpDescriptionInput from "./SignUpDescriptionInput";
+
+import { Summary } from "../../types";
+
+import useAccessToken from "../../hooks/useAccessToken";
+import useSignupFormStore from "../../hooks/useSignupFormStore";
+
+import Button from "../ui/Button";
+
+import { RequiredStar } from "../../utils/RequiredStar";
 
 const Container = styled.div`
   padding: 20px ${props => props.theme.sizes.contentPadding} 0;
@@ -93,9 +93,13 @@ export default function SignUpForm({ genders }: SignUpFormProps){
       <h2>회원가입</h2>
       <div>필수항목</div>
       <Form onSubmit={handleSubmit}>
-        <SignUpEmailInput />
-        <SignUpNameInput />
-        <SignUpPasswords />
+        <SignUpEmailInput label="이메일" placeholder="이메일을 입력해주세요." />
+        <SignUpNameInput label="이메일" placeholder="이메일을 입력해주세요." />
+        <SignUpPasswords
+          pwdLabel="비밀번호"
+          pwdPlaceholder="영문, 숫자, 특수문자 포함 8 ~ 16자리를 사용합니다."
+          confirmPlaceholder="비밀번호를 다시 입력해주세요."
+          />
         <SignUpGenderInput genders={genders}/>
         <SignUpHeightInput />
         <SignUpWeightInput />

@@ -47,11 +47,20 @@ const ConfirmErrorMessage = ({
   if (!isPasswordConfirmationValid) {
     return ERROR_MESSAGES.CONFIRM_INVALID_MESSAGE;
   }
-
   return null;
 };
 
-export default function SignUpPassword() {
+type SignUpPassword = {
+  pwdLabel: string;
+  pwdPlaceholder: string;
+  confirmPlaceholder: string;
+}
+
+export default function SignUpPassword({
+  pwdLabel,
+  pwdPlaceholder,
+  confirmPlaceholder
+}: SignUpPassword) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [isTouched, setIsTouched] = useState({
@@ -60,7 +69,7 @@ export default function SignUpPassword() {
   });
 
   const [{
-    password, passwordConfirmation, isPasswordValid, isPasswordConfirmationValid
+    user: { password }, passwordConfirmation, isPasswordValid, isPasswordConfirmationValid
   }, store] = useSignupFormStore();
 
   const handleChangePassword = (value: string) => {
@@ -101,8 +110,8 @@ export default function SignUpPassword() {
     <>
       <PasswordWrapper>
         <TextInputBox
-          label="비밀번호"
-          placeholder="영문, 숫자, 특수문자 포함 8 ~ 16자리를 사용합니다."
+          label={pwdLabel}
+          placeholder={pwdPlaceholder}
           value={password}
           type={showPassword ? "text" : "password"}
           maxLength={16}
@@ -120,7 +129,7 @@ export default function SignUpPassword() {
       </PasswordWrapper>
       <ConfirmationWrapper>
         <TextInputBox
-          placeholder="비밀번호를 다시 입력해주세요."
+          placeholder={confirmPlaceholder}
           value={passwordConfirmation}
           type={showConfirmation ? "text" : "password"}
           maxLength={16}
