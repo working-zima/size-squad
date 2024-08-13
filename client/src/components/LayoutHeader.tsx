@@ -1,11 +1,12 @@
-import { Link, useLocation, useMatch } from 'react-router-dom';
+import { useLocation, useMatch, useParams } from 'react-router-dom';
 
 import styled from 'styled-components';
 import { LiaAngleLeftSolid } from "react-icons/lia";
 
 import BackSpace from './ui/BackSpace';
-import { TITLE } from '../constants';
-import useUserStore from '../hooks/useUserStore';
+import { PAGES, USERFIELDS } from '../constants';
+
+import useSignupFormStore from '../hooks/useSignupFormStore';
 
 const Container = styled.header`
   grid-area: header;
@@ -41,29 +42,40 @@ const Blank = styled.div`
 
 export default function LayoutHeader() {
   const location = useLocation();
+  const params = useParams();
 
-  const [{ user }] = useUserStore();
+  const path = String(params.path);
 
-  const defaultTitle = 'Size Squad';
+  const [{ user }] = useSignupFormStore();
 
   const isEditSizePage = useMatch('/mysize/:id/edit');
   const isEditProfilePage = useMatch('/mypage/:id/edit');
+  const isEditProfile = useMatch('/mypage/:id/edit/:editField')
   const isMyPage = useMatch('/mypage');
 
-  let pageTitle = TITLE[location.pathname] || defaultTitle;
+  const defaultPage = {
+    pageTitle: '', homeButton: false, backSpace: false, showMenu: false
+  }
 
-  if (isEditSizePage) pageTitle = TITLE['/mysize/:id/edit'];
+  let page = PAGES[location.pathname] || defaultPage;
 
-  if (isEditProfilePage) pageTitle = TITLE['/mypage/:id/edit'];
+  if (isEditSizePage) page = PAGES['/mysize/:id/edit'];
+
+  if (isEditProfilePage) page = PAGES['/mypage/:id/edit'];
 
   if (isMyPage && user) {
-    pageTitle = `${user.name}님의 페이지`; // /mypage 경로에서 사용자 이름 사용
+    page.pageTitle = `${user.name}님의 페이지`;
+  }
+
+  if (isEditProfile && user) {
+    page = PAGES['/mypage/:id/edit/:editField'];
+    page.pageTitle = `${USERFIELDS[path]} 변경`
   }
 
   return (
     <Container>
       <h1>사이즈 스쿼드</h1>
-      {pageTitle !==  'Size Squad' ? (
+      {page.backSpace ? (
           <BackSpace>
             <LiaAngleLeftSolid size="24"/>
           </BackSpace>
@@ -73,7 +85,7 @@ export default function LayoutHeader() {
       }
       <h2>
         <p>
-          {pageTitle}
+          {page.pageTitle}
         </p>
       </h2>
       <Blank/>

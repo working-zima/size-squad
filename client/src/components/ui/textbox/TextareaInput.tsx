@@ -99,7 +99,7 @@ export default function TextareaInput ({
         ref={textareaRef}
         placeholder={placeholder}
         rows={lines}
-        // maxLength={maxLength}
+        maxLength={maxLength}
         onFocus={handleFocus}
         onBlur={handleBlur}
       />

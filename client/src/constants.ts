@@ -60,19 +60,78 @@ export const ERROR_MESSAGES: Record<string, string> = {
   CONFIRM_INVALID_MESSAGE: '비밀번호와 일치하지 않습니다.',
 }
 
-type Titles = {
-  [key: string]: string;
-};
+type PageConfig = {
+  pageTitle: string;
+  homeButton: boolean;
+  backSpace: boolean;
+  showMenu: boolean;
+}
 
-export const TITLE: Titles = {
-  '/': 'Size Squad',
-  '/mysize': 'Size Squad',
-  '/login': '로그인',
-  '/signup': '회원가입',
-  '/mysize/:id/edit': '사이즈 정보 변경',
-  '/mysize/new': '사이즈 등록',
-  '/mypage': '내 페이지',
-  '/mypage/:id/edit': '회원 정보 변경'
+export const PAGES: Record<string, PageConfig> = {
+  '/': {
+    pageTitle: 'Size Squad',
+    homeButton: false,
+    backSpace: false,
+    showMenu: true
+  },
+  '/mysize': {
+    pageTitle: 'Size Squad',
+    homeButton: false,
+    backSpace: false,
+    showMenu: true
+  },
+  '/login': {
+    pageTitle: '로그인',
+    homeButton: false,
+    backSpace: true,
+    showMenu: false
+  },
+  '/signup': {
+    pageTitle: '회원가입',
+    homeButton: false,
+    backSpace: true,
+    showMenu: false
+  },
+  '/mysize/:id/edit': {
+    pageTitle: '사이즈 정보 변경',
+    homeButton: false,
+    backSpace: true,
+    showMenu: false
+  },
+  '/mysize/new': {
+    pageTitle: '사이즈 등록',
+    homeButton: false,
+    backSpace: true,
+    showMenu: false
+  },
+  '/mypage': {
+    pageTitle: '내 페이지',
+    homeButton: false,
+    backSpace: true,
+    showMenu: false
+  },
+  '/mypage/:id/edit': {
+    pageTitle: '회원 정보 변경',
+    homeButton: false,
+    backSpace: true,
+    showMenu: false
+  },
+  '/mypage/:id/edit/:editField': {
+    pageTitle: '특정 회원 정보 변경',
+    homeButton: false,
+    backSpace: true,
+    showMenu: false
+  }
+}
+
+export const USERFIELDS: Record<string, string> = {
+  email: '이메일',
+  name: '이름',
+  password: '비밀번호',
+  gender: '성별',
+  height: '키',
+  weight: '몸무게',
+  description: '체형'
 }
 
 // TODO: delete this!

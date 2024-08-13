@@ -2,7 +2,15 @@ import useSignupFormStore from "../../hooks/useSignupFormStore";
 
 import { TextareaBox } from "../ui/textbox/TextBoxComponents";
 
-export default function SignUpDescriptionInput() {
+type SignUpDescriptionInputProps = {
+  label?: string;
+  placeholder?: string;
+}
+
+export default function SignUpDescriptionInput({
+  label = "",
+  placeholder = ""
+}: SignUpDescriptionInputProps) {
   const [, store] = useSignupFormStore();
 
   const handleChangeDescription = (value: string) => {
@@ -11,8 +19,8 @@ export default function SignUpDescriptionInput() {
 
   return (
     <TextareaBox
-      label="체형"
-      placeholder="체형을 100자 이내로 설명해주세요."
+      label={label}
+      placeholder={placeholder}
       maxLength={100}
       onChange={handleChangeDescription}
     />

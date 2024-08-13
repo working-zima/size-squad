@@ -2,7 +2,15 @@ import useSignupFormStore from "../../hooks/useSignupFormStore";
 
 import { TextInputBox } from "../ui/textbox/TextBoxComponents";
 
-export default function SignUpHeightInput() {
+type SignUpHeightInputProps = {
+  label?: string;
+  placeholder?: string;
+}
+
+export default function SignUpHeightInput({
+  label="",
+  placeholder=""
+}: SignUpHeightInputProps) {
   const [{ user: { height } }, store] = useSignupFormStore();
 
   const handleChangeHeight = (value: string) => {
@@ -21,8 +29,8 @@ export default function SignUpHeightInput() {
 
   return (
     <TextInputBox
-      label="키"
-      placeholder="키를 입력해주세요."
+      label={label}
+      placeholder={placeholder}
       value={height === 0 ? '' : String(height)}
       maxLength={3}
       unitType={'cm'}

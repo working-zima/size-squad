@@ -93,17 +93,35 @@ export default function SignUpForm({ genders }: SignUpFormProps){
       <h2>회원가입</h2>
       <div>필수항목</div>
       <Form onSubmit={handleSubmit}>
-        <SignUpEmailInput label="이메일" placeholder="이메일을 입력해주세요." />
-        <SignUpNameInput label="이메일" placeholder="이메일을 입력해주세요." />
+        <SignUpEmailInput
+          label="이메일"
+          placeholder="이메일을 입력해주세요."
+        />
+        <SignUpNameInput
+          label="닉네임"
+          placeholder="2 ~ 10자리 이내 닉네임을 입력해주세요."
+        />
         <SignUpPasswords
           pwdLabel="비밀번호"
           pwdPlaceholder="영문, 숫자, 특수문자 포함 8 ~ 16자리를 사용합니다."
           confirmPlaceholder="비밀번호를 다시 입력해주세요."
           />
-        <SignUpGenderInput genders={genders}/>
-        <SignUpHeightInput />
-        <SignUpWeightInput />
-        <SignUpDescriptionInput />
+        <SignUpGenderInput
+          genders={genders}
+          label="성별"
+        />
+        <SignUpHeightInput
+          label="키"
+          placeholder="키를 입력해주세요."
+        />
+        <SignUpWeightInput
+          label="몸무게"
+          placeholder="몸무게를 입력해주세요."
+        />
+        <SignUpDescriptionInput
+          label="체형"
+          placeholder="체형을 100자 이내로 설명해주세요."
+        />
         <ButtonWrapper>
           <Button type="submit" disabled={!valid}>
             회원 가입

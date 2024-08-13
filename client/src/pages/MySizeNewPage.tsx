@@ -6,7 +6,7 @@ import AccessDeniedPage from "./AccessDeniedPage";
 import MySizeNewForm from "../components/mySize/MySizeNewForm";
 
 import useAccessToken from "../hooks/useAccessToken";
-import useFetchUser from "../hooks/useFetchUser";
+import useFetchUser from "../hooks/useFetchUserStore";
 import useFetchInitialData from "../hooks/useFetchInitialData";
 import useProductFormStore from "../hooks/useProductFormStore";
 

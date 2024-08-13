@@ -1,0 +1,89 @@
+import { useState } from "react";
+
+import styled from "styled-components";
+
+import useSignupFormStore from "../../hooks/useSignupFormStore";
+
+import { ERROR_MESSAGES } from "../../constants";
+
+import { TextInputBox } from "../ui/textbox/TextBoxComponents";
+
+const ConfirmationWrapper = styled.div`
+  height: 70px;
+`
+
+const ValidTextWrapper = styled.p`
+  margin-top: 4px;
+  font-size: 1.2rem;
+  line-height: 16px;
+  color: #e72a1d;
+`
+
+type ConfirmErrorMessageProps = {
+  passwordConfirmation: string;
+  isPasswordConfirmationValid: boolean;
+}
+
+const ConfirmErrorMessage = ({
+  isPasswordConfirmationValid
+}: ConfirmErrorMessageProps) => {
+  if (!isPasswordConfirmationValid) {
+    return ERROR_MESSAGES.CONFIRM_INVALID_MESSAGE;
+  }
+  return null;
+};
+
+type SignUpConfirmPasswordInputProps = {
+  placeholder: string;
+}
+
+export default function SignUpConfirmPasswordInput({
+  placeholder
+}: SignUpConfirmPasswordInputProps) {
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [isTouched, setIsTouched] = useState({
+    passwordIsTouched: false,
+    confirmIsTouched: false
+  });
+
+  const [{
+    passwordConfirmation, isPasswordConfirmationValid
+  }, store] = useSignupFormStore();
+
+  const handleChangePasswordConfirmation = (value: string) => {
+    setIsTouched(prev => ({ ...prev, confirmIsTouched: true }));
+    store.changePasswordConfirmation(value);
+    store.validatePasswordConfirmation(value);
+  };
+
+  const handleResetPasswordConfirmation = () => {
+    store.changePasswordConfirmation('');
+  }
+
+  const handleShowConfirmation = () => {
+    setShowConfirmation((prev) => !prev);
+  };
+
+  const confirmErrorMessage = isTouched.confirmIsTouched
+    ? ConfirmErrorMessage({ passwordConfirmation, isPasswordConfirmationValid })
+    : null;
+
+  return (
+    <ConfirmationWrapper>
+      <TextInputBox
+        placeholder={placeholder}
+        value={passwordConfirmation}
+        type={showConfirmation ? "text" : "password"}
+        maxLength={16}
+        isShowPw={showConfirmation}
+        onChange={handleChangePasswordConfirmation}
+        handleShowPassword={handleShowConfirmation}
+        isValid={isPasswordConfirmationValid}
+        useBorderColor={true}
+        onReset={handleResetPasswordConfirmation}
+      />
+      {!!confirmErrorMessage
+        && <ValidTextWrapper>{confirmErrorMessage}</ValidTextWrapper>}
+    </ConfirmationWrapper>
+  )
+}

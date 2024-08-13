@@ -12,8 +12,14 @@ type LoginInputProps = {
 }
 
 export function LoginInput({
-  email, password, isShowPw,
-  handleChangeEmail, handleChangePassword, handleResetEmail, handleShowPassword, handleResetPassword
+  email,
+  password,
+  isShowPw,
+  handleChangeEmail,
+  handleChangePassword,
+  handleResetEmail,
+  handleShowPassword,
+  handleResetPassword
 }: LoginInputProps) {
 
   return (

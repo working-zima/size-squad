@@ -43,4 +43,9 @@ userRouter.get(
   "/name-valid/:name", userController.getIdByName
 )
 
+/* 비밀번호 변경 */
+userRouter.patch(
+  "/modify-password", tokenValidationRules, userController.patchPassword
+)
+
 module.exports = userRouter;

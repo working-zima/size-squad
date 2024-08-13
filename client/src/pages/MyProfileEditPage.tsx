@@ -6,8 +6,8 @@ import AccessDeniedPage from './AccessDeniedPage';
 
 import MyProfileEditForm from '../components/myProfile/MyProfileEditForm';
 
-import useFetchUser from '../hooks/useFetchUser';
 import useAccessToken from '../hooks/useAccessToken';
+import useFetchUserStore from '../hooks/useFetchUserStore';
 
 const Container = styled.div`
   display: flex;
@@ -31,8 +31,8 @@ const ButtonWrapper = styled.div`
 
 export default function MyProfileEditPage() {
   const { accessToken } = useAccessToken();
-  const { user, loading } = useFetchUser()
-  console.log(user)
+  const { user, loading } = useFetchUserStore()
+
   if (!accessToken) {
     return <AccessDeniedPage />;
   }

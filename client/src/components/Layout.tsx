@@ -8,7 +8,7 @@ import LayoutFooter from './LayoutFooter';
 
 import useCheckAccessToken from '../hooks/useCheckAccessToken';
 
-import { TITLE } from '../constants';
+import { PAGES } from '../constants';
 
 type ContainerProps = {
   showMenu: boolean;
@@ -43,16 +43,17 @@ export default function Layout() {
   const location = useLocation();
 
   // 조건에 따라 menu를 보여줄지 결정
-  const showMenu = TITLE[location.pathname] === 'Size Squad';
+  const pageConfig = PAGES[location.pathname]
+    || { pageTitle: '', homeButton: false, backSpace: false, showMenu: false };
 
   return (
-    <Container showMenu={showMenu}>
+    <Container showMenu={pageConfig.showMenu}>
       <LayoutHeader />
       <Main>
         <Outlet />
       </Main>
-      {showMenu && <LayoutFooter />}
-      {showMenu && <LayoutMenuBar />}
+      {pageConfig.showMenu && <LayoutFooter />}
+      {pageConfig.showMenu && <LayoutMenuBar />}
     </Container>
   );
 }

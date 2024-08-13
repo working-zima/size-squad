@@ -2,8 +2,10 @@ import { singleton } from "tsyringe";
 
 import { Action, Store } from "usestore-ts";
 
-import { apiService } from "../services/ApiService";
 import { Summary, User } from "../types";
+
+import { apiService } from "../services/ApiService";
+
 import { nullUser } from "../nullObject";
 
 @singleton()
@@ -11,9 +13,13 @@ import { nullUser } from "../nullObject";
 class SignupFormStore {
   user: User = nullUser;
 
+  oldPassword = '';
+
   passwordConfirmation = '';
 
   accessToken = '';
+
+  errorMessage = '';
 
   error = false;
 
@@ -31,13 +37,22 @@ class SignupFormStore {
 
   isPasswordValid = false;
 
+  isOldPasswordValid = false;
+
   isPasswordConfirmationValid = false;
 
+  // 유효성 검사
   get valid() {
     return this.isEmailValid
       && !this.isEmailDuplicated
       && this.isNameValid
       && !this.isNameDuplicated
+      && this.isPasswordValid
+      && this.isPasswordConfirmationValid
+  }
+
+  get EditPasswordValid() {
+    return this.isOldPasswordValid
       && this.isPasswordValid
       && this.isPasswordConfirmationValid
   }
@@ -53,14 +68,17 @@ class SignupFormStore {
   }
 
   async validateAndCheckEmail(email: string) {
-    console.log(email)
     this.validateEmail(email);
     if(this.isEmailValid) {
       try {
         const isDuplicated = await apiService.checkUserEmail({ email });
         this.changeIsEmailDuplicated(!!isDuplicated);
       } catch(error) {
-        this.setError();
+        if (error instanceof Error) {
+          this.setError(error.message);
+        } else {
+          this.setError(`알 수 없는 오류가 발생했습니다.\n 관리자에게 문의해주세요.`);
+        }
       }
     } else {
       this.changeIsEmailDuplicated(false);
@@ -84,7 +102,11 @@ class SignupFormStore {
         const isDuplicated = await apiService.checkUserName({ name });
         this.changeIsNameDuplicated(!!isDuplicated);
       } catch(error) {
-        this.setError();
+        if (error instanceof Error) {
+          this.setError(error.message);
+        } else {
+          this.setError(`알 수 없는 오류가 발생했습니다.\n 관리자에게 문의해주세요.`);
+        }
       }
     } else {
       this.changeIsNameDuplicated(false);
@@ -102,11 +124,17 @@ class SignupFormStore {
   }
 
   @Action()
+  validateOldPassword(password: string) {
+    this.isOldPasswordValid = this.passwordValidation(password);
+  }
+
+  @Action()
   validatePasswordConfirmation(passwordConfirmation: string) {
     this.isPasswordConfirmationValid =
       this.user.password === passwordConfirmation;
   }
 
+  // 상태 변경
   @Action()
   changeEmail(email: string) {
     this.user = {...this.user, email};
@@ -115,6 +143,11 @@ class SignupFormStore {
   @Action()
   changeName(name: string) {
     this.user = {...this.user, name};
+  }
+
+  @Action()
+  changeOldPassword(password: string) {
+    this.oldPassword = password;
   }
 
   @Action()
@@ -160,17 +193,14 @@ class SignupFormStore {
   @Action()
   private setAccessToken(accessToken: string) {
     this.accessToken = accessToken;
-  }
-
-  @Action()
-  private setError() {
-    this.error = true;
+    this.reset();
   }
 
   @Action()
   reset() {
     this.user = nullUser;
     this.passwordConfirmation = '';
+    this.oldPassword = '';
     this.accessToken = '';
 
     this.error = false;
@@ -185,6 +215,16 @@ class SignupFormStore {
     this.isPasswordConfirmationValid = false;
   }
 
+  @Action()
+  private setError(message: string) {
+    this.user = nullUser;
+    this.passwordConfirmation = '';
+    this.oldPassword = '';
+    this.loading = false;
+    this.error = true;
+    this.errorMessage = message;
+  }
+
   async signup() {
     try {
       const accessToken = await apiService.signup({
@@ -193,7 +233,28 @@ class SignupFormStore {
       });
       this.setAccessToken(accessToken);
     } catch (error) {
-      this.setError();
+      if (error instanceof Error) {
+        this.setError(error.message);
+      } else {
+        this.setError(`알 수 없는 오류가 발생했습니다.\n 관리자에게 문의해주세요.`);
+      }
+    }
+  }
+
+  async updatePassword() {
+    try {
+      await apiService.updatePassword({
+        oldPassword: this.oldPassword,
+        newPassword: this.user.password
+      })
+
+      this.reset();
+    } catch (error) {
+      if (error instanceof Error) {
+        this.setError(error.message);
+      } else {
+        this.setError('현재 비밀번호가 맞지 않습니다.')
+      }
     }
   }
 }

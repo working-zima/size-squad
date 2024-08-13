@@ -4,6 +4,8 @@ import MyProfileCard from "./MyProfileCard";
 
 import { User } from "../../types";
 
+import { key } from "../../utils";
+
 const Container = styled.div`
   margin-bottom: auto;
   display: flex;
@@ -66,6 +68,7 @@ export default function MyProfileEditForm({
     <Container>
       {profileFields.map((field, index) => (
         <MyProfileCard
+          key={key(field.label, index)}
           label={field.label}
           value={field.value}
           path={field.path}

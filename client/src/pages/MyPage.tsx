@@ -7,8 +7,8 @@ import AccessDeniedPage from "./AccessDeniedPage";
 import LineClampedText from "../components/ui/LineClamp";
 import Button from "../components/ui/Button";
 
-import useFetchUser from "../hooks/useFetchUser"
 import useAccessToken from "../hooks/useAccessToken";
+import useFetchUserStore from "../hooks/useFetchUserStore";
 
 import { apiService } from "../services/ApiService";
 
@@ -85,11 +85,12 @@ export default function MyPage() {
   const navigate = useNavigate();
 
   const { accessToken, setAccessToken } = useAccessToken();
-  const { user, loading } = useFetchUser()
+  const { user, loading, store } = useFetchUserStore();
 
   const handleClickLogout = async () => {
     await apiService.logout();
     setAccessToken('');
+    store.reset();
     navigate('/');
   };
 
@@ -105,9 +106,9 @@ export default function MyPage() {
     <Container>
       <ProfileWrapper>
         <UserSummary>
-          <div>{user.name}</div>
-          <span>{user.gender.name}</span>
-          <span>{user.height}cm / {user.weight}kg</span>
+          <div>{user?.name}</div>
+          <span>{user.gender?.name}</span>
+          <span>{user?.height}cm / {user.weight}kg</span>
         </UserSummary>
         <LineClampedText
           text={[user.description

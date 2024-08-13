@@ -35,13 +35,13 @@ const ErrorMessage = ({
 };
 
 type SignUpEmailInputProps = {
-  label: string;
-  placeholder: string;
+  label?: string;
+  placeholder?: string;
 }
 
 export default function SignUpEmailInput({
-  label,
-  placeholder
+  label="",
+  placeholder=""
 }: SignUpEmailInputProps) {
   const [
     { user: {email}, isEmailDuplicated, isEmailValid }, store

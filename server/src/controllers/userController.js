@@ -177,9 +177,30 @@ const userController = {
       }
 
       await userService.deleteMe(userAccessToken);
-      console.log(`check`)
+
       res.status(200).json();
     } catch(error) {
+      next(error);
+    }
+  },
+
+  /** 비밀번호 변경 */
+  patchPassword: async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const error = new Error('Validation failed');
+      error.statusCode = 400;
+      error.data = errors.array();
+      return next(error);
+    }
+    try {
+      const accessToken = req.headers["authorization"];
+      const { oldPassword, newPassword } = req.body;
+
+      await userService.patchPassword({ oldPassword, newPassword, accessToken });
+
+      res.status(201).json({});
+    } catch (error) {
       next(error);
     }
   },

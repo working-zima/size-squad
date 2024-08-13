@@ -2,7 +2,15 @@ import useSignupFormStore from "../../hooks/useSignupFormStore";
 
 import { TextInputBox } from "../ui/textbox/TextBoxComponents";
 
-export default function SignUpWeightInput() {
+type SignUpWeightInputProps = {
+  label?: string;
+  placeholder?: string;
+}
+
+export default function SignUpWeightInput({
+  label = "",
+  placeholder = ""
+}: SignUpWeightInputProps) {
   const [{ user: { weight } }, store] = useSignupFormStore();
 
   const handleChangeWeight = (value: string) => {
@@ -21,8 +29,8 @@ export default function SignUpWeightInput() {
 
   return (
     <TextInputBox
-      label="몸무게"
-      placeholder="몸무게를 입력해주세요."
+      label={label}
+      placeholder={placeholder}
       value={weight === 0 ? '' : String(weight)}
       maxLength={3}
       unitType={'kg'}

@@ -62,6 +62,30 @@ const User = {
     }
   },
 
+  findPasswordById: async ({userId}) => {
+    try {
+      const userData = await UserModel.findOne({ userId }, "password")
+        .lean();
+
+      return userData;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  /** 비밀번호 수정 */
+  patchPassword: async (filter, userData) => {
+    try {
+      const data = await UserModel.findOneAndUpdate(
+        filter, userData, { new: true }
+      ).lean();
+
+      return;
+    } catch(error) {
+      throw error;
+    }
+  },
+
   /** 유저 정보 삭제 */
   deleteUser: async (_id) => {
     try {

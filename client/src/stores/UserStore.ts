@@ -18,6 +18,10 @@ class UserStore {
 
   done = false;
 
+  get passwordValid() {
+    return
+  }
+
   @Action()
   private setUser(user: User) {
     this.user = user;
@@ -31,6 +35,13 @@ class UserStore {
     this.user = nullUser;
     this.error = false;
     this.done = false;
+  }
+
+  @Action()
+  private setDone() {
+    this.done = true;
+    this.loading = false;
+    this.error = false;
   }
 
   @Action()
@@ -56,7 +67,7 @@ class UserStore {
       this.setError();
     }
   }
-}
 
+}
 
 export default UserStore;

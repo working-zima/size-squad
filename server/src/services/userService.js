@@ -4,6 +4,7 @@ const { User } = require("../db/models/User");
 const { Token } = require('../db/models/Token');
 
 const { getUserIdByAccessToken, generateJwtToken } = require("../utils/utils");
+const CustomError = require("../utils/CustomError");
 
 const SALT_ROUND = parseInt(process.env.SALT_ROUND);
 
@@ -94,6 +95,26 @@ const userService = {
 
       return;
     } catch(error) {
+      throw error;
+    }
+  },
+
+  /** 비밀번호 변경 */
+  patchPassword: async ({ oldPassword, newPassword, accessToken }) => {
+    try {
+      const userId = getUserIdByAccessToken({ accessToken })
+      const { _id, password } = await User.findPasswordById(userId);
+
+      const isPasswordMatch = await bcrypt.compare(oldPassword, password);
+
+      if (!isPasswordMatch) {
+        throw new CustomError('Incorrect password', 400, []);
+      }
+
+      const hashedPassword = await bcrypt.hash(newPassword, SALT_ROUND);
+
+      await User.patchPassword({ _id }, {password: hashedPassword})
+    } catch (error) {
       throw error;
     }
   },

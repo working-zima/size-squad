@@ -7,17 +7,35 @@ import {
 const MOCK_BASE_URL = 'http://localhost:5000';
 
 export default class ApiService {
-  private instance = axios.create({
-    baseURL: MOCK_BASE_URL,
-  });
-
-  private accessToken = '';
-
   constructor() {
     // 응답 인터셉트
     this.instance.interceptors.response.use(
       this.onResponse, this.onErrorResponse
     );
+    console.log(`constructor`)
+  }
+
+  private instance = axios.create({ baseURL: MOCK_BASE_URL });
+
+  private accessToken = '';
+
+  setAccessToken(accessToken: string) {
+    if (accessToken === this.accessToken) {
+      return;
+    }
+
+    const authorization = accessToken ? `Bearer ${accessToken}` : undefined;
+
+    this.instance = axios.create({
+      baseURL: MOCK_BASE_URL,
+      headers: { Authorization: authorization },
+    });
+
+    this.instance.interceptors.response.use(
+      this.onResponse, this.onErrorResponse
+    );
+
+    this.accessToken = accessToken;
   }
 
   logOnDev = (message: string) => {
@@ -42,7 +60,6 @@ export default class ApiService {
   };
 
   onErrorResponse = async (error: AxiosError | Error) => {
-    console.log(`error: `, error)
     if (axios.isAxiosError(error)) {
       const { message } = error;
       const { method, url } = error.config as AxiosRequestConfig;
@@ -89,7 +106,9 @@ export default class ApiService {
           this.onError(status, `에러가 발생했습니다. ${error.message}`);
         }
       }
-    } else if (error instanceof Error && error.name === "TimeoutError") {
+    }
+
+    if (error instanceof Error && error.name === "TimeoutError") {
       this.logOnDev(`[API] | TimeError ${error.toString()}`);
       this.onError(0, "요청 시간이 초과되었습니다.");
     } else {
@@ -99,21 +118,6 @@ export default class ApiService {
 
     return Promise.reject(error);
   };
-
-  setAccessToken(accessToken: string) {
-    if (accessToken === this.accessToken) {
-      return;
-    }
-
-    const authorization = accessToken ? `Bearer ${accessToken}` : undefined;
-
-    this.instance = axios.create({
-      baseURL: MOCK_BASE_URL,
-      headers: { Authorization: authorization },
-    });
-
-    this.accessToken = accessToken;
-  }
 
   async fetchProducts({ categoryId, subCategoryId }: {
     categoryId?: string, subCategoryId?: string
@@ -139,8 +143,17 @@ export default class ApiService {
   }
 
   async updateProduct({
-    _id, author, name, brand, category, subCategory, gender, size, fit,
-    measurements, description
+    _id,
+    author,
+    name,
+    brand,
+    category,
+    subCategory,
+    gender,
+    size,
+    fit,
+    measurements,
+    description
   }: ProductRequest): Promise<void> {
     const productId = _id
     const product = {
@@ -151,8 +164,12 @@ export default class ApiService {
     await this.instance.patch(`/products/${productId}`, product);
   }
 
-  async login({email, password} : {
-    email: string, password: string
+  async login({
+    email,
+    password
+  } : {
+    email: string,
+    password: string
   }): Promise<string> {
     const { data } = await this.instance.post('/session', { email, password });
     const { accessToken } = data;
@@ -165,7 +182,13 @@ export default class ApiService {
   }
 
   async signup({
-    email, name, password, gender, height, weight, description
+    email,
+    name,
+    password,
+    gender,
+    height,
+    weight,
+    description
   } : {
     email: string;
     name: string;
@@ -191,7 +214,7 @@ export default class ApiService {
   }
 
   async checkUserEmail({ email }: {
-    email: string
+    email: string;
   }): Promise<string> {
 
     const { data } = await this.instance.get(`/users/email-valid/${email}`)
@@ -201,7 +224,7 @@ export default class ApiService {
   }
 
   async checkUserName({ name } : {
-    name: string
+    name: string;
   }): Promise<string> {
     const { data } = await this.instance.get(`/users/name-valid/${name}`)
     const { id } = data;
@@ -209,8 +232,24 @@ export default class ApiService {
     return id;
   }
 
-  async fetchMyProducts({ categoryId, subCategoryId }: {
-    categoryId?: string, subCategoryId?: string
+  async updatePassword({
+    oldPassword,
+    newPassword
+  }: {
+    oldPassword: string;
+    newPassword: string;
+  }) {
+    const data = await this.instance.patch(`/users/modify-password`, {
+      oldPassword, newPassword
+    });
+  }
+
+  async fetchMyProducts({
+    categoryId,
+    subCategoryId
+  }: {
+    categoryId?: string,
+    subCategoryId?: string
   } = {}): Promise<ProductResponse[]> {
     const { data } = await this.instance.get('/users/product', {
       params: { categoryId, subCategoryId },

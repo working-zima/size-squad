@@ -43,17 +43,17 @@ export function LoginUtils({error, errorMessage}: LoginUtils) {
 
   return (
     <>
-    <AlertModal modalRef={modalRef} hide={handleConfirm}>
-      <p>로그인 실패</p>
-      <p>{errorMessage}</p>
-    </AlertModal>
-    <ButtonWrapper>
-      <p>
-        <Link to="/signup">
-          회원 가입
-        </Link>
-      </p>
-    </ButtonWrapper>
+      <AlertModal modalRef={modalRef} hide={handleConfirm}>
+        <p>로그인 실패</p>
+        <p>{errorMessage}</p>
+      </AlertModal>
+      <ButtonWrapper>
+        <p>
+          <Link to="/signup">
+            회원 가입
+          </Link>
+        </p>
+      </ButtonWrapper>
     </>
   )
 }
