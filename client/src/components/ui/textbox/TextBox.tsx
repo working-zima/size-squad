@@ -42,7 +42,7 @@ const TextBoxWrapper = styled.div<TextBoxWrapperProps>`
       `
   }
 
-    // useBorderColor가 true일 때, isTouched가 false일 때 focus될 경우
+  // useBorderColor가 true일 때, isTouched가 false일 때 focus될 경우
   ${(props) =>
     props.useBorderColor
       && !props.isTouched

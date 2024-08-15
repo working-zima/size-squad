@@ -4,10 +4,16 @@ import useProductFormStore from '../../hooks/useProductFormStore';
 import useInitialDataStore from '../../hooks/useInitialDataStore';
 
 import { GENDER_MESSAGES } from '../../constants';
+import { Summary } from '../../types';
 
+type MySizeGenderBoxProps = {
+  gender: Summary;
+  changeGender: (value: Summary) => void;
+}
 
-export default function MySizeGenderBox() {
-  const [{ gender }, store] = useProductFormStore();
+export default function MySizeGenderBox({
+  gender, changeGender
+}: MySizeGenderBoxProps) {
   const [{ genders }] = useInitialDataStore()
 
   return (
@@ -20,7 +26,7 @@ export default function MySizeGenderBox() {
         ? `${GENDER_MESSAGES[item?.name]}용`
         : item?.name || ''
       }
-      onChange={(value) => value && store.changeGender(value)}
+      onChange={(value) => value && changeGender(value)}
     />
   )
 }

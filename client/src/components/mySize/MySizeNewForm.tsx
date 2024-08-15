@@ -61,7 +61,7 @@ type MySizeNewFormProps = {
 }
 
 export default function MySizeNewForm({ onComplete }: MySizeNewFormProps) {
-  const [{ error, done, valid }, store] = useProductFormStore();
+  const [{ error, done, valid, gender }, store] = useProductFormStore();
 
   useEffect(() => {
     if (done) {
@@ -81,7 +81,10 @@ export default function MySizeNewForm({ onComplete }: MySizeNewFormProps) {
         <MySizeBrandInput />
         <MySizeNameInput />
         <MySizeCategoryBox />
-        <MySizeGenderBox />
+        <MySizeGenderBox
+          gender={gender}
+          changeGender={(value) => store.changeGender(value)}
+        />
         <MySizeSizeBox />
         <MySizeFitBox />
         <MySizeMeasurementsInput />

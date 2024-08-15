@@ -6,8 +6,8 @@ import Button from "../Button";
 import useModal from "../../../hooks/useModal";
 
 type AlertTriggerProps = {
-  children: ReactNode;
-  buttonText: string;
+  children: ReactNode
+  buttonText?: string
 }
 
 /** 모달 버튼이 필요한 경우 trigger 사용 */
@@ -16,23 +16,27 @@ export const AlertTrigger = ({ children, buttonText }: AlertTriggerProps) => {
 
   return (
     <>
-      <Button onClick={openModal}>{buttonText}</Button>
+      {buttonText && (<Button onClick={openModal}>{buttonText}</Button>)}
       <AlertModal modalRef={modalRef} children={children} hide={closeModal} />
     </>
   )
 }
 
 type ConfirmTriggerProps = {
-  title: string
+  title?: string
+  buttonType?: string
   buttonText: string
+  disabled?: boolean | null
   confirmed: boolean | null
-  children: ReactNode;
-  setConfirmed: (confirm: boolean) => void;
+  children: ReactNode
+  setConfirmed: (confirm: boolean) => void
 }
 
 export const ConfirmTrigger = ({
   title,
+  buttonType,
   buttonText,
+  disabled=true,
   children,
   confirmed,
   setConfirmed,
@@ -42,7 +46,7 @@ export const ConfirmTrigger = ({
 
   return (
     <>
-      <Button onClick={openModal} className="delete-link">
+      <Button onClick={openModal} type={buttonType = 'button'} disabled={!disabled}>
         {buttonText}
       </Button>
       <ConfirmModal

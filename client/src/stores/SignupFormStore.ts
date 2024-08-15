@@ -213,6 +213,7 @@ class SignupFormStore {
     this.isNameValid = false;
     this.isPasswordValid = false;
     this.isPasswordConfirmationValid = false;
+    this.isOldPasswordValid = false;
   }
 
   @Action()
@@ -253,8 +254,27 @@ class SignupFormStore {
       if (error instanceof Error) {
         this.setError(error.message);
       } else {
-        this.setError('현재 비밀번호가 맞지 않습니다.')
+        this.setError('현재 비밀번호가 일치하지 않습니다.')
       }
+      throw error;
+    }
+  }
+
+  async updateGender() {
+    try {
+      await apiService.updateGender({
+        oldPassword: this.oldPassword,
+        newPassword: this.user.password
+      })
+
+      this.reset();
+    } catch (error) {
+      if (error instanceof Error) {
+        this.setError(error.message);
+      } else {
+        this.setError('현재 비밀번호가 일치하지 않습니다.')
+      }
+      throw error;
     }
   }
 }

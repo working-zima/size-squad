@@ -43,15 +43,12 @@ export default function OldPasswordInput({
   placeholder,
 }: OldPasswordInputProps) {
   const [showOldPassword, setShowOldPassword] = useState(false);
-  const [isTouched, setIsTouched] = useState({
-    passwordIsTouched: false,
-    confirmIsTouched: false
-  });
+  const [isTouched, setIsTouched] = useState(false);
 
   const [{ oldPassword, isOldPasswordValid}, store] = useSignupFormStore();
 
   const handleChangeOldPassword = (value: string) => {
-    setIsTouched(prev => ({ ...prev, passwordIsTouched: true }));
+    setIsTouched(true);
     store.changeOldPassword(value);
     store.validateOldPassword(value);
   };
@@ -62,7 +59,7 @@ export default function OldPasswordInput({
     setShowOldPassword((prev) => !prev);
   };
 
-  const passwordErrorMessage = isTouched.passwordIsTouched
+  const passwordErrorMessage = isTouched
     ? PasswordErrorMessage({ oldPassword, isOldPasswordValid })
     : null;
 

@@ -8,6 +8,8 @@ import MyProfileEditForm from '../components/myProfile/MyProfileEditForm';
 
 import useAccessToken from '../hooks/useAccessToken';
 import useFetchUserStore from '../hooks/useFetchUserStore';
+import { ConfirmTrigger } from '../components/ui/modal/ModalTrigger';
+import { useState } from 'react';
 
 const Container = styled.div`
   display: flex;
@@ -32,6 +34,7 @@ const ButtonWrapper = styled.div`
 export default function MyProfileEditPage() {
   const { accessToken } = useAccessToken();
   const { user, loading } = useFetchUserStore()
+  const [confirmed, setConfirmed] = useState<boolean | null>(false);
 
   if (!accessToken) {
     return <AccessDeniedPage />;
@@ -51,6 +54,13 @@ export default function MyProfileEditPage() {
           </Link>
         </p>
       </ButtonWrapper>
+      <ConfirmTrigger
+        buttonText="회원 탈퇴"
+        confirmed={confirmed}
+        setConfirmed={setConfirmed}
+      >
+        회원 탈퇴
+      </ConfirmTrigger>
     </Container>
   )
 }

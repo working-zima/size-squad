@@ -2,20 +2,21 @@ import ComboBox from "../ui/ComboBox";
 
 import { Summary } from "../../types";
 
-import useSignupFormStore from "../../hooks/useSignupFormStore";
-
 import { GENDER_MESSAGES } from "../../constants";
 
 type SignUpGenderInputProps = {
-  genders: Summary[];
   label?: string
+  genders: Summary[]
+  gender: Summary
+  changeGender: (value: Summary) => void;
 }
 
 export default function SignUpGenderInput({
+  label="",
   genders,
-  label=""
+  gender,
+  changeGender
 }: SignUpGenderInputProps) {
-  const [{ user: { gender } }, store] = useSignupFormStore();
 
   return (
     <ComboBox
@@ -24,7 +25,7 @@ export default function SignUpGenderInput({
       items={genders}
       itemToId={(item) => item?._id}
       itemToText={(item) => GENDER_MESSAGES[item?.name]}
-      onChange={(value) => value && store.changeGender(value)}
+      onChange={(value) => value && changeGender(value)}
     />
   )
 }

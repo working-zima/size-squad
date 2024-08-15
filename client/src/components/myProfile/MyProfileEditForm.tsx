@@ -5,6 +5,7 @@ import MyProfileCard from "./MyProfileCard";
 import { User } from "../../types";
 
 import { key } from "../../utils";
+import { GENDER_MESSAGES } from "../../constants";
 
 const Container = styled.div`
   margin-bottom: auto;
@@ -40,7 +41,7 @@ export default function MyProfileEditForm({
     },
     {
       label: "Gender",
-      value: user?.gender?.name,
+      value: GENDER_MESSAGES[user?.gender?.name],
       isEditable: true,
       path: "gender"
     },

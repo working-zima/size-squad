@@ -75,7 +75,7 @@ type SignUpFormProps = {
 export default function SignUpForm({ genders }: SignUpFormProps){
   const { setAccessToken } = useAccessToken();
 
-  const [{ valid, error, accessToken }, store] = useSignupFormStore();
+  const [{ user, valid, error, accessToken }, store] = useSignupFormStore();
 
   useEffect(() => {
     if (accessToken) {
@@ -108,7 +108,9 @@ export default function SignUpForm({ genders }: SignUpFormProps){
           />
         <SignUpGenderInput
           genders={genders}
+          gender={user.gender}
           label="성별"
+          changeGender={(value) => store.changeGender(value)}
         />
         <SignUpHeightInput
           label="키"

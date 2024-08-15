@@ -12,6 +12,13 @@ type AlertModalProps = {
   hide: () => void;
 }
 
+/**
+ * 알림 모달
+ * @param props
+ * @param modalRef
+ * @param children
+ * @param hide
+ */
 export const AlertModal = ({
   modalRef,
   children,
@@ -39,6 +46,17 @@ type ConfirmModalProps = {
   hide: () => void
 }
 
+/**
+ * 확인 모달
+ * @param props
+ * @param modalRef
+ * @param children
+ * @param title
+ * @param confirmed
+ * @param onConfirm
+ * @param onCancel
+ * @param hide
+ */
 export const ConfirmModal = ({
   modalRef,
   children,
@@ -50,7 +68,7 @@ export const ConfirmModal = ({
 }: ConfirmModalProps) => {
   return (
     <Modal modalRef={modalRef} hide={hide} hideOnClickOutside>
-      <ModalHeader title={title} hide={hide}/>
+      {title && (<ModalHeader title={title} hide={hide} />)}
       <ModalContent>{children}</ModalContent>
       <ModalFooter>
       <Button onClick={onConfirm}>확인</Button>

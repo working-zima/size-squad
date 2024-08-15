@@ -12,7 +12,6 @@ export default class ApiService {
     this.instance.interceptors.response.use(
       this.onResponse, this.onErrorResponse
     );
-    console.log(`constructor`)
   }
 
   private instance = axios.create({ baseURL: MOCK_BASE_URL });
