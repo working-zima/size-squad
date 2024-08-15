@@ -7,16 +7,16 @@ import {
 const MOCK_BASE_URL = 'http://localhost:5000';
 
 export default class ApiService {
+  private instance = axios.create({ baseURL: MOCK_BASE_URL });
+
+  private accessToken = '';
+
   constructor() {
     // 응답 인터셉트
     this.instance.interceptors.response.use(
       this.onResponse, this.onErrorResponse
     );
   }
-
-  private instance = axios.create({ baseURL: MOCK_BASE_URL });
-
-  private accessToken = '';
 
   setAccessToken(accessToken: string) {
     if (accessToken === this.accessToken) {
@@ -118,6 +118,7 @@ export default class ApiService {
     return Promise.reject(error);
   };
 
+  // products
   async fetchProducts({ categoryId, subCategoryId }: {
     categoryId?: string, subCategoryId?: string
   } = {}): Promise<ProductResponse[]> {
@@ -163,6 +164,7 @@ export default class ApiService {
     await this.instance.patch(`/products/${productId}`, product);
   }
 
+  // session
   async login({
     email,
     password
@@ -180,6 +182,7 @@ export default class ApiService {
     await this.instance.delete('/session');
   }
 
+  // users
   async signup({
     email,
     name,
@@ -212,6 +215,21 @@ export default class ApiService {
     return user;
   }
 
+  async fetchMyProducts({
+    categoryId,
+    subCategoryId
+  }: {
+    categoryId?: string,
+    subCategoryId?: string
+  } = {}): Promise<ProductResponse[]> {
+    const { data } = await this.instance.get('/users/product', {
+      params: { categoryId, subCategoryId },
+    });
+    const { products } = data;
+
+    return products;
+  }
+
   async checkUserEmail({ email }: {
     email: string;
   }): Promise<string> {
@@ -238,24 +256,33 @@ export default class ApiService {
     oldPassword: string;
     newPassword: string;
   }) {
-    const data = await this.instance.patch(`/users/modify-password`, {
+    await this.instance.patch(`/users/modify-password`, {
       oldPassword, newPassword
     });
   }
 
-  async fetchMyProducts({
-    categoryId,
-    subCategoryId
-  }: {
-    categoryId?: string,
-    subCategoryId?: string
-  } = {}): Promise<ProductResponse[]> {
-    const { data } = await this.instance.get('/users/product', {
-      params: { categoryId, subCategoryId },
-    });
-    const { products } = data;
+  async updateGender({ gender }: {
+    gender: Summary;
+  }) {
+    await this.instance.patch(`/users/modify-gender`, { gender });
+  }
 
-    return products;
+  async updateHeight({ height }: {
+    height: number;
+  }) {
+    await this.instance.patch(`/users/modify-height`, { height });
+  }
+
+  async updateWeight({ weight }: {
+    weight: number;
+  }) {
+    await this.instance.patch(`/users/modify-weight`, { weight });
+  }
+
+  async updateDescription({ description }: {
+    description: string;
+  }) {
+    await this.instance.patch(`/users/modify-description`, { description });
   }
 
   async deleteMyProducts({ productId }: {
@@ -264,6 +291,7 @@ export default class ApiService {
     await this.instance.delete(`/users/product/${productId}`);
   }
 
+  // etc
   async fetchInitialData() {
     const { data } = await this.instance.get('/initialData')
     const { initialData } = data;

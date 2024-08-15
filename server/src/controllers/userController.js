@@ -204,6 +204,90 @@ const userController = {
       next(error);
     }
   },
+
+  /** 성별 변경 */
+  patchGender: async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const error = new Error('Validation failed');
+      error.statusCode = 400;
+      error.data = errors.array();
+      return next(error);
+    }
+    try {
+      const accessToken = req.headers["authorization"];
+      const { gender } = req.body;
+
+      await userService.patchGender({ gender, accessToken });
+
+      res.status(201).json({});
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  /** 키 변경 */
+  patchHeight: async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const error = new Error('Validation failed');
+      error.statusCode = 400;
+      error.data = errors.array();
+      return next(error);
+    }
+    try {
+      const accessToken = req.headers["authorization"];
+      const { height } = req.body;
+
+      await userService.patchHeight({ height, accessToken });
+
+      res.status(201).json({});
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  /** 몸무게 변경 */
+  patchWeight: async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const error = new Error('Validation failed');
+      error.statusCode = 400;
+      error.data = errors.array();
+      return next(error);
+    }
+    try {
+      const accessToken = req.headers["authorization"];
+      const { weight } = req.body;
+
+      await userService.patchWeight({ weight, accessToken });
+
+      res.status(201).json({});
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  /** 체형 변경 */
+  patchDescription: async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const error = new Error('Validation failed');
+      error.statusCode = 400;
+      error.data = errors.array();
+      return next(error);
+    }
+    try {
+      const accessToken = req.headers["authorization"];
+      const { description } = req.body;
+
+      await userService.patchDescription({ description, accessToken });
+
+      res.status(201).json({});
+    } catch (error) {
+      next(error);
+    }
+  },
 }
 
 exports.userController = userController;

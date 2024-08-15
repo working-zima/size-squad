@@ -1,18 +1,18 @@
-import useSignupFormStore from "../../hooks/useSignupFormStore";
-
 import { TextInputBox } from "../ui/textbox/TextBoxComponents";
 
 type SignUpWeightInputProps = {
-  label?: string;
-  placeholder?: string;
+  label?: string
+  placeholder?: string
+  weight: number
+  changeWeight: (value: number) => void
 }
 
 export default function SignUpWeightInput({
   label = "",
-  placeholder = ""
+  placeholder = "",
+  weight,
+  changeWeight
 }: SignUpWeightInputProps) {
-  const [{ user: { weight } }, store] = useSignupFormStore();
-
   const handleChangeWeight = (value: string) => {
     let sanitizedValue = value.replace(/[^0-9]/g, '');
 
@@ -20,11 +20,11 @@ export default function SignUpWeightInput({
       sanitizedValue = sanitizedValue.slice(0, 3);
     }
 
-    store.changeWeight(Number(sanitizedValue));
+    changeWeight(Number(sanitizedValue));
   };
 
   const handleResetWeight = () => {
-    store.changeWeight(0);
+    changeWeight(0);
   }
 
   return (

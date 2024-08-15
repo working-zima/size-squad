@@ -115,14 +115,20 @@ export default function SignUpForm({ genders }: SignUpFormProps){
         <SignUpHeightInput
           label="키"
           placeholder="키를 입력해주세요."
+          height={user.height}
+          changeHeight={(value) => store.changeHeight(value)}
         />
         <SignUpWeightInput
           label="몸무게"
           placeholder="몸무게를 입력해주세요."
+          weight={user.weight}
+          changeWeight={(value) => store.changeWeight(value)}
         />
         <SignUpDescriptionInput
           label="체형"
-          placeholder="체형을 100자 이내로 설명해주세요."
+          placeholder="체형을 100자 이내로 입력해주세요."
+          description={user.description}
+          changeDescription={(value) => store.changeDescription(value)}
         />
         <ButtonWrapper>
           <Button type="submit" disabled={!valid}>

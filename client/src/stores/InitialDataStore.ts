@@ -24,6 +24,12 @@ class InitialDataStore {
 
   fits: Summary[] = [nullSummary];
 
+  loading = true;
+
+  error = false;
+
+  done = false;
+
   @Action()
   private setInitialData(initialData: initialData) {
     this.categories = initialData.categories;
@@ -32,10 +38,43 @@ class InitialDataStore {
     this.fits = initialData.fits;
   }
 
-  async fetchInitialData() {
-    const initialData = await apiService.fetchInitialData();
 
-    this.setInitialData(initialData);
+  @Action()
+  reset() {
+    this.categories = [nullCategory];
+    this.genders = [nullSummary];
+    this.sizes = [nullSize];
+    this.fits = [nullSummary];
+    this.error = false;
+    this.done = false;
+  }
+
+
+  @Action()
+  private startLoading() {
+    this.reset()
+    this.loading = true;
+  }
+
+  @Action()
+  private setError() {
+    this.categories = [nullCategory];
+    this.genders = [nullSummary];
+    this.sizes = [nullSize];
+    this.fits = [nullSummary];
+
+    this.loading = false;
+    this.error = true;
+  }
+
+  async fetchInitialData() {
+    try {
+      this.startLoading();
+      const initialData = await apiService.fetchInitialData();
+      this.setInitialData(initialData);
+    } catch (error) {
+      this.setError()
+    }
   }
 }
 

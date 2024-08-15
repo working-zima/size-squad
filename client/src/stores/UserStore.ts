@@ -48,7 +48,6 @@ class UserStore {
   private startLoading() {
     this.reset()
     this.loading = true;
-    this.error = false;
   }
 
   @Action()

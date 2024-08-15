@@ -29,7 +29,7 @@ const ButtonWrapper = styled.div`
   }
 `
 
-export default function ChangePasswordForm({ userId }: {userId: string}) {
+export default function ChangePasswordForm() {
   const [confirmed, setConfirmed] = useState<boolean | null>(false);
   const navigate = useNavigate();
 
@@ -39,7 +39,7 @@ export default function ChangePasswordForm({ userId }: {userId: string}) {
   const handleSubmitEditPassword = async () => {
     try {
       await store.updatePassword();
-      navigate(`/mypage/${userId}/edit`);
+      navigate(-1);
     } catch (error) {
       openModal();
     } finally {
@@ -74,12 +74,12 @@ export default function ChangePasswordForm({ userId }: {userId: string}) {
         </ConfirmTrigger>
       </ButtonWrapper>
       <AlertModal
-          modalRef={modalRef}
-          hide={closeModal}
-        >
-          <p>비밀번호 변경 실패</p>
-          <p>{errorMessage}</p>
-        </AlertModal>
+        modalRef={modalRef}
+        hide={closeModal}
+      >
+        <p>비밀번호 변경 실패</p>
+        <p>{errorMessage}</p>
+      </AlertModal>
     </>
   )
 }

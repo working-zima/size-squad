@@ -6,7 +6,7 @@ import { LiaAngleLeftSolid } from "react-icons/lia";
 import BackSpace from './ui/BackSpace';
 import { PAGES, USERFIELDS } from '../constants';
 
-import useSignupFormStore from '../hooks/useSignupFormStore';
+import useUserStore from '../hooks/useUserStore';
 
 const Container = styled.header`
   grid-area: header;
@@ -46,7 +46,7 @@ export default function LayoutHeader() {
 
   const path = String(params.path);
 
-  const [{ user }] = useSignupFormStore();
+  const [{ user }] = useUserStore();
 
   const isEditSizePage = useMatch('/mysize/:id/edit');
   const isEditProfilePage = useMatch('/mypage/:id/edit');

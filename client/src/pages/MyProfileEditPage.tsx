@@ -9,7 +9,8 @@ import MyProfileEditForm from '../components/myProfile/MyProfileEditForm';
 import useAccessToken from '../hooks/useAccessToken';
 import useFetchUserStore from '../hooks/useFetchUserStore';
 import { ConfirmTrigger } from '../components/ui/modal/ModalTrigger';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import useSignupFormStore from '../hooks/useSignupFormStore';
 
 const Container = styled.div`
   display: flex;
@@ -33,8 +34,13 @@ const ButtonWrapper = styled.div`
 
 export default function MyProfileEditPage() {
   const { accessToken } = useAccessToken();
+  const [, store] = useSignupFormStore()
   const { user, loading } = useFetchUserStore()
   const [confirmed, setConfirmed] = useState<boolean | null>(false);
+
+  useEffect(() => {
+    store.reset()
+  }, [])
 
   if (!accessToken) {
     return <AccessDeniedPage />;

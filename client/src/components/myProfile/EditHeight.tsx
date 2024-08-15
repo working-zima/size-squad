@@ -3,12 +3,11 @@ import { useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
 
-import SignUpGenderInput from "../signUp/SignUpGenderInput";
+import SignUpHeightInput from "../signUp/SignUpHeightInput";
 
 import { ConfirmTrigger } from "../ui/modal/ModalTrigger";
 import { AlertModal } from "../ui/modal/ModalComponents";
 
-import useFetchInitialData from "../../hooks/useFetchInitialData";
 import useSignupFormStore from "../../hooks/useSignupFormStore";
 import useModal from "../../hooks/useModal";
 
@@ -30,17 +29,16 @@ const ButtonWrapper = styled.div`
   }
 `
 
-export default function EditGender() {
+export default function EditHeight() {
   const [confirmed, setConfirmed] = useState<boolean | null>(false);
   const navigate = useNavigate();
 
-  const { genders } = useFetchInitialData()
-  const [{ errorMessage, user }, store] = useSignupFormStore()
+  const [{ errorMessage, user, HeightValid }, store] = useSignupFormStore()
   const { modalRef, openModal, closeModal } = useModal()
 
   const handleSubmitEditGender = async () => {
     try {
-      await store.updateGender();
+      await store.updateHeight();
       navigate(-1);
     } catch (error) {
       openModal();
@@ -56,28 +54,29 @@ export default function EditGender() {
     }
   }, [confirmed]);
 
-
   return (
     <>
-      <SignUpGenderInput
-        genders={genders}
-        gender={user.gender}
-        changeGender={(value) => store.changeGender(value)}
+      <SignUpHeightInput
+        label="키"
+        placeholder="키를 입력해주세요."
+        height={user.height}
+        changeHeight={(value) => store.changeHeight(value)}
       />
       <ButtonWrapper>
         <ConfirmTrigger
           buttonText="변경"
           confirmed={confirmed}
           setConfirmed={setConfirmed}
+          disabled={HeightValid}
         >
-          <p>성별을 변경하시겠습니까?</p>
+          <p>키를 변경하시겠습니까?</p>
         </ConfirmTrigger>
       </ButtonWrapper>
       <AlertModal
         modalRef={modalRef}
         hide={closeModal}
       >
-        <p>성별 변경 실패</p>
+        <p>키 변경 실패</p>
         <p>{errorMessage}</p>
       </AlertModal>
     </>

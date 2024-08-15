@@ -46,7 +46,11 @@ export const ConfirmTrigger = ({
 
   return (
     <>
-      <Button onClick={openModal} type={buttonType = 'button'} disabled={!disabled}>
+      <Button
+        onClick={openModal}
+        type={buttonType = 'button'}
+        disabled={!disabled}
+      >
         {buttonText}
       </Button>
       <ConfirmModal

@@ -57,6 +57,18 @@ class SignupFormStore {
       && this.isPasswordConfirmationValid
   }
 
+  get HeightValid() {
+    return !(this.user.height === 0)
+  }
+
+  get WeightValid() {
+    return !(this.user.weight === 0)
+  }
+
+  get DescriptionValid() {
+    return !(this.user.description.trim() === '')
+  }
+
   private emailValidation = (email: string) => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return emailRegex.test(email);
@@ -173,6 +185,7 @@ class SignupFormStore {
   @Action()
   changeWeight(weight: number) {
     this.user = {...this.user, weight};
+    console.log(this.user.weight)
   }
 
   @Action()
@@ -263,8 +276,7 @@ class SignupFormStore {
   async updateGender() {
     try {
       await apiService.updateGender({
-        oldPassword: this.oldPassword,
-        newPassword: this.user.password
+        gender: this.user.gender
       })
 
       this.reset();
@@ -272,7 +284,58 @@ class SignupFormStore {
       if (error instanceof Error) {
         this.setError(error.message);
       } else {
-        this.setError('현재 비밀번호가 일치하지 않습니다.')
+        this.setError(`알 수 없는 오류가 발생했습니다.\n 관리자에게 문의해주세요.`)
+      }
+      throw error;
+    }
+  }
+
+  async updateHeight() {
+    try {
+      await apiService.updateHeight({
+        height: this.user.height
+      })
+
+      this.reset();
+    } catch (error) {
+      if (error instanceof Error) {
+        this.setError(error.message);
+      } else {
+        this.setError(`알 수 없는 오류가 발생했습니다.\n 관리자에게 문의해주세요.`)
+      }
+      throw error;
+    }
+  }
+
+  async updateWeight() {
+    try {
+      await apiService.updateWeight({
+        weight: this.user.weight
+      })
+
+      this.reset();
+    } catch (error) {
+      if (error instanceof Error) {
+        this.setError(error.message);
+      } else {
+        this.setError(`알 수 없는 오류가 발생했습니다.\n 관리자에게 문의해주세요.`)
+      }
+      throw error;
+    }
+  }
+
+  async updateDescription() {
+    try {
+      await apiService.updateDescription({
+        description: this.user.description
+      })
+
+      this.reset();
+    } catch (error) {
+      if (error instanceof Error) {
+        this.setError(error.message);
+      } else {
+        this.setError(`알 수 없는 오류가 발생했습니다.\n 관리자에게 문의해주세요.`)
       }
       throw error;
     }

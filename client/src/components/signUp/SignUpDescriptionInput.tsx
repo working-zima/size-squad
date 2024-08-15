@@ -3,24 +3,27 @@ import useSignupFormStore from "../../hooks/useSignupFormStore";
 import { TextareaBox } from "../ui/textbox/TextBoxComponents";
 
 type SignUpDescriptionInputProps = {
-  label?: string;
-  placeholder?: string;
+  label?: string
+  placeholder?: string
+  description: string
+  changeDescription: (value: string) => void
 }
 
 export default function SignUpDescriptionInput({
   label = "",
-  placeholder = ""
+  placeholder = "",
+  description,
+  changeDescription
 }: SignUpDescriptionInputProps) {
-  const [, store] = useSignupFormStore();
-
   const handleChangeDescription = (value: string) => {
-    store.changeDescription(value);
+    changeDescription(value);
   };
 
   return (
     <TextareaBox
       label={label}
       placeholder={placeholder}
+      value={description}
       maxLength={100}
       onChange={handleChangeDescription}
     />

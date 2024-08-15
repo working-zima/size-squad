@@ -48,4 +48,24 @@ userRouter.patch(
   "/modify-password", tokenValidationRules, userController.patchPassword
 )
 
+/* 성별 변경 */
+userRouter.patch(
+  "/modify-gender", tokenValidationRules, userController.patchGender
+)
+
+/* 키 변경 */
+userRouter.patch(
+  "/modify-height", tokenValidationRules, userController.patchHeight
+)
+
+/* 몸무게 변경 */
+userRouter.patch(
+  "/modify-weight", tokenValidationRules, userController.patchWeight
+)
+
+/* 체형 변경 */
+userRouter.patch(
+  "/modify-description", tokenValidationRules, userController.patchDescription
+)
+
 module.exports = userRouter;

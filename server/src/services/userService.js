@@ -113,7 +113,55 @@ const userService = {
 
       const hashedPassword = await bcrypt.hash(newPassword, SALT_ROUND);
 
-      await User.patchPassword({ _id }, {password: hashedPassword})
+      await User.patchUserData({ _id }, {password: hashedPassword})
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  /** 성별 변경 */
+  patchGender: async ({ gender, accessToken }) => {
+    try {
+      const userId = getUserIdByAccessToken({ accessToken })
+      const { _id } = await User.findPasswordById(userId);
+
+      await User.patchUserData({ _id }, { gender })
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  /** 키 변경 */
+  patchHeight: async ({ height, accessToken }) => {
+    try {
+      const userId = getUserIdByAccessToken({ accessToken })
+      const { _id } = await User.findPasswordById(userId);
+
+      await User.patchUserData({ _id }, { height })
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  /** 몸무게 변경 */
+  patchWeight: async ({ weight, accessToken }) => {
+    try {
+      const userId = getUserIdByAccessToken({ accessToken })
+      const { _id } = await User.findPasswordById(userId);
+
+      await User.patchUserData({ _id }, { weight })
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  /** 체형 변경 */
+  patchDescription: async ({ description, accessToken }) => {
+    try {
+      const userId = getUserIdByAccessToken({ accessToken })
+      const { _id } = await User.findPasswordById(userId);
+
+      await User.patchUserData({ _id }, { description })
     } catch (error) {
       throw error;
     }

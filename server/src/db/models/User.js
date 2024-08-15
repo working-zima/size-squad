@@ -73,8 +73,8 @@ const User = {
     }
   },
 
-  /** 비밀번호 수정 */
-  patchPassword: async (filter, userData) => {
+  /** 유저 정보 수정 */
+  patchUserData: async (filter, userData) => {
     try {
       const data = await UserModel.findOneAndUpdate(
         filter, userData, { new: true }

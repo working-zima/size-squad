@@ -1,18 +1,18 @@
-import useSignupFormStore from "../../hooks/useSignupFormStore";
-
 import { TextInputBox } from "../ui/textbox/TextBoxComponents";
 
 type SignUpHeightInputProps = {
-  label?: string;
-  placeholder?: string;
+  label?: string
+  placeholder?: string
+  height: number
+  changeHeight:(value: number) => void
 }
 
 export default function SignUpHeightInput({
   label="",
-  placeholder=""
+  placeholder="",
+  height,
+  changeHeight
 }: SignUpHeightInputProps) {
-  const [{ user: { height } }, store] = useSignupFormStore();
-
   const handleChangeHeight = (value: string) => {
     let sanitizedValue = value.replace(/[^0-9]/g, '');
 
@@ -20,11 +20,11 @@ export default function SignUpHeightInput({
       sanitizedValue = sanitizedValue.slice(0, 3);
     }
 
-    store.changeHeight(Number(sanitizedValue));
+    changeHeight(Number(sanitizedValue));
   };
 
   const handleResetHeight = () => {
-    store.changeHeight(0);
+    changeHeight(0);
   }
 
   return (

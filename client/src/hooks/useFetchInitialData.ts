@@ -9,5 +9,5 @@ export default function useFetchInitialData() {
       store.fetchInitialData();
   }, [store])
 
-  return { categories, genders, fits, sizes }
+  return { categories, genders, fits, sizes, store }
 }

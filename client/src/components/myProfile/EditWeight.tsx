@@ -3,12 +3,10 @@ import { useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
 
-import SignUpGenderInput from "../signUp/SignUpGenderInput";
-
+import SignUpWeightInput from "../signUp/SignUpWeightInput";
 import { ConfirmTrigger } from "../ui/modal/ModalTrigger";
 import { AlertModal } from "../ui/modal/ModalComponents";
 
-import useFetchInitialData from "../../hooks/useFetchInitialData";
 import useSignupFormStore from "../../hooks/useSignupFormStore";
 import useModal from "../../hooks/useModal";
 
@@ -30,17 +28,16 @@ const ButtonWrapper = styled.div`
   }
 `
 
-export default function EditGender() {
+export default function EditWeight() {
   const [confirmed, setConfirmed] = useState<boolean | null>(false);
   const navigate = useNavigate();
 
-  const { genders } = useFetchInitialData()
-  const [{ errorMessage, user }, store] = useSignupFormStore()
+  const [{ errorMessage, user, WeightValid }, store] = useSignupFormStore()
   const { modalRef, openModal, closeModal } = useModal()
 
-  const handleSubmitEditGender = async () => {
+  const handleSubmitEditWeight = async () => {
     try {
-      await store.updateGender();
+      await store.updateWeight();
       navigate(-1);
     } catch (error) {
       openModal();
@@ -52,32 +49,33 @@ export default function EditGender() {
 
   useEffect(() => {
     if (confirmed) {
-      handleSubmitEditGender();
+      handleSubmitEditWeight();
     }
   }, [confirmed]);
 
-
   return (
     <>
-      <SignUpGenderInput
-        genders={genders}
-        gender={user.gender}
-        changeGender={(value) => store.changeGender(value)}
-      />
+      <SignUpWeightInput
+          label="몸무게"
+          placeholder="몸무게를 입력해주세요."
+          weight={user.weight}
+          changeWeight={(value) => store.changeWeight(value)}
+        />
       <ButtonWrapper>
         <ConfirmTrigger
           buttonText="변경"
           confirmed={confirmed}
           setConfirmed={setConfirmed}
+          disabled={WeightValid}
         >
-          <p>성별을 변경하시겠습니까?</p>
+          <p>몸무게를 변경하시겠습니까?</p>
         </ConfirmTrigger>
       </ButtonWrapper>
       <AlertModal
         modalRef={modalRef}
         hide={closeModal}
       >
-        <p>성별 변경 실패</p>
+        <p>몸무게 변경 실패</p>
         <p>{errorMessage}</p>
       </AlertModal>
     </>
