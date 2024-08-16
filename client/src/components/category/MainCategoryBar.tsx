@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import styled, { css } from 'styled-components';
 
@@ -66,10 +66,23 @@ type MainCategoryProps = {
 export default function MainCategoryBar({
   categories,
 }: MainCategoryProps) {
+  const navigate = useNavigate();
+
   const [activeBtn, setActiveBtn] = useState('all');
   const [activeBarStyle, setActiveBarStyle] = useState({ left: 0, width: 0 });
+
   const buttonsRef = useRef<(HTMLButtonElement | null)[]>([]);
-  const navigate = useNavigate();
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const categoryId = params.get('category1DepthCode');
+
+    if (categoryId) {
+      setActiveBtn(categoryId);
+    } else {
+      setActiveBtn('all');
+    }
+  }, [location.search]);
 
   useEffect(() => {
     const activeElement = buttonsRef.current.find(
@@ -90,8 +103,8 @@ export default function MainCategoryBar({
   return (
     <Container>
       <CustomButton
-        ref={(el) => {
-          buttonsRef.current[0] = el;
+        ref={(elem) => {
+          buttonsRef.current[0] = elem;
         }}
         data-id="all"
         active={activeBtn === 'all'}
@@ -103,8 +116,8 @@ export default function MainCategoryBar({
         categories.map((category, idx) => (
           <CustomButton
             key={category._id}
-            ref={(el) => {
-              buttonsRef.current[idx + 1] = el;
+            ref={(elem) => {
+              buttonsRef.current[idx + 1] = elem;
             }}
             data-id={category._id}
             active={activeBtn === category._id}

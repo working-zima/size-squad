@@ -57,24 +57,22 @@ export default function SubCategoryBar(
   { subCategories }: SubCategoryBarProps,
 ) {
   const [activeBtn, setActiveBtn] = useState('all');
-  const [params] = useSearchParams();
+
   const navigate = useNavigate();
+
+  const [params] = useSearchParams();
   const categoryId = params.get('category1DepthCode');
   const subCategoryId = params.get('category2DepthCodes');
 
   useEffect(() => {
-    if (!subCategoryId) {
-      setActiveBtn('all');
-    }
+    if (subCategoryId) setActiveBtn(subCategoryId)
+    else setActiveBtn('all')
   }, [subCategoryId]);
 
   const handleNavigate = (btnId: string) => {
     let path = '/mysize';
 
-    if (!!categoryId) {
-      path = `${path}?category1DepthCode=${categoryId}`;
-    }
-
+    if (!!categoryId) path = `${path}?category1DepthCode=${categoryId}`
     if (btnId !== 'all') {
       path = `${path}${categoryId ? '&' : '?'}category2DepthCodes=${btnId}`;
     }
