@@ -1,4 +1,4 @@
-import { useLocation, useMatch, useParams } from 'react-router-dom';
+import { Link, useLocation, useMatch, useParams } from 'react-router-dom';
 
 import styled from 'styled-components';
 import { LiaAngleLeftSolid } from "react-icons/lia";
@@ -7,12 +7,13 @@ import BackSpace from './ui/BackSpace';
 import { PAGES, USERFIELDS } from '../constants';
 
 import useUserStore from '../hooks/useUserStore';
+import { CiHome } from 'react-icons/ci';
 
 const Container = styled.header`
   grid-area: header;
   display: flex;
-  justify-content: space-between;
   flex-basis: 40px;
+  justify-content: space-between;
   align-items: center;
   padding: 0 1rem;
   background-color: ${(props) => props.theme.colors.backgroundColor};
@@ -36,6 +37,11 @@ const Container = styled.header`
   }
 `;
 
+const HomeWrapper = styled.div`
+  display: flex;
+`
+
+// 빈칸 채우기용
 const Blank = styled.div`
   flex-basis: 40px;
 `
@@ -88,7 +94,16 @@ export default function LayoutHeader() {
           {page.pageTitle}
         </p>
       </h2>
-      <Blank/>
+      {page.homeButton ? (
+          <Link to="/">
+            <HomeWrapper>
+              <CiHome size="24"/>
+            </HomeWrapper>
+          </Link>
+        ) : (
+          <Blank/>
+        )
+      }
     </Container>
   );
 }

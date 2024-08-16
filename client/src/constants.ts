@@ -112,13 +112,13 @@ export const PAGES: Record<string, PageConfig> = {
   },
   '/mypage/:id/edit': {
     pageTitle: '회원 정보 변경',
-    homeButton: false,
+    homeButton: true,
     backSpace: true,
     showMenu: false
   },
   '/mypage/:id/edit/:editField': {
     pageTitle: '특정 회원 정보 변경',
-    homeButton: false,
+    homeButton: true,
     backSpace: true,
     showMenu: false
   }

@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import styled from 'styled-components';
 import { CiUser, CiHome, CiEdit, CiLogin, CiViewList } from "react-icons/ci";
@@ -6,7 +6,6 @@ import { CiUser, CiHome, CiEdit, CiLogin, CiViewList } from "react-icons/ci";
 import FixedDetailSwitcher from './FixedDetailSwitcher';
 
 import useAccessToken from '../hooks/useAccessToken';
-import { TITLE } from '../constants';
 
 const Container = styled.div.attrs({ className: 'LayoutMenuBar' })`
   grid-area: menu;
@@ -56,10 +55,7 @@ const Menu = styled.nav`
 `;
 
 export default function LayoutMenuBar() {
-  // const location = useLocation();
   const { accessToken } = useAccessToken();
-
-  // if (TITLE[location.pathname] !== 'Size Squad') {return null}
 
   return (
     <Container>

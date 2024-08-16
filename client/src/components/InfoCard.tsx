@@ -4,12 +4,11 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Description from './Description';
+
 import { ConfirmTrigger } from './ui/modal/ModalTrigger';
 
 import { ProductResponse } from '../types';
 
-import useModal from '../hooks/useModal';
-import useFetchProducts from '../hooks/useFetchProducts';
 import useProductsStore from '../hooks/useProductsStore';
 
 const Container = styled.div`
@@ -50,7 +49,7 @@ const EditDeleteWrapper = styled.div`
     margin-right: 1rem;
   }
 
-  .delete-link {
+  .delete-link > button:first-of-type {
     color: ${(props) => props.theme.colors.primaryRed};
     font-weight: bold;
     font-size: 1.2rem;
