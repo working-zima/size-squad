@@ -61,10 +61,6 @@ export default function TextareaInput ({
     const elem = textareaRef.current;
     const cloneElem = cloneRef.current;
 
-    if (elem && defaultValue) {
-      elem.value = defaultValue; // 여기에 value 설정
-    }
-
     const handleInput = () => {
       if (!elem || !cloneElem) return;
 
@@ -77,8 +73,13 @@ export default function TextareaInput ({
       );
 
       if (onChange) onChange(val);
-      setIsTouched(true);
-    };
+        setIsTouched(true);
+      };
+
+    if (elem && defaultValue) {
+      elem.value = defaultValue;
+      handleInput();
+    }
 
     if (elem) elem.addEventListener('input', handleInput);
 

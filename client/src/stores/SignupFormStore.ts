@@ -185,7 +185,6 @@ class SignupFormStore {
   @Action()
   changeWeight(weight: number) {
     this.user = {...this.user, weight};
-    console.log(this.user.weight)
   }
 
   @Action()
