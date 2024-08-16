@@ -206,7 +206,6 @@ class SignupFormStore {
   @Action()
   private setAccessToken(accessToken: string) {
     this.accessToken = accessToken;
-    this.reset();
   }
 
   @Action()

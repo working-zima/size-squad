@@ -20,11 +20,10 @@ const userController = {
       return next(error);
     }
     try {
-
       const {
         email, name, password, gender, height, weight, description
       } = req.body;
-      const accessToken = userService.signUp(
+      const accessToken = await userService.signUp(
         { email, name, password, gender, height, weight, description }
       )
 

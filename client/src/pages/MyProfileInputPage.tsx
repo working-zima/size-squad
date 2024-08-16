@@ -37,7 +37,12 @@ export default function MyProfileInputPage() {
   }, [])
 
   if (loading) {
-    return <div>Loading...</div>
+    return (
+      <div>
+        <p>Loading...</p>
+        <p>새로고침 하거나 잠시후 시도해보세요.</p>
+      </div>
+    )
   }
 
   if (!accessToken) {

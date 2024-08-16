@@ -204,7 +204,6 @@ export default class ApiService {
       email, name, password, gender, height, weight, description
     });
     const { accessToken } = data;
-
     return accessToken;
   }
 
