@@ -26,13 +26,14 @@ const UserSummary = styled.div`
   display: flex;
   flex-direction: column;
   font-weight: 500;
+  margin-bottom: 4px;
 
   div {
     font-size: 1.4rem;
   }
 
   span {
-    padding: 4px 0 0 0;
+    padding-top: 4px;
     font-weight: 400;
     color: ${props => props.theme.colors.unSelectedText};
   }

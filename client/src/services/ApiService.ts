@@ -290,6 +290,10 @@ export default class ApiService {
     await this.instance.delete(`/users/product/${productId}`);
   }
 
+  async deleteUser() {
+    await this.instance.delete(`/users`);
+  }
+
   // etc
   async fetchInitialData() {
     const { data } = await this.instance.get('/initialData')

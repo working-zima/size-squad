@@ -71,8 +71,8 @@ export const ConfirmModal = ({
       {title && (<ModalHeader title={title} hide={hide} />)}
       <ModalContent>{children}</ModalContent>
       <ModalFooter>
-      <Button onClick={onConfirm}>확인</Button>
       <Button onClick={onCancel} className="red-button">취소</Button>
+      <Button onClick={onConfirm}>확인</Button>
     </ModalFooter>
     </Modal>
   )

@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 const Container = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   padding: ${props => props.theme.sizes.contentPadding};
   font-size: 1.4rem;
