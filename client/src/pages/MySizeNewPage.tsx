@@ -14,10 +14,10 @@ export default function MySizeNewPage() {
   const navigate = useNavigate();
 
   const { accessToken } = useAccessToken();
-  const { user } = useFetchUser()
+  const { user, loading } = useFetchUser()
   const { categories, fits, sizes } = useFetchInitialData()
   const [{ product }, store] = useProductFormStore();
-
+  console.log(user)
   useEffect(() => {
     store.reset();
   }, [])
@@ -32,6 +32,8 @@ export default function MySizeNewPage() {
     store.changeFit(fits[0]);
 
     const sizeList = sizes.filter(sizeElem => {
+      console.log(`sizeElem: `, sizeElem)
+      console.log(`user.gender._id: `, user.gender._id)
       return sizeElem.gender._id === user.gender._id
     });
     store.changeSize(sizeList[0]);
@@ -47,6 +49,10 @@ export default function MySizeNewPage() {
     store.reset();
     navigate('/mysize');
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   if (!accessToken) {
     return (

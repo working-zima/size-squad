@@ -23,13 +23,13 @@ const Container = styled.div`
 const ButtonWrapper = styled.div`
   margin-top: 40px;
   width: 100%;
+  text-underline-offset: 1.5px;
 
-  button {
+  & > button {
     line-height: 1.67;
     padding: 0;
     color: ${props => props.theme.colors.unSelectedText};
     text-decoration-line: underline;
-    text-underline-offset: 1.5px;
     user-select: none;
   }
 `

@@ -17,7 +17,7 @@ export default function SignupPage() {
   useEffect(() => {
     store.reset();
     store.changeGender(genders[0]);
-  }, []);
+  }, [genders]);
 
   useEffect(() => {
     if (accessToken) {

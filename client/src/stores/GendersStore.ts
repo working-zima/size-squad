@@ -29,8 +29,8 @@ class GendersStore {
   }
 
   @Action()
-  private setGender(gender: Summary[]) {
-    this.genders = gender;
+  private setGender(genders: Summary[]) {
+    this.genders = genders;
     this.loading = false;
     this.error = false;
   }
@@ -38,8 +38,8 @@ class GendersStore {
   async fetchGenders() {
     this.startLoading();
     try {
-      const gender = await apiService.fetchGenders();
-      this.setGender(gender);
+      const genders = await apiService.fetchGenders();
+      this.setGender(genders);
 
       this.setDone();
     } catch (error) {

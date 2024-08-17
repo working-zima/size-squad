@@ -132,7 +132,6 @@ class ProductFormStore {
         })
       ),
     };
-    console.log(this.product)
   }
 
   @Action()

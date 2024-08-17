@@ -5,6 +5,7 @@ const { Token } = require('../db/models/Token');
 
 const { getUserIdByAccessToken, generateJwtToken } = require("../utils/utils");
 const CustomError = require("../utils/CustomError");
+const { Product } = require("../db/models/Product");
 
 const SALT_ROUND = parseInt(process.env.SALT_ROUND);
 
@@ -92,6 +93,7 @@ const userService = {
       const userId = getUserIdByAccessToken({ accessToken })
       await User.deleteUser(userId);
       await Token.deleteToken(userId);
+      await Product.deleteProductByAuthor({ author: userId })
 
       return;
     } catch(error) {

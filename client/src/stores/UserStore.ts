@@ -61,6 +61,7 @@ class UserStore {
     try {
       this.startLoading();
       const user = await apiService.fetchCurrentUser();
+
       this.setUser(user);
     } catch (error) {
       this.setError();

@@ -258,10 +258,12 @@ class SignupFormStore {
 
       this.reset();
     } catch (error) {
-      const typedError = error as { message: string };
-      this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
+      const typedError = error as { status?: number; message: string };
+      if (typedError.status === 400) this.errorMessage = '현재 비밀번호가 맞지 않습니다.'
+      else this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
 
       this.setError()
+      throw error
     }
   }
 

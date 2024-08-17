@@ -159,9 +159,22 @@ const Product = {
     }
   },
 
+  /** productId로 제거 */
   deleteProductByProductId: async ({ productId }) => {
     try {
       await ProductModel.findByIdAndDelete({ _id: productId });
+
+      return;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  /** author로 제거 */
+  deleteProductByAuthor: async ({ author }) => {
+    try {
+      console.log(author)
+      await ProductModel.findByIdAndDelete({ author });
 
       return;
     } catch (error) {

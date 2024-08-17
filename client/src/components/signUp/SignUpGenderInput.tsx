@@ -17,7 +17,6 @@ export default function SignUpGenderInput({
   gender,
   changeGender
 }: SignUpGenderInputProps) {
-
   return (
     <ComboBox
       label={label}

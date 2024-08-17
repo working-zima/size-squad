@@ -33,7 +33,7 @@ export default function ChangePasswordForm() {
   const [confirmed, setConfirmed] = useState<boolean | null>(false);
   const navigate = useNavigate();
 
-  const [{ errorMessage, EditPasswordValid }, store] = useSignupFormStore()
+  const [{ errorMessage, EditPasswordValid, error }, store] = useSignupFormStore()
   const { modalRef, openModal, closeModal } = useModal();
 
   const handleSubmitEditPassword = async () => {
