@@ -1,9 +1,8 @@
 import { singleton } from 'tsyringe';
 import { Action, Store } from 'usestore-ts';
 
-import { Summary, Measurement, ProductResponse, } from '../types';
-
-import { nullSummary } from '../nullObject';
+import { Summary, ProductResponse, Product } from '../types';
+import { nullProduct, nullSummary } from '../nullObject';
 
 import { apiService } from '../services/ApiService';
 
@@ -12,31 +11,13 @@ import { append, sanitizeMeasurementInput, update } from '../utils';
 @singleton()
 @Store()
 class ProductFormStore {
-  productId= '';
-
-  author: Summary = nullSummary;
-
-  name = '';
-
-  brand = '';
+  product: Product = nullProduct;
 
   type: Summary = nullSummary;
 
-  category: Summary = nullSummary;
-
-  subCategory: Summary = nullSummary;
-
-  gender: Summary = nullSummary;
-
-  size: Summary = nullSummary;
-
-  fit: Summary = nullSummary;
-
-  measurements: Measurement[] = []
-
-  description = '';
-
   currentSubCategories: Summary[] = [];
+
+  errorMessage = '';
 
   loading = true;
 
@@ -75,7 +56,8 @@ class ProductFormStore {
   }
 
   private measurementValidation = () => {
-    return this.measurements.every(measurement => measurement.value.length > 0);
+    return this.product.measurements
+      .every(measurement => measurement.value.length > 0);
   }
 
   @Action()
@@ -85,27 +67,27 @@ class ProductFormStore {
 
   @Action()
   changeAuthor(author: Summary) {
-    this.author = author;
+    this.product = {...this.product ,author};
   }
 
   @Action()
   changeName(name: string) {
-    this.name = name;
+    this.product = {...this.product, name};
   }
 
   @Action()
   changeBrand(brand: string) {
-    this.brand = brand;
+    this.product = {...this.product, brand};
   }
 
   @Action()
   changeCategory(category: Summary) {
-    this.category = category;
+    this.product = {...this.product, category};
   }
 
   @Action()
   changeSubCategory(subCategory: Summary) {
-    this.subCategory = subCategory;
+    this.product = {...this.product, subCategory};
   }
 
   @Action()
@@ -115,143 +97,124 @@ class ProductFormStore {
 
   @Action()
   changeGender(gender: Summary) {
-    this.gender = gender;
+    this.product = {...this.product, gender};
   }
 
   @Action()
   changeSize(size: Summary) {
-    this.size = size;
+    this.product = {...this.product, size};
   }
 
   @Action()
   changeFit(fit: Summary) {
-    this.fit = fit;
+    this.product = {...this.product, fit};
   }
 
   @Action()
   addMeasurement() {
     const measurement = { _id: '', name: '', value: '' };
-    this.measurements = append(this.measurements, measurement);
+    this.product = {
+      ...this.product,
+      measurements: append(this.product.measurements, measurement),
+    };
   }
 
   @Action()
-  changeMeasurementAndId(index: number, _id: string, name: string, value: string = '') {
-    this.measurements = update(this.measurements, index, (measurement) => ({
-      ...measurement,
-      _id,
-      name,
-      value
-    }));
+  changeMeasurementAndId(
+    index: number,
+    _id: string,
+    name: string,
+    value: string = '') {
+    this.product = {
+      ...this.product,
+      measurements: update(this.product.measurements, index, (measurement) => ({
+          ...measurement, _id, name, value
+        })
+      ),
+    };
+    console.log(this.product)
   }
 
   @Action()
   changeMeasurementValue(index: number, value: string) {
     const sanitizedValue = sanitizeMeasurementInput(value)
 
-    this.measurements = update(this.measurements, index, (measurement) => ({
-      ...measurement,
-      value: sanitizedValue,
-    }));
+    this.product = {
+      ...this.product,
+      measurements: update(this.product.measurements, index, (measurement) => ({
+        ...measurement,
+        value: sanitizedValue,
+      }))
+    }
     this.validateMeasurement();
   }
 
   @Action()
   resetMeasurements() {
-    this.measurements = [];
+    this.product = { ...this.product, measurements: [] };
   }
 
 
   @Action()
   changeDescription(description: string) {
-    this.description = description;
+    this.product = { ...this.product, description };
   }
 
   @Action()
   reset() {
-    this.productId = '';
-    this.author = nullSummary;
-    this.brand = '';
-    this.name = '';
-    this.category = nullSummary;
-    this.subCategory = nullSummary;
-    this.gender = nullSummary;
-    this.size = nullSummary;
-    this.fit = nullSummary;
-    this.measurements = [];
-    this.description = '';
-    this.error = false;
-    this.done = false;
-  }
-
-  @Action()
-  setProduct(product: ProductResponse) {
-    this.productId = product._id || '';
-    this.author = product.author || nullSummary;
-    this.brand = product.brand;
-    this.name = product.name;
-    this.category = product.category;
-    this.subCategory = product.subCategory;
-    this.gender = product.gender;
-    this.size = product.size;
-    this.fit = product.fit;
-    this.measurements = product.measurements.map(measurement => ({
-      _id: measurement?._id || '',
-      name: measurement.name,
-      value: String(measurement.value)
-    }));
-    this.description = product.description;
-
-    this.error = false;
-    this.done = false;
-    this.loading = false;
-
-    this.validateBrand(product.brand);
-    this.validateName(product.name);
-    this.validateMeasurement()
-  }
-
-  @Action()
-  private startLoading() {
-    this.reset()
-    this.error = false;
+    this.product = nullProduct;
+    this.type = nullSummary;
+    this.currentSubCategories = [];
+    this.errorMessage = '';
     this.loading = true;
+    this.error = false;
+    this.done = false;
   }
 
   @Action()
-  private setDone() {
-    this.done = true;
+  setProduct(productResponse: ProductResponse) {
+    this.product = {
+      ...productResponse,
+      author: productResponse.author || nullSummary,
+      measurements: productResponse.measurements.map(measurement => ({
+        _id: measurement._id || '',
+        name: measurement.name,
+        value: String(measurement.value)
+      }))
+    };
+
     this.error = false;
     this.loading = false;
-  }
 
-  @Action()
-  private setError() {
-    this.reset()
-    this.error = true;
-    this.loading = false;
+    this.validateBrand(productResponse.brand);
+    this.validateName(productResponse.name);
+    this.validateMeasurement()
   }
 
   async create() {
     try {
       await apiService.createProduct({
-        author: this.author?._id || '',
-        name: this.name,
-        brand: this.brand,
-        category: this.category?._id || '',
-        subCategory: this.subCategory?._id || '',
-        gender: this.gender?._id || '',
-        size: this.size._id || '',
-        fit: this.fit?._id || '',
-        measurements: this.measurements.map(measurement => ({
+        author: this.product.author?._id || '',
+        name: this.product.name,
+        brand: this.product.brand,
+        category: this.product.category?._id || '',
+        subCategory: this.product.subCategory?._id || '',
+        gender: this.product.gender?._id || '',
+        size: this.product.size._id || '',
+        fit: this.product.fit?._id || '',
+        measurements: this.product.measurements.map(measurement => ({
           _id: measurement._id || '',
           name: measurement.name,
-          value: Number(measurement.value)
+          value: Number(measurement.value),
         })),
-        description: this.description,
+        description: this.product.description,
       });
 
       this.setDone();
-    } catch (e) {
+    } catch (error) {
+      const typedError = error as { status?: number; message: string };
+      this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
+
       this.setError();
     }
   }
@@ -259,25 +222,28 @@ class ProductFormStore {
   async update() {
     try {
       await apiService.updateProduct({
-        _id: this.productId,
-        author: this.author?._id || '',
-        name: this.name,
-        brand: this.brand,
-        category: this.category?._id || '',
-        subCategory: this.subCategory?._id || '',
-        gender: this.gender?._id || '',
-        size: this.size._id || '',
-        fit: this.fit?._id || '',
-        measurements: this.measurements.map(measurement => ({
-          _id: measurement?._id || '',
+        _id: this.product._id,
+        author: this.product.author?._id || '',
+        name: this.product.name,
+        brand: this.product.brand,
+        category: this.product.category?._id || '',
+        subCategory: this.product.subCategory?._id || '',
+        gender: this.product.gender?._id || '',
+        size: this.product.size._id || '',
+        fit: this.product.fit?._id || '',
+        measurements: this.product.measurements.map(measurement => ({
+          _id: measurement._id || '',
           name: measurement.name,
           value: Number(measurement.value)
         })),
-        description: this.description,
+        description: this.product.description,
       });
 
       this.setDone();
-    } catch (e) {
+    } catch (error) {
+      const typedError = error as { status?: number; message: string };
+      this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
+
       this.setError();
     }
   }
@@ -285,13 +251,37 @@ class ProductFormStore {
   async fetchProduct({ productId }: { productId: string }) {
     this.startLoading();
     try {
-      const product = await apiService.fetchProduct({ productId });
+      const productResponse = await apiService.fetchProduct({ productId });
+      this.setProduct(productResponse);
 
-      this.setProduct(product);
-
+      this.setDone();
     } catch (error) {
+      const typedError = error as { status?: number; message: string };
+      this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
+
       this.setError();
     }
+  }
+
+  @Action()
+  private startLoading() {
+    this.reset()
+    this.errorMessage = '';
+    this.loading = true;
+    this.error = false;
+    this.done = false;
+  }
+
+  @Action()
+  private setDone() {
+    this.done = true;
+  }
+
+  @Action()
+  private setError() {
+    this.reset()
+    this.error = true;
+    this.loading = false;
   }
 }
 

@@ -8,7 +8,7 @@ import useInitialDataStore from '../../hooks/useInitialDataStore';
 import { MEASUREMENT_MESSAGES } from '../../constants';
 
 export default function MySizeMeasurementsInput() {
-  const [{ category, measurements }, store] = useProductFormStore();
+  const [{ product: { category, measurements } }, store] = useProductFormStore();
   const [{ categories }] = useInitialDataStore();
   const [prevCategoryId, setPrevCategoryId] = useState(category._id);
 

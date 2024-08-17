@@ -60,8 +60,8 @@ export type MeasurementRequest = {
 export type ProductRequest = {
   _id?: string;
   author: string;
-  name: string;
   brand: string;
+  name: string;
   category: string;
   subCategory: string;
   gender: string;
@@ -74,8 +74,8 @@ export type ProductRequest = {
 export type ProductResponse = {
   _id: string;
   author?: Summary;
-  name: string;
   brand: string;
+  name: string;
   category: Summary;
   subCategory: Summary;
   gender: Summary;
@@ -83,4 +83,11 @@ export type ProductResponse = {
   fit: Summary;
   measurements: Measurement[];
   description: string;
+}
+
+export type initialData = {
+  categories: Category[];
+  genders: Summary[];
+  sizes: Size[];
+  fits: Summary[];
 }

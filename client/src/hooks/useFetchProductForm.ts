@@ -3,7 +3,7 @@ import useProductFormStore from './useProductFormStore';
 
 export default function useFetchProductForm({ productId }
   : { productId: string }) {
-  const [product, store] = useProductFormStore();
+  const [{ product }, store] = useProductFormStore();
 
   useEffect(() => {
     store.fetchProduct({ productId });

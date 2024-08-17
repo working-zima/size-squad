@@ -10,7 +10,7 @@ import { CATEGORY_MESSAGES, SUBCATEGORY_MESSAGES } from '../../constants';
 import { useEffect } from 'react';
 
 export default function MySizeCategoryBox() {
-  const [{ category, subCategory }, store] = useProductFormStore();
+  const [{ product: { category, subCategory } }, store] = useProductFormStore();
   const [{ categories }] = useInitialDataStore()
 
   let subCategories = categories

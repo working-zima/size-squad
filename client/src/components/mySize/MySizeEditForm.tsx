@@ -61,7 +61,7 @@ type MySizeEditFormProps = {
 }
 
 export default function MySizeEditForm({ onComplete }: MySizeEditFormProps) {
-  const [product, store] = useProductFormStore();
+  const [{ product, done, valid }, store] = useProductFormStore();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -69,11 +69,11 @@ export default function MySizeEditForm({ onComplete }: MySizeEditFormProps) {
   };
 
   useEffect(() => {
-    if (product.done) {
+    if (done) {
       store.reset();
       onComplete();
     }
-  }, [product.done]);
+  }, [done]);
 
   return (
     <Container>
@@ -82,13 +82,16 @@ export default function MySizeEditForm({ onComplete }: MySizeEditFormProps) {
       <MySizeBrandInput />
       <MySizeNameInput />
       <MySizeCategoryBox />
-      <MySizeGenderBox />
+      <MySizeGenderBox
+        gender={ product.gender }
+        changeGender={(value) => store.changeGender(value)}
+      />
       <MySizeSizeBox />
       <MySizeFitBox />
       <MySizeMeasurementsInput />
       <MySizeDescriptionInput />
       <ButtonWrapper>
-        <Button type="submit" disabled={!product.valid}>
+        <Button type="submit" disabled={!valid}>
           등록
         </Button>
       </ButtonWrapper>

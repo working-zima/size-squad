@@ -1,4 +1,4 @@
-import { Summary, Category, Size, ProductResponse, Measurement, User } from "./types";
+import { Summary, Category, Size, ProductResponse, Measurement, User, Product } from "./types";
 
 export const nullSummary: Summary = {
   _id: '',
@@ -16,8 +16,8 @@ export const nullCategory: Category = {
   _id: '',
   name: '',
   type: nullSummary,
-  subCategories: [nullSummary],
-  measurements: [nullSummary]
+  subCategories: [],
+  measurements: []
 };
 
 export const nullMeasurement: Measurement = {
@@ -26,7 +26,21 @@ export const nullMeasurement: Measurement = {
   value: ''
 };
 
-export const nullProduct: ProductResponse = {
+export const nullProduct: Product = {
+  _id: '',
+  author: nullSummary,
+  brand: '',
+  name: '',
+  category: nullSummary,
+  subCategory: nullSummary,
+  gender: nullSummary,
+  size: nullSummary,
+  fit: nullSummary,
+  measurements: [],
+  description: '',
+};
+
+export const nullProductResponse: ProductResponse = {
   _id: '',
   author: nullSummary,
   brand: '',
@@ -36,7 +50,7 @@ export const nullProduct: ProductResponse = {
   gender: nullSummary,
   size: nullSize,
   fit: nullSummary,
-  measurements: [nullMeasurement],
+  measurements: [],
   description: '',
 };
 

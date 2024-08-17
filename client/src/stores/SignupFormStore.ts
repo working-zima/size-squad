@@ -86,11 +86,10 @@ class SignupFormStore {
         const isDuplicated = await apiService.checkUserEmail({ email });
         this.changeIsEmailDuplicated(!!isDuplicated);
       } catch(error) {
-        if (error instanceof Error) {
-          this.setError(error.message);
-        } else {
-          this.setError(`알 수 없는 오류가 발생했습니다.\n 관리자에게 문의해주세요.`);
-        }
+        const typedError = error as { message: string };
+        this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
+
+        this.setError()
       }
     } else {
       this.changeIsEmailDuplicated(false);
@@ -114,11 +113,10 @@ class SignupFormStore {
         const isDuplicated = await apiService.checkUserName({ name });
         this.changeIsNameDuplicated(!!isDuplicated);
       } catch(error) {
-        if (error instanceof Error) {
-          this.setError(error.message);
-        } else {
-          this.setError(`알 수 없는 오류가 발생했습니다.\n 관리자에게 문의해주세요.`);
-        }
+        const typedError = error as { message: string };
+        this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
+
+        this.setError()
       }
     } else {
       this.changeIsNameDuplicated(false);
@@ -228,13 +226,12 @@ class SignupFormStore {
   }
 
   @Action()
-  private setError(message: string) {
+  private setError() {
     this.user = nullUser;
     this.passwordConfirmation = '';
     this.oldPassword = '';
     this.loading = false;
     this.error = true;
-    this.errorMessage = message;
   }
 
   async signup() {
@@ -245,11 +242,10 @@ class SignupFormStore {
       });
       this.setAccessToken(accessToken);
     } catch (error) {
-      if (error instanceof Error) {
-        this.setError(error.message);
-      } else {
-        this.setError(`알 수 없는 오류가 발생했습니다.\n 관리자에게 문의해주세요.`);
-      }
+      const typedError = error as { message: string };
+      this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
+
+      this.setError()
     }
   }
 
@@ -262,12 +258,10 @@ class SignupFormStore {
 
       this.reset();
     } catch (error) {
-      if (error instanceof Error) {
-        this.setError(error.message);
-      } else {
-        this.setError('현재 비밀번호가 일치하지 않습니다.')
-      }
-      throw error;
+      const typedError = error as { message: string };
+      this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
+
+      this.setError()
     }
   }
 
@@ -279,12 +273,10 @@ class SignupFormStore {
 
       this.reset();
     } catch (error) {
-      if (error instanceof Error) {
-        this.setError(error.message);
-      } else {
-        this.setError(`알 수 없는 오류가 발생했습니다.\n 관리자에게 문의해주세요.`)
-      }
-      throw error;
+      const typedError = error as { message: string };
+      this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
+
+      this.setError()
     }
   }
 
@@ -296,12 +288,10 @@ class SignupFormStore {
 
       this.reset();
     } catch (error) {
-      if (error instanceof Error) {
-        this.setError(error.message);
-      } else {
-        this.setError(`알 수 없는 오류가 발생했습니다.\n 관리자에게 문의해주세요.`)
-      }
-      throw error;
+      const typedError = error as { message: string };
+      this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
+
+      this.setError()
     }
   }
 
@@ -313,12 +303,10 @@ class SignupFormStore {
 
       this.reset();
     } catch (error) {
-      if (error instanceof Error) {
-        this.setError(error.message);
-      } else {
-        this.setError(`알 수 없는 오류가 발생했습니다.\n 관리자에게 문의해주세요.`)
-      }
-      throw error;
+      const typedError = error as { message: string };
+      this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
+
+      this.setError()
     }
   }
 
@@ -330,12 +318,10 @@ class SignupFormStore {
 
       this.reset();
     } catch (error) {
-      if (error instanceof Error) {
-        this.setError(error.message);
-      } else {
-        this.setError(`알 수 없는 오류가 발생했습니다.\n 관리자에게 문의해주세요.`)
-      }
-      throw error;
+      const typedError = error as { message: string };
+      this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
+
+      this.setError()
     }
   }
 }

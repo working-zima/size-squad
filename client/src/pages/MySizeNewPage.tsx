@@ -16,14 +16,14 @@ export default function MySizeNewPage() {
   const { accessToken } = useAccessToken();
   const { user } = useFetchUser()
   const { categories, fits, sizes } = useFetchInitialData()
-  const [{ productId }, store] = useProductFormStore();
+  const [{ product }, store] = useProductFormStore();
 
   useEffect(() => {
     store.reset();
   }, [])
 
   useEffect(() => {
-    if (!categories[0]._id || productId) return;
+    if (!categories[0]._id || product._id) return;
     store.reset()
 
     store.changeCategory(categories[0]);

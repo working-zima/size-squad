@@ -4,7 +4,7 @@ import useProductFormStore from '../../hooks/useProductFormStore';
 import { useEffect } from 'react';
 
 export default function MySizeNewDescription() {
-  const [{ description }, store] = useProductFormStore();
+  const [{ product: { description } }, store] = useProductFormStore();
 
   const handleChangeDescription = (value: string) => {
     store.changeDescription(value);

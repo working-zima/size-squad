@@ -30,28 +30,14 @@ export default function MySizeListPage() {
     { categoryId, subCategoryId }
   );
 
-  if (error) {
-    return (
-      <ErrorPage errorMessage={errorMessage}/>
-    );
-  }
-
-  if (loading) {
-    return (
-      <p>Loading...</p>
-    );
-  }
-
   const subCategories = categoryId
-    ? categories.find(category => category._id === categoryId)?.subCategories
-      || []
-    : allSubCategories;
+  ? categories.find(category => category._id === categoryId)?.subCategories
+    || []
+  : allSubCategories;
 
-  if (!accessToken) {
-    return (
-      <AccessDeniedPage />
-    );
-  }
+  if (!accessToken) return (<AccessDeniedPage />);
+  if (error) return (<ErrorPage errorMessage={errorMessage}/>);
+  if (loading) return (<p>Loading...</p>);
 
   if(!products.length) {
     return (

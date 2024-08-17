@@ -11,6 +11,8 @@ import { Summary } from "../types";
 class FitsStore {
   fits = [nullSummary];
 
+  errorMessage = '';
+
   loading = true;
 
   error = false;
@@ -18,10 +20,35 @@ class FitsStore {
   done = false;
 
   @Action()
+  reset() {
+    this.fits = [nullSummary];
+    this.errorMessage = '';
+    this.loading = true;
+    this.error = false;
+    this.done = false;
+  }
+
+  @Action()
   private setGender(fits: Summary[]) {
     this.fits = fits;
     this.loading = false;
     this.error = false;
+  }
+
+  async fetchFits() {
+    try {
+      this.startLoading();
+
+      const fits = await apiService.fetchFits();
+      this.setGender(fits);
+
+      this.setDone();
+    } catch (error) {
+      const typedError = error as { status?: number; message: string };
+      this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
+
+      this.setError();
+    }
   }
 
   @Action()
@@ -32,20 +59,14 @@ class FitsStore {
   }
 
   @Action()
-  private setError() {
-    this.error = true;
+  private setDone() {
+    this.done = true;
   }
 
-  async fetchFits() {
-    try {
-      this.startLoading();
-
-      const fits = await apiService.fetchFits();
-
-      this.setGender(fits);
-    } catch (error) {
-      this.setError();
-    }
+  @Action()
+  private setError() {
+    this.error = true;
+    this.loading = false;
   }
 }
 

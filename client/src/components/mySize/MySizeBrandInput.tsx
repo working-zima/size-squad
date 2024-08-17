@@ -3,7 +3,7 @@ import { TextInputBox } from '../ui/textbox/TextBoxComponents';
 import useProductFormStore from '../../hooks/useProductFormStore';
 
 export default function MySizeBrandInput() {
-  const [{ brand }, store] = useProductFormStore();
+  const [{ product: { brand } }, store] = useProductFormStore();
 
   const handleChangeBrand = (value: string) => {
     store.changeBrand(value);

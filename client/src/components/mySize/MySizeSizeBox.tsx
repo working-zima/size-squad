@@ -6,7 +6,7 @@ import { nullSize } from '../../nullObject';
 import ComboBox from '../ui/ComboBox';
 
 export default function MySizeSizeBox() {
-  const [{ gender, size, type }, store] = useProductFormStore();
+  const [{ product: { gender, size } }, store] = useProductFormStore();
   const [{ sizes }] = useInitialDataStore()
 
   let sizeList = sizes.filter(sizeElem => {

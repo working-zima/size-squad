@@ -15,7 +15,11 @@ class LoginFormStore {
 
   errorMessage = '';
 
+  loading = true;
+
   error = false;
+
+  done = false;
 
   get valid() {
     return this.email.includes('@') && !!this.password;
@@ -38,18 +42,14 @@ class LoginFormStore {
   }
 
   @Action()
-  private setError(message: string) {
-    this.error = true;
-    this.errorMessage = message;
-  }
-
-  @Action()
   reset() {
     this.email = '';
     this.password = '';
     this.accessToken = '';
     this.errorMessage = '';
+    this.loading = true;
     this.error = false;
+    this.done = false;
   }
 
   async login() {
@@ -59,13 +59,33 @@ class LoginFormStore {
         password: this.password,
       });
       this.setAccessToken(accessToken);
+
+      this.setDone();
     } catch (error) {
-      if (error instanceof Error) {
-        this.setError(error.message);
-      } else {
-        this.setError(`알 수 없는 오류가 발생했습니다.\n 관리자에게 문의해주세요.`);
-      }
+      const typedError = error as { status?: number; message: string };
+      if (typedError.status === 400) this.errorMessage = '아이디 또는 비밀번호가 맞지 않습니다.'
+      else this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
+
+      this.setError()
     }
+  }
+  @Action()
+  private startLoading() {
+    this.email = '';
+    this.password = '';
+    this.loading = true;
+    this.error = false;
+  }
+
+  @Action()
+  private setDone() {
+    this.done = true;
+  }
+
+  @Action()
+  private setError() {
+    this.error = true;
+    this.loading = false;
   }
 }
 
