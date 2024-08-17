@@ -10,11 +10,13 @@ type useFetchProductsProps = {
 export default function useFetchProducts({
   categoryId, subCategoryId,
 }: useFetchProductsProps) {
-  const [{ products = [] }, store] = useProductsStore();
+  const [{
+    products = [], errorMessage, loading, error
+  }, store] = useProductsStore();
 
   useEffect(() => {
     store.fetchProducts({ categoryId, subCategoryId });
   }, [categoryId, subCategoryId, store]);
 
-  return { products };
+  return { products, errorMessage, loading, error, store };
 }

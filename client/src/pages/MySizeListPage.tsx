@@ -11,6 +11,8 @@ import Products from '../components/Products';
 import useAccessToken from '../hooks/useAccessToken';
 import useFetchCategories from '../hooks/useFetchCategories';
 import useFetchProducts from '../hooks/useFetchProducts';
+import { useEffect } from 'react';
+import ErrorPage from './ErrorPage';
 
 const Container = styled.div`
   padding-bottom: 24px;
@@ -24,7 +26,21 @@ export default function MySizeListPage() {
   const subCategoryId = params.get('category2DepthCodes') ?? undefined;
 
   const { categories, allSubCategories } = useFetchCategories();
-  const { products } = useFetchProducts({ categoryId, subCategoryId });
+  const { products, error, loading, errorMessage } = useFetchProducts(
+    { categoryId, subCategoryId }
+  );
+
+  if (error) {
+    return (
+      <ErrorPage errorMessage={errorMessage}/>
+    );
+  }
+
+  if (loading) {
+    return (
+      <p>Loading...</p>
+    );
+  }
 
   const subCategories = categoryId
     ? categories.find(category => category._id === categoryId)?.subCategories

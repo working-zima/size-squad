@@ -66,16 +66,11 @@ export default function LayoutHeader() {
   let page = PAGES[location.pathname] || defaultPage;
 
   if (isEditSizePage) page = PAGES['/mysize/:id/edit'];
-
   if (isEditProfilePage) page = PAGES['/mypage/:id/edit'];
-
-  if (isMyPage && user) {
-    page.pageTitle = `${user.name}님의 페이지`;
-  }
-
+  if (isMyPage && user) page.pageTitle = `${user.name}님의 페이지`;
   if (isEditProfile && user) {
     page = PAGES['/mypage/:id/edit/:editField'];
-    page.pageTitle = `${USERFIELDS[path]} 변경`
+    page.pageTitle = USERFIELDS[path] ? `${USERFIELDS[path]} 변경` : ''
   }
 
   return (

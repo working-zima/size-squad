@@ -16,6 +16,7 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     white-space: pre-line;
+    text-align: center;
   }
 `
 

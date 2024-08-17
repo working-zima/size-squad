@@ -1,6 +1,5 @@
 import Layout from './components/Layout';
 
-import ErrorPage from './pages/ErrorPage';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
@@ -11,7 +10,8 @@ import MyPage from './pages/MyPage';
 import MySizeNewPage from './pages/MySizeNewPage';
 import MyProfileEditPage from './pages/MyProfileEditPage';
 import MyProfileInputPage from './pages/MyProfileInputPage';
-import NetworkErrorPage from './pages/NetworkErrorPage';
+import ErrorPage from './pages/ErrorPage';
+
 
 const routes = [
   {
@@ -28,7 +28,6 @@ const routes = [
       { path: '/mypage', element: <MyPage />},
       { path: '/mypage/:id/edit', element: <MyProfileEditPage />},
       { path: '/mypage/:id/edit/:path', element: <MyProfileInputPage />},
-      { path: '/error/network', element: <NetworkErrorPage />},
     ],
   },
 ];

@@ -30,7 +30,7 @@ export const AlertModal = ({
         <p>{children}</p>
       </ModalContent>
       <ModalFooter>
-        <button onClick={hide}>확인</button>
+        <Button onClick={hide}>확인</Button>
       </ModalFooter>
     </Modal>
   )

@@ -5,13 +5,14 @@ import SignUpForm from "../components/signUp/SignUpForm";
 
 import useSignupFormStore from "../hooks/useSignupFormStore";
 import useFetchGender from "../hooks/useFetchGenders";
+import ErrorPage from "./ErrorPage";
 
 export default function SignupPage() {
   const navigate = useNavigate();
 
   const [{ accessToken }, store] = useSignupFormStore();
 
-  const { genders, error, loading } = useFetchGender();
+  const { genders, error, errorMessage, loading } = useFetchGender();
 
   useEffect(() => {
     store.reset();
@@ -25,15 +26,15 @@ export default function SignupPage() {
     }
   }, [accessToken]);
 
-  if (loading) {
+  if (error) {
     return (
-      <p>Loading...</p>
+      <ErrorPage errorMessage={errorMessage}/>
     );
   }
 
-  if (error) {
+  if (loading) {
     return (
-      <p>Error!</p>
+      <p>Loading...</p>
     );
   }
 

@@ -220,6 +220,8 @@ class ProductFormStore {
   @Action()
   private setDone() {
     this.done = true;
+    this.error = false;
+    this.loading = false;
   }
 
   @Action()

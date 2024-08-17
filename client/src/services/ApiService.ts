@@ -69,7 +69,7 @@ export default class ApiService {
           `[API] ${method?.toUpperCase()} ${url} | Network Error: ${message}`
         );
 
-        this.onError(undefined, "네트워크 오류입니다.");
+        this.onError(undefined, "네트워크 오류가 발생했습니다.");
         return Promise.reject(error);
       }
 
