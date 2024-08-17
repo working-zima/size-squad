@@ -19,9 +19,11 @@ export default function MySizeCategoryBox() {
   if(!subCategories?.length) subCategories = [nullSummary];
 
   useEffect(() => {
+    if (!category || !categories) return;
+
     const isAvailableSubs = categories
       .find(cat => cat._id === category._id)?.subCategories
-      .some(subCat => subCat._id === subCategory._id);
+      .some(subCat => subCat._id === subCategory?._id);
 
     if (isAvailableSubs) return;
 
@@ -30,7 +32,7 @@ export default function MySizeCategoryBox() {
 
     store.changeSubCategory(selectedCategory?.subCategories[0])
     store.changeType(selectedCategory?.type)
-  }, [category])
+  }, [category, categories, subCategory, store])
 
   return (
     <>

@@ -17,7 +17,7 @@ export default function MySizeNewPage() {
   const { user, loading } = useFetchUser()
   const { categories, fits, sizes } = useFetchInitialData()
   const [{ product }, store] = useProductFormStore();
-  console.log(user)
+
   useEffect(() => {
     store.reset();
   }, [])
@@ -32,8 +32,6 @@ export default function MySizeNewPage() {
     store.changeFit(fits[0]);
 
     const sizeList = sizes.filter(sizeElem => {
-      console.log(`sizeElem: `, sizeElem)
-      console.log(`user.gender._id: `, user.gender._id)
       return sizeElem.gender._id === user.gender._id
     });
     store.changeSize(sizeList[0]);

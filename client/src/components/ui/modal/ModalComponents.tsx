@@ -27,7 +27,7 @@ export const AlertModal = ({
   return (
     <Modal modalRef={modalRef} hide={hide}>
       <ModalContent>
-        <p>{children}</p>
+        {children}
       </ModalContent>
       <ModalFooter>
         <Button onClick={hide}>확인</Button>

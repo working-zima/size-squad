@@ -14,6 +14,8 @@ import MySizeDescriptionInput from './MySizeDescriptionInput';
 import useProductFormStore from '../../hooks/useProductFormStore';
 
 import Button from '../ui/Button';
+import { AlertModal } from '../ui/modal/ModalComponents';
+import useModal from '../../hooks/useModal';
 
 const Container = styled.div`
   padding: 20px ${props => props.theme.sizes.contentPadding} 0;
@@ -61,41 +63,51 @@ type MySizeEditFormProps = {
 }
 
 export default function MySizeEditForm({ onComplete }: MySizeEditFormProps) {
-  const [{ product, done, valid }, store] = useProductFormStore();
+  const [{ product, valid, errorMessage }, store] = useProductFormStore();
+  const { modalRef, openModal, closeModal } = useModal();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await store.update();
-  };
-
-  useEffect(() => {
-    if (done) {
+    try {
+      await store.update();
       store.reset();
       onComplete();
+    } catch (error) {
+      openModal();
     }
-  }, [done]);
+  };
+
+  const handleConfirm = (event?: React.MouseEvent) => {
+    if (event) event.preventDefault();
+    store.reset();
+    closeModal();
+  };
 
   return (
     <Container>
-    <h2>Edit Size</h2>
-    <Form onSubmit={handleSubmit}>
-      <MySizeBrandInput />
-      <MySizeNameInput />
-      <MySizeCategoryBox />
-      <MySizeGenderBox
-        gender={ product.gender }
-        changeGender={(value) => store.changeGender(value)}
-      />
-      <MySizeSizeBox />
-      <MySizeFitBox />
-      <MySizeMeasurementsInput />
-      <MySizeDescriptionInput />
-      <ButtonWrapper>
-        <Button type="submit" disabled={!valid}>
-          등록
-        </Button>
-      </ButtonWrapper>
-    </Form>
-  </Container>
+      <h2>Edit Size</h2>
+      <Form onSubmit={handleSubmit}>
+        <MySizeBrandInput />
+        <MySizeNameInput />
+        <MySizeCategoryBox />
+        <MySizeGenderBox
+          gender={ product.gender }
+          changeGender={(value) => store.changeGender(value)}
+        />
+        <MySizeSizeBox />
+        <MySizeFitBox />
+        <MySizeMeasurementsInput />
+        <MySizeDescriptionInput />
+        <ButtonWrapper>
+          <Button type="submit" disabled={!valid}>
+            등록
+          </Button>
+        </ButtonWrapper>
+      </Form>
+      <AlertModal modalRef={modalRef} hide={handleConfirm}>
+        <p>수정 실패</p>
+        <p>{errorMessage}</p>
+      </AlertModal>
+    </Container>
   )
 }

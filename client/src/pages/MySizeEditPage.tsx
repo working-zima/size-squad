@@ -11,9 +11,8 @@ export default function MySizeEditPage() {
   const params = useParams();
   const productId = String(params.id)
 
-  useFetchProductForm({ productId });
+  const { loading } = useFetchProductForm({ productId });
   useFetchInitialData();
-  const [{ loading }] = useProductFormStore();
 
   const handleComplete = () => {
     navigate(`/mysize`);
