@@ -174,7 +174,7 @@ const Product = {
   deleteProductByAuthor: async ({ author }) => {
     try {
       console.log(author)
-      await ProductModel.findByIdAndDelete({ author });
+      await ProductModel.deleteMany({ author });
 
       return;
     } catch (error) {

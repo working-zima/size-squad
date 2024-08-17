@@ -23,7 +23,7 @@ export default function MySizeNewPage() {
   }, [])
 
   useEffect(() => {
-    if (!categories[0]._id || product._id) return;
+    if (!categories[0]._id || product._id || !user.gender) return;
     store.reset()
 
     store.changeCategory(categories[0]);
