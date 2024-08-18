@@ -7,7 +7,8 @@ import { Category, Summary } from '../../types';
 
 const Container = styled.div`
   position: sticky;
-  top: 0%;
+  position: -webkit-sticky;
+  top: 0;
   height: 10.2rem;
   z-index: 1000;
   background-color: white;

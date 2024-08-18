@@ -27,7 +27,7 @@ const Container = styled.div<ContainerProps>`
     ${({ showMenu }) => (showMenu ? "'menu'" : '')};
   margin: 0 auto;
   width: 100vw;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
 `;
 
 const Main = styled.main`

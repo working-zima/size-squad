@@ -13,7 +13,6 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   position: relative;
-  width: 100%;
   height: 4.7rem;
   margin: 0 0.4rem;
   overflow: auto hidden;

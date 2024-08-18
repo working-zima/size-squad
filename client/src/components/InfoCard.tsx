@@ -23,7 +23,6 @@ const InfoContainer = styled.div`
 
 const DetailWrapper = styled.div`
   display: flex;
-  flex-direction: column;
   text-align: left;
   word-break: break-all;
   overflow: auto hidden;
@@ -32,6 +31,7 @@ const DetailWrapper = styled.div`
 
   h3 {
     font-weight: bold;
+    margin-right: 1rem;
   }
 
   strong {

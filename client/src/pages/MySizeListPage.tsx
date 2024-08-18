@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import AccessDeniedPage from './AccessDeniedPage';
 import NoListPage from './NoListPage';
+import ErrorPage from './ErrorPage';
 
 import CategoryBar from '../components/category/CategoryBar';
 import Products from '../components/Products';
@@ -11,8 +12,6 @@ import Products from '../components/Products';
 import useAccessToken from '../hooks/useAccessToken';
 import useFetchCategories from '../hooks/useFetchCategories';
 import useFetchProducts from '../hooks/useFetchProducts';
-import { useEffect } from 'react';
-import ErrorPage from './ErrorPage';
 
 const Container = styled.div`
   padding-bottom: 24px;
@@ -31,9 +30,9 @@ export default function MySizeListPage() {
   );
 
   const subCategories = categoryId
-  ? categories.find(category => category._id === categoryId)?.subCategories
-    || []
-  : allSubCategories;
+    ? categories.find(category => category._id === categoryId)?.subCategories
+      || []
+    : allSubCategories;
 
   if (!accessToken) return (<AccessDeniedPage />);
   if (error) return (<ErrorPage errorMessage={errorMessage}/>);
