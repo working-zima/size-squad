@@ -14,6 +14,8 @@ import MySizeDescriptionInput from './MySizeDescriptionInput';
 import useProductFormStore from '../../hooks/useProductFormStore';
 
 import Button from '../ui/Button';
+import useModal from '../../hooks/useModal';
+import { AlertModal } from '../ui/modal/ModalComponents';
 
 const Container = styled.div`
   padding: 20px ${props => props.theme.sizes.contentPadding} 0;
@@ -61,17 +63,26 @@ type MySizeNewFormProps = {
 }
 
 export default function MySizeNewForm({ onComplete }: MySizeNewFormProps) {
-  const [{ product: { gender }, done, valid }, store] = useProductFormStore();
-
-  useEffect(() => {
-    if (done) {
-      onComplete();
-    }
-  }, [done]);
+  const [
+    { product: { gender }, errorMessage, valid }, store
+  ] = useProductFormStore();
+  const { modalRef, openModal, closeModal } = useModal();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await store.create();
+    try {
+      await store.create();
+      store.reset();
+      onComplete();
+    } catch (error) {
+      openModal();
+    }
+  };
+
+  const handleConfirm = (event?: React.MouseEvent) => {
+    if (event) event.preventDefault();
+    store.reset();
+    closeModal();
   };
 
   return (
@@ -95,6 +106,10 @@ export default function MySizeNewForm({ onComplete }: MySizeNewFormProps) {
           </Button>
         </ButtonWrapper>
       </Form>
+      <AlertModal modalRef={modalRef} hide={handleConfirm}>
+        <p>수정 실패</p>
+        <p>{errorMessage}</p>
+      </AlertModal>
     </Container>
   )
 }

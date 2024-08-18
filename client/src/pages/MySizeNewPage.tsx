@@ -19,6 +19,7 @@ export default function MySizeNewPage() {
   const [{ product }, store] = useProductFormStore();
 
   useEffect(() => {
+    console.log(`check newPage`)
     store.reset();
   }, [])
 
@@ -44,6 +45,7 @@ export default function MySizeNewPage() {
   }, [categories, user.gender, store])
 
   const handleComplete = () => {
+    console.log(`check handleComplete`)
     store.reset();
     navigate('/mysize');
   };
