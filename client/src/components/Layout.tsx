@@ -32,7 +32,7 @@ const Container = styled.div<ContainerProps>`
 
 const Main = styled.main`
   grid-area: main;
-  max-width: 1280px;
+  max-width: 768px;
   width: 100%;
   margin: 0 auto;
 `;

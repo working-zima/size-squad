@@ -1,37 +1,44 @@
 import styled from 'styled-components';
-
 import { MEASUREMENT_MESSAGES } from '../constants';
-
 import { ProductResponse } from '../types';
 
-const Container = styled.div`
-  display: flex;
-  flex: 1 1 auto;
+type ContainerProps = {
+  columnsCount: number;
+}
+
+const Container = styled.div<ContainerProps>`
+  display: grid;
+  grid-template-columns: repeat(${props => props.columnsCount + 1}, 1fr);
+  grid-template-rows: auto auto;
   align-items: center;
-  height: 5.4rem;
-  overflow: auto hidden;
+  overflow-x: auto;
+  font-size: 1.2rem;
+  height: 60px;
+  color: ${props => props.theme.colors.secondaryTextColor};
   white-space: nowrap;
-  scrollbar-width: none;
+  border-radius: 3px;
+`;
 
-  table {
-    th {
-      vertical-align: middle;
-      width: 68px;
-      min-width: 68px;
-      height: 30px;
+type CellProps = {
+  gridColumn: number;
+  gridRow: number;
+}
 
-      &:first-child {
-        position: sticky;
-        left: 0px;
-
-      }
-    }
-
-    td {
-      vertical-align: middle;
-      text-align: center;
-    }
-  }
+const Cell = styled.div<CellProps>`
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  font-weight: 500;
+  position: ${props => (props.gridColumn === 1 ? 'sticky' : 'static')};
+  left: ${props => (props.gridColumn === 1 ? '0' : 'auto')};
+  z-index: ${props => (props.gridColumn === 1 ? '1' : 'auto')};
+  background-color: ${ props => (props.gridRow === 1
+    ? props.theme.colors.backgroundColor
+    : props.theme.colors.primaryWhite
+  )};
+  grid-row: ${props => props.gridRow};
+  grid-column: ${props => props.gridColumn};
 `;
 
 type SizeCardProps = {
@@ -42,31 +49,38 @@ export default function SizeCard({ product }: SizeCardProps) {
   const values = Object.values(product.measurements);
 
   return (
-    <Container>
-      <table>
-        <thead>
-          <tr>
-            <th>
-              사이즈 (cm)
-            </th>
-            {product.measurements.map((measurement) => (
-              <th key={measurement._id}>
-                {MEASUREMENT_MESSAGES[measurement.name]}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th>
-              {product.size.name}
-            </th>
-            {values.map((value) => (
-              <td key={value._id}>{value.value}</td>
-            ))}
-          </tr>
-        </tbody>
-      </table>
+    <Container columnsCount={product.measurements.length}>
+      <Cell
+        gridColumn={1}
+        gridRow={1}
+      >
+        사이즈 (cm)
+      </Cell>
+      {product.measurements.map((measurement, index) => (
+        <Cell
+          key={measurement._id}
+          gridColumn={2 + index}
+          gridRow={1}
+        >
+          {MEASUREMENT_MESSAGES[measurement.name]}
+        </Cell>
+      ))}
+
+      <Cell
+        gridColumn={1}
+        gridRow={2}
+      >
+        {product.size.name}
+      </Cell>
+      {values.map((value, index) => (
+        <Cell
+          key={value._id}
+          gridColumn={2 + index}
+          gridRow={2}
+        >
+          {value.value}
+        </Cell>
+      ))}
     </Container>
   );
 }

@@ -13,22 +13,22 @@ import { useEffect, useState } from 'react';
 
 const Container = styled.div`
   padding: 1rem 0.1rem;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   line-height: 1.67;
-  border-bottom: 1px solid ${(props) => props.theme.colors.dividerColor};
+  border-bottom: 1px solid ${props => props.theme.colors.dividerColor};
 `;
 
 const InfoContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 2rem;
-  height: 30px;
+  gap: 1rem;
+  height: 40px;
 `;
 
 const Brand = styled.div`
   display: flex;
-  flex: 3;
+  flex: 2.5;
   word-break: break-all;
   overflow: auto hidden;
   white-space: nowrap;
@@ -37,16 +37,12 @@ const Brand = styled.div`
   h3 {
     font-weight: bold;
     margin-right: 1rem;
-  }
-
-  strong {
-    font-weight: bold;
-    color: ${(props) => props.theme.colors.secondaryTextColor}
+    color: ${(props) => props.theme.colors.PrimaryBlue}
   }
 `;
 
 const Name = styled.div`
-  flex: 6;
+  flex: 6.5;
   display: flex;
   text-align: left;
   word-break: break-all;
@@ -54,14 +50,9 @@ const Name = styled.div`
   white-space: nowrap;
   scrollbar-width: none;
 
-  h3 {
-    font-weight: bold;
-    margin-right: 1rem;
-  }
-
   strong {
     font-weight: bold;
-    color: ${(props) => props.theme.colors.secondaryTextColor}
+    color: ${(props) => props.theme.colors.primaryBlack}
   }
 `;
 
@@ -80,7 +71,7 @@ const EditDeleteWrapper = styled.div`
   .delete-link > button:first-of-type {
     color: ${(props) => props.theme.colors.primaryRed};
     font-weight: bold;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     margin-right: 1rem;
   }
 `;
