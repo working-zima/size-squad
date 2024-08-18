@@ -6,6 +6,7 @@ import { ProductResponse } from '../types';
 
 const Container = styled.div`
   display: flex;
+  flex: 1 1 auto;
   align-items: center;
   height: 5.4rem;
   overflow: auto hidden;
@@ -13,21 +14,16 @@ const Container = styled.div`
   scrollbar-width: none;
 
   table {
-    thead {
-      border-bottom: 1px solid ${(props) => props.theme.colors.borderColor};
-    }
-
     th {
       vertical-align: middle;
       width: 68px;
       min-width: 68px;
       height: 30px;
-      background-color: ${(props) => props.theme.colors.dividerColor};
 
       &:first-child {
         position: sticky;
         left: 0px;
-        border-right: 1px solid ${(props) => props.theme.colors.borderColor};
+
       }
     }
 
@@ -51,7 +47,7 @@ export default function SizeCard({ product }: SizeCardProps) {
         <thead>
           <tr>
             <th>
-              사이즈 (CM)
+              사이즈 (cm)
             </th>
             {product.measurements.map((measurement) => (
               <th key={measurement._id}>

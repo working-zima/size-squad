@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 import styled from 'styled-components';
 
 import MySizeBrandInput from './MySizeBrandInput';
@@ -84,13 +82,13 @@ export default function MySizeNewForm({ onComplete }: MySizeNewFormProps) {
     store.reset();
     closeModal();
   };
-
+  console.log(valid)
   return (
     <Container>
       <h2>New Product</h2>
       <Form onSubmit={handleSubmit}>
-        <MySizeBrandInput />
-        <MySizeNameInput />
+        <MySizeBrandInput maxLength={29}/>
+        <MySizeNameInput maxLength={29}/>
         <MySizeCategoryBox />
         <MySizeGenderBox
           gender={gender}

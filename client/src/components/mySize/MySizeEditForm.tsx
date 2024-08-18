@@ -87,8 +87,8 @@ export default function MySizeEditForm({ onComplete }: MySizeEditFormProps) {
     <Container>
       <h2>Edit Size</h2>
       <Form onSubmit={handleSubmit}>
-        <MySizeBrandInput />
-        <MySizeNameInput />
+        <MySizeBrandInput maxLength={29}/>
+        <MySizeNameInput maxLength={29}/>
         <MySizeCategoryBox />
         <MySizeGenderBox
           gender={ product.gender }

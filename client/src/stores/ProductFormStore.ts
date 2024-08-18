@@ -38,7 +38,7 @@ class ProductFormStore {
   }
 
   private brandValidation = (brand: string) => {
-    return brand.length < 28 && brand.length > 0;
+    return brand.length < 30 && brand.length > 0;
   }
 
   @Action()

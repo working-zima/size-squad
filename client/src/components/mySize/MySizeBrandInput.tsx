@@ -2,7 +2,13 @@ import { TextInputBox } from '../ui/textbox/TextBoxComponents';
 
 import useProductFormStore from '../../hooks/useProductFormStore';
 
-export default function MySizeBrandInput() {
+type MySizeBrandInput = {
+  maxLength: number;
+}
+
+export default function MySizeBrandInput({
+  maxLength
+}: MySizeBrandInput) {
   const [{ product: { brand } }, store] = useProductFormStore();
 
   const handleChangeBrand = (value: string) => {
@@ -19,6 +25,7 @@ export default function MySizeBrandInput() {
       label="브랜드"
       placeholder="상품의 브랜드를 입력해주세요."
       type="text"
+      maxLength={maxLength}
       value={brand}
       onChange={(value) => handleChangeBrand(value)}
       onReset={handleResetBrand}
