@@ -33,6 +33,7 @@ const Container = styled.header`
     p {
       color: black;
       user-select: none;
+      white-space: nowrap;
     }
   }
 `;

@@ -11,6 +11,7 @@ const Content = styled.div<ContentProps>`
   position: relative;
   line-height: 1.67; /* 필수 */
   display: flex;
+  flex: 1 1 auto;
 
   .text {
     white-space: pre-line;
@@ -56,8 +57,8 @@ const ButtonMore = styled.button<ButtonMoreProps>`
   width: 5px;
   height: 5px;
   padding: 0;
-  cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
 
   /* 밑 화살표 */
   &::before {
@@ -99,7 +100,11 @@ const LineClampedText = ({ text, lines }: LineClampedText) => {
   }, [lines]);
 
   return (
-    <Content isCollapsed={isCollapsed} lines={lines}>
+    <Content
+      isCollapsed={isCollapsed}
+      lines={lines}
+      onClick={() => setIsCollapsed(prev => !prev)}
+    >
         <TextClone ref={cloneRef}>
             {text}
           </TextClone>
@@ -108,7 +113,6 @@ const LineClampedText = ({ text, lines }: LineClampedText) => {
           </Text>
       {isClamped
         && <ButtonMore
-          onClick={() => setIsCollapsed(prev => !prev)}
           isCollapsed={isCollapsed}
         />
         }

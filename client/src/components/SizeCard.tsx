@@ -13,7 +13,7 @@ const Container = styled.div<ContainerProps>`
   align-items: center;
   overflow-x: auto;
   font-size: 1.2rem;
-  height: 60px;
+  min-height: 71px;
   color: ${props => props.theme.colors.secondaryTextColor};
   white-space: nowrap;
   border-radius: 3px;
