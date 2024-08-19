@@ -12,6 +12,7 @@ import { ConfirmTrigger } from '../components/ui/modal/ModalTrigger';
 import { useEffect, useState } from 'react';
 import useSignupFormStore from '../hooks/useSignupFormStore';
 import { apiService } from '../services/ApiService';
+import LoadingSpinner from '../components/ui/LoadingSpinner';
 
 const Container = styled.div`
   display: flex;
@@ -60,7 +61,7 @@ export default function MyProfileEditPage() {
   }
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner />;
   }
 
   return (

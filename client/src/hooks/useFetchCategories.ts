@@ -10,14 +10,15 @@ import { Category, Summary } from '../types';
 export default function useFetchCategories(): {
   categories: Category[],
   allSubCategories: Summary[],
+  loading: boolean
 } {
   const [
-    { categories, allSubCategories }, store
+    { categories, allSubCategories, loading }, store
   ] = useCategoriesStore();
 
   useEffect(() => {
     store.fetchCategories();
   }, [store]);
 
-  return { categories, allSubCategories };
+  return { categories, allSubCategories, loading };
 }

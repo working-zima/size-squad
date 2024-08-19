@@ -9,8 +9,10 @@ import Button from "../components/ui/Button";
 
 import useAccessToken from "../hooks/useAccessToken";
 import useFetchUserStore from "../hooks/useFetchUserStore";
+import useFetchProducts from "../hooks/useFetchProducts";
 
 import { apiService } from "../services/ApiService";
+import LoadingSpinner from "../components/ui/LoadingSpinner";
 
 const Container = styled.div`
   padding: ${props => props.theme.sizes.contentPadding};
@@ -86,7 +88,10 @@ export default function MyPage() {
   const navigate = useNavigate();
 
   const { accessToken, setAccessToken } = useAccessToken();
-  const { user, loading, store } = useFetchUserStore();
+  const { user, loading: userLoading, store } = useFetchUserStore();
+  const { products, loading: productsLoading } = useFetchProducts({});
+
+  const loading = userLoading || productsLoading;
 
   const handleClickLogout = async () => {
     await apiService.logout();
@@ -96,7 +101,7 @@ export default function MyPage() {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner />;
   }
 
   if (!accessToken) {

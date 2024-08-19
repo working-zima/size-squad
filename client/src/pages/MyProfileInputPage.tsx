@@ -14,6 +14,7 @@ import EditDescription from "../components/myProfile/EditDescription";
 import useAccessToken from "../hooks/useAccessToken";
 import useFetchUserStore from "../hooks/useFetchUserStore";
 import useSignupFormStore from "../hooks/useSignupFormStore";
+import LoadingSpinner from "../components/ui/LoadingSpinner";
 
 const Container = styled.div`
   display: flex;
@@ -37,12 +38,7 @@ export default function MyProfileInputPage() {
   }, [])
 
   if (loading) {
-    return (
-      <div>
-        <p>Loading...</p>
-        <p>새로고침 하거나 잠시후 시도해보세요.</p>
-      </div>
-    )
+    return <LoadingSpinner />;
   }
 
   if (!accessToken) {

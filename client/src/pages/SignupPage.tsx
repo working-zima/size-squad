@@ -6,12 +6,12 @@ import SignUpForm from "../components/signUp/SignUpForm";
 import useSignupFormStore from "../hooks/useSignupFormStore";
 import useFetchGender from "../hooks/useFetchGenders";
 import ErrorPage from "./ErrorPage";
+import LoadingSpinner from "../components/ui/LoadingSpinner";
 
 export default function SignupPage() {
   const navigate = useNavigate();
 
   const [{ accessToken }, store] = useSignupFormStore();
-
   const { genders, error, errorMessage, loading } = useFetchGender();
 
   useEffect(() => {
@@ -33,9 +33,7 @@ export default function SignupPage() {
   }
 
   if (loading) {
-    return (
-      <p>Loading...</p>
-    );
+    return <LoadingSpinner />;
   }
 
   return (

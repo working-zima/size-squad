@@ -12,6 +12,7 @@ import Products from '../components/Products';
 import useAccessToken from '../hooks/useAccessToken';
 import useFetchCategories from '../hooks/useFetchCategories';
 import useFetchProducts from '../hooks/useFetchProducts';
+import LoadingSpinner from '../components/ui/LoadingSpinner';
 
 const Container = styled.div`
   padding-bottom: 24px;
@@ -24,19 +25,25 @@ export default function MySizeListPage() {
   const categoryId = params.get('category1DepthCode') ?? undefined;
   const subCategoryId = params.get('category2DepthCodes') ?? undefined;
 
-  const { categories, allSubCategories } = useFetchCategories();
-  const { products, error, loading, errorMessage } = useFetchProducts(
+  const {
+    categories, allSubCategories, loading: categoriesLoading
+  } = useFetchCategories();
+  const {
+    products, error, loading: productsLoading, errorMessage
+  } = useFetchProducts(
     { categoryId, subCategoryId }
   );
+
+  const loading = categoriesLoading || productsLoading;
 
   const subCategories = categoryId
     ? categories.find(category => category._id === categoryId)?.subCategories
       || []
     : allSubCategories;
 
-  if (!accessToken) return (<AccessDeniedPage />);
-  if (error) return (<ErrorPage errorMessage={errorMessage}/>);
-  if (loading) return (<p>Loading...</p>);
+    if (loading) (<LoadingSpinner />);
+    if (!accessToken) return (<AccessDeniedPage />);
+    if (error) return (<ErrorPage errorMessage={errorMessage}/>);
 
   if(!products.length) {
     return (

@@ -18,7 +18,6 @@ export default function InfoCard({ product }: InfoCardProps) {
 
   return (
     <Container>
-      {/* <Description product={product} /> */}
       <LineClampedText
         text={[product.description
           ? product.description

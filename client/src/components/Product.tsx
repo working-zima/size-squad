@@ -61,6 +61,7 @@ const EditDeleteWrapper = styled.div`
   flex: 1;
   white-space: nowrap;
   font-weight: bold;
+  font-size: 1.3rem;
   -webkit-tap-highlight-color: transparent;
 
   .edit-link {
@@ -71,7 +72,7 @@ const EditDeleteWrapper = styled.div`
   .delete-link > button:first-of-type {
     color: ${(props) => props.theme.colors.primaryRed};
     font-weight: bold;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     margin-right: 1rem;
   }
 `;

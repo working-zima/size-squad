@@ -11,11 +11,14 @@ export default function useFetchProducts({
   categoryId, subCategoryId,
 }: useFetchProductsProps) {
   const [{
-    products = [], errorMessage, loading, error
+    products = [],
+    errorMessage,
+    loading,
+    error
   }, store] = useProductsStore();
 
   useEffect(() => {
-    store.fetchProducts({ categoryId, subCategoryId });
+    store.fetchMyProducts({ categoryId, subCategoryId });
   }, [categoryId, subCategoryId, store]);
 
   return { products, errorMessage, loading, error, store };

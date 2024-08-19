@@ -50,7 +50,7 @@ class ProductsStore {
     this.loading = false;
   }
 
-  async fetchProducts({ categoryId, subCategoryId }: {
+  async fetchMyProducts({ categoryId, subCategoryId }: {
     categoryId?: string, subCategoryId?: string
   }) {
     try {
@@ -75,7 +75,7 @@ class ProductsStore {
       this.startLoading();
 
       await apiService.deleteMyProducts({ productId });
-      await this.fetchProducts({});
+      await this.fetchMyProducts({});
 
       this.setDone();
     } catch (error) {

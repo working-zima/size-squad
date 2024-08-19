@@ -9,17 +9,21 @@ import useAccessToken from "../hooks/useAccessToken";
 import useFetchUser from "../hooks/useFetchUserStore";
 import useFetchInitialData from "../hooks/useFetchInitialData";
 import useProductFormStore from "../hooks/useProductFormStore";
+import LoadingSpinner from "../components/ui/LoadingSpinner";
 
 export default function MySizeNewPage() {
   const navigate = useNavigate();
 
   const { accessToken } = useAccessToken();
-  const { user, loading } = useFetchUser()
-  const { categories, fits, sizes } = useFetchInitialData()
+  const { user, loading: userLoading } = useFetchUser()
+  const {
+    categories, fits, sizes, loading: initialDataLoading
+  } = useFetchInitialData()
   const [{ product }, store] = useProductFormStore();
 
+  const loading = userLoading || initialDataLoading;
+
   useEffect(() => {
-    console.log(`check newPage`)
     store.reset();
   }, [])
 
@@ -51,7 +55,7 @@ export default function MySizeNewPage() {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner />;
   }
 
   if (!accessToken) {

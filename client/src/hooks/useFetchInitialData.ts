@@ -3,11 +3,14 @@ import { useEffect } from "react";
 import useInitialDataStore from "./useInitialDataStore";
 
 export default function useFetchInitialData() {
-  const [{ categories, genders, fits, sizes }, store] = useInitialDataStore();
+  const [
+    { categories, genders, fits, sizes, loading },
+    store
+  ] = useInitialDataStore();
 
   useEffect(() => {
       store.fetchInitialData();
   }, [store])
 
-  return { categories, genders, fits, sizes, store }
+  return { categories, genders, fits, sizes, loading, store }
 }
