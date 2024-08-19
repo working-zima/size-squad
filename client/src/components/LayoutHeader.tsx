@@ -1,13 +1,12 @@
-import { Link, useLocation, useMatch, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import styled from 'styled-components';
+import { CiHome } from 'react-icons/ci';
 import { LiaAngleLeftSolid } from "react-icons/lia";
 
 import BackSpace from './ui/BackSpace';
-import { PAGES, USERFIELDS } from '../constants';
 
-import useUserStore from '../hooks/useUserStore';
-import { CiHome } from 'react-icons/ci';
+import { PageConfig } from '../types';
 
 const Container = styled.header`
   grid-area: header;
@@ -47,33 +46,7 @@ const Blank = styled.div`
   flex-basis: 40px;
 `
 
-export default function LayoutHeader() {
-  const location = useLocation();
-  const params = useParams();
-
-  const path = String(params.path);
-
-  const [{ user }] = useUserStore();
-
-  const isEditSizePage = useMatch('/mysize/:id/edit');
-  const isEditProfilePage = useMatch('/mypage/:id/edit');
-  const isEditProfile = useMatch('/mypage/:id/edit/:editField')
-  const isMyPage = useMatch('/mypage');
-
-  const defaultPage = {
-    pageTitle: '', homeButton: false, backSpace: false, showMenu: false
-  }
-
-  let page = PAGES[location.pathname] || defaultPage;
-
-  if (isEditSizePage) page = PAGES['/mysize/:id/edit'];
-  if (isEditProfilePage) page = PAGES['/mypage/:id/edit'];
-  if (isMyPage && user) page.pageTitle = `${user.name}님의 페이지`;
-  if (isEditProfile && user) {
-    page = PAGES['/mypage/:id/edit/:editField'];
-    page.pageTitle = USERFIELDS[path] ? `${USERFIELDS[path]} 변경` : ''
-  }
-
+export default function LayoutHeader({ page }: {page: PageConfig}) {
   return (
     <Container>
       <h1>사이즈 스쿼드</h1>

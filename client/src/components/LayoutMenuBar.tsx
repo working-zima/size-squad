@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { CiUser, CiHome, CiEdit, CiLogin, CiViewList } from "react-icons/ci";
 
-import FixedDetailSwitcher from './FixedDetailSwitcher';
-
 import useAccessToken from '../hooks/useAccessToken';
 
 const Container = styled.div.attrs({ className: 'LayoutMenuBar' })`
@@ -59,10 +57,6 @@ export default function LayoutMenuBar() {
 
   return (
     <Container>
-      {location.pathname === '/mysize'
-        ? <FixedDetailSwitcher />
-        : null
-      }
       <MenuWrap>
         <h2>Navigation Menu</h2>
         <Menu>

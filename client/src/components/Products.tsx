@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import ProductComponent from './Product';
+import Product from './Product';
 
 import { ProductResponse, Summary } from '../types';
 
@@ -43,7 +43,7 @@ export default function Products({ subCategory, products }: ProductsProps) {
         </h2>
       </SubCategoryWrapper>
       {filteredProduct.map((product) => (
-        <ProductComponent
+        <Product
           key={product._id}
           product={product}
         />

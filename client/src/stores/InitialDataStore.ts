@@ -1,7 +1,7 @@
 import { singleton } from 'tsyringe';
 import { Action, Store } from 'usestore-ts';
 
-import { Category, initialData, Size, Summary } from '../types';
+import { Category, InitialData, Size, Summary } from '../types';
 import { nullCategory, nullSize, nullSummary } from '../nullObject';
 
 import { apiService } from '../services/ApiService';
@@ -38,7 +38,7 @@ class InitialDataStore {
   }
 
   @Action()
-  private setInitialData(initialData: initialData) {
+  private setInitialData(initialData: InitialData) {
     this.categories = initialData.categories;
     this.genders = initialData.genders;
     this.sizes = initialData.sizes;

@@ -1,3 +1,5 @@
+import { PageConfig } from "./types";
+
 export const MEASUREMENT_MESSAGES: Record<string, string> = {
   totalLength: '총장',
   shoulderWidth: '어깨너비',
@@ -31,7 +33,6 @@ export const FIT_MESSAGES: Record<string, string> = {
   oversized: '오버',
 };
 
-
 export const SUBCATEGORY_MESSAGES: Record<string, string> = {
   shortSleeves: '반소매 상의',
   longSleeves: '긴소매 상의',
@@ -60,67 +61,69 @@ export const ERROR_MESSAGES: Record<string, string> = {
   CONFIRM_INVALID_MESSAGE: '비밀번호와 일치하지 않습니다.',
 }
 
-type PageConfig = {
-  pageTitle: string;
-  homeButton: boolean;
-  backSpace: boolean;
-  showMenu: boolean;
-}
-
 export const PAGES: Record<string, PageConfig> = {
   '/': {
     pageTitle: 'Size Squad',
     homeButton: false,
     backSpace: false,
-    showMenu: true
+    showMenu: true,
+    Switcher: true,
   },
   '/mysize': {
     pageTitle: 'Size Squad',
     homeButton: false,
     backSpace: false,
-    showMenu: true
+    showMenu: true,
+    Switcher: true,
   },
   '/login': {
     pageTitle: '로그인',
     homeButton: false,
     backSpace: true,
-    showMenu: false
+    showMenu: false,
+    Switcher: false,
   },
   '/signup': {
     pageTitle: '회원가입',
     homeButton: false,
     backSpace: true,
-    showMenu: false
+    showMenu: false,
+    Switcher: false,
   },
   '/mysize/:id/edit': {
     pageTitle: '사이즈 정보 변경',
     homeButton: false,
     backSpace: true,
-    showMenu: false
+    showMenu: false,
+    Switcher: false,
   },
   '/mysize/new': {
     pageTitle: '사이즈 등록',
     homeButton: false,
     backSpace: true,
-    showMenu: false
+    showMenu: false,
+    Switcher: false,
   },
   '/mypage': {
     pageTitle: '내 페이지',
     homeButton: false,
     backSpace: true,
-    showMenu: false
+    showMenu: false,
+    Switcher: true,
   },
   '/mypage/:id/edit': {
     pageTitle: '회원 정보 변경',
     homeButton: true,
     backSpace: true,
-    showMenu: false
+    showMenu: false,
+    Switcher: false,
   },
   '/mypage/:id/edit/:editField': {
     pageTitle: '특정 회원 정보 변경',
     homeButton: true,
     backSpace: true,
-    showMenu: false
+    showMenu: false,
+    Switcher: false,
   }
 }
 

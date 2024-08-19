@@ -48,10 +48,7 @@ type ButtonMoreProps = {
 const ButtonMore = styled.button<ButtonMoreProps>`
   position: absolute;
   right: 10px;
-  bottom: ${props => props.isCollapsed
-      ? `15px`
-      : `10px`
-    };
+  bottom: ${props => props.isCollapsed ? `15px` : `10px`};
   border: 0;
   background-color: transparent;
   width: 5px;

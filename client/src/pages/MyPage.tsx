@@ -6,22 +6,26 @@ import AccessDeniedPage from "./AccessDeniedPage";
 
 import LineClampedText from "../components/ui/LineClamp";
 import Button from "../components/ui/Button";
+import LoadingSpinner from "../components/ui/LoadingSpinner";
+import Product from "../components/Product";
 
 import useAccessToken from "../hooks/useAccessToken";
 import useFetchUserStore from "../hooks/useFetchUserStore";
 import useFetchProducts from "../hooks/useFetchProducts";
 
 import { apiService } from "../services/ApiService";
-import LoadingSpinner from "../components/ui/LoadingSpinner";
+import { GENDER_MESSAGES } from "../constants";
 
 const Container = styled.div`
-  padding: ${props => props.theme.sizes.contentPadding};
-  background-color: ${(props) => props.theme.colors.backgroundColor};
+  overflow: hidden;
 `
 
 const ProfileWrapper = styled.div`
   font-size: 1.3rem;
   line-height: ${(props) => props.theme.sizes.lineHeight};
+  background-color: ${(props) => props.theme.colors.backgroundColor};
+  padding: ${props => props.theme.sizes.contentPadding};
+  padding-bottom: 0;
 `
 
 const UserSummary = styled.div`
@@ -35,10 +39,14 @@ const UserSummary = styled.div`
   }
 
   span {
-    padding-top: 4px;
+    padding: 4px 0;
     font-weight: 400;
     color: ${props => props.theme.colors.unSelectedText};
   }
+`
+
+const Description = styled.div`
+  font-weight: 500;
 `
 
 const ButtonWrapper = styled.div`
@@ -84,6 +92,11 @@ const ButtonLike = styled.div`
   }
 `
 
+const ProductWrapper = styled.div`
+  background-color: ${props => props.theme.colors.primaryWhite};
+  margin: 0 10px;
+`
+
 export default function MyPage() {
   const navigate = useNavigate();
 
@@ -113,27 +126,41 @@ export default function MyPage() {
       <ProfileWrapper>
         <UserSummary>
           <div>{user?.name}</div>
-          <span>{user.gender?.name}</span>
-          <span>{user?.height}cm / {user.weight}kg</span>
+          <span>
+            {user?.height}cm / {user.weight}kg · {GENDER_MESSAGES[user.gender?.name]}
+          </span>
         </UserSummary>
-        <LineClampedText
-          text={[user.description
-            ? user.description
-            : '간단한 체형 정보를 적어보세요'
-          ]}
-          lines={1}
-        />
+        <Description>
+          <LineClampedText
+            text={[user.description
+              ? user.description
+              : '간단한 체형 정보를 적어보세요'
+            ]}
+            lines={1}
+          />
+        </Description>
+        <ButtonWrapper>
+          <ButtonLike>
+            <Link to={`/mypage/${user._id}/edit`}>
+              회원정보 변경
+            </Link>
+          </ButtonLike>
+          <Button onClick={handleClickLogout}>
+            로그아웃
+          </Button>
+        </ButtonWrapper>
       </ProfileWrapper>
-      <ButtonWrapper>
-        <ButtonLike>
-          <Link to={`/mypage/${user._id}/edit`}>
-            회원정보 변경
-          </Link>
-        </ButtonLike>
-        <Button onClick={handleClickLogout}>
-          로그아웃
+      <ProductWrapper>
+        {products.map(product => (
+          <Product
+            key={product._id}
+            product={product}
+          />
+        ))}
+        <Button>
+          더보기
         </Button>
-      </ButtonWrapper>
+      </ProductWrapper>
     </Container>
   )
 }

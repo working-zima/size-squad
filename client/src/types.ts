@@ -85,9 +85,17 @@ export type ProductResponse = {
   description: string;
 }
 
-export type initialData = {
+export type InitialData = {
   categories: Category[];
   genders: Summary[];
   sizes: Size[];
   fits: Summary[];
+}
+
+export type PageConfig = {
+  pageTitle: string;
+  homeButton: boolean;
+  backSpace: boolean;
+  showMenu: boolean;
+  Switcher: boolean;
 }

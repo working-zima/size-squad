@@ -41,9 +41,9 @@ export default function MySizeListPage() {
       || []
     : allSubCategories;
 
-    if (loading) (<LoadingSpinner />);
     if (!accessToken) return (<AccessDeniedPage />);
     if (error) return (<ErrorPage errorMessage={errorMessage}/>);
+    if (loading) (<LoadingSpinner />);
 
   if(!products.length) {
     return (

@@ -82,7 +82,7 @@ export default function MySizeNewForm({ onComplete }: MySizeNewFormProps) {
     store.reset();
     closeModal();
   };
-  console.log(valid)
+
   return (
     <Container>
       <h2>New Product</h2>
