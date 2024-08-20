@@ -17,7 +17,7 @@ const LoadingWrap = styled.div`
 const Spinner = styled.div`
   width: 40px;
   height: 40px;
-  border: 5px solid ${props => props.theme.colors.PrimaryBlue};
+  border: 5px solid ${props => props.theme.colors.primaryWhite};
   border-top: 5px solid transparent;
   border-radius: 50%;
   animation: rotate 1s linear infinite;
@@ -36,6 +36,7 @@ const TextWrapper = styled.div`
   margin-top: 1.5rem;
   font-weight: 600;
   font-size: 2rem;
+  color: ${props => props.theme.colors.primaryWhite};
 `
 
 export default function LoadingSpinner() {

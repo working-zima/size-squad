@@ -43,7 +43,7 @@ export default function MySizeMeasurementsInput() {
             label={MEASUREMENT_MESSAGES[measurement.name]}
             placeholder={`${MEASUREMENT_MESSAGES[measurement.name]}을 입력해주세요.`}
             type="text"
-            maxLength={4}
+            maxLength={5}
             value={measurement.value}
             onChange={(value) => store.changeMeasurementValue(index, value)}
             unitType='cm'

@@ -1,15 +1,17 @@
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+
 import styled from 'styled-components';
 
 import SizeCard from './SizeCard';
 import InfoCard from './InfoCard';
 
+import { ConfirmTrigger } from './ui/modal/ModalTrigger';
+
 import { ProductResponse } from '../types';
 
 import useViewModeStore from '../hooks/useViewModeStore';
-import { Link } from 'react-router-dom';
-import { ConfirmTrigger } from './ui/modal/ModalTrigger';
 import useProductsStore from '../hooks/useProductsStore';
-import { useEffect, useState } from 'react';
 
 const Container = styled.div`
   padding: 1rem 0.1rem;
@@ -98,7 +100,7 @@ export default function Product({
     <Container>
       <InfoContainer>
         <Brand>
-          <p><h3>{product.brand}</h3></p>
+          <h3>{product.brand}</h3>
         </Brand>
         <Name>
           <p><strong>{product.name}</strong></p>
@@ -126,8 +128,9 @@ export default function Product({
         </EditDeleteWrapper>
       </InfoContainer>
       {isDescriptionView
-        ? (<InfoCard product={product} />)
-        : (<SizeCard product={product} />)}
+        ? (<SizeCard product={product} />)
+        : (<InfoCard product={product} />)
+      }
     </Container>
   );
 }

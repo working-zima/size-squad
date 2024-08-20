@@ -46,7 +46,10 @@ const Blank = styled.div`
   flex-basis: 40px;
 `
 
-export default function LayoutHeader({ page }: { page: PageConfig }) {
+export default function LayoutHeader({
+  page
+}: { page: PageConfig }) {
+
   return (
     <Container>
       <h1>사이즈 스쿼드</h1>

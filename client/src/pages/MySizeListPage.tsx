@@ -26,13 +26,16 @@ export default function MySizeListPage() {
   const subCategoryId = params.get('category2DepthCodes') ?? undefined;
 
   const {
-    categories, allSubCategories, loading: categoriesLoading
+    categories,
+    allSubCategories,
+    loading: categoriesLoading
   } = useFetchCategories();
   const {
-    products, error, loading: productsLoading, errorMessage
-  } = useFetchProducts(
-    { categoryId, subCategoryId }
-  );
+    products,
+    error,
+    loading: productsLoading,
+    errorMessage
+  } = useFetchProducts({ categoryId, subCategoryId });
 
   const loading = categoriesLoading || productsLoading;
 
@@ -43,7 +46,7 @@ export default function MySizeListPage() {
 
   if (!accessToken) return (<AccessDeniedPage />);
   if (error) return (<ErrorPage errorMessage={errorMessage} />);
-  if (loading) (<LoadingSpinner />);
+  if (loading) return (<LoadingSpinner />);
 
   if (!products.length) {
     return (

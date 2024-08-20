@@ -57,7 +57,6 @@ export default function SubCategoryBar(
   { subCategories }: SubCategoryBarProps,
 ) {
   const [activeBtn, setActiveBtn] = useState('all');
-
   const navigate = useNavigate();
 
   const [params] = useSearchParams();
