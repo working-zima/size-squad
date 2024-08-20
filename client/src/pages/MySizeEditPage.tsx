@@ -25,6 +25,6 @@ export default function MySizeEditPage() {
   }
 
   return (
-    <MySizeEditForm onComplete={handleComplete}/>
+    <MySizeEditForm onComplete={handleComplete} />
   );
 }

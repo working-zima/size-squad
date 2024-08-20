@@ -13,7 +13,7 @@ export default function MySizeSizeBox() {
     return sizeElem.gender._id === gender._id
   });
 
-  if(!sizeList.length) sizeList = [nullSize];
+  if (!sizeList.length) sizeList = [nullSize];
 
   return (
     <ComboBox

@@ -67,27 +67,27 @@ class ProductFormStore {
 
   @Action()
   changeAuthor(author: Summary) {
-    this.product = {...this.product ,author};
+    this.product = { ...this.product, author };
   }
 
   @Action()
   changeName(name: string) {
-    this.product = {...this.product, name};
+    this.product = { ...this.product, name };
   }
 
   @Action()
   changeBrand(brand: string) {
-    this.product = {...this.product, brand};
+    this.product = { ...this.product, brand };
   }
 
   @Action()
   changeCategory(category: Summary) {
-    this.product = {...this.product, category};
+    this.product = { ...this.product, category };
   }
 
   @Action()
   changeSubCategory(subCategory: Summary) {
-    this.product = {...this.product, subCategory};
+    this.product = { ...this.product, subCategory };
   }
 
   @Action()
@@ -97,17 +97,17 @@ class ProductFormStore {
 
   @Action()
   changeGender(gender: Summary) {
-    this.product = {...this.product, gender};
+    this.product = { ...this.product, gender };
   }
 
   @Action()
   changeSize(size: Summary) {
-    this.product = {...this.product, size};
+    this.product = { ...this.product, size };
   }
 
   @Action()
   changeFit(fit: Summary) {
-    this.product = {...this.product, fit};
+    this.product = { ...this.product, fit };
   }
 
   @Action()
@@ -128,8 +128,8 @@ class ProductFormStore {
     this.product = {
       ...this.product,
       measurements: update(this.product.measurements, index, (measurement) => ({
-          ...measurement, _id, name, value
-        })
+        ...measurement, _id, name, value
+      })
       ),
     };
   }

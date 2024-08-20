@@ -67,9 +67,9 @@ const ButtonMore = styled.button<ButtonMoreProps>`
     border-style: solid;
     border-color: transparent #333 #333 transparent;
     transform: ${props => props.isCollapsed
-      ? `rotate(45deg)`
-      : `rotate(225deg);`
-    };
+    ? `rotate(45deg)`
+    : `rotate(225deg);`
+  };
     vertical-align: middle;
   }
 `;
@@ -102,17 +102,17 @@ const LineClampedText = ({ text, lines }: LineClampedText) => {
       lines={lines}
       onClick={() => setIsCollapsed(prev => !prev)}
     >
-        <TextClone ref={cloneRef}>
-            {text}
-          </TextClone>
-          <Text ref={elemRef} className='text'>
-            {text}
-          </Text>
+      <TextClone ref={cloneRef}>
+        {text}
+      </TextClone>
+      <Text ref={elemRef} className='text'>
+        {text}
+      </Text>
       {isClamped
         && <ButtonMore
           isCollapsed={isCollapsed}
         />
-        }
+      }
     </Content>
   );
 };

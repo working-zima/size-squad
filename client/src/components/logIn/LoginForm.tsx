@@ -66,8 +66,8 @@ export default function LoginForm() {
     event.preventDefault();
     store.login();
 
-    if(!isAutoLogin) localStorage.removeItem('accessToken')
-      else sessionStorage.removeItem('accessToken')
+    if (!isAutoLogin) localStorage.removeItem('accessToken')
+    else sessionStorage.removeItem('accessToken')
   };
 
   return (
@@ -83,7 +83,7 @@ export default function LoginForm() {
           handleResetEmail={handleResetEmail}
           handleShowPassword={handleShowPassword}
           handleResetPassword={handleResetPassword}
-          />
+        />
         <LoginButton
           valid={valid}
           isAutoLogin={isAutoLogin}
@@ -92,7 +92,7 @@ export default function LoginForm() {
         <Divider>
           또는
         </Divider>
-        <LoginUtils error={error} errorMessage={errorMessage}/>
+        <LoginUtils error={error} errorMessage={errorMessage} />
       </form>
     </Container>
   );

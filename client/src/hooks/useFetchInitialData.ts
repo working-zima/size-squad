@@ -9,7 +9,7 @@ export default function useFetchInitialData() {
   ] = useInitialDataStore();
 
   useEffect(() => {
-      store.fetchInitialData();
+    store.fetchInitialData();
   }, [store])
 
   return { categories, genders, fits, sizes, loading, store }

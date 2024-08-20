@@ -6,7 +6,7 @@ export default function useFetchFits() {
   const [{ fits, error, loading }, store] = useFitsStore();
 
   useEffect(() => {
-      store.fetchFits();
+    store.fetchFits();
   }, [store])
 
   return { fits, error, loading }

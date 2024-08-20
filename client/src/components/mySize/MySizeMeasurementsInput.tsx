@@ -18,7 +18,7 @@ export default function MySizeMeasurementsInput() {
 
   const selectedMeasurements = categories
     .find((categoryElem) => categoryElem._id === category._id)?.measurements
-      || [];
+    || [];
 
   useEffect(() => {
     if (category._id !== prevCategoryId) {
@@ -47,10 +47,10 @@ export default function MySizeMeasurementsInput() {
             value={measurement.value}
             onChange={(value) => store.changeMeasurementValue(index, value)}
             unitType='cm'
-            onReset={() => {handleResetMeasurement(index)}}
+            onReset={() => { handleResetMeasurement(index) }}
           />
-        )
-      )}
+        ))
+      }
     </>
   )
 }

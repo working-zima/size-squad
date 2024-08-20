@@ -16,7 +16,7 @@ type BackSpaceProps = {
   children: JSX.Element
 }
 
-export default function BackSpace({children}: BackSpaceProps) {
+export default function BackSpace({ children }: BackSpaceProps) {
   const navigate = useNavigate();
   const onClickBtn = () => {
     navigate(-1);

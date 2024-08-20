@@ -4,12 +4,12 @@ type SignUpHeightInputProps = {
   label?: string
   placeholder?: string
   height: number
-  changeHeight:(value: number) => void
+  changeHeight: (value: number) => void
 }
 
 export default function SignUpHeightInput({
-  label="",
-  placeholder="",
+  label = "",
+  placeholder = "",
   height,
   changeHeight
 }: SignUpHeightInputProps) {

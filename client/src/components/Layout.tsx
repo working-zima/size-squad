@@ -18,8 +18,7 @@ type ContainerProps = {
 
 const Container = styled.div<ContainerProps>`
   display: grid;
-  grid-template-rows: ${
-    ({ showMenu }) => (showMenu ? '50px auto auto 50px' : '50px auto')
+  grid-template-rows: ${({ showMenu }) => (showMenu ? '50px auto auto 50px' : '50px auto')
   };
   grid-template-columns: 100%;
   grid-template-areas:
@@ -42,35 +41,35 @@ export default function Layout() {
   useCheckAccessToken();
   const location = useLocation();
   const params = useParams();
-    const path = String(params.path);
+  const path = String(params.path);
 
-    const [{ user }] = useUserStore();
+  const [{ user }] = useUserStore();
 
-    const isEditSizePage = useMatch('/mysize/:id/edit');
-    const isEditProfilePage = useMatch('/mypage/:id/edit');
-    const isEditProfile = useMatch('/mypage/:id/edit/:editField')
-    const isMyPage = useMatch('/mypage');
+  const isEditSizePage = useMatch('/mysize/:id/edit');
+  const isEditProfilePage = useMatch('/mypage/:id/edit');
+  const isEditProfile = useMatch('/mypage/:id/edit/:editField')
+  const isMyPage = useMatch('/mypage');
 
-    let page = PAGES[location.pathname]
+  let page = PAGES[location.pathname]
     || {
-      pageTitle: '',
-      homeButton: false,
-      backSpace: false,
-      showMenu: false ,
-      Switcher: false,
-    };
+    pageTitle: '',
+    homeButton: false,
+    backSpace: false,
+    showMenu: false,
+    Switcher: false,
+  };
 
-    if (isEditSizePage) page = PAGES['/mysize/:id/edit'];
-    if (isEditProfilePage) page = PAGES['/mypage/:id/edit'];
-    if (isMyPage && user) page.pageTitle = `${user.name}님의 페이지`;
-    if (isEditProfile && user) {
-      page = PAGES['/mypage/:id/edit/:editField'];
-      page.pageTitle = USERFIELDS[path] ? `${USERFIELDS[path]} 변경` : ''
-    }
+  if (isEditSizePage) page = PAGES['/mysize/:id/edit'];
+  if (isEditProfilePage) page = PAGES['/mypage/:id/edit'];
+  if (isMyPage && user) page.pageTitle = `${user.name}님의 페이지`;
+  if (isEditProfile && user) {
+    page = PAGES['/mypage/:id/edit/:editField'];
+    page.pageTitle = USERFIELDS[path] ? `${USERFIELDS[path]} 변경` : ''
+  }
 
   return (
     <Container showMenu={page.showMenu}>
-      <LayoutHeader page={page}/>
+      <LayoutHeader page={page} />
       <Main>
         <Outlet />
       </Main>
@@ -79,7 +78,7 @@ export default function Layout() {
         ? <FixedDetailSwitcher />
         : null
       }
-      {page.showMenu && <LayoutMenuBar/>}
+      {page.showMenu && <LayoutMenuBar />}
     </Container>
   );
 }

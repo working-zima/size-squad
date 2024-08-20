@@ -20,8 +20,8 @@ type CategoryBarProps = {
 }
 
 export default function CategoryBar({
-    categories, subCategories
-  }: CategoryBarProps) {
+  categories, subCategories
+}: CategoryBarProps) {
 
   return (
     <Container>

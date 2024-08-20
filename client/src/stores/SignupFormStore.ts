@@ -81,11 +81,11 @@ class SignupFormStore {
 
   async validateAndCheckEmail(email: string) {
     this.validateEmail(email);
-    if(this.isEmailValid) {
+    if (this.isEmailValid) {
       try {
         const isDuplicated = await apiService.checkUserEmail({ email });
         this.changeIsEmailDuplicated(!!isDuplicated);
-      } catch(error) {
+      } catch (error) {
         const typedError = error as { message: string };
         this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
 
@@ -108,11 +108,11 @@ class SignupFormStore {
 
   async validateAndCheckName(name: string) {
     this.validateName(name);
-    if(this.isNameValid) {
+    if (this.isNameValid) {
       try {
         const isDuplicated = await apiService.checkUserName({ name });
         this.changeIsNameDuplicated(!!isDuplicated);
-      } catch(error) {
+      } catch (error) {
         const typedError = error as { message: string };
         this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
 
@@ -147,12 +147,12 @@ class SignupFormStore {
   // 상태 변경
   @Action()
   changeEmail(email: string) {
-    this.user = {...this.user, email};
+    this.user = { ...this.user, email };
   }
 
   @Action()
   changeName(name: string) {
-    this.user = {...this.user, name};
+    this.user = { ...this.user, name };
   }
 
   @Action()
@@ -162,7 +162,7 @@ class SignupFormStore {
 
   @Action()
   changePassword(password: string) {
-    this.user = {...this.user, password};
+    this.user = { ...this.user, password };
   }
 
   @Action()
@@ -172,22 +172,22 @@ class SignupFormStore {
 
   @Action()
   changeGender(gender: Summary) {
-    this.user = {...this.user, gender};
+    this.user = { ...this.user, gender };
   }
 
   @Action()
   changeHeight(height: number) {
-    this.user = {...this.user, height};
+    this.user = { ...this.user, height };
   }
 
   @Action()
   changeWeight(weight: number) {
-    this.user = {...this.user, weight};
+    this.user = { ...this.user, weight };
   }
 
   @Action()
   changeDescription(description: string) {
-    this.user = {...this.user, description};
+    this.user = { ...this.user, description };
   }
 
   @Action()

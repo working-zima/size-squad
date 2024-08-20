@@ -41,7 +41,7 @@ const TextWrapper = styled.div`
 export default function LoadingSpinner() {
   return (
     <LoadingWrap>
-      <Spinner/>
+      <Spinner />
       <TextWrapper>
         <p>로딩 중...</p>
       </TextWrapper>

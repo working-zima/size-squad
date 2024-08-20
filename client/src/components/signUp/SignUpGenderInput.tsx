@@ -12,7 +12,7 @@ type SignUpGenderInputProps = {
 }
 
 export default function SignUpGenderInput({
-  label="",
+  label = "",
   genders,
   gender,
   changeGender

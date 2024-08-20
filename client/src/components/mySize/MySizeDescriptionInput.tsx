@@ -1,7 +1,6 @@
 import { TextareaBox } from '../ui/textbox/TextBoxComponents';
 
 import useProductFormStore from '../../hooks/useProductFormStore';
-import { useEffect } from 'react';
 
 export default function MySizeNewDescription() {
   const [{ product: { description } }, store] = useProductFormStore();

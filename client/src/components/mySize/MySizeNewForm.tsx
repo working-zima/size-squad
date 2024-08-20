@@ -87,8 +87,8 @@ export default function MySizeNewForm({ onComplete }: MySizeNewFormProps) {
     <Container>
       <h2>New Product</h2>
       <Form onSubmit={handleSubmit}>
-        <MySizeBrandInput maxLength={29}/>
-        <MySizeNameInput maxLength={29}/>
+        <MySizeBrandInput maxLength={29} />
+        <MySizeNameInput maxLength={29} />
         <MySizeCategoryBox />
         <MySizeGenderBox
           gender={gender}

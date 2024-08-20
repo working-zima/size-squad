@@ -57,11 +57,11 @@ export default function EditDescription() {
   return (
     <>
       <SignUpDescriptionInput
-          label="체형"
-          placeholder="체형을 100자 이내로 입력해주세요."
-          description={user.description}
-          changeDescription={(value) => store.changeDescription(value)}
-        />
+        label="체형"
+        placeholder="체형을 100자 이내로 입력해주세요."
+        description={user.description}
+        changeDescription={(value) => store.changeDescription(value)}
+      />
       <ButtonWrapper>
         <ConfirmTrigger
           buttonText="변경"

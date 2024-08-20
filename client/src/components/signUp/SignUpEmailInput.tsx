@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
 import styled from "styled-components";
-import { CiCircleRemove } from "react-icons/ci";
 
 import useSignupFormStore from "../../hooks/useSignupFormStore";
 import useDebounce from "../../hooks/useDebounce";
@@ -40,11 +39,11 @@ type SignUpEmailInputProps = {
 }
 
 export default function SignUpEmailInput({
-  label="",
-  placeholder=""
+  label = "",
+  placeholder = ""
 }: SignUpEmailInputProps) {
   const [
-    { user: {email}, isEmailDuplicated, isEmailValid }, store
+    { user: { email }, isEmailDuplicated, isEmailValid }, store
   ] = useSignupFormStore();
   const [isTouched, setIsTouched] = useState(false);
 

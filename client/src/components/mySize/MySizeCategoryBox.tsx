@@ -16,7 +16,7 @@ export default function MySizeCategoryBox() {
   let subCategories = categories
     .find(cat => cat._id === category._id)?.subCategories;
 
-  if(!subCategories?.length) subCategories = [nullSummary];
+  if (!subCategories?.length) subCategories = [nullSummary];
 
   useEffect(() => {
     if (!category || !categories) return;
@@ -28,7 +28,7 @@ export default function MySizeCategoryBox() {
     if (isAvailableSubs) return;
 
     const selectedCategory = categories
-    .find(cat => cat._id === category._id) || nullCategory;
+      .find(cat => cat._id === category._id) || nullCategory;
 
     store.changeSubCategory(selectedCategory?.subCategories[0])
     store.changeType(selectedCategory?.type)
@@ -43,7 +43,7 @@ export default function MySizeCategoryBox() {
         itemToId={(item) => item?._id || ''}
         itemToText={(item) => CATEGORY_MESSAGES[item?.name] || ''}
         onChange={(value) => value
-          && store.changeCategory({_id: value._id, name: value.name})}
+          && store.changeCategory({ _id: value._id, name: value.name })}
       />
       <ComboBox
         label="세부 카테고리"

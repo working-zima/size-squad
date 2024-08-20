@@ -61,28 +61,28 @@ export default function LayoutMenuBar() {
         <h2>Navigation Menu</h2>
         <Menu>
           <Link to="/">
-            <div><CiHome size="24"/></div>
+            <div><CiHome size="24" /></div>
             <span>홈</span>
           </Link>
           <Link to="/mysize">
-            <div><CiViewList size="24"/></div>
+            <div><CiViewList size="24" /></div>
             <span>목록</span>
           </Link>
           {!!accessToken && (
             <Link to="/mysize/new">
-              <div><CiEdit size="24"/></div>
+              <div><CiEdit size="24" /></div>
               <span>작성</span>
             </Link>
           )}
           <Link to={!!accessToken ? "/mypage" : "/login"}>
-          {!!accessToken ? (
+            {!!accessToken ? (
               <>
-                <div><CiUser size="24"/></div>
+                <div><CiUser size="24" /></div>
                 <span>마이</span>
               </>
             ) : (
               <>
-                <div><CiLogin size="24"/></div>
+                <div><CiLogin size="24" /></div>
                 <span>로그인</span>
               </>
             )}

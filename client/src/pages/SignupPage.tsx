@@ -28,7 +28,7 @@ export default function SignupPage() {
 
   if (error) {
     return (
-      <ErrorPage errorMessage={errorMessage}/>
+      <ErrorPage errorMessage={errorMessage} />
     );
   }
 
@@ -37,6 +37,6 @@ export default function SignupPage() {
   }
 
   return (
-    <SignUpForm genders={genders}/>
+    <SignUpForm genders={genders} />
   )
 }

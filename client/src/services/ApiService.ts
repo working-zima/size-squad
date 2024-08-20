@@ -133,7 +133,7 @@ export default class ApiService {
   }
 
   async fetchProduct({ productId }: { productId: string })
-  : Promise<ProductResponse> {
+    : Promise<ProductResponse> {
     const { data } = await this.instance.get(`/products/${productId}`);
     const { product } = data;
 
@@ -170,7 +170,7 @@ export default class ApiService {
   async login({
     email,
     password
-  } : {
+  }: {
     email: string,
     password: string
   }): Promise<string> {
@@ -193,7 +193,7 @@ export default class ApiService {
     height,
     weight,
     description
-  } : {
+  }: {
     email: string;
     name: string;
     password: string;
@@ -241,7 +241,7 @@ export default class ApiService {
     return id;
   }
 
-  async checkUserName({ name } : {
+  async checkUserName({ name }: {
     name: string;
   }): Promise<string> {
     const { data } = await this.instance.get(`/users/name-valid/${name}`)
@@ -305,7 +305,7 @@ export default class ApiService {
   }
 
   async fetchCategories({ categoryId }: {
-    categoryId? : string
+    categoryId?: string
   } = {}): Promise<Category[]> {
     const { data } = await this.instance.get('/categories', {
       params: { categoryId },

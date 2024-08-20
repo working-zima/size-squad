@@ -1,5 +1,3 @@
-import useSignupFormStore from "../../hooks/useSignupFormStore";
-
 import { TextareaBox } from "../ui/textbox/TextBoxComponents";
 
 type SignUpDescriptionInputProps = {

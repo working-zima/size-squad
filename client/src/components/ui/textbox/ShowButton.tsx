@@ -14,10 +14,10 @@ export default function ShowButton({
 
   return (
     <Button onClick={handleShowPassword}>
-    {isShowPw
-      ? <CiRead size="18" fill='#6e6e6e'/>
-      : <CiUnread size="18" fill='#6e6e6e'/>
-    }
-  </Button>
+      {isShowPw
+        ? <CiRead size="18" fill='#6e6e6e' />
+        : <CiUnread size="18" fill='#6e6e6e' />
+      }
+    </Button>
   )
 }

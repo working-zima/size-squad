@@ -45,7 +45,7 @@ export default function MyProfileInputPage() {
     return <AccessDeniedPage />
   }
 
-  if(path === 'password') {
+  if (path === 'password') {
     return (
       <Container>
         <EditPassword />
@@ -53,7 +53,7 @@ export default function MyProfileInputPage() {
     )
   }
 
-  if(path === 'gender') {
+  if (path === 'gender') {
     return (
       <Container>
         <EditGender />
@@ -61,7 +61,7 @@ export default function MyProfileInputPage() {
     )
   }
 
-  if(path === 'height') {
+  if (path === 'height') {
     return (
       <Container>
         <EditHeight />
@@ -69,7 +69,7 @@ export default function MyProfileInputPage() {
     )
   }
 
-  if(path === 'weight') {
+  if (path === 'weight') {
     return (
       <Container>
         <EditWeight />
@@ -77,7 +77,7 @@ export default function MyProfileInputPage() {
     )
   }
 
-  if(path === 'description') {
+  if (path === 'description') {
     return (
       <Container>
         <EditDescription />

@@ -7,7 +7,7 @@ import ComboBox from "../ui/ComboBox";
 
 export default function MySizeFitBox() {
   const [{ product: { fit } }, store] = useProductFormStore();
-  const [{fits}] = useInitialDataStore()
+  const [{ fits }] = useInitialDataStore()
 
   return (
     <ComboBox

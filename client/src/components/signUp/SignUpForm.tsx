@@ -72,7 +72,7 @@ type SignUpFormProps = {
   genders: Summary[];
 }
 
-export default function SignUpForm({ genders }: SignUpFormProps){
+export default function SignUpForm({ genders }: SignUpFormProps) {
   const { setAccessToken } = useAccessToken();
 
   const [{ user, valid, error, accessToken }, store] = useSignupFormStore();
@@ -105,7 +105,7 @@ export default function SignUpForm({ genders }: SignUpFormProps){
           pwdLabel="비밀번호"
           pwdPlaceholder="영문, 숫자, 특수문자 포함 8 ~ 16자리를 사용합니다."
           confirmPlaceholder="비밀번호를 다시 입력해주세요."
-          />
+        />
         <SignUpGenderInput
           genders={genders}
           gender={user.gender}

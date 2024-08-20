@@ -41,7 +41,7 @@ type TextareaInputProps = {
   onChange?: (value: string) => void;
 }
 
-export default function TextareaInput ({
+export default function TextareaInput({
   idRef,
   placeholder = undefined,
   lines = 3,
@@ -73,8 +73,8 @@ export default function TextareaInput ({
       );
 
       if (onChange) onChange(val);
-        setIsTouched(true);
-      };
+      setIsTouched(true);
+    };
 
     if (elem && defaultValue) {
       elem.value = defaultValue;

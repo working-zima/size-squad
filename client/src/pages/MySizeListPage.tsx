@@ -38,25 +38,25 @@ export default function MySizeListPage() {
 
   const subCategories = categoryId
     ? categories.find(category => category._id === categoryId)?.subCategories
-      || []
+    || []
     : allSubCategories;
 
-    if (!accessToken) return (<AccessDeniedPage />);
-    if (error) return (<ErrorPage errorMessage={errorMessage}/>);
-    if (loading) (<LoadingSpinner />);
+  if (!accessToken) return (<AccessDeniedPage />);
+  if (error) return (<ErrorPage errorMessage={errorMessage} />);
+  if (loading) (<LoadingSpinner />);
 
-  if(!products.length) {
+  if (!products.length) {
     return (
       <Container>
-        <CategoryBar categories={categories} subCategories={subCategories}/>
-        <NoListPage/>
+        <CategoryBar categories={categories} subCategories={subCategories} />
+        <NoListPage />
       </Container>
     )
   }
 
   return (
     <Container>
-      <CategoryBar categories={categories} subCategories={subCategories}/>
+      <CategoryBar categories={categories} subCategories={subCategories} />
       {subCategories.map((subCategory) => (
         <Products
           key={subCategory._id}

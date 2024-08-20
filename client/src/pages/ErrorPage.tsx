@@ -42,8 +42,8 @@ export default function ErrorPage({
   return (
     <Container>
       <MessageBox>
-      <h2>{errorMessage}</h2>
-      <p>잠시 후에 다시 시도해 주세요.</p>
+        <h2>{errorMessage}</h2>
+        <p>잠시 후에 다시 시도해 주세요.</p>
       </MessageBox>
       <Link to='/'>
         <Button>

@@ -29,7 +29,7 @@ const Container = styled.div<ContainerProps>`
 
 `
 
-export default function Divider({ children }: {children?: React.ReactNode}){
+export default function Divider({ children }: { children?: React.ReactNode }) {
   return (
     <Container hasChildren={!!children}>
       {children}

@@ -75,11 +75,11 @@ export default function SignupCompletePage() {
   return (
     <Container>
       <CheckMark>
-        <CiCircleCheck/>
+        <CiCircleCheck />
       </CheckMark>
       <MessageBox>
         <h1>회원가입 완료</h1>
-        <p>회원가입이 성공적으로 완료되었습니다.<br/>로그인 후 이용해 주세요.</p>
+        <p>회원가입이 성공적으로 완료되었습니다.<br />로그인 후 이용해 주세요.</p>
       </MessageBox>
       <ButtonContainer>
         <Button onClick={navegateHomeHandler}>홈으로</Button>

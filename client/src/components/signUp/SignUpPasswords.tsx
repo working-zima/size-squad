@@ -8,9 +8,9 @@ type SignUpPasswordProps = {
 }
 
 export default function SignUpPasswords({
-  pwdLabel="",
-  pwdPlaceholder="",
-  confirmPlaceholder=""
+  pwdLabel = "",
+  pwdPlaceholder = "",
+  confirmPlaceholder = ""
 }: SignUpPasswordProps) {
 
   return (

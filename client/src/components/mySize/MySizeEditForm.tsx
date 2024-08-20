@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { FormEvent, MouseEvent } from 'react'
 
 import styled from 'styled-components';
 
@@ -66,7 +66,7 @@ export default function MySizeEditForm({ onComplete }: MySizeEditFormProps) {
   const [{ product, valid, errorMessage }, store] = useProductFormStore();
   const { modalRef, openModal, closeModal } = useModal();
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
       await store.update();
@@ -77,7 +77,7 @@ export default function MySizeEditForm({ onComplete }: MySizeEditFormProps) {
     }
   };
 
-  const handleConfirm = (event?: React.MouseEvent) => {
+  const handleConfirm = (event?: MouseEvent) => {
     if (event) event.preventDefault();
     store.reset();
     closeModal();
@@ -87,11 +87,11 @@ export default function MySizeEditForm({ onComplete }: MySizeEditFormProps) {
     <Container>
       <h2>Edit Size</h2>
       <Form onSubmit={handleSubmit}>
-        <MySizeBrandInput maxLength={29}/>
-        <MySizeNameInput maxLength={29}/>
+        <MySizeBrandInput maxLength={29} />
+        <MySizeNameInput maxLength={29} />
         <MySizeCategoryBox />
         <MySizeGenderBox
-          gender={ product.gender }
+          gender={product.gender}
           changeGender={(value) => store.changeGender(value)}
         />
         <MySizeSizeBox />

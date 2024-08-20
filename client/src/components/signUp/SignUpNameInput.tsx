@@ -40,8 +40,8 @@ type SignUpNameInputProps = {
 }
 
 export default function SignUpNameInput({
-  label="",
-  placeholder=""
+  label = "",
+  placeholder = ""
 }: SignUpNameInputProps) {
   const [
     { user: { name }, isNameDuplicated, isNameValid }, store
@@ -64,7 +64,7 @@ export default function SignUpNameInput({
   }
 
   const errorMessage = isTouched
-  ? ErrorMessage({ name, isNameDuplicated, isNameValid }) : null;
+    ? ErrorMessage({ name, isNameDuplicated, isNameValid }) : null;
 
   return (
     <Container>

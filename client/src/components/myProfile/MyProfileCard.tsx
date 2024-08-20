@@ -73,7 +73,7 @@ const EditLink = styled.div`
   }
 `
 
-export default function MyProfileCard ({
+export default function MyProfileCard({
   label,
   value,
   path,

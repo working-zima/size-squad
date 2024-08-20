@@ -46,17 +46,17 @@ const Blank = styled.div`
   flex-basis: 40px;
 `
 
-export default function LayoutHeader({ page }: {page: PageConfig}) {
+export default function LayoutHeader({ page }: { page: PageConfig }) {
   return (
     <Container>
       <h1>사이즈 스쿼드</h1>
       {page.backSpace ? (
-          <BackSpace>
-            <LiaAngleLeftSolid size="24"/>
-          </BackSpace>
-        ) : (
-          <Blank/>
-        )
+        <BackSpace>
+          <LiaAngleLeftSolid size="24" />
+        </BackSpace>
+      ) : (
+        <Blank />
+      )
       }
       <h2>
         <p>
@@ -64,14 +64,14 @@ export default function LayoutHeader({ page }: {page: PageConfig}) {
         </p>
       </h2>
       {page.homeButton ? (
-          <Link to="/">
-            <HomeWrapper>
-              <CiHome size="24"/>
-            </HomeWrapper>
-          </Link>
-        ) : (
-          <Blank/>
-        )
+        <Link to="/">
+          <HomeWrapper>
+            <CiHome size="24" />
+          </HomeWrapper>
+        </Link>
+      ) : (
+        <Blank />
+      )
       }
     </Container>
   );

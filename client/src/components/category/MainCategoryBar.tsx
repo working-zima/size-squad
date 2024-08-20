@@ -26,7 +26,7 @@ const Container = styled.div`
   }
 `;
 
-const CustomButton = styled(Button)<{ active: boolean }>`
+const CustomButton = styled(Button) <{ active: boolean }>`
   display: flex;
   align-items: center;
   position: relative;

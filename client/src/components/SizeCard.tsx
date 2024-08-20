@@ -33,7 +33,7 @@ const Cell = styled.div<CellProps>`
   position: ${props => (props.gridColumn === 1 ? 'sticky' : 'static')};
   left: ${props => (props.gridColumn === 1 ? '0' : 'auto')};
   z-index: ${props => (props.gridColumn === 1 ? '1' : 'auto')};
-  background-color: ${ props => (props.gridRow === 1
+  background-color: ${props => (props.gridRow === 1
     ? props.theme.colors.backgroundColor
     : props.theme.colors.primaryWhite
   )};

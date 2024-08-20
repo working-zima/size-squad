@@ -48,7 +48,7 @@ export default function SignUpPasswordInput({
     confirmIsTouched: false
   });
 
-  const [{ user: { password }, isPasswordValid}, store] = useSignupFormStore();
+  const [{ user: { password }, isPasswordValid }, store] = useSignupFormStore();
 
   const handleChangePassword = (value: string) => {
     setIsTouched(prev => ({ ...prev, passwordIsTouched: true }));

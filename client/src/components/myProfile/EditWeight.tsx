@@ -56,11 +56,11 @@ export default function EditWeight() {
   return (
     <>
       <SignUpWeightInput
-          label="몸무게"
-          placeholder="몸무게를 입력해주세요."
-          weight={user.weight}
-          changeWeight={(value) => store.changeWeight(value)}
-        />
+        label="몸무게"
+        placeholder="몸무게를 입력해주세요."
+        weight={user.weight}
+        changeWeight={(value) => store.changeWeight(value)}
+      />
       <ButtonWrapper>
         <ConfirmTrigger
           buttonText="변경"

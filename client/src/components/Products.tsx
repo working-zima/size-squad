@@ -36,19 +36,19 @@ export default function Products({ subCategory, products }: ProductsProps) {
 
   return (
     !!filteredProduct.length && (
-    <Container>
-      <SubCategoryWrapper>
-        <h2>
-          {SUBCATEGORY_MESSAGES[subCategory.name]}
-        </h2>
-      </SubCategoryWrapper>
-      {filteredProduct.map((product) => (
-        <Product
-          key={product._id}
-          product={product}
-        />
-      ))}
-    </Container>
+      <Container>
+        <SubCategoryWrapper>
+          <h2>
+            {SUBCATEGORY_MESSAGES[subCategory.name]}
+          </h2>
+        </SubCategoryWrapper>
+        {filteredProduct.map((product) => (
+          <Product
+            key={product._id}
+            product={product}
+          />
+        ))}
+      </Container>
     )
   );
 }

@@ -26,7 +26,7 @@ type LoginUtils = {
   errorMessage: string;
 }
 
-export function LoginUtils({error, errorMessage}: LoginUtils) {
+export function LoginUtils({ error, errorMessage }: LoginUtils) {
   const [, store] = useLoginFormStore();
   const { modalRef, openModal, closeModal } = useModal();
 

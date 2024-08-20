@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 import { AlertModal, ConfirmModal } from "./ModalComponents";
 
 import Button from "../Button";
+
 import useModal from "../../../hooks/useModal";
 
 type AlertTriggerProps = {
@@ -36,7 +37,7 @@ export const ConfirmTrigger = ({
   title,
   buttonType,
   buttonText,
-  disabled=true,
+  disabled = true,
   children,
   confirmed,
   setConfirmed,
