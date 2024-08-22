@@ -11,32 +11,32 @@ const productController = {
   /** product 리스트 조회 */
   getProducts: async (req, res, next) => {
     try {
-      const categoryId = req.query.categoryId;
-      const subCategoryId = req.query.subCategoryId;
+      const { categoryId, subCategoryId } = req.query;
+
       let productData = [];
 
       // 서브 카테고리
-      if(subCategoryId) {
+      if (subCategoryId) {
         productData = await productService.getProductBySubCategoryId({
           subCategoryId
         });
       }
 
       // 카테고리
-      if(categoryId && !subCategoryId) {
+      if (categoryId && !subCategoryId) {
         productData = await productService.getProductByCategoryId({
           categoryId
         });
       }
 
       // 전체
-      if(!categoryId && !subCategoryId) {
+      if (!categoryId && !subCategoryId) {
 
-        productData = await productService.getProducts();
+        productData = await productService.getAllProducts();
       }
 
       res.status(200).json({ products: productData });
-    } catch(error) {
+    } catch (error) {
       next(error);
     }
   },
@@ -109,7 +109,7 @@ const productController = {
       Product.update({ product, productId })
 
       res.status(200).json();
-    } catch(error) {
+    } catch (error) {
       next(error);
     }
   },
@@ -118,10 +118,10 @@ const productController = {
   getProduct: async (req, res, next) => {
     try {
       const { productId } = req.params;
-      const [ product ] = await Product.findByProductId({ productId })
+      const [product] = await Product.findByProductId({ productId })
 
       res.status(200).json({ product })
-    } catch(error) {
+    } catch (error) {
       next(error);
     }
   }

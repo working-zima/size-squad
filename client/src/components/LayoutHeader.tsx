@@ -53,7 +53,7 @@ export default function LayoutHeader({
   return (
     <Container>
       <h1>사이즈 스쿼드</h1>
-      {page.backSpace ? (
+      {page.BACKSPACE ? (
         <BackSpace>
           <LiaAngleLeftSolid size="24" />
         </BackSpace>
@@ -63,10 +63,10 @@ export default function LayoutHeader({
       }
       <h2>
         <p>
-          {page.pageTitle}
+          {page.PAGETITLE}
         </p>
       </h2>
-      {page.homeButton ? (
+      {page.HOMEBUTTON ? (
         <Link to="/">
           <HomeWrapper>
             <CiHome size="24" />

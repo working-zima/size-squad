@@ -7,7 +7,7 @@ const Product = {
       await ProductModel.create(newProduct)
 
       return;
-    } catch(error) {
+    } catch (error) {
       throw error;
     }
   },
@@ -21,7 +21,7 @@ const Product = {
       );
 
       return;
-    } catch(error) {
+    } catch (error) {
       throw error;
     }
   },
@@ -30,7 +30,7 @@ const Product = {
     try {
       const productData = await ProductModel.find({ _id: productId },
         "_id author name brand category subCategory gender size fit measurements description"
-        ).populate({ path: "category", select: ["_id", "name"] })
+      ).populate({ path: "category", select: ["_id", "name"] })
         .populate({ path: "subCategory", select: ["_id", "name"] })
         .populate({ path: "author", select: ["_id", "name"] })
         .populate({ path: "gender", select: ["_id", "name"] })
@@ -38,66 +38,48 @@ const Product = {
         .populate({ path: "size", select: ["_id", "name"] })
         .lean();
       return productData;
-    } catch(error) {
+    } catch (error) {
       throw error;
     }
   },
 
   /** userId로 product list 가져오기 */
-  findByUserId: async ({ user }) => {
+  findByUserId: async ({ userId, options }) => {
     try {
-      const productData = await ProductModel.find({ author: user },
-        "_id author name brand category subCategory gender size fit measurements description"
-        ).populate({ path: "category", select: ["_id", "name"] })
-        .populate({ path: "subCategory", select: ["_id", "name"] })
-        .populate({ path: "author", select: ["_id", "name"] })
-        .populate({ path: "gender", select: ["_id", "name"] })
-        .populate({ path: "fit", select: ["_id", "name"] })
-        .populate({ path: "size", select: ["_id", "name"] })
-        .lean();
+      const productData = await ProductModel.paginate(
+        { author: userId },
+        options
+      );
 
       return productData;
-    } catch(error) {
+    } catch (error) {
       throw error;
     }
   },
 
   /** userId와 categoryId로 product list 가져오기 */
-  findByUserIdAndCategoryId: async ({ user, category }) => {
+  findByUserIdAndCategoryId: async ({ userId, category, options }) => {
     try {
-      const productData = await ProductModel.find(
-        { author: user, category },
-        "_id author name brand category subCategory gender size fit measurements description"
-        ).populate({ path: "category", select: ["_id", "name"] })
-        .populate({ path: "subCategory", select: ["_id", "name"] })
-        .populate({ path: "author", select: ["_id", "name"] })
-        .populate({ path: "gender", select: ["_id", "name"] })
-        .populate({ path: "fit", select: ["_id", "name"] })
-        .populate({ path: "size", select: ["_id", "name"] })
-        .lean();
+      const productData = await ProductModel.paginate(
+        { author: userId, category },
+        options
+      );
 
       return productData;
-    } catch(error) {
+    } catch (error) {
       throw error;
     }
   },
 
   /** userId와 categoryId로 product list 가져오기 */
-  findByUserIdAndSubCategoryId: async ({ user, subCategory }) => {
+  findByUserIdAndSubCategoryId: async ({ userId, subCategory, options }) => {
     try {
-      const productData = await ProductModel.find(
-        { author: user, subCategory },
-        "_id author name brand category subCategory gender size fit measurements description"
-        ).populate({ path: "category", select: ["_id", "name"] })
-        .populate({ path: "subCategory", select: ["_id", "name"] })
-        .populate({ path: "author", select: ["_id", "name"] })
-        .populate({ path: "gender", select: ["_id", "name"] })
-        .populate({ path: "fit", select: ["_id", "name"] })
-        .populate({ path: "size", select: ["_id", "name"] })
-        .lean();
-
+      const productData = await ProductModel.paginate(
+        { author: userId, subCategory },
+        options
+      );
       return productData;
-    } catch(error) {
+    } catch (error) {
       throw error;
     }
   },
@@ -107,7 +89,7 @@ const Product = {
     try {
       const productData = await ProductModel.find({},
         "_id author name brand category subCategory gender size fit measurements description"
-        ).populate({ path: "category", select: ["_id", "name"] })
+      ).populate({ path: "category", select: ["_id", "name"] })
         .populate({ path: "subCategory", select: ["_id", "name"] })
         .populate({ path: "author", select: ["_id", "name"] })
         .populate({ path: "gender", select: ["_id", "name"] })
@@ -116,7 +98,7 @@ const Product = {
         .lean();
 
       return productData;
-    } catch(error) {
+    } catch (error) {
       throw error;
     }
   },
@@ -126,7 +108,7 @@ const Product = {
     try {
       const productData = await ProductModel.find({ category: categoryId },
         "_id author name brand category subCategory gender size fit measurements description"
-        ).populate({ path: "category", select: ["_id", "name"] })
+      ).populate({ path: "category", select: ["_id", "name"] })
         .populate({ path: "subCategory", select: ["_id", "name"] })
         .populate({ path: "author", select: ["_id", "name"] })
         .populate({ path: "gender", select: ["_id", "name"] })
@@ -135,7 +117,7 @@ const Product = {
         .lean();
 
       return productData;
-    } catch(error) {
+    } catch (error) {
       throw error;
     }
   },
@@ -145,7 +127,7 @@ const Product = {
     try {
       const productData = await ProductModel.find({ subCategory: subCategoryId },
         "_id author name brand category subCategory gender size fit measurements description"
-        ).populate({ path: "category", select: ["_id", "name"] })
+      ).populate({ path: "category", select: ["_id", "name"] })
         .populate({ path: "subCategory", select: ["_id", "name"] })
         .populate({ path: "author", select: ["_id", "name"] })
         .populate({ path: "gender", select: ["_id", "name"] })
@@ -154,7 +136,7 @@ const Product = {
         .lean();
 
       return productData;
-    } catch(error) {
+    } catch (error) {
       throw error;
     }
   },
@@ -173,7 +155,6 @@ const Product = {
   /** author로 제거 */
   deleteProductByAuthor: async ({ author }) => {
     try {
-      console.log(author)
       await ProductModel.deleteMany({ author });
 
       return;

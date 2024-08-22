@@ -1,65 +1,111 @@
 import { singleton } from 'tsyringe';
 import { Action, Store } from 'usestore-ts';
 
-import { ProductResponse } from '../types';
+import { PaginationResponse, ProductResponse } from '../types';
+
 import { apiService } from '../services/ApiService';
+
+type hasCategoryChangedProps = {
+  categoryId?: string;
+  subCategoryId?: string;
+}
 
 @singleton()
 @Store()
 class ProductsStore {
   products: ProductResponse[] = [];
 
-  errorMessage = ''
+  page = 1;
 
-  loading = true;
+  hasNextPage = true;
 
-  error = false;
+  per = 5;
 
-  done = false;
+  lastCategoryId: string | undefined = '';
+
+  lastSubCategoryId: string | undefined = '';
+
+  errorMessage = '';
+
+  state: 'loading' | 'fetched' | 'idle' | 'error' = 'idle'
 
   @Action()
   private setProducts(products: ProductResponse[]) {
-    this.products = products;
+    this.products = [...this.products, ...products];
+  }
+
+  @Action()
+  private setPage(nextPage: number) {
+    this.page = nextPage
+  }
+
+  @Action()
+  private setHasNextPage() {
+    this.hasNextPage = false
+  }
+
+  @Action()
+  private setLastCategoryAndSubCategoryId({
+    categoryId, subCategoryId
+  }: hasCategoryChangedProps) {
+    this.reset();
+    this.lastCategoryId = categoryId;
+    this.lastSubCategoryId = subCategoryId;
+  }
+
+  @Action()
+  private hasCategoryChanged({
+    categoryId, subCategoryId
+  }: hasCategoryChangedProps) {
+    return this.lastCategoryId !== categoryId
+      || this.lastSubCategoryId !== subCategoryId;
+  }
+
+  @Action()
+  private handleProductResponse(products: PaginationResponse) {
+    if (!products.hasNextPage) this.setHasNextPage();
+    if (products.totalPages >= this.page) this.setProducts(products.docs);
+    if (products.nextPage) this.setPage(products.nextPage);
   }
 
   @Action()
   reset() {
     this.products = [];
-    this.error = false;
-    this.done = false;
+    this.page = 1;
+    this.hasNextPage = true;
+    this.state = 'idle';
   }
 
   @Action()
   private startLoading() {
-    this.reset()
-    this.error = false;
-    this.loading = true;
+    this.state = 'loading';
   }
 
   @Action()
   private setDone() {
-    this.done = true;
-    this.error = false;
-    this.loading = false;
+    this.state = 'fetched';
   }
 
   @Action()
   private setError() {
-    this.reset();
-    this.error = true;
-    this.loading = false;
+    this.state = 'error';
   }
 
   async fetchMyProducts({ categoryId, subCategoryId }: {
     categoryId?: string, subCategoryId?: string
   }) {
-    try {
-      this.startLoading();
+    if (this.hasCategoryChanged({ categoryId, subCategoryId })) {
+      this.setLastCategoryAndSubCategoryId({ categoryId, subCategoryId })
+    }
+    if (this.state === 'loading' || !this.hasNextPage) return;
 
+    this.startLoading();
+    try {
       const products = await apiService.fetchMyProducts({
-        categoryId, subCategoryId
+        categoryId, subCategoryId, page: this.page, per: this.per
       });
-      this.setProducts(products);
+
+      this.handleProductResponse(products);
 
       this.setDone();
     } catch (error) {

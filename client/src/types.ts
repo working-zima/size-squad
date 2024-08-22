@@ -85,6 +85,19 @@ export type ProductResponse = {
   description: string;
 }
 
+export type PaginationResponse = {
+  docs: ProductResponse[];
+  hasNextPage: boolean;
+  hasPrevPage: boolean;
+  nextPage: number | null;
+  prevPage: number | null;
+  limit: number;
+  page: number;
+  pagingCounter: number;
+  totalDocs: number;
+  totalPages: number;
+}
+
 export type InitialData = {
   categories: Category[];
   genders: Summary[];
@@ -93,9 +106,10 @@ export type InitialData = {
 }
 
 export type PageConfig = {
-  pageTitle: string;
-  homeButton: boolean;
-  backSpace: boolean;
-  showMenu: boolean;
-  Switcher: boolean;
+  PAGETITLE: string;
+  HOMEBUTTON: boolean;
+  BACKSPACE: boolean;
+  SHOWMENU: boolean;
+  SWITCHER: boolean;
+  FOOTER: boolean;
 }

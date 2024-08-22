@@ -7,13 +7,13 @@ const productService = {
       await Product.create({ newProduct })
 
       return;
-    } catch(error) {
+    } catch (error) {
       throw error;
     }
   },
 
   /** product 조회 */
-  getProducts: async () => {
+  getAllProducts: async () => {
     try {
       const productData = await Product.findAll();
 
@@ -24,39 +24,90 @@ const productService = {
   },
 
   /** userId로 product 조회 */
-  getProductByUserId: async ({ user }) => {
+  getProductByUserId: async ({
+    userId, page, limit
+  }) => {
     try {
-      const productData = await Product.findByUserId({ user });
+      const options = {
+        page,
+        limit,
+        sort: { createdAt: -1 },
+        populate: [
+          { path: "category", select: ["_id", "name"] },
+          { path: "subCategory", select: ["_id", "name"] },
+          { path: "author", select: ["_id", "name"] },
+          { path: "gender", select: ["_id", "name"] },
+          { path: "fit", select: ["_id", "name"] },
+          { path: "size", select: ["_id", "name"] }
+        ],
+        lean: true
+      };
+
+      const productData = await Product.findByUserId({
+        userId, options
+      });
 
       return productData;
-    } catch(error) {
+    } catch (error) {
       throw error;
     }
   },
 
   /** categoryId와 userId로 product 조회 */
-  getProductByUserIdAndCategoryId: async ({ user, category }) => {
+  getProductByUserIdAndCategoryId: async ({
+    userId, category, page, limit
+  }) => {
     try {
+      const options = {
+        page,
+        limit,
+        sort: { createdAt: -1 },
+        populate: [
+          { path: "category", select: ["_id", "name"] },
+          { path: "subCategory", select: ["_id", "name"] },
+          { path: "author", select: ["_id", "name"] },
+          { path: "gender", select: ["_id", "name"] },
+          { path: "fit", select: ["_id", "name"] },
+          { path: "size", select: ["_id", "name"] }
+        ],
+        lean: true
+      };
+
       const productData = await Product.findByUserIdAndCategoryId({
-        user, category
+        userId, category, options
       });
 
       return productData;
-    } catch(error) {
+    } catch (error) {
       throw error;
     }
   },
 
   /** subCategoryId와 userId로 product 조회 */
-  getProductByUserIdAndSubCategoryId: async ({ user, subCategory }) => {
-
+  getProductByUserIdAndSubCategoryId: async ({
+    userId, subCategory, page, limit
+  }) => {
     try {
+      const options = {
+        page,
+        limit,
+        populate: [
+          { path: "category", select: ["_id", "name"] },
+          { path: "subCategory", select: ["_id", "name"] },
+          { path: "author", select: ["_id", "name"] },
+          { path: "gender", select: ["_id", "name"] },
+          { path: "fit", select: ["_id", "name"] },
+          { path: "size", select: ["_id", "name"] }
+        ],
+        lean: true
+      };
+
       const productData = await Product.findByUserIdAndSubCategoryId({
-        user, subCategory
+        userId, subCategory, options
       });
 
       return productData;
-    } catch(error) {
+    } catch (error) {
       throw error;
     }
   },
@@ -69,7 +120,7 @@ const productService = {
       });
 
       return productData;
-    } catch(error) {
+    } catch (error) {
       throw error;
     }
   },
@@ -82,7 +133,7 @@ const productService = {
       });
 
       return productData;
-    } catch(error) {
+    } catch (error) {
       throw error;
     }
   },
@@ -91,14 +142,14 @@ const productService = {
   deleteMyProduct: async ({ productId, userId }) => {
     try {
       const productData = await Product.findByProductId({ productId });
-      if(productData[0].author._id !== userId) {
+      if (productData[0].author._id !== userId) {
         throw new CustomError('Access Token mismatch', 403);
       }
 
       await Product.deleteProductByProductId({ productId })
 
       return;
-    } catch(error) {
+    } catch (error) {
       throw error;
     }
   },

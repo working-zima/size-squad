@@ -7,7 +7,7 @@ const Category = {
       await CategoryModel.create(newCategory);
 
       return;
-    } catch(error) {
+    } catch (error) {
       throw error;
     }
   },
@@ -18,24 +18,24 @@ const Category = {
       const categoryData = await CategoryModel.find(
         {}, "_id name type category subCategories measurements"
       ).populate({ path: "subCategories", select: ["_id", "name"] })
-        .populate({ path: "measurements", select: ["_id", "name"]})
-        .populate({ path: "type", select: ["_id", "name"]})
+        .populate({ path: "measurements", select: ["_id", "name"] })
+        .populate({ path: "type", select: ["_id", "name"] })
         .lean();
 
       return categoryData;
-    } catch(error) {
+    } catch (error) {
       throw error;
     }
   },
 
   /** _id로 검색 */
-  findById: async ({_id}) => {
+  findById: async ({ _id }) => {
     try {
       let categoryData = await CategoryModel.findOne(
         { _id }, "_id name type subCategories measurements"
       ).populate({ path: "subCategories", select: ["_id", "name"] })
-        .populate({ path: "measurements", select: ["_id", "name"]})
-        .populate({ path: "type", select: ["_id", "name"]})
+        .populate({ path: "measurements", select: ["_id", "name"] })
+        .populate({ path: "type", select: ["_id", "name"] })
         .lean();
 
       return categoryData;
@@ -45,14 +45,14 @@ const Category = {
   },
 
   /** category로 검색 */
-  findByCategory: async ({category}) => {
+  findByCategory: async ({ category }) => {
     try {
       let categoryData = await CategoryModel.findOne(
         { name: category },
         "_id name type subCategories measurements"
       ).populate({ path: "subCategories", select: ["_id", "name"] })
-        .populate({ path: "measurements", select: ["_id", "name"]})
-        .populate({ path: "type", select: ["_id", "name"]})
+        .populate({ path: "measurements", select: ["_id", "name"] })
+        .populate({ path: "type", select: ["_id", "name"] })
         .lean();
 
       return categoryData;
@@ -69,7 +69,7 @@ const Category = {
       ).lean();
 
       return;
-    } catch(error) {
+    } catch (error) {
       throw error;
     }
   }

@@ -45,8 +45,8 @@ export default function AccessDeniedPage() {
   return (
     <Container>
       <MessageBox>
-        <h1>로그인이 필요합니다</h1>
-        <p>서비스 이용을 위해 로그인이 필요합니다.<br />로그인 후 이용해 주세요.</p>
+        <h1>로그인 후 이용해 주세요.</h1>
+        <p>서비스 이용을 위해 로그인이 필요합니다.</p>
       </MessageBox>
       <Link to='/login'>
         <Button>

@@ -1,7 +1,8 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 import {
-  Category, Summary, ProductResponse, ProductRequest, Size, User
+  Category, Summary, ProductResponse, ProductRequest, Size, User,
+  PaginationResponse
 } from '../types';
 
 const MOCK_BASE_URL = 'http://localhost:5000';
@@ -70,7 +71,7 @@ export default class ApiService {
         );
 
         this.onError(
-          undefined, "네트워크 오류가 발생했습니다. \n 새로고침 하거나 잠시후 시도해보세요"
+          undefined, "네트워크 오류가 발생했습니다."
         );
         return Promise.reject(error);
       }
@@ -218,13 +219,17 @@ export default class ApiService {
 
   async fetchMyProducts({
     categoryId,
-    subCategoryId
+    subCategoryId,
+    page,
+    per
   }: {
     categoryId?: string,
-    subCategoryId?: string
-  } = {}): Promise<ProductResponse[]> {
+    subCategoryId?: string,
+    page?: number,
+    per?: number,
+  } = {}): Promise<PaginationResponse> {
     const { data } = await this.instance.get('/users/product', {
-      params: { categoryId, subCategoryId },
+      params: { categoryId, subCategoryId, page, per },
     });
     const { products } = data;
 

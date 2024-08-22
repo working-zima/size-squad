@@ -17,13 +17,6 @@ const Container = styled.div`
   }
 `;
 
-const SubCategoryWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  position: sticky;
-  padding: 0.8rem 0 0 0;
-`;
-
 type ProductsProps = {
   subCategory: Summary;
   products: ProductResponse[];
@@ -33,15 +26,9 @@ export default function Products({ subCategory, products }: ProductsProps) {
   const filteredProduct = products.filter((product) => (
     product.subCategory && product.subCategory._id === subCategory._id
   ));
-
   return (
     !!filteredProduct.length && (
       <Container>
-        <SubCategoryWrapper>
-          <h2>
-            {SUBCATEGORY_MESSAGES[subCategory.name]}
-          </h2>
-        </SubCategoryWrapper>
         {filteredProduct.map((product) => (
           <Product
             key={product._id}

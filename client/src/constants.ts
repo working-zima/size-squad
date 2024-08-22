@@ -63,67 +63,76 @@ export const ERROR_MESSAGES: Record<string, string> = {
 
 export const PAGES: Record<string, PageConfig> = {
   '/': {
-    pageTitle: 'Size Squad',
-    homeButton: false,
-    backSpace: false,
-    showMenu: true,
-    Switcher: true,
+    PAGETITLE: 'Size Squad',
+    HOMEBUTTON: false,
+    BACKSPACE: false,
+    SHOWMENU: true,
+    SWITCHER: true,
+    FOOTER: true
   },
   '/mysize': {
-    pageTitle: 'Size Squad',
-    homeButton: false,
-    backSpace: false,
-    showMenu: true,
-    Switcher: true,
+    PAGETITLE: 'Size Squad',
+    HOMEBUTTON: false,
+    BACKSPACE: false,
+    SHOWMENU: true,
+    SWITCHER: true,
+    FOOTER: false
   },
   '/login': {
-    pageTitle: '로그인',
-    homeButton: false,
-    backSpace: true,
-    showMenu: false,
-    Switcher: false,
+    PAGETITLE: '로그인',
+    HOMEBUTTON: false,
+    BACKSPACE: true,
+    SHOWMENU: false,
+    SWITCHER: false,
+    FOOTER: false
   },
   '/signup': {
-    pageTitle: '회원가입',
-    homeButton: false,
-    backSpace: true,
-    showMenu: false,
-    Switcher: false,
+    PAGETITLE: '회원가입',
+    HOMEBUTTON: false,
+    BACKSPACE: true,
+    SHOWMENU: false,
+    SWITCHER: false,
+    FOOTER: false
   },
   '/mysize/:id/edit': {
-    pageTitle: '사이즈 정보 변경',
-    homeButton: false,
-    backSpace: true,
-    showMenu: false,
-    Switcher: false,
+    PAGETITLE: '사이즈 정보 변경',
+    HOMEBUTTON: false,
+    BACKSPACE: true,
+    SHOWMENU: false,
+    SWITCHER: false,
+    FOOTER: false
   },
   '/mysize/new': {
-    pageTitle: '사이즈 등록',
-    homeButton: false,
-    backSpace: true,
-    showMenu: false,
-    Switcher: false,
+    PAGETITLE: '사이즈 등록',
+    HOMEBUTTON: false,
+    BACKSPACE: true,
+    SHOWMENU: false,
+    SWITCHER: false,
+    FOOTER: false
   },
   '/mypage': {
-    pageTitle: '내 페이지',
-    homeButton: false,
-    backSpace: true,
-    showMenu: false,
-    Switcher: true,
+    PAGETITLE: '내 페이지',
+    HOMEBUTTON: false,
+    BACKSPACE: true,
+    SHOWMENU: false,
+    SWITCHER: true,
+    FOOTER: false
   },
   '/mypage/:id/edit': {
-    pageTitle: '회원 정보 변경',
-    homeButton: true,
-    backSpace: true,
-    showMenu: false,
-    Switcher: false,
+    PAGETITLE: '회원 정보 변경',
+    HOMEBUTTON: true,
+    BACKSPACE: true,
+    SHOWMENU: false,
+    SWITCHER: false,
+    FOOTER: false
   },
   '/mypage/:id/edit/:editField': {
-    pageTitle: '특정 회원 정보 변경',
-    homeButton: true,
-    backSpace: true,
-    showMenu: false,
-    Switcher: false,
+    PAGETITLE: '특정 회원 정보 변경',
+    HOMEBUTTON: true,
+    BACKSPACE: true,
+    SHOWMENU: false,
+    SWITCHER: false,
+    FOOTER: false
   }
 }
 

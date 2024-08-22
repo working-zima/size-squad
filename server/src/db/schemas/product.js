@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const mongoosePaginate = require("mongoose-paginate-v2");
+
 const Schema = mongoose.Schema;
 const Types = mongoose.Types;
 
@@ -70,8 +72,10 @@ const ProductSchema = new Schema(
     },
   },
   { timestamps: true },
-  { versionKey : false}
+  { versionKey: false }
 )
+
+ProductSchema.plugin(mongoosePaginate);
 
 const ProductModel = mongoose.model("Product", ProductSchema);
 

@@ -5,22 +5,27 @@ const LoadingWrap = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  position: fixed;
-  top: 0;
-  left: 0;
+  margin: auto;
   width: 100%;
   height: 100%;
-  background-color: #0002;
+  background-color: transparent;
   z-index: 1000;
 `
 
 const Spinner = styled.div`
-  width: 40px;
-  height: 40px;
-  border: 5px solid ${props => props.theme.colors.primaryWhite};
-  border-top: 5px solid transparent;
-  border-radius: 50%;
-  animation: rotate 1s linear infinite;
+  display: block;
+  margin: 0 auto;
+
+  &::before {
+    content: '';
+    display: block;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 6px solid ${props => props.theme.colors.buttonBorderColor};
+    border-color: ${props => props.theme.colors.buttonBorderColor} transparent ${props => props.theme.colors.buttonBorderColor} transparent;
+    animation: rotate 1.2s linear infinite;
+  }
 
   @keyframes rotate {
     from {
@@ -32,20 +37,10 @@ const Spinner = styled.div`
   }
 `
 
-const TextWrapper = styled.div`
-  margin-top: 1.5rem;
-  font-weight: 600;
-  font-size: 2rem;
-  color: ${props => props.theme.colors.primaryWhite};
-`
-
 export default function LoadingSpinner() {
   return (
     <LoadingWrap>
       <Spinner />
-      <TextWrapper>
-        <p>로딩 중...</p>
-      </TextWrapper>
     </LoadingWrap>
   )
 }

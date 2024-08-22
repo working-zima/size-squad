@@ -13,21 +13,22 @@ import useUserStore from '../hooks/useUserStore';
 import FixedDetailSwitcher from './FixedDetailSwitcher';
 
 type ContainerProps = {
-  showMenu: boolean;
+  SHOWMENU: boolean;
+  FOOTER: boolean;
 }
 
 const Container = styled.div<ContainerProps>`
   display: grid;
-  grid-template-rows: ${({ showMenu }) => (showMenu ? '50px auto auto 50px' : '50px auto')
-  };
+  grid-template-rows: 50px 1fr ${({ FOOTER }) => (FOOTER ? '50px' : '')};
   grid-template-columns: 100%;
   grid-template-areas:
     'header'
     'main'
-    ${({ showMenu }) => (showMenu ? "'footer'" : '')};
-    ${({ showMenu }) => (showMenu ? "'menu'" : '')};
+    ${({ FOOTER }) => (FOOTER ? "'footer'" : '')};
+    ${({ SHOWMENU }) => (SHOWMENU ? "'menu'" : '')};
   margin: 0 auto;
   width: 100vw;
+  height: 100vh;
 `;
 
 const Main = styled.main`
@@ -52,7 +53,7 @@ export default function Layout() {
 
   let page = PAGES[location.pathname]
     || {
-    pageTitle: '',
+    PAGETITLE: '',
     homeButton: false,
     backSpace: false,
     showMenu: false,
@@ -61,24 +62,24 @@ export default function Layout() {
 
   if (isEditSizePage) page = PAGES['/mysize/:id/edit'];
   if (isEditProfilePage) page = PAGES['/mypage/:id/edit'];
-  if (isMyPage && user) page.pageTitle = `${user.name}님의 페이지`;
+  if (isMyPage && user) page.PAGETITLE = `${user.name}님의 페이지`;
   if (isEditProfile && user) {
     page = PAGES['/mypage/:id/edit/:editField'];
-    page.pageTitle = USERFIELDS[path] ? `${USERFIELDS[path]} 변경` : ''
+    page.PAGETITLE = USERFIELDS[path] ? `${USERFIELDS[path]} 변경` : ''
   }
 
   return (
-    <Container showMenu={page.showMenu}>
+    <Container SHOWMENU={page.SHOWMENU} FOOTER={page.FOOTER}>
       <LayoutHeader page={page} />
       <Main>
         <Outlet />
       </Main>
-      {page.showMenu && <LayoutFooter />}
-      {page.Switcher
+      {page.FOOTER && <LayoutFooter />}
+      {page.SHOWMENU
         ? <FixedDetailSwitcher />
         : null
       }
-      {page.showMenu && <LayoutMenuBar />}
+      {page.SHOWMENU && <LayoutMenuBar />}
     </Container>
   );
 }

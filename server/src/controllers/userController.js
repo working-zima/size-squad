@@ -27,7 +27,7 @@ const userController = {
         { email, name, password, gender, height, weight, description }
       )
 
-      res.status(201).json({accessToken});
+      res.status(201).json({ accessToken });
     } catch (error) {
       next(error);
     }
@@ -46,34 +46,34 @@ const userController = {
       const userAccessToken = req.headers["authorization"];
       const userData = await userService.getMyInfo(userAccessToken);
 
-      const user = userData._id;
+      const userId = userData._id;
 
-      const categoryId = req.query.categoryId;
-      const subCategoryId = req.query.subCategoryId;
+      const { categoryId, subCategoryId, page, per } = req.query;
 
       let productData = [];
 
       // 서브 카테고리
-      if(subCategoryId) {
+      if (subCategoryId) {
         productData = await productService.getProductByUserIdAndSubCategoryId({
-          user, subCategory: subCategoryId
+          userId, subCategory: subCategoryId, page, limit: per
         });
       }
 
       // 카테고리
-      if(categoryId && !subCategoryId) {
+      if (categoryId && !subCategoryId) {
         productData = await productService.getProductByUserIdAndCategoryId({
-          user, category: categoryId
+          userId, category: categoryId, page, limit: per
         });
       }
 
       // 전체
-      if(!categoryId && !subCategoryId) {
-        productData = await productService.getProductByUserId({ user });
+      if (!categoryId && !subCategoryId) {
+        productData = await productService.getProductByUserId({
+          userId, page, limit: per
+        });
       }
-
-      res.status(200).json({products: productData});
-    } catch(error) {
+      res.status(200).json({ products: productData });
+    } catch (error) {
       next(error);
     }
   },
@@ -95,7 +95,7 @@ const userController = {
       const { role, ...userDataWithoutRole } = userData;
 
       res.status(200).json({ user: userDataWithoutRole });
-    } catch(error) {
+    } catch (error) {
       next(error);
     }
   },
@@ -107,7 +107,7 @@ const userController = {
       const id = await userService.getIdByEmail({ email });
 
       res.status(200).json({ id });
-    } catch(error) {
+    } catch (error) {
       next(error);
     }
   },
@@ -119,7 +119,7 @@ const userController = {
       const id = await userService.getIdByName({ name });
 
       res.status(200).json({ id });
-    } catch(error) {
+    } catch (error) {
       next(error);
     }
   },
@@ -150,7 +150,7 @@ const userController = {
       productService.deleteMyProduct({ productId, userId });
 
       res.status(200).json();
-    } catch(error) {
+    } catch (error) {
       next(error);
     }
   },
@@ -178,7 +178,7 @@ const userController = {
       await userService.deleteMe(userAccessToken);
 
       res.status(200).json();
-    } catch(error) {
+    } catch (error) {
       next(error);
     }
   },

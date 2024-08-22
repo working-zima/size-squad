@@ -4,6 +4,7 @@ import MainCategoryBar from './MainCategoryBar';
 import SubCategoryBar from './SubCategoryBar';
 
 import { Category, Summary } from '../../types';
+import LoadingSpinner from '../ui/LoadingSpinner';
 
 const Container = styled.div`
   position: sticky;
@@ -17,16 +18,23 @@ const Container = styled.div`
 type CategoryBarProps = {
   categories: Category[];
   subCategories: Summary[];
+  categoriesLoading: boolean;
 }
 
 export default function CategoryBar({
-  categories, subCategories
+  categories, subCategories, categoriesLoading
 }: CategoryBarProps) {
 
   return (
     <Container>
-      <MainCategoryBar categories={categories} />
-      <SubCategoryBar subCategories={subCategories} />
+      {categoriesLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <>
+          <MainCategoryBar categories={categories} />
+          <SubCategoryBar subCategories={subCategories} />
+        </>
+      )}
     </Container>
 
   );

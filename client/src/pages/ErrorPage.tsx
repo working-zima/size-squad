@@ -43,7 +43,7 @@ export default function ErrorPage({
     <Container>
       <MessageBox>
         <h2>{errorMessage}</h2>
-        <p>잠시 후에 다시 시도해 주세요.</p>
+        <p>새로고침 하거나 잠시 후에 다시 시도해 주세요.</p>
       </MessageBox>
       <Link to='/'>
         <Button>
