@@ -19,11 +19,7 @@ class InitialDataStore {
 
   errorMessage = '';
 
-  loading = true;
-
-  error = false;
-
-  done = false;
+  state: 'loading' | 'fetched' | 'idle' | 'error' = 'idle'
 
   @Action()
   reset() {
@@ -32,9 +28,7 @@ class InitialDataStore {
     this.sizes = [nullSize];
     this.fits = [nullSummary];
     this.errorMessage = ''
-    this.loading = true;
-    this.error = false;
-    this.done = false;
+    this.state = 'idle';
   }
 
   @Action()
@@ -43,8 +37,6 @@ class InitialDataStore {
     this.genders = initialData.genders;
     this.sizes = initialData.sizes;
     this.fits = initialData.fits;
-    this.loading = false;
-    this.error = false;
   }
 
   async fetchInitialData() {
@@ -68,19 +60,17 @@ class InitialDataStore {
     this.genders = [nullSummary];
     this.sizes = [nullSize];
     this.fits = [nullSummary];
-    this.loading = true;
-    this.error = false;
+    this.state = 'loading';
   }
 
   @Action()
   private setDone() {
-    this.done = true;
+    this.state = 'fetched';
   }
 
   @Action()
   private setError() {
-    this.loading = false;
-    this.error = true;
+    this.state = 'error';
   }
 }
 

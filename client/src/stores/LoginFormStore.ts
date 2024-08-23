@@ -15,11 +15,7 @@ class LoginFormStore {
 
   errorMessage = '';
 
-  loading = true;
-
-  error = false;
-
-  done = false;
+  state: 'loading' | 'fetched' | 'idle' | 'error' = 'idle'
 
   get valid() {
     return this.email.includes('@') && !!this.password;
@@ -47,9 +43,7 @@ class LoginFormStore {
     this.password = '';
     this.accessToken = '';
     this.errorMessage = '';
-    this.loading = true;
-    this.error = false;
-    this.done = false;
+    this.state = 'idle';
   }
 
   async login() {
@@ -73,19 +67,17 @@ class LoginFormStore {
   private startLoading() {
     this.email = '';
     this.password = '';
-    this.loading = true;
-    this.error = false;
+    this.state = 'loading';
   }
 
   @Action()
   private setDone() {
-    this.done = true;
+    this.state = 'fetched';
   }
 
   @Action()
   private setError() {
-    this.error = true;
-    this.loading = false;
+    this.state = 'error';
   }
 }
 

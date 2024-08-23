@@ -1,18 +1,19 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+import ErrorPage from "./ErrorPage";
+
 import SignUpForm from "../components/signUp/SignUpForm";
+import LoadingSpinner from "../components/ui/LoadingSpinner";
 
 import useSignupFormStore from "../hooks/useSignupFormStore";
 import useFetchGender from "../hooks/useFetchGenders";
-import ErrorPage from "./ErrorPage";
-import LoadingSpinner from "../components/ui/LoadingSpinner";
 
 export default function SignupPage() {
   const navigate = useNavigate();
 
   const [{ accessToken }, store] = useSignupFormStore();
-  const { genders, error, errorMessage, loading } = useFetchGender();
+  const { genders, errorMessage, state } = useFetchGender();
 
   useEffect(() => {
     store.reset();
@@ -26,17 +27,8 @@ export default function SignupPage() {
     }
   }, [accessToken]);
 
-  if (error) {
-    return (
-      <ErrorPage errorMessage={errorMessage} />
-    );
-  }
+  if (state === 'error') return (<ErrorPage errorMessage={errorMessage} />);
+  if (state === 'loading') return (<LoadingSpinner />);
 
-  if (loading) {
-    return <LoadingSpinner />;
-  }
-
-  return (
-    <SignUpForm genders={genders} />
-  )
+  return (<SignUpForm genders={genders} />)
 }

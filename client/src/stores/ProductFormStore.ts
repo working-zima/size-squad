@@ -19,11 +19,7 @@ class ProductFormStore {
 
   errorMessage = '';
 
-  loading = true;
-
-  error = false;
-
-  done = false;
+  state: 'loading' | 'fetched' | 'idle' | 'error' = 'idle'
 
   private isBrandValid = false;
 
@@ -165,9 +161,7 @@ class ProductFormStore {
     this.type = nullSummary;
     this.currentSubCategories = [];
     this.errorMessage = '';
-    this.loading = true;
-    this.error = false;
-    this.done = false;
+    this.state = 'idle';
   }
 
   @Action()
@@ -181,9 +175,6 @@ class ProductFormStore {
         value: String(measurement.value)
       }))
     };
-
-    this.error = false;
-    this.loading = false;
 
     this.validateBrand(productResponse.brand);
     this.validateName(productResponse.name);
@@ -266,21 +257,17 @@ class ProductFormStore {
   private startLoading() {
     this.reset()
     this.errorMessage = '';
-    this.loading = true;
-    this.error = false;
-    this.done = false;
+    this.state = 'loading';
   }
 
   @Action()
   private setDone() {
-    this.done = true;
+    this.state = 'fetched';
   }
 
   @Action()
   private setError() {
-    this.reset()
-    this.error = true;
-    this.loading = false;
+    this.state = 'error';
   }
 }
 

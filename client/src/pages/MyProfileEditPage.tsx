@@ -39,7 +39,7 @@ export default function MyProfileEditPage() {
   const navigate = useNavigate();
 
   const { accessToken, setAccessToken } = useAccessToken();
-  const { user, loading } = useFetchUserStore()
+  const { user, state } = useFetchUserStore()
   const [, store] = useSignupFormStore()
   const [confirmed, setConfirmed] = useState<boolean | null>(false);
 
@@ -60,13 +60,13 @@ export default function MyProfileEditPage() {
     return <AccessDeniedPage />;
   }
 
-  if (loading) {
+  if (state === 'loading') {
     return <LoadingSpinner />;
   }
 
   return (
     <Container>
-      <MyProfileEditForm user={user}/>
+      <MyProfileEditForm user={user} />
       <ButtonWrapper>
         <ConfirmTrigger
           title='정말 탈퇴하시겠어요?'

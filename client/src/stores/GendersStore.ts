@@ -13,26 +13,18 @@ class GendersStore {
 
   errorMessage = '';
 
-  loading = true;
-
-  error = false;
-
-  done = false;
+  state: 'loading' | 'fetched' | 'idle' | 'error' = 'idle'
 
   @Action()
   reset() {
     this.genders = [];
     this.errorMessage = ''
-    this.loading = true;
-    this.error = false;
-    this.done = false;
+    this.state = 'idle';
   }
 
   @Action()
   private setGender(genders: Summary[]) {
     this.genders = genders;
-    this.loading = false;
-    this.error = false;
   }
 
   async fetchGenders() {
@@ -53,19 +45,17 @@ class GendersStore {
   @Action()
   private startLoading() {
     this.genders = [nullSummary];
-    this.loading = true;
-    this.error = false;
+    this.state = 'loading';
   }
 
   @Action()
   private setDone() {
-    this.done = true;
+    this.state = 'fetched';
   }
 
   @Action()
   private setError() {
-    this.error = true;
-    this.loading = false;
+    this.state = 'error';
   }
 }
 

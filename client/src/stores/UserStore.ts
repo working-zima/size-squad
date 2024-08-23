@@ -12,11 +12,7 @@ import { nullUser } from "../nullObject";
 class UserStore {
   user: User = nullUser;
 
-  loading = true;
-
-  error = false;
-
-  done = false;
+  state: 'loading' | 'fetched' | 'idle' | 'error' = 'idle'
 
   get passwordValid() {
     return
@@ -25,36 +21,12 @@ class UserStore {
   @Action()
   private setUser(user: User) {
     this.user = user;
-    this.loading = false;
-    this.error = false;
-    this.done = false;
   }
 
   @Action()
   reset() {
     this.user = nullUser;
-    this.error = false;
-    this.done = false;
-  }
-
-  @Action()
-  private setDone() {
-    this.done = true;
-    this.loading = false;
-    this.error = false;
-  }
-
-  @Action()
-  private startLoading() {
-    this.reset()
-    this.loading = true;
-  }
-
-  @Action()
-  private setError() {
-    this.user = nullUser;
-    this.loading = false;
-    this.error = true;
+    this.state = 'idle';
   }
 
   async fetchUser() {
@@ -63,11 +35,28 @@ class UserStore {
       const user = await apiService.fetchCurrentUser();
 
       this.setUser(user);
+      this.setDone();
     } catch (error) {
       this.setError();
     }
   }
 
+  @Action()
+  private setDone() {
+    this.state = 'fetched';
+  }
+
+  @Action()
+  private startLoading() {
+    this.reset()
+    this.state = 'loading';
+  }
+
+  @Action()
+  private setError() {
+    this.user = nullUser;
+    this.state = 'error';
+  }
 }
 
 export default UserStore;

@@ -15,13 +15,13 @@ export default function MySizeNewPage() {
   const navigate = useNavigate();
 
   const { accessToken } = useAccessToken();
-  const { user, loading: userLoading } = useFetchUser()
+  const { user, state: userState } = useFetchUser()
   const {
-    categories, fits, sizes, loading: initialDataLoading
+    categories, fits, sizes, state: initialDataState
   } = useFetchInitialData()
   const [{ product }, store] = useProductFormStore();
 
-  const loading = userLoading || initialDataLoading;
+  const loading = userState === 'loading' || initialDataState === 'loading';
 
   useEffect(() => {
     store.reset();
@@ -49,7 +49,6 @@ export default function MySizeNewPage() {
   }, [categories, user.gender, store])
 
   const handleComplete = () => {
-    console.log(`check handleComplete`)
     store.reset();
     navigate('/mysize');
   };

@@ -75,7 +75,7 @@ type SignUpFormProps = {
 export default function SignUpForm({ genders }: SignUpFormProps) {
   const { setAccessToken } = useAccessToken();
 
-  const [{ user, valid, error, accessToken }, store] = useSignupFormStore();
+  const [{ user, valid, state, accessToken }, store] = useSignupFormStore();
 
   useEffect(() => {
     if (accessToken) {
@@ -135,7 +135,7 @@ export default function SignUpForm({ genders }: SignUpFormProps) {
             회원 가입
           </Button>
         </ButtonWrapper>
-        {error && (
+        {state === 'error' && (
           <p>회원 가입 실패</p>
         )}
       </Form>

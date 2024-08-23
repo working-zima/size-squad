@@ -28,14 +28,14 @@ export default function MySizeListPage() {
   const {
     categories,
     allSubCategories,
-    loading: categoriesLoading
+    state: categoriesState
   } = useFetchCategories();
 
   const {
     products,
-    state,
     errorMessage,
-    moreRef
+    moreRef,
+    state: productsState,
   } = useInfiniteScroll({ categoryId, subCategoryId });
 
   const subCategories = categoryId
@@ -43,11 +43,13 @@ export default function MySizeListPage() {
     : allSubCategories;
 
   if (!accessToken) return <AccessDeniedPage />;
-  if (state === 'error') return <ErrorPage errorMessage={errorMessage} />;
+  if (productsState === 'error') {
+    return <ErrorPage errorMessage={errorMessage} />
+  }
 
   return (
     <Container>
-      <CategoryBar categories={categories} subCategories={subCategories} categoriesLoading={categoriesLoading} />
+      <CategoryBar categories={categories} subCategories={subCategories} categoriesState={categoriesState} />
       {subCategories.map(subCategory => (
         <Products
           key={subCategory._id}
@@ -56,7 +58,7 @@ export default function MySizeListPage() {
         />
       ))}
       <div id='more button' ref={moreRef} />
-      {state === 'loading' && <LoadingSpinner />}
+      {productsState === 'loading' && <LoadingSpinner />}
       {products.length === 0 && <NoListPage />}
     </Container>
   );

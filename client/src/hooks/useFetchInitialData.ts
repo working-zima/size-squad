@@ -4,7 +4,7 @@ import useInitialDataStore from "./useInitialDataStore";
 
 export default function useFetchInitialData() {
   const [
-    { categories, genders, fits, sizes, loading },
+    { categories, genders, fits, sizes, state },
     store
   ] = useInitialDataStore();
 
@@ -12,5 +12,5 @@ export default function useFetchInitialData() {
     store.fetchInitialData();
   }, [store])
 
-  return { categories, genders, fits, sizes, loading, store }
+  return { categories, genders, fits, sizes, state, store }
 }

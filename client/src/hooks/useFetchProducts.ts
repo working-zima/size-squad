@@ -13,13 +13,12 @@ export default function useFetchProducts({
   const [{
     products = [],
     errorMessage,
-    loading,
-    error
+    state
   }, store] = useProductsStore();
 
   useEffect(() => {
     store.fetchMyProducts({ categoryId, subCategoryId });
   }, [categoryId, subCategoryId, store]);
 
-  return { products, errorMessage, loading, error, store };
+  return { products, errorMessage, state, store };
 }

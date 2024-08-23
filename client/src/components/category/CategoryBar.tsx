@@ -18,16 +18,16 @@ const Container = styled.div`
 type CategoryBarProps = {
   categories: Category[];
   subCategories: Summary[];
-  categoriesLoading: boolean;
+  categoriesState: 'loading' | 'fetched' | 'idle' | 'error';
 }
 
 export default function CategoryBar({
-  categories, subCategories, categoriesLoading
+  categories, subCategories, categoriesState
 }: CategoryBarProps) {
 
   return (
     <Container>
-      {categoriesLoading ? (
+      {categoriesState === 'loading' ? (
         <LoadingSpinner />
       ) : (
         <>

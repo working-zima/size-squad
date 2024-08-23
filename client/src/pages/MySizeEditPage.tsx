@@ -11,18 +11,17 @@ export default function MySizeEditPage() {
   const params = useParams();
   const productId = String(params.id)
 
-  const { loading: productFormLoading } = useFetchProductForm({ productId });
-  const { loading: initialDataLoading } = useFetchInitialData();
+  const { state: productFormState } = useFetchProductForm({ productId });
+  const { state: initialDataState } = useFetchInitialData();
 
-  const loading = productFormLoading || initialDataLoading;
+  const loading = productFormState === 'loading'
+    || initialDataState === 'loading';
 
   const handleComplete = () => {
     navigate(`/mysize`);
   };
 
-  if (loading) {
-    return <LoadingSpinner />;
-  }
+  if (loading) return (<LoadingSpinner />);
 
   return (
     <MySizeEditForm onComplete={handleComplete} />

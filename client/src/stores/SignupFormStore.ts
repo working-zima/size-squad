@@ -21,11 +21,7 @@ class SignupFormStore {
 
   errorMessage = '';
 
-  error = false;
-
-  loading = true;
-
-  done = false;
+  state: 'loading' | 'fetched' | 'idle' | 'error' = 'idle'
 
   isEmailDuplicated = false;
 
@@ -212,9 +208,7 @@ class SignupFormStore {
     this.oldPassword = '';
     this.accessToken = '';
 
-    this.error = false;
-    this.loading = false;
-    this.done = false;
+    this.state = 'idle';
 
     this.isNameDuplicated = false;
     this.isEmailValid = false;
@@ -225,22 +219,16 @@ class SignupFormStore {
     this.isOldPasswordValid = false;
   }
 
-  @Action()
-  private setError() {
-    this.user = nullUser;
-    this.passwordConfirmation = '';
-    this.oldPassword = '';
-    this.loading = false;
-    this.error = true;
-  }
-
   async signup() {
+    this.startLoading()
     try {
       const accessToken = await apiService.signup({
         ...this.user,
         gender: this.user.gender?._id || '',
       });
       this.setAccessToken(accessToken);
+
+      this.setDone()
     } catch (error) {
       const typedError = error as { message: string };
       this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
@@ -250,6 +238,7 @@ class SignupFormStore {
   }
 
   async updatePassword() {
+    this.startLoading()
     try {
       await apiService.updatePassword({
         oldPassword: this.oldPassword,
@@ -268,6 +257,7 @@ class SignupFormStore {
   }
 
   async updateGender() {
+    this.startLoading()
     try {
       await apiService.updateGender({
         gender: this.user.gender
@@ -283,6 +273,7 @@ class SignupFormStore {
   }
 
   async updateHeight() {
+    this.startLoading()
     try {
       await apiService.updateHeight({
         height: this.user.height
@@ -298,6 +289,7 @@ class SignupFormStore {
   }
 
   async updateWeight() {
+    this.startLoading()
     try {
       await apiService.updateWeight({
         weight: this.user.weight
@@ -313,6 +305,7 @@ class SignupFormStore {
   }
 
   async updateDescription() {
+    this.startLoading()
     try {
       await apiService.updateDescription({
         description: this.user.description
@@ -325,6 +318,24 @@ class SignupFormStore {
 
       this.setError()
     }
+  }
+
+  @Action()
+  private startLoading() {
+    this.state = 'loading';
+  }
+
+  @Action()
+  private setDone() {
+    this.state = 'fetched';
+  }
+
+  @Action()
+  private setError() {
+    this.user = nullUser;
+    this.passwordConfirmation = '';
+    this.oldPassword = '';
+    this.state = 'error';
   }
 }
 

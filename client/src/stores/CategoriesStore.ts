@@ -14,20 +14,14 @@ class CategoriesStore {
 
   errorMessage = '';
 
-  loading = true;
-
-  error = false;
-
-  done = false;
+  state: 'loading' | 'fetched' | 'idle' | 'error' = 'idle'
 
   @Action()
   reset() {
     this.categories = [];
     this.allSubCategories = [];
     this.errorMessage = ''
-    this.loading = true;
-    this.error = false;
-    this.done = false;
+    this.state = 'idle'
   }
 
   @Action()
@@ -36,8 +30,6 @@ class CategoriesStore {
     this.allSubCategories = categories.reduce<Summary[]>(
       (acc, category) => [...acc, ...category.subCategories], []
     )
-    this.loading = false;
-    this.error = false;
   }
 
   async fetchCategories() {
@@ -59,19 +51,17 @@ class CategoriesStore {
   private startLoading() {
     this.categories = [];
     this.allSubCategories = [];
-    this.loading = true;
-    this.error = false;
+    this.state = 'loading'
   }
 
   @Action()
   private setDone() {
-    this.done = true;
+    this.state = 'fetched'
   }
 
   @Action()
   private setError() {
-    this.error = true;
-    this.loading = false;
+    this.state = 'error'
   }
 }
 

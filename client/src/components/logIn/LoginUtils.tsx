@@ -22,17 +22,17 @@ const ButtonWrapper = styled.div`
 `
 
 type LoginUtils = {
-  error: boolean;
+  state: 'loading' | 'fetched' | 'idle' | 'error';
   errorMessage: string;
 }
 
-export function LoginUtils({ error, errorMessage }: LoginUtils) {
+export function LoginUtils({ state, errorMessage }: LoginUtils) {
   const [, store] = useLoginFormStore();
   const { modalRef, openModal, closeModal } = useModal();
 
   useEffect(() => {
-    if (error) openModal();
-  }, [error]);
+    if (state === 'loading') openModal();
+  }, [state]);
 
   const handleConfirm = (event?: React.MouseEvent) => {
     if (event) event.preventDefault();

@@ -101,10 +101,10 @@ export default function MyPage() {
   const navigate = useNavigate();
 
   const { accessToken, setAccessToken } = useAccessToken();
-  const { user, loading: userLoading, store } = useFetchUserStore();
-  const { products, loading: productsLoading } = useFetchProducts({});
+  const { user, state: userState, store } = useFetchUserStore();
+  const { products, state: productsState } = useFetchProducts({});
 
-  const loading = userLoading || productsLoading;
+  const loading = userState === 'loading' || productsState === 'loading';
 
   const handleClickLogout = async () => {
     await apiService.logout();

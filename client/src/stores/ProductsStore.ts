@@ -76,21 +76,6 @@ class ProductsStore {
     this.state = 'idle';
   }
 
-  @Action()
-  private startLoading() {
-    this.state = 'loading';
-  }
-
-  @Action()
-  private setDone() {
-    this.state = 'fetched';
-  }
-
-  @Action()
-  private setError() {
-    this.state = 'error';
-  }
-
   async fetchMyProducts({ categoryId, subCategoryId }: {
     categoryId?: string, subCategoryId?: string
   }) {
@@ -130,6 +115,21 @@ class ProductsStore {
 
       this.setError();
     }
+  }
+
+  @Action()
+  private startLoading() {
+    this.state = 'loading';
+  }
+
+  @Action()
+  private setDone() {
+    this.state = 'fetched';
+  }
+
+  @Action()
+  private setError() {
+    this.state = 'error';
   }
 }
 

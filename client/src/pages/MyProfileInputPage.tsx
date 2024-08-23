@@ -23,7 +23,7 @@ const Container = styled.div`
 `
 
 export default function MyProfileInputPage() {
-  const { user, loading } = useFetchUserStore()
+  const { user, state } = useFetchUserStore()
   const { accessToken } = useAccessToken()
   const [, store] = useSignupFormStore()
 
@@ -37,7 +37,7 @@ export default function MyProfileInputPage() {
     store.changeDescription(user.description)
   }, [])
 
-  if (loading) {
+  if (state === 'loading') {
     return <LoadingSpinner />;
   }
 
