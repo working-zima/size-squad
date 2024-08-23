@@ -5,11 +5,6 @@ import { PaginationResponse, ProductResponse } from '../types';
 
 import { apiService } from '../services/ApiService';
 
-type hasCategoryChangedProps = {
-  categoryId?: string;
-  subCategoryId?: string;
-}
-
 @singleton()
 @Store()
 class ProductsStore {
@@ -20,10 +15,6 @@ class ProductsStore {
   hasNextPage = true;
 
   per = 5;
-
-  lastCategoryId: string | undefined = '';
-
-  lastSubCategoryId: string | undefined = '';
 
   errorMessage = '';
 
@@ -45,23 +36,6 @@ class ProductsStore {
   }
 
   @Action()
-  private setLastCategoryAndSubCategoryId({
-    categoryId, subCategoryId
-  }: hasCategoryChangedProps) {
-    this.reset();
-    this.lastCategoryId = categoryId;
-    this.lastSubCategoryId = subCategoryId;
-  }
-
-  @Action()
-  private hasCategoryChanged({
-    categoryId, subCategoryId
-  }: hasCategoryChangedProps) {
-    return this.lastCategoryId !== categoryId
-      || this.lastSubCategoryId !== subCategoryId;
-  }
-
-  @Action()
   private handleProductResponse(products: PaginationResponse) {
     if (!products.hasNextPage) this.setHasNextPage();
     if (products.totalPages >= this.page) this.setProducts(products.docs);
@@ -76,43 +50,52 @@ class ProductsStore {
     this.state = 'idle';
   }
 
-  async fetchMyProducts({ categoryId, subCategoryId }: {
+  async fetchInitialProducts({ categoryId, subCategoryId }: {
     categoryId?: string, subCategoryId?: string
   }) {
-    if (this.hasCategoryChanged({ categoryId, subCategoryId })) {
-      this.setLastCategoryAndSubCategoryId({ categoryId, subCategoryId })
+    this.reset();
+    this.startLoading();
+    try {
+      const products = await apiService.fetchMyProducts({
+        categoryId, subCategoryId, page: 1, per: this.per
+      });
+      this.handleProductResponse(products);
+      this.setDone();
+    } catch (error) {
+      const typedError = error as { message: string };
+      this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.';
+      this.setError();
     }
-    if (this.state === 'loading' || !this.hasNextPage) return;
+  }
 
+  async fetchMoreProducts({ categoryId, subCategoryId }: {
+    categoryId?: string, subCategoryId?: string
+  }) {
+    if (this.state === 'loading' || !this.hasNextPage) return;
     this.startLoading();
     try {
       const products = await apiService.fetchMyProducts({
         categoryId, subCategoryId, page: this.page, per: this.per
       });
-
       this.handleProductResponse(products);
-
       this.setDone();
     } catch (error) {
       const typedError = error as { message: string };
-      this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
-
+      this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.';
       this.setError();
     }
   }
 
+
   async deleteAndFetchProducts(productId: string) {
     try {
       this.startLoading();
-
       await apiService.deleteMyProducts({ productId });
-      await this.fetchMyProducts({});
-
+      await this.fetchInitialProducts({});
       this.setDone();
     } catch (error) {
       const typedError = error as { message: string };
       this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
-
       this.setError();
     }
   }

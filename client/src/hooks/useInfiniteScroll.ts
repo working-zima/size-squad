@@ -23,20 +23,23 @@ const useInfiniteScroll = ({
 
   const moreRef = useRef<HTMLDivElement>(null)
 
-  const {
-    entries: [entry],
-  } = useIntersectionObserver(moreRef, ioOptions)
+  const { entries: [entry] } = useIntersectionObserver(moreRef, ioOptions)
   const isIntersecting = entry?.isIntersecting
 
   useEffect(() => {
-    store.fetchMyProducts({ categoryId, subCategoryId });
-  }, [isIntersecting, categoryId, subCategoryId]);
+    store.fetchInitialProducts({ categoryId, subCategoryId });
+  }, [categoryId, subCategoryId, store]);
+
+  useEffect(() => {
+    if (isIntersecting) store.fetchMoreProducts({ categoryId, subCategoryId });
+  }, [isIntersecting, store]);
 
   return {
     products,
     state,
     moreRef,
-    errorMessage
+    errorMessage,
+    store
   };
 };
 

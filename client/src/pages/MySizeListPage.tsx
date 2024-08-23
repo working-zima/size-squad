@@ -13,6 +13,7 @@ import LoadingSpinner from '../components/ui/LoadingSpinner';
 import useAccessToken from '../hooks/useAccessToken';
 import useFetchCategories from '../hooks/useFetchCategories';
 import useInfiniteScroll from '../hooks/useInfiniteScroll';
+import { useEffect } from 'react';
 
 const Container = styled.div`
   height: 100%;
@@ -36,6 +37,7 @@ export default function MySizeListPage() {
     errorMessage,
     moreRef,
     state: productsState,
+    store
   } = useInfiniteScroll({ categoryId, subCategoryId });
 
   const subCategories = categoryId
