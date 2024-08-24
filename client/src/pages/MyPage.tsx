@@ -101,10 +101,7 @@ export default function MyPage() {
   const navigate = useNavigate();
 
   const { accessToken, setAccessToken } = useAccessToken();
-  const { user, state: userState, store } = useFetchUserStore();
-  const { products, state: productsState } = useFetchProducts({});
-
-  const loading = userState === 'loading' || productsState === 'loading';
+  const { user, state, store } = useFetchUserStore();
 
   const handleClickLogout = async () => {
     await apiService.logout();
@@ -113,7 +110,7 @@ export default function MyPage() {
     navigate('/');
   };
 
-  if (loading) {
+  if (state === 'loading') {
     return <LoadingSpinner />;
   }
 
@@ -150,17 +147,6 @@ export default function MyPage() {
           </Button>
         </ButtonWrapper>
       </ProfileWrapper>
-      <ProductWrapper>
-        {products.map(product => (
-          <Product
-            key={product._id}
-            product={product}
-          />
-        ))}
-        <Button>
-          더보기
-        </Button>
-      </ProductWrapper>
     </Container>
   )
 }

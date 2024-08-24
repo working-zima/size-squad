@@ -9,15 +9,30 @@ import NoListPage from './NoListPage';
 import CategoryBar from '../components/category/CategoryBar';
 import Products from '../components/Products';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
+import BorderlessComboBox from '../components/ui/selectbox/BorderlessComboBox';
 
 import useAccessToken from '../hooks/useAccessToken';
 import useFetchCategories from '../hooks/useFetchCategories';
 import useInfiniteScroll from '../hooks/useInfiniteScroll';
-import { useEffect } from 'react';
+
+const options = [
+  { _id: '1', name: '수정순' },
+  { _id: '2', name: '이름순' }
+]
 
 const Container = styled.div`
   height: 100%;
 `;
+
+const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px;
+  font-size: 1.4rem;
+  color: ${props => props.theme.colors.unSelectedText};
+`
 
 export default function MySizeListPage() {
   const { accessToken } = useAccessToken();
@@ -37,7 +52,6 @@ export default function MySizeListPage() {
     errorMessage,
     moreRef,
     state: productsState,
-    store
   } = useInfiniteScroll({ categoryId, subCategoryId });
 
   const subCategories = categoryId
@@ -51,7 +65,23 @@ export default function MySizeListPage() {
 
   return (
     <Container>
-      <CategoryBar categories={categories} subCategories={subCategories} categoriesState={categoriesState} />
+      <CategoryBar
+        categories={categories}
+        subCategories={subCategories}
+        categoriesState={categoriesState}
+      />
+      <Wrapper>
+        <p>
+          Total
+        </p>
+        <BorderlessComboBox
+          selectedItem={options[0]}
+          items={options}
+          itemToId={() => options[0]._id}
+          itemToText={() => options[0].name}
+          onChange={() => { }}
+        />
+      </Wrapper>
       {subCategories.map(subCategory => (
         <Products
           key={subCategory._id}

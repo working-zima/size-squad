@@ -3,7 +3,7 @@ import useProductFormStore from '../../hooks/useProductFormStore';
 
 import { nullSize } from '../../nullObject';
 
-import ComboBox from '../ui/ComboBox';
+import ComboBox from '../ui/selectbox/ComboBox';
 
 export default function MySizeSizeBox() {
   const [{ product: { gender, size } }, store] = useProductFormStore();

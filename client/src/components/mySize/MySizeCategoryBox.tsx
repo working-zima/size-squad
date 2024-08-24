@@ -1,4 +1,4 @@
-import ComboBox from '../ui/ComboBox';
+import ComboBox from '../ui/selectbox/ComboBox';
 
 import useProductFormStore from '../../hooks/useProductFormStore';
 import useInitialDataStore from '../../hooks/useInitialDataStore';

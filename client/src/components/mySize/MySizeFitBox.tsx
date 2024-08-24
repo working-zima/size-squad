@@ -3,7 +3,7 @@ import useInitialDataStore from "../../hooks/useInitialDataStore";
 
 import { FIT_MESSAGES } from "../../constants";
 
-import ComboBox from "../ui/ComboBox";
+import ComboBox from "../ui/selectbox/ComboBox";
 
 export default function MySizeFitBox() {
   const [{ product: { fit } }, store] = useProductFormStore();

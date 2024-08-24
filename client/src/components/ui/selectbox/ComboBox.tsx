@@ -66,7 +66,12 @@ type ComboBoxProps<T> = {
  * @param onChange 선택된 값이 바뀔 때 발생할 함수. 예시: (value) => value && store.changeCategory(value)
  */
 export default function ComboBox<T>({
-  label, selectedItem, items, itemToId, itemToText, onChange,
+  label,
+  selectedItem,
+  items,
+  itemToId,
+  itemToText,
+  onChange,
 }: ComboBoxProps<T>) {
   const id = useRef(`combobox-${Math.random().toString().slice(2)}`);
 

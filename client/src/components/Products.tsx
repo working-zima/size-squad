@@ -4,8 +4,6 @@ import Product from './Product';
 
 import { ProductResponse, Summary } from '../types';
 
-import { SUBCATEGORY_MESSAGES } from '../constants';
-
 const Container = styled.div`
   margin: 0 10px;
 
@@ -26,6 +24,7 @@ export default function Products({ subCategory, products }: ProductsProps) {
   const filteredProduct = products.filter((product) => (
     product.subCategory && product.subCategory._id === subCategory._id
   ));
+
   return (
     !!filteredProduct.length && (
       <Container>
