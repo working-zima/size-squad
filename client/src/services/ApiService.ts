@@ -1,8 +1,14 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 import {
-  Category, Summary, ProductResponse, ProductRequest, Size, User,
-  PaginationResponse
+  Category,
+  Summary,
+  ProductResponse,
+  ProductRequest,
+  Size,
+  User,
+  PaginationResponse,
+  SortOption
 } from '../types';
 
 const MOCK_BASE_URL = 'http://localhost:5000';
@@ -220,16 +226,20 @@ export default class ApiService {
   async fetchMyProducts({
     categoryId,
     subCategoryId,
+    sortField,
+    sortOrder,
     page,
-    per
+    per,
   }: {
-    categoryId?: string,
-    subCategoryId?: string,
-    page?: number,
-    per?: number,
+    categoryId?: string;
+    subCategoryId?: string;
+    sortField?: string;
+    sortOrder?: number;
+    page?: number;
+    per?: number;
   } = {}): Promise<PaginationResponse> {
     const { data } = await this.instance.get('/users/product', {
-      params: { categoryId, subCategoryId, page, per },
+      params: { categoryId, subCategoryId, sortField, sortOrder, page, per },
     });
     const { products } = data;
 

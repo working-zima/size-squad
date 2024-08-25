@@ -8,17 +8,21 @@ const ioOptions = { threshold: 1 }
 
 type useInfiniteScrollProps = {
   categoryId?: string,
-  subCategoryId?: string
+  subCategoryId?: string,
+  sortCode?: string
 }
 
 const useInfiniteScroll = ({
   categoryId,
-  subCategoryId
+  subCategoryId,
+  sortCode
 }: useInfiniteScrollProps) => {
   const [{
     products = [],
     errorMessage,
     state,
+    sortOption,
+    totalDocs,
   }, store] = useProductsStore();
 
   const moreRef = useRef<HTMLDivElement>(null)
@@ -27,11 +31,13 @@ const useInfiniteScroll = ({
   const isIntersecting = entry?.isIntersecting
 
   useEffect(() => {
-    store.fetchInitialProducts({ categoryId, subCategoryId });
-  }, [categoryId, subCategoryId, store]);
+    store.fetchInitialProducts({ categoryId, subCategoryId, sortCode });
+  }, [categoryId, subCategoryId, sortCode, store]);
 
   useEffect(() => {
-    if (isIntersecting) store.fetchMoreProducts({ categoryId, subCategoryId });
+    if (isIntersecting) {
+      store.fetchMoreProducts({ categoryId, subCategoryId })
+    }
   }, [isIntersecting, store]);
 
   return {
@@ -39,6 +45,8 @@ const useInfiniteScroll = ({
     state,
     moreRef,
     errorMessage,
+    sortOption,
+    totalDocs,
     store
   };
 };

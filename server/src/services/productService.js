@@ -25,13 +25,13 @@ const productService = {
 
   /** userId로 product 조회 */
   getProductByUserId: async ({
-    userId, page, limit
+    userId, sort, page, limit
   }) => {
     try {
       const options = {
         page,
         limit,
-        sort: { createdAt: -1 },
+        sort: sort,
         populate: [
           { path: "category", select: ["_id", "name"] },
           { path: "subCategory", select: ["_id", "name"] },
@@ -46,7 +46,6 @@ const productService = {
       const productData = await Product.findByUserId({
         userId, options
       });
-
       return productData;
     } catch (error) {
       throw error;
@@ -55,13 +54,13 @@ const productService = {
 
   /** categoryId와 userId로 product 조회 */
   getProductByUserIdAndCategoryId: async ({
-    userId, category, page, limit
+    userId, category, sort, page, limit
   }) => {
     try {
       const options = {
         page,
         limit,
-        sort: { createdAt: -1 },
+        sort: sort,
         populate: [
           { path: "category", select: ["_id", "name"] },
           { path: "subCategory", select: ["_id", "name"] },
@@ -85,12 +84,13 @@ const productService = {
 
   /** subCategoryId와 userId로 product 조회 */
   getProductByUserIdAndSubCategoryId: async ({
-    userId, subCategory, page, limit
+    userId, subCategory, sort, page, limit
   }) => {
     try {
       const options = {
         page,
         limit,
+        sort: sort,
         populate: [
           { path: "category", select: ["_id", "name"] },
           { path: "subCategory", select: ["_id", "name"] },

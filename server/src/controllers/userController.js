@@ -44,32 +44,34 @@ const userController = {
     }
     try {
       const userAccessToken = req.headers["authorization"];
+      const { categoryId, subCategoryId, sortField, sortOrder, page, per } = req.query;
+
+      let sort = {};
+      if (sortField && sortOrder) sort[sortField] = parseInt(sortOrder, 10)
+
       const userData = await userService.getMyInfo(userAccessToken);
-
       const userId = userData._id;
-
-      const { categoryId, subCategoryId, page, per } = req.query;
 
       let productData = [];
 
       // 서브 카테고리
       if (subCategoryId) {
         productData = await productService.getProductByUserIdAndSubCategoryId({
-          userId, subCategory: subCategoryId, page, limit: per
+          userId, subCategory: subCategoryId, sort, page, limit: per
         });
       }
 
       // 카테고리
       if (categoryId && !subCategoryId) {
         productData = await productService.getProductByUserIdAndCategoryId({
-          userId, category: categoryId, page, limit: per
+          userId, category: categoryId, sort, page, limit: per
         });
       }
 
       // 전체
       if (!categoryId && !subCategoryId) {
         productData = await productService.getProductByUserId({
-          userId, page, limit: per
+          userId, sort, page, limit: per
         });
       }
       res.status(200).json({ products: productData });

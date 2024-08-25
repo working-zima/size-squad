@@ -113,3 +113,10 @@ export type PageConfig = {
   SWITCHER: boolean;
   FOOTER: boolean;
 }
+
+export type SortOption = {
+  _id: string;
+  name: string;
+  sort: { [key: string]: -1 | 1 };
+  urlParam: string;
+}

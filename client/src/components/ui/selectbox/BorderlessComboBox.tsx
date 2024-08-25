@@ -14,9 +14,9 @@ const SelectWrapper = styled.div`
     padding-right: 22px;
     background-color: transparent;
     border: 0;
-    font-size: 1.4rem;
     line-height: 20px;
     color: ${props => props.theme.colors.unSelectedText};
+    font-size: 1.3rem;
     text-align: right;
     direction: rtl;
     z-index: 10;

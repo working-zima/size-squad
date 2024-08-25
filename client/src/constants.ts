@@ -1,4 +1,4 @@
-import { PageConfig } from "./types";
+import { PageConfig, SortOption } from "./types";
 
 export const MEASUREMENT_MESSAGES: Record<string, string> = {
   totalLength: '총장',
@@ -145,6 +145,45 @@ export const USERFIELDS: Record<string, string> = {
   weight: '몸무게',
   description: '체형'
 }
+
+export const SORT_OPTIONS: Record<string, SortOption> = {
+  RECENT: {
+    _id: '1',
+    name: '등록순 (최신 순)',
+    sort: { createdAt: -1 },
+    urlParam: 'RECENT'
+  },
+  OLDEST: {
+    _id: '2',
+    name: '등록순 (오래된 순)',
+    sort: { createdAt: 1 },
+    urlParam: 'OLDEST'
+  },
+  NAME_ASC: {
+    _id: '3',
+    name: '제품명 순 (ㄱ-ㅎ)',
+    sort: { name: 1 },
+    urlParam: 'NAME_ASC'
+  },
+  NAME_DESC: {
+    _id: '4',
+    name: '제품명 순 (ㅎ-ㄱ)',
+    sort: { name: -1 },
+    urlParam: 'NAME_DESC'
+  },
+  BRAND_ASC: {
+    _id: '5',
+    name: '브랜드명 순 (ㄱ-ㅎ)',
+    sort: { brand: 1 },
+    urlParam: 'BRAND_ASC'
+  },
+  BRAND_DESC: {
+    _id: '6',
+    name: '브랜드명 순 (ㅎ-ㄱ)',
+    sort: { brand: -1 },
+    urlParam: 'BRAND_DESC'
+  },
+};
 
 // TODO: delete this!
 export default {};

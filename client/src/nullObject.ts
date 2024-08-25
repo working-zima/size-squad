@@ -1,4 +1,4 @@
-import { Summary, Category, Size, ProductResponse, Measurement, User, Product } from "./types";
+import { Summary, Category, Size, ProductResponse, Measurement, User, Product, SortOption } from "./types";
 
 export const nullSummary: Summary = {
   _id: '',
@@ -66,3 +66,9 @@ export const nullUser: User = {
   followers: [],
   following: [],
 };
+
+export const nullSortOption: SortOption = {
+  _id: '',
+  name: '',
+  sort: { '': -1 },
+}

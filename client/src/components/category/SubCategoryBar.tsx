@@ -17,7 +17,6 @@ const Container = styled.div`
   padding: 1rem 0;
   white-space: nowrap;
   scrollbar-width: none;
-  border-bottom: 1px solid ${(props) => props.theme.colors.lineColor};
 
   &::-webkit-scrollbar {
     display: none;
@@ -61,7 +60,7 @@ export default function SubCategoryBar(
 
   const [params] = useSearchParams();
   const categoryId = params.get('category1DepthCode');
-  const subCategoryId = params.get('category2DepthCodes');
+  const subCategoryId = params.get('category2DepthCode');
 
   useEffect(() => {
     if (subCategoryId) setActiveBtn(subCategoryId)
@@ -73,7 +72,7 @@ export default function SubCategoryBar(
 
     if (!!categoryId) path = `${path}?category1DepthCode=${categoryId}`
     if (btnId !== 'all') {
-      path = `${path}${categoryId ? '&' : '?'}category2DepthCodes=${btnId}`;
+      path = `${path}${categoryId ? '&' : '?'}category2DepthCode=${btnId}`;
     }
 
     setActiveBtn(btnId);

@@ -17,7 +17,6 @@ const Container = styled.div`
   margin: 0 0.4rem;
   overflow: auto hidden;
   white-space: nowrap;
-  border-bottom: 1px solid ${(props) => props.theme.colors.lineColor};
   scrollbar-width: none;
   -ms-overflow-style: none;
 
