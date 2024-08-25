@@ -6,11 +6,11 @@ import LayoutHeader from './LayoutHeader';
 import LayoutMenuBar from './LayoutMenuBar';
 import LayoutFooter from './LayoutFooter';
 
-import useCheckAccessToken from '../hooks/useCheckAccessToken';
+import useCheckAccessToken from '../../hooks/useCheckAccessToken';
 
-import { PAGES, USERFIELDS } from '../constants';
-import useUserStore from '../hooks/useUserStore';
-import FixedDetailSwitcher from './FixedDetailSwitcher';
+import { PAGES, USERFIELDS } from '../../constants';
+import useUserStore from '../../hooks/useUserStore';
+import SideButtons from './SideButtons';
 
 type ContainerProps = {
   SHOWMENU: boolean;
@@ -76,7 +76,7 @@ export default function Layout() {
       </Main>
       {page.FOOTER && <LayoutFooter />}
       {page.SHOWMENU
-        ? <FixedDetailSwitcher />
+        ? <SideButtons />
         : null
       }
       {page.SHOWMENU && <LayoutMenuBar />}

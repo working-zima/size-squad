@@ -1,4 +1,4 @@
-import Layout from './components/Layout';
+import Layout from './components/layout/Layout';
 
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
@@ -25,9 +25,9 @@ const routes = [
       { path: '/mysize', element: <MySizeListPage /> },
       { path: '/mysize/new', element: <MySizeNewPage /> },
       { path: '/mysize/:id/edit', element: <MySizeEditPage /> },
-      { path: '/mypage', element: <MyPage />},
-      { path: '/mypage/:id/edit', element: <MyProfileEditPage />},
-      { path: '/mypage/:id/edit/:path', element: <MyProfileInputPage />},
+      { path: '/mypage', element: <MyPage /> },
+      { path: '/mypage/:id/edit', element: <MyProfileEditPage /> },
+      { path: '/mypage/:id/edit/:path', element: <MyProfileInputPage /> },
     ],
   },
 ];

@@ -4,9 +4,9 @@ import styled from 'styled-components';
 import { CiHome } from 'react-icons/ci';
 import { LiaAngleLeftSolid } from "react-icons/lia";
 
-import BackSpace from './ui/BackSpace';
+import BackSpace from '../ui/BackSpace';
 
-import { PageConfig } from '../types';
+import { PageConfig } from '../../types';
 
 const Container = styled.header`
   grid-area: header;

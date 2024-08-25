@@ -7,7 +7,7 @@ const User = {
       const userData = await UserModel.create(newUser)
 
       return userData;
-    } catch(error) {
+    } catch (error) {
       throw error;
     }
   },
@@ -20,8 +20,8 @@ const User = {
         "_id email name gender height weight description role followers following"
         // mongoose document를 필요한 javascript object로 반환
       )
-      .populate({ path: "gender", select: ["_id", "name"] })
-      .lean();
+        .populate({ path: "gender", select: ["_id", "name"] })
+        .lean();
 
       return userData;
     } catch (error) {
@@ -30,15 +30,15 @@ const User = {
   },
 
   /** Email로 검색 */
-  findByEmail: async ({email}) => {
+  findByEmail: async ({ email }) => {
     try {
       const userData = await UserModel.findOne(
         { email },
         "_id email password name"
         // mongoose document를 필요한 javascript object로 반환
       )
-      .populate({ path: "gender", select: ["_id", "name"] })
-      .lean();
+        .populate({ path: "gender", select: ["_id", "name"] })
+        .lean();
 
       return userData;
     } catch (error) {
@@ -47,14 +47,14 @@ const User = {
   },
 
   /** Name으로 검색 */
-  findByName: async ({name}) => {
+  findByName: async ({ name }) => {
     try {
       const userData = await UserModel.findOne(
         { name },
         "_id email name"
       )
-      .populate({ path: "gender", select: ["_id", "name"] })
-      .lean();
+        .populate({ path: "gender", select: ["_id", "name"] })
+        .lean();
 
       return userData;
     } catch (error) {
@@ -62,9 +62,9 @@ const User = {
     }
   },
 
-  findPasswordById: async ({userId}) => {
+  findPasswordById: async ({ _id }) => {
     try {
-      const userData = await UserModel.findOne({ userId }, "password")
+      const userData = await UserModel.findOne({ _id }, "password")
         .lean();
 
       return userData;
@@ -81,7 +81,7 @@ const User = {
       ).lean();
 
       return;
-    } catch(error) {
+    } catch (error) {
       throw error;
     }
   },

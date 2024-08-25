@@ -19,7 +19,7 @@ const userService = {
       const { _id } = userData;
 
       // accessToken, refreshToken 동시 발급
-      const refreshToken =  generateJwtToken({
+      const refreshToken = generateJwtToken({
         userId: _id,
         secretKey: process.env.JWT_SECRET_KEY,
         expiresIn: process.env.REFRESH_EXPIRES_IN
@@ -33,7 +33,7 @@ const userService = {
       await Token.create({ refreshToken, accessToken, user: _id });
 
       return accessToken;
-    } catch(error) {
+    } catch (error) {
       throw error;
     }
   },
@@ -49,17 +49,17 @@ const userService = {
     }
   },
 
-  getIdByEmail: async ({email}) => {
+  getIdByEmail: async ({ email }) => {
     try {
       const userData = await User.findByEmail({ email })
       const { _id } = userData
 
       return _id;
     } catch (error) {
-      if(
+      if (
         error.message ===
         "Cannot destructure property '_id' of 'userData' as it is null."
-      ){
+      ) {
         error.statusCode = 200;
         error.message = 'email not found'
       }
@@ -68,17 +68,17 @@ const userService = {
     }
   },
 
-  getIdByName: async ({name}) => {
+  getIdByName: async ({ name }) => {
     try {
       const userData = await User.findByName({ name })
       const { _id } = userData
 
       return _id;
     } catch (error) {
-      if(
+      if (
         error.message ===
         "Cannot destructure property '_id' of 'userData' as it is null."
-      ){
+      ) {
         error.statusCode = 200;
         error.message = 'Name not found'
       }
@@ -96,7 +96,7 @@ const userService = {
       await Product.deleteProductByAuthor({ author: userId })
 
       return;
-    } catch(error) {
+    } catch (error) {
       throw error;
     }
   },
@@ -105,7 +105,7 @@ const userService = {
   patchPassword: async ({ oldPassword, newPassword, accessToken }) => {
     try {
       const userId = getUserIdByAccessToken({ accessToken })
-      const { _id, password } = await User.findPasswordById(userId);
+      const { _id, password } = await User.findPasswordById({ _id: userId });
 
       const isPasswordMatch = await bcrypt.compare(oldPassword, password);
 
@@ -115,7 +115,7 @@ const userService = {
 
       const hashedPassword = await bcrypt.hash(newPassword, SALT_ROUND);
 
-      await User.patchUserData({ _id }, {password: hashedPassword})
+      await User.patchUserData({ _id }, { password: hashedPassword })
     } catch (error) {
       throw error;
     }
@@ -125,7 +125,7 @@ const userService = {
   patchGender: async ({ gender, accessToken }) => {
     try {
       const userId = getUserIdByAccessToken({ accessToken })
-      const { _id } = await User.findPasswordById(userId);
+      const { _id } = await User.findPasswordById({ _id: userId });
 
       await User.patchUserData({ _id }, { gender })
     } catch (error) {
@@ -137,7 +137,7 @@ const userService = {
   patchHeight: async ({ height, accessToken }) => {
     try {
       const userId = getUserIdByAccessToken({ accessToken })
-      const { _id } = await User.findPasswordById(userId);
+      const { _id } = await User.findPasswordById({ _id: userId });
 
       await User.patchUserData({ _id }, { height })
     } catch (error) {
@@ -149,7 +149,7 @@ const userService = {
   patchWeight: async ({ weight, accessToken }) => {
     try {
       const userId = getUserIdByAccessToken({ accessToken })
-      const { _id } = await User.findPasswordById(userId);
+      const { _id } = await User.findPasswordById({ _id: userId });
 
       await User.patchUserData({ _id }, { weight })
     } catch (error) {
@@ -161,7 +161,7 @@ const userService = {
   patchDescription: async ({ description, accessToken }) => {
     try {
       const userId = getUserIdByAccessToken({ accessToken })
-      const { _id } = await User.findPasswordById(userId);
+      const { _id } = await User.findPasswordById({ _id: userId });
 
       await User.patchUserData({ _id }, { description })
     } catch (error) {

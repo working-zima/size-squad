@@ -3,13 +3,12 @@ import { useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
 
-import SignUpHeightInput from "../signUp/SignUpHeightInput";
-
 import { ConfirmTrigger } from "../ui/modal/ModalTrigger";
 import { AlertModal } from "../ui/modal/ModalComponents";
 
 import useSignupFormStore from "../../hooks/useSignupFormStore";
 import useModal from "../../hooks/useModal";
+import BodyMetricInput from "../signUp/BodyMetricInput";
 
 const ButtonWrapper = styled.div`
   & > button {
@@ -56,11 +55,12 @@ export default function EditHeight() {
 
   return (
     <>
-      <SignUpHeightInput
+      <BodyMetricInput
         label="키"
         placeholder="키를 입력해주세요."
-        height={user.height}
-        changeHeight={(value) => store.changeHeight(value)}
+        value={user.height}
+        unitType='cm'
+        onChange={(value) => store.changeHeight(value)}
       />
       <ButtonWrapper>
         <ConfirmTrigger

@@ -4,10 +4,8 @@ import styled from "styled-components";
 
 import SignUpEmailInput from "./SignUpEmailInput";
 import SignUpNameInput from "./SignUpNameInput";
-import SignUpPasswords from "./SignUpPasswords";
-import SignUpGenderInput from "./SignUpGenderInput";
-import SignUpHeightInput from "./SignUpHeightInput";
-import SignUpWeightInput from "./SignUpWeightInput";
+import PasswordInputs from "./PasswordInputs";
+import BodyMetricInput from "./BodyMetricInput";
 import SignUpDescriptionInput from "./SignUpDescriptionInput";
 
 import { Summary } from "../../types";
@@ -16,8 +14,11 @@ import useAccessToken from "../../hooks/useAccessToken";
 import useSignupFormStore from "../../hooks/useSignupFormStore";
 
 import Button from "../ui/Button";
+import ComboBox from "../ui/selectbox/ComboBox";
 
 import { RequiredStar } from "../../utils/RequiredStar";
+
+import { GENDER_MESSAGES } from "../../constants";
 
 const Container = styled.div`
   padding: 20px ${props => props.theme.sizes.contentPadding} 0;
@@ -101,28 +102,32 @@ export default function SignUpForm({ genders }: SignUpFormProps) {
           label="닉네임"
           placeholder="2 ~ 10자리 이내 닉네임을 입력해주세요."
         />
-        <SignUpPasswords
+        <PasswordInputs
           pwdLabel="비밀번호"
           pwdPlaceholder="영문, 숫자, 특수문자 포함 8 ~ 16자리를 사용합니다."
           confirmPlaceholder="비밀번호를 다시 입력해주세요."
         />
-        <SignUpGenderInput
-          genders={genders}
-          gender={user.gender}
+        <ComboBox
           label="성별"
-          changeGender={(value) => store.changeGender(value)}
+          selectedItem={user.gender}
+          items={genders}
+          itemToId={(item) => item?._id}
+          itemToText={(item) => GENDER_MESSAGES[item?.name]}
+          onChange={(value) => value && store.changeGender(value)}
         />
-        <SignUpHeightInput
+        <BodyMetricInput
           label="키"
           placeholder="키를 입력해주세요."
-          height={user.height}
-          changeHeight={(value) => store.changeHeight(value)}
+          value={user.height}
+          unitType='cm'
+          onChange={(value) => store.changeHeight(value)}
         />
-        <SignUpWeightInput
+        <BodyMetricInput
           label="몸무게"
           placeholder="몸무게를 입력해주세요."
-          weight={user.weight}
-          changeWeight={(value) => store.changeWeight(value)}
+          value={user.weight}
+          unitType='kg'
+          onChange={(value) => store.changeWeight(value)}
         />
         <SignUpDescriptionInput
           label="체형"

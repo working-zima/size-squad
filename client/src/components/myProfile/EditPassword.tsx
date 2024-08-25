@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import OldPasswordInput from "./OldPasswordInput";
-import SignUpPasswords from "../signUp/SignUpPasswords";
+import PasswordInputs from "../signUp/PasswordInputs";
 
 import useSignupFormStore from "../../hooks/useSignupFormStore";
 import useModal from "../../hooks/useModal";
@@ -59,7 +59,7 @@ export default function ChangePasswordForm() {
       <OldPasswordInput
         placeholder="현재 비밀번호를 입력해주세요."
       />
-      <SignUpPasswords
+      <PasswordInputs
         pwdPlaceholder="새 비밀번호를 입력해주세요."
         confirmPlaceholder="새 비밀번호를 다시 입력해주세요."
       />

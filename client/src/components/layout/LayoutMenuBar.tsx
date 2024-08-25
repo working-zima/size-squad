@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { CiUser, CiHome, CiEdit, CiLogin, CiViewList } from "react-icons/ci";
 
-import useAccessToken from '../hooks/useAccessToken';
+import useAccessToken from '../../hooks/useAccessToken';
 
 const Container = styled.div.attrs({ className: 'LayoutMenuBar' })`
   grid-area: menu;

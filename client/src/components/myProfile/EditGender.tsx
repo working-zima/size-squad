@@ -3,14 +3,14 @@ import { useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
 
-import SignUpGenderInput from "../signUp/SignUpGenderInput";
-
 import { ConfirmTrigger } from "../ui/modal/ModalTrigger";
 import { AlertModal } from "../ui/modal/ModalComponents";
 
 import useFetchInitialData from "../../hooks/useFetchInitialData";
 import useSignupFormStore from "../../hooks/useSignupFormStore";
 import useModal from "../../hooks/useModal";
+import ComboBox from "../ui/selectbox/ComboBox";
+import { GENDER_MESSAGES } from "../../constants";
 
 const ButtonWrapper = styled.div`
   & > button {
@@ -59,10 +59,13 @@ export default function EditGender() {
 
   return (
     <>
-      <SignUpGenderInput
-        genders={genders}
-        gender={user.gender}
-        changeGender={(value) => store.changeGender(value)}
+      <ComboBox
+        label={''}
+        selectedItem={user.gender}
+        items={genders}
+        itemToId={(item) => item?._id}
+        itemToText={(item) => GENDER_MESSAGES[item?.name]}
+        onChange={(value) => value && store.changeGender(value)}
       />
       <ButtonWrapper>
         <ConfirmTrigger

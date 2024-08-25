@@ -7,7 +7,7 @@ type SignUpPasswordProps = {
   confirmPlaceholder?: string;
 }
 
-export default function SignUpPasswords({
+export default function PasswordInputs({
   pwdLabel = "",
   pwdPlaceholder = "",
   confirmPlaceholder = ""

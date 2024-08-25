@@ -3,12 +3,13 @@ import { useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
 
-import SignUpWeightInput from "../signUp/SignUpWeightInput";
+import SignUpWeightInput from "../signUp/BodyMetricInput";
 import { ConfirmTrigger } from "../ui/modal/ModalTrigger";
 import { AlertModal } from "../ui/modal/ModalComponents";
 
 import useSignupFormStore from "../../hooks/useSignupFormStore";
 import useModal from "../../hooks/useModal";
+import BodyMetricInput from "../signUp/BodyMetricInput";
 
 const ButtonWrapper = styled.div`
   & > button {
@@ -55,11 +56,12 @@ export default function EditWeight() {
 
   return (
     <>
-      <SignUpWeightInput
+      <BodyMetricInput
         label="몸무게"
         placeholder="몸무게를 입력해주세요."
-        weight={user.weight}
-        changeWeight={(value) => store.changeWeight(value)}
+        value={user.weight}
+        unitType="kg"
+        onChange={(value) => store.changeWeight(value)}
       />
       <ButtonWrapper>
         <ConfirmTrigger
