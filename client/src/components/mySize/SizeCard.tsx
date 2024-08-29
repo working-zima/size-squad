@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { MEASUREMENT_MESSAGES } from '../constants';
-import { ProductResponse } from '../types';
+import { MEASUREMENT_MESSAGES } from '../../constants';
+import { ProductResponse } from '../../types';
 
 type ContainerProps = {
   columnsCount: number;

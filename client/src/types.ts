@@ -107,11 +107,11 @@ export type InitialData = {
 
 export type PageConfig = {
   PAGETITLE: string;
-  HOMEBUTTON: boolean;
-  BACKSPACE: boolean;
-  SHOWMENU: boolean;
-  SWITCHER: boolean;
+  LEFTBUTTON: 'backspace' | '';
+  RIGHTBUTTON: 'search' | 'home' | '';
   FOOTER: boolean;
+  SWITCHER: boolean;
+  SHOWMENU: boolean;
 }
 
 export type SortOption = {

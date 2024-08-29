@@ -1,10 +1,15 @@
-import { useRef, useState } from "react";
+import { Dispatch, SetStateAction, useRef, useState } from "react";
+
+import { CiSearch } from "react-icons/ci";
 
 import Label from "./Label";
 import TextBox from "./TextBox";
 import TextareaInput from "./TextareaInput";
 import TextInput from "./TextInput";
+import TextSimpleInput from './TextSimpleInput';
+import TextSimpleBox from "./TextSimpleBox";
 import Buttons from "./Buttons";
+import Button from "../Button";
 
 type TextareaTextBoxProps = {
   label: string;
@@ -130,6 +135,67 @@ export const TextInputBox = ({
           />
         </>
       </TextBox>
+    </>
+  )
+}
+
+type TextSimpleInputBoxProps = {
+  value: string;
+  placeholder: string;
+  label?: string;
+  type?: 'text' | 'number' | 'password' | 'tel';
+  maxLength?: number;
+  isShowPw?: boolean
+  setIsFocused: Dispatch<SetStateAction<boolean>>;
+  onChange?: (value: string) => void;
+  onReset?: () => void;
+  required?: boolean;
+}
+
+
+export const SearchTextInputBox = ({
+  value,
+  placeholder,
+  label,
+  type = 'text',
+  maxLength,
+  isShowPw,
+  setIsFocused,
+  onChange = undefined,
+  onReset = undefined,
+  required = false,
+}: TextSimpleInputBoxProps) => {
+  const id = useRef(`textbox-${Math.random().toString().slice(2)}`);
+
+  return (
+    <>
+      {label && (
+        <Label
+          idRef={id}
+          label={label}
+          required={required}
+        />
+      )}
+      <TextSimpleBox>
+        <TextSimpleInput
+          idRef={id}
+          placeholder={placeholder}
+          value={value}
+          type={type}
+          maxLength={maxLength}
+          setIsFocused={setIsFocused}
+          onChange={onChange}
+        />
+        <Buttons
+          value={value}
+          isShowPw={isShowPw}
+          type={type}
+          onReset={onReset}
+        />
+        <Button type="submit">
+          <CiSearch size="24" />
+        </Button>
+      </TextSimpleBox>
     </>
   )
 }

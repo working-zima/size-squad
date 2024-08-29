@@ -11,7 +11,7 @@ import MySizeNewPage from './pages/MySizeNewPage';
 import MyProfileEditPage from './pages/MyProfileEditPage';
 import MyProfileInputPage from './pages/MyProfileInputPage';
 import ErrorPage from './pages/ErrorPage';
-
+import SearchResultPage from './pages/SearchResultPage';
 
 const routes = [
   {
@@ -28,6 +28,7 @@ const routes = [
       { path: '/mypage', element: <MyPage /> },
       { path: '/mypage/:id/edit', element: <MyProfileEditPage /> },
       { path: '/mypage/:id/edit/:path', element: <MyProfileInputPage /> },
+      { path: '/search', element: <SearchResultPage /> },
     ],
   },
 ];

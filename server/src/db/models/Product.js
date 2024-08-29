@@ -44,10 +44,10 @@ const Product = {
   },
 
   /** userId로 product list 가져오기 */
-  findByUserId: async ({ userId, options }) => {
+  findByUserId: async ({ queryCriteria, options }) => {
     try {
       const productData = await ProductModel.paginate(
-        { author: userId },
+        queryCriteria,
         options
       );
 

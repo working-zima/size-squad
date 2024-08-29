@@ -7,7 +7,6 @@ import AccessDeniedPage from "./AccessDeniedPage";
 import LineClampedText from "../components/ui/LineClamp";
 import Button from "../components/ui/Button";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
-import Product from "../components/Product";
 
 import useAccessToken from "../hooks/useAccessToken";
 import useFetchUserStore from "../hooks/useFetchUserStore";

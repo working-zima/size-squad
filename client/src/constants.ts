@@ -64,75 +64,75 @@ export const ERROR_MESSAGES: Record<string, string> = {
 export const PAGES: Record<string, PageConfig> = {
   '/': {
     PAGETITLE: 'Size Squad',
-    HOMEBUTTON: false,
-    BACKSPACE: false,
-    SHOWMENU: true,
+    LEFTBUTTON: '',
+    RIGHTBUTTON: '',
+    FOOTER: true,
     SWITCHER: true,
-    FOOTER: true
+    SHOWMENU: true,
   },
   '/mysize': {
     PAGETITLE: 'Size Squad',
-    HOMEBUTTON: false,
-    BACKSPACE: false,
-    SHOWMENU: true,
+    LEFTBUTTON: '',
+    RIGHTBUTTON: 'search',
+    FOOTER: false,
     SWITCHER: true,
-    FOOTER: false
+    SHOWMENU: true,
   },
   '/login': {
     PAGETITLE: '로그인',
-    HOMEBUTTON: false,
-    BACKSPACE: true,
-    SHOWMENU: false,
+    LEFTBUTTON: '',
+    RIGHTBUTTON: '',
+    FOOTER: false,
     SWITCHER: false,
-    FOOTER: false
+    SHOWMENU: false,
   },
   '/signup': {
     PAGETITLE: '회원가입',
-    HOMEBUTTON: false,
-    BACKSPACE: true,
-    SHOWMENU: false,
+    LEFTBUTTON: 'backspace',
+    RIGHTBUTTON: '',
+    FOOTER: false,
     SWITCHER: false,
-    FOOTER: false
+    SHOWMENU: false,
   },
   '/mysize/:id/edit': {
     PAGETITLE: '사이즈 정보 변경',
-    HOMEBUTTON: false,
-    BACKSPACE: true,
-    SHOWMENU: false,
+    LEFTBUTTON: 'backspace',
+    RIGHTBUTTON: 'home',
+    FOOTER: false,
     SWITCHER: false,
-    FOOTER: false
+    SHOWMENU: false,
   },
   '/mysize/new': {
     PAGETITLE: '사이즈 등록',
-    HOMEBUTTON: false,
-    BACKSPACE: true,
-    SHOWMENU: false,
+    LEFTBUTTON: 'backspace',
+    RIGHTBUTTON: '',
+    FOOTER: false,
     SWITCHER: false,
-    FOOTER: false
+    SHOWMENU: false,
   },
   '/mypage': {
     PAGETITLE: '내 페이지',
-    HOMEBUTTON: false,
-    BACKSPACE: true,
-    SHOWMENU: false,
+    LEFTBUTTON: 'backspace',
+    RIGHTBUTTON: '',
+    FOOTER: false,
     SWITCHER: true,
-    FOOTER: false
+    SHOWMENU: false,
   },
   '/mypage/:id/edit': {
     PAGETITLE: '회원 정보 변경',
-    HOMEBUTTON: true,
-    BACKSPACE: true,
-    SHOWMENU: false,
+    LEFTBUTTON: 'backspace',
+    RIGHTBUTTON: 'home',
+    FOOTER: false,
     SWITCHER: false,
-    FOOTER: false
+    SHOWMENU: false,
   },
   '/mypage/:id/edit/:editField': {
     PAGETITLE: '특정 회원 정보 변경',
-    HOMEBUTTON: true,
-    BACKSPACE: true,
-    SHOWMENU: false,
+    LEFTBUTTON: 'backspace',
+    RIGHTBUTTON: '',
+    FOOTER: false,
     SWITCHER: false,
-    FOOTER: false
+    SHOWMENU: false,
   }
 }
 

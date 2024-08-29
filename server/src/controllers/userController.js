@@ -44,7 +44,9 @@ const userController = {
     }
     try {
       const userAccessToken = req.headers["authorization"];
-      const { categoryId, subCategoryId, sortField, sortOrder, page, per } = req.query;
+      const {
+        keyword, categoryId, subCategoryId, sortField, sortOrder, page, per
+      } = req.query;
 
       let sort = {};
       if (sortField && sortOrder) sort[sortField] = parseInt(sortOrder, 10)
@@ -71,9 +73,10 @@ const userController = {
       // 전체
       if (!categoryId && !subCategoryId) {
         productData = await productService.getProductByUserId({
-          userId, sort, page, limit: per
+          userId, keyword, sort, page, limit: per
         });
       }
+
       res.status(200).json({ products: productData });
     } catch (error) {
       next(error);

@@ -11,6 +11,7 @@ import useCheckAccessToken from '../../hooks/useCheckAccessToken';
 import { PAGES, USERFIELDS } from '../../constants';
 import useUserStore from '../../hooks/useUserStore';
 import SideButtons from './SideButtons';
+import PortalRoot from './PortalRoot';
 
 type ContainerProps = {
   SHOWMENU: boolean;
@@ -80,6 +81,7 @@ export default function Layout() {
         : null
       }
       {page.SHOWMENU && <LayoutMenuBar />}
+      <PortalRoot />
     </Container>
   );
 }

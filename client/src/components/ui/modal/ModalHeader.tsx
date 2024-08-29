@@ -34,9 +34,9 @@ const Container = styled.div`
     &::after {
       content: '';
       position: absolute;
-      width: 25px;
+      width: 21px;
       height: 0;
-      border-top: 2px solid #333;
+      border-top: 1.5px solid #333;
       transform-origin: 50% 1px;
       left: 10px;
       top: 19px;

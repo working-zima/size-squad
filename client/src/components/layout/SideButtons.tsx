@@ -10,7 +10,7 @@ const Container = styled.div`
   flex-direction: column;
   position: fixed;
   right: 10px;
-  bottom: 80px;
+  bottom: 50px;
   z-index: 500;
   font-size: 1.4rem;
 `;
@@ -30,6 +30,7 @@ const SizeInfoSwitch = styled(Button)`
 `;
 
 const ScrollToTopButton = styled(SizeInfoSwitch)`
+  margin: 0;
   &::before {
     content: '';
     display: inline-block;

@@ -64,15 +64,17 @@ export default function LayoutMenuBar() {
             <div><CiHome size="24" /></div>
             <span>홈</span>
           </Link>
-          <Link to="/mysize">
-            <div><CiViewList size="24" /></div>
-            <span>목록</span>
-          </Link>
           {!!accessToken && (
-            <Link to="/mysize/new">
-              <div><CiEdit size="24" /></div>
-              <span>작성</span>
-            </Link>
+            <>
+              <Link to="/mysize">
+                <div><CiViewList size="24" /></div>
+                <span>목록</span>
+              </Link>
+              <Link to="/mysize/new">
+                <div><CiEdit size="24" /></div>
+                <span>작성</span>
+              </Link>
+            </>
           )}
           <Link to={!!accessToken ? "/mypage" : "/login"}>
             {!!accessToken ? (

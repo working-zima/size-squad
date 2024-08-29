@@ -7,7 +7,8 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: calc(100vh - 150px);
+  flex-grow: 1;
+  height: calc(100vh - 243px);
 
   button {
     display: inline-block;

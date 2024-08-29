@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 
-import { ProductResponse } from '../types';
-import LineClampedText from './ui/LineClamp';
+import { ProductResponse } from '../../types';
+import LineClampedText from '../ui/LineClamp';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 71px;
+  padding: 5px;
   color: ${(props) => props.theme.colors.secondaryTextColor};
 `;
 

@@ -18,7 +18,9 @@ class ProductsStore {
 
   hasNextPage = true;
 
-  per = 5;
+  keyword = '';
+
+  per = 10;
 
   totalDocs = 0;
 
@@ -60,6 +62,16 @@ class ProductsStore {
   }
 
   @Action()
+  changeKeyword(keyword: string) {
+    this.keyword = keyword;
+  }
+
+  @Action()
+  resetKeyword() {
+    this.keyword = '';
+  }
+
+  @Action()
   private handleProductResponse(products: PaginationResponse) {
     if (!products.hasNextPage) this.setHasNextPage();
     if (products.totalPages >= this.page) this.setProducts(products.docs);
@@ -69,17 +81,28 @@ class ProductsStore {
   /**
    * 첫 렌더링 fetch
    */
-  async fetchInitialProducts({ categoryId, subCategoryId, sortCode }: {
-    categoryId?: string, subCategoryId?: string, sortCode?: string
+  async fetchInitialProducts({
+    keyword,
+    categoryId,
+    subCategoryId,
+    sortCode,
+  }: {
+    keyword?: string,
+    categoryId?: string,
+    subCategoryId?: string,
+    sortCode?: string
   }) {
     this.reset();
     this.startLoading();
     try {
-      const sortOption = sortCode ? SORT_OPTIONS[sortCode] : SORT_OPTIONS.RECENT;
+      const sortOption = sortCode
+        ? SORT_OPTIONS[sortCode]
+        : SORT_OPTIONS.RECENT;
       const sortField = Object.keys(sortOption.sort)[0];
       const sortOrder = Object.values(sortOption.sort)[0];
 
       const products = await apiService.fetchMyProducts({
+        keyword,
         categoryId,
         subCategoryId,
         sortField,
@@ -93,7 +116,6 @@ class ProductsStore {
       this.setTotalDocs(products.totalDocs);
       this.setDone();
     } catch (error) {
-      console.log(error)
       const typedError = error as { message: string };
       this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.';
       this.setError();
@@ -103,8 +125,8 @@ class ProductsStore {
   /**
    * 첫 렌더링 이후 fetch
    */
-  async fetchMoreProducts({ categoryId, subCategoryId }: {
-    categoryId?: string, subCategoryId?: string
+  async fetchMoreProducts({ keyword, categoryId, subCategoryId }: {
+    keyword?: string, categoryId?: string, subCategoryId?: string
   }) {
     if (this.state === 'loading' || !this.hasNextPage) return;
     this.startLoading();
@@ -113,6 +135,7 @@ class ProductsStore {
       const sortOrder = Object.values(this.sortOption.sort)[0];
 
       const products = await apiService.fetchMyProducts({
+        keyword,
         categoryId,
         subCategoryId,
         sortField,

@@ -6,12 +6,12 @@ import styled from 'styled-components';
 import SizeCard from './SizeCard';
 import InfoCard from './InfoCard';
 
-import { ConfirmTrigger } from './ui/modal/ModalTrigger';
+import { ConfirmTrigger } from '../ui/modal/ModalTrigger';
 
-import { ProductResponse } from '../types';
+import { ProductResponse } from '../../types';
 
-import useViewModeStore from '../hooks/useViewModeStore';
-import useProductsStore from '../hooks/useProductsStore';
+import useViewModeStore from '../../hooks/useViewModeStore';
+import useProductsStore from '../../hooks/useProductsStore';
 
 const Container = styled.div`
   padding: 1rem 0.1rem;

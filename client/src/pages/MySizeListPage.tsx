@@ -7,17 +7,18 @@ import ErrorPage from './ErrorPage';
 import NoListPage from './NoListPage';
 
 import CategoryBar from '../components/category/CategoryBar';
-import Product from '../components/Product';
+import Product from '../components/mySize/Product';
 
 import LoadingSpinner from '../components/ui/LoadingSpinner';
 import BorderlessComboBox from '../components/ui/selectbox/BorderlessComboBox';
+
+import { SortOption } from '../types';
 
 import useAccessToken from '../hooks/useAccessToken';
 import useFetchCategories from '../hooks/useFetchCategories';
 import useInfiniteScroll from '../hooks/useInfiniteScroll';
 
 import { SORT_OPTIONS } from '../constants';
-import { SortOption } from '../types';
 
 const Container = styled.div`
   height: 100%;

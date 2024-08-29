@@ -224,6 +224,7 @@ export default class ApiService {
   }
 
   async fetchMyProducts({
+    keyword,
     categoryId,
     subCategoryId,
     sortField,
@@ -231,6 +232,7 @@ export default class ApiService {
     page,
     per,
   }: {
+    keyword?: string;
     categoryId?: string;
     subCategoryId?: string;
     sortField?: string;
@@ -239,7 +241,9 @@ export default class ApiService {
     per?: number;
   } = {}): Promise<PaginationResponse> {
     const { data } = await this.instance.get('/users/product', {
-      params: { categoryId, subCategoryId, sortField, sortOrder, page, per },
+      params: {
+        keyword, categoryId, subCategoryId, sortField, sortOrder, page, per
+      },
     });
     const { products } = data;
 

@@ -71,4 +71,5 @@ export const nullSortOption: SortOption = {
   _id: '',
   name: '',
   sort: { '': -1 },
+  urlParam: ""
 }

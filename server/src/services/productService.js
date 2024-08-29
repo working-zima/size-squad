@@ -25,9 +25,20 @@ const productService = {
 
   /** userId로 product 조회 */
   getProductByUserId: async ({
-    userId, sort, page, limit
+    userId, keyword, sort, page, limit
   }) => {
     try {
+      const queryCriteria = {
+        author: userId,
+      };
+
+      if (keyword) {
+        queryCriteria.$or = [
+          { brand: { $regex: keyword, $options: 'i' } },
+          { name: { $regex: keyword, $options: 'i' } }
+        ];
+      }
+
       const options = {
         page,
         limit,
@@ -44,7 +55,7 @@ const productService = {
       };
 
       const productData = await Product.findByUserId({
-        userId, options
+        queryCriteria, options
       });
       return productData;
     } catch (error) {
