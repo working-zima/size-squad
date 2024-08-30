@@ -1,17 +1,21 @@
+import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import SearchInput from '../components/SearchInput';
-
-import usePortal from '../hooks/usePortal';
-import { useEffect } from 'react';
 import styled from 'styled-components';
-import BorderlessComboBox from '../components/ui/selectbox/BorderlessComboBox';
-import { SORT_OPTIONS } from '../constants';
-import LoadingSpinner from '../components/ui/LoadingSpinner';
-import Product from '../components/mySize/Product';
+
 import NoListPage from './NoListPage';
 import ErrorPage from './ErrorPage';
+
+import SearchInput from '../components/SearchInput';
+import Product from '../components/mySize/Product';
+import BorderlessComboBox from '../components/ui/selectbox/BorderlessComboBox';
+import LoadingSpinner from '../components/ui/LoadingSpinner';
+
+import usePortal from '../hooks/usePortal';
 import useInfiniteScroll from '../hooks/useInfiniteScroll';
+import useProductsStore from '../hooks/useProductsStore';
+
+import { SORT_OPTIONS } from '../constants';
 
 const Container = styled.div`
   height: 100%;
@@ -33,17 +37,21 @@ const Products = styled.div`
 `;
 
 export default function SearchResultPage() {
+  const [, store] = useProductsStore();
+
   let [searchParams] = useSearchParams();
+  const query = searchParams.get('query') || '';
 
   const {
     opened: headerOpened,
     openModal: openHeader,
-    closeModal: closeHeader
+    closeModal: hideHeader
   } = usePortal();
+
   const {
     opened: bodyOpened,
     openModal: openBody,
-    closeModal: closeBody
+    closeModal: hideBody
   } = usePortal();
 
   const {
@@ -53,11 +61,12 @@ export default function SearchResultPage() {
     state: productsState,
     sortOption,
     totalDocs
-  } = useInfiniteScroll({});
+  } = useInfiniteScroll({ keyword: query });
 
   useEffect(() => {
     openHeader();
-  }, [])
+    store.changeKeyword(query);
+  }, [query])
 
   const handleNavigate = (value: any) => { }
 
@@ -66,8 +75,8 @@ export default function SearchResultPage() {
       <SearchInput
         headerOpened={headerOpened}
         bodyOpened={bodyOpened}
-        hideHeader={closeHeader}
-        hideBody={closeBody}
+        hideHeader={hideHeader}
+        hideBody={hideBody}
         openBody={openBody}
       />
       <SortWrapper>
@@ -90,7 +99,7 @@ export default function SearchResultPage() {
             product={product}
           />
         ))}
-        {products.length === 0 && <NoListPage />}
+        {products.length === 0 && productsState === 'error' && <NoListPage />}
         {productsState === 'error' && <ErrorPage errorMessage={errorMessage} />}
       </Products>
       <div id='more button' ref={moreRef} />

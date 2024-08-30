@@ -4,10 +4,12 @@ import styled from "styled-components"
 import { CiHome } from "react-icons/ci"
 import { CiSearch } from "react-icons/ci";
 
-import { PageConfig } from "../../types"
-import usePortal from "../../hooks/usePortal";
-import Button from "../ui/Button";
 import SearchInput from "../SearchInput";
+import Button from "../ui/Button";
+
+import { PageConfig } from "../../types"
+
+import usePortal from "../../hooks/usePortal";
 
 const HomeWrapper = styled.div`
   display: flex;
@@ -21,12 +23,12 @@ const SearchTrigger = ({ id }: { id: string; }) => {
   const {
     opened: headerOpened,
     openModal: openHeader,
-    closeModal: closeHeader
+    closeModal: hideHeader
   } = usePortal();
   const {
     opened: bodyOpened,
     openModal: openBody,
-    closeModal: closeBody
+    closeModal: hideBody
   } = usePortal();
 
   const openBoth = () => {
@@ -44,8 +46,8 @@ const SearchTrigger = ({ id }: { id: string; }) => {
       <SearchInput
         headerOpened={headerOpened}
         bodyOpened={bodyOpened}
-        hideHeader={closeHeader}
-        hideBody={closeBody}
+        hideHeader={hideHeader}
+        hideBody={hideBody}
         isInitialOpen={true}
       />
     </>

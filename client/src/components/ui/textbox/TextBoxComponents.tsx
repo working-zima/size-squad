@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useRef, useState } from "react";
+import { Dispatch, ForwardedRef, forwardRef, RefObject, SetStateAction, useRef, useState } from "react";
 
 import { CiSearch } from "react-icons/ci";
 
@@ -140,6 +140,7 @@ export const TextInputBox = ({
 }
 
 type TextSimpleInputBoxProps = {
+  ref: RefObject<HTMLInputElement>
   value: string;
   placeholder: string;
   label?: string;
@@ -153,49 +154,52 @@ type TextSimpleInputBoxProps = {
 }
 
 
-export const SearchTextInputBox = ({
-  value,
-  placeholder,
-  label,
-  type = 'text',
-  maxLength,
-  isShowPw,
-  setIsFocused,
-  onChange = undefined,
-  onReset = undefined,
-  required = false,
-}: TextSimpleInputBoxProps) => {
-  const id = useRef(`textbox-${Math.random().toString().slice(2)}`);
+export const SearchTextInputBox = forwardRef<HTMLInputElement, TextSimpleInputBoxProps>(
+  ({
+    value,
+    placeholder,
+    label,
+    type = 'text',
+    maxLength,
+    isShowPw,
+    setIsFocused,
+    onChange = undefined,
+    onReset = undefined,
+    required = false,
+  }: TextSimpleInputBoxProps, ref: ForwardedRef<HTMLInputElement>) => {
+    const id = useRef(`textbox-${Math.random().toString().slice(2)}`);
 
-  return (
-    <>
-      {label && (
-        <Label
-          idRef={id}
-          label={label}
-          required={required}
-        />
-      )}
-      <TextSimpleBox>
-        <TextSimpleInput
-          idRef={id}
-          placeholder={placeholder}
-          value={value}
-          type={type}
-          maxLength={maxLength}
-          setIsFocused={setIsFocused}
-          onChange={onChange}
-        />
-        <Buttons
-          value={value}
-          isShowPw={isShowPw}
-          type={type}
-          onReset={onReset}
-        />
-        <Button type="submit">
-          <CiSearch size="24" />
-        </Button>
-      </TextSimpleBox>
-    </>
-  )
-}
+    return (
+      <>
+        {label && (
+          <Label
+            idRef={id}
+            label={label}
+            required={required}
+          />
+        )}
+        <TextSimpleBox>
+          <TextSimpleInput
+            ref={ref} // forwardRef로 전달
+            idRef={id}
+            placeholder={placeholder}
+            value={value}
+            type={type}
+            maxLength={maxLength}
+            setIsFocused={setIsFocused}
+            onChange={onChange}
+          />
+          <Buttons
+            value={value}
+            isShowPw={isShowPw}
+            type={type}
+            onReset={onReset}
+          />
+          <Button type="submit">
+            <CiSearch size="24" />
+          </Button>
+        </TextSimpleBox>
+      </>
+    );
+  }
+);

@@ -7,12 +7,14 @@ import useProductsStore from './useProductsStore';
 const ioOptions = { threshold: 1 }
 
 type useInfiniteScrollProps = {
+  keyword?: string,
   categoryId?: string,
   subCategoryId?: string,
   sortCode?: string
 }
 
 const useInfiniteScroll = ({
+  keyword,
   categoryId,
   subCategoryId,
   sortCode
@@ -31,12 +33,12 @@ const useInfiniteScroll = ({
   const isIntersecting = entry?.isIntersecting
 
   useEffect(() => {
-    store.fetchInitialProducts({ categoryId, subCategoryId, sortCode });
-  }, [categoryId, subCategoryId, sortCode, store]);
+    store.fetchInitialProducts({ keyword, categoryId, subCategoryId, sortCode });
+  }, [categoryId, subCategoryId, sortCode, keyword, store]);
 
   useEffect(() => {
     if (isIntersecting) {
-      store.fetchMoreProducts({ categoryId, subCategoryId })
+      store.fetchMoreProducts({ keyword, categoryId, subCategoryId })
     }
   }, [isIntersecting, store]);
 

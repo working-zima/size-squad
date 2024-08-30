@@ -1,4 +1,4 @@
-import { Dispatch, FormEvent, MouseEvent, SetStateAction } from "react"
+import { Dispatch, FormEvent, MouseEvent, SetStateAction, useRef } from "react"
 import { useNavigate } from "react-router-dom"
 
 import styled from 'styled-components'
@@ -32,15 +32,17 @@ const Container = styled.header`
 `
 
 type SearchInputProps = {
-  hide: () => void;
+  hideHeader: () => void;
+  hideBody: () => void;
   setIsFocused: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function SearchInputHeader({
-  hide, setIsFocused
+  hideHeader, hideBody, setIsFocused
 }: SearchInputProps) {
   const navigate = useNavigate();
   const [{ keyword }, store] = useProductsStore()
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const stopPropagation = (event: MouseEvent<HTMLDivElement>) => {
     event.stopPropagation()
@@ -48,12 +50,17 @@ export default function SearchInputHeader({
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsFocused(false);
+    if (inputRef.current) inputRef.current.blur();
+
     navigate(`/search?query=${encodeURIComponent(keyword)}`);
   }
 
   const handleClick = () => {
-    navigate(-1);
-    hide();
+    navigate('/mysize');
+    hideHeader();
+    hideBody();
+    store.resetKeyword();
     store.fetchInitialProducts({});
   }
 
@@ -64,6 +71,7 @@ export default function SearchInputHeader({
       </Button>
       <form onSubmit={handleSubmit}>
         <SearchTextInputBox
+          ref={inputRef}
           value={keyword}
           placeholder="브랜드, 제품명으로 검색하세요"
           maxLength={100}

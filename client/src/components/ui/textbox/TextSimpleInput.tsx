@@ -1,4 +1,11 @@
-import { ChangeEvent, Dispatch, RefObject, SetStateAction } from 'react'
+import {
+  ChangeEvent,
+  Dispatch,
+  ForwardedRef,
+  forwardRef,
+  RefObject,
+  SetStateAction
+} from 'react';
 
 import styled from 'styled-components';
 
@@ -19,7 +26,7 @@ const Input = styled.input`
   &:focus {
     outline: none;
   }
-`
+`;
 
 type TextInputProps = {
   idRef?: RefObject<string>;
@@ -29,34 +36,40 @@ type TextInputProps = {
   maxLength?: number;
   setIsFocused: Dispatch<SetStateAction<boolean>>;
   onChange?: (value: string) => void;
-}
+};
 
-export default function TextSimpleInput({
-  idRef,
-  placeholder = undefined,
-  value,
-  type,
-  maxLength,
-  setIsFocused,
-  onChange = undefined,
-}: TextInputProps) {
-  const handleFocus = () => setIsFocused(true);
-  const handleBlur = () => setIsFocused(false);
+const TextSimpleInput = forwardRef<HTMLInputElement, TextInputProps>(
+  ({
+    idRef,
+    placeholder = undefined,
+    value,
+    type,
+    maxLength,
+    setIsFocused,
+    onChange = undefined,
+  }: TextInputProps, ref: ForwardedRef<HTMLInputElement>) => {
+    const handleFocus = () => setIsFocused(true);
+    const handleBlur = () => setIsFocused(false);
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (!onChange) return;
-    onChange(event.target.value);
-  };
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+      if (!onChange) return;
+      onChange(event.target.value);
+    };
 
-  return (
-    <Input
-      id={idRef?.current || ''}
-      type={type}
-      placeholder={placeholder}
-      value={value}
-      maxLength={maxLength}
-      onFocus={handleFocus}
-      onChange={handleChange}
-    />
-  )
-}
+    return (
+      <Input
+        ref={ref} // forwardRef로 전달
+        id={idRef?.current || ''}
+        type={type}
+        placeholder={placeholder}
+        value={value}
+        maxLength={maxLength}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        onChange={handleChange}
+      />
+    );
+  }
+);
+
+export default TextSimpleInput;

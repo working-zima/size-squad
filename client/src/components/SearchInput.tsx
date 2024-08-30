@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react"
 import { createPortal } from "react-dom"
 
 import styled from "styled-components"
@@ -5,7 +6,6 @@ import styled from "styled-components"
 import SearchInputHeader from "./SearchInputHeader"
 
 import Button from "./ui/Button"
-import { useEffect, useState } from "react"
 
 const SearchInputBody = styled.div`
   display: flex;
@@ -66,7 +66,8 @@ export default function SearchInput({
     <>
       {headerOpened && createPortal(
         <SearchInputHeader
-          hide={hideHeader}
+          hideHeader={hideHeader}
+          hideBody={hideBody}
           setIsFocused={setIsFocused}
         />,
         portalRoot
