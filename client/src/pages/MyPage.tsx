@@ -10,9 +10,9 @@ import LoadingSpinner from "../components/ui/LoadingSpinner";
 
 import useAccessToken from "../hooks/useAccessToken";
 import useFetchUserStore from "../hooks/useFetchUserStore";
-import useFetchProducts from "../hooks/useFetchProducts";
 
 import { apiService } from "../services/ApiService";
+
 import { GENDER_MESSAGES } from "../constants";
 
 const Container = styled.div`
@@ -22,9 +22,9 @@ const Container = styled.div`
 const ProfileWrapper = styled.div`
   font-size: 1.3rem;
   line-height: ${(props) => props.theme.sizes.lineHeight};
-  background-color: ${(props) => props.theme.colors.backgroundColor};
   padding: ${props => props.theme.sizes.contentPadding};
   padding-bottom: 0;
+  border-bottom: 1px solid ${props => props.theme.colors.dividerColor};
 `
 
 const UserSummary = styled.div`
@@ -89,11 +89,6 @@ const ButtonLike = styled.div`
     width: 100%;
     height: 100%;
   }
-`
-
-const ProductWrapper = styled.div`
-  background-color: ${props => props.theme.colors.primaryWhite};
-  margin: 0 10px;
 `
 
 export default function MyPage() {

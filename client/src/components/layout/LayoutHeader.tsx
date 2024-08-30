@@ -14,9 +14,8 @@ const Container = styled.header<ContainerProps>`
   grid-area: header;
   display: flex;
   flex-basis: 40px;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  padding: 0 1rem;
   background-color: ${(props) => props.isHeaderless
     ? 'white'
     : props.theme.colors.backgroundColor
@@ -42,6 +41,15 @@ const Container = styled.header<ContainerProps>`
   }
 `;
 
+const ContentWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 768px;
+  padding: 0 1rem;
+`;
+
 export default function LayoutHeader({
   page
 }: { page: PageConfig }) {
@@ -50,13 +58,15 @@ export default function LayoutHeader({
   return (
     <Container isHeaderless={!!isSignupCompletePage}>
       <h1>사이즈 스쿼드</h1>
-      <LeftButton page={page} />
-      <h2>
-        <p>
-          {page.PAGETITLE}
-        </p>
-      </h2>
-      <RightButton page={page} />
+      <ContentWrapper>
+        <LeftButton page={page} />
+        <h2>
+          <p>
+            {page.PAGETITLE}
+          </p>
+        </h2>
+        <RightButton page={page} />
+      </ContentWrapper>
     </Container>
   );
 }

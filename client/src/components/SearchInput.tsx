@@ -12,6 +12,7 @@ const SearchInputBody = styled.div`
   flex-direction: column;
   padding: 10px;
   width: 100%;
+  max-width: 768px;
   height: calc(100vh - 50px);
   overflow: hidden;
   padding-top: 4px;

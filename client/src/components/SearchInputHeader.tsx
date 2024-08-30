@@ -16,6 +16,7 @@ const Container = styled.header`
   align-items: center;
   padding: 6px 16px 6px 10px;
   width: 100%;
+  max-width: 768px;
   height: 50px;
   background-color: ${props => props.theme.colors.primaryWhite};
   color: ${props => props.theme.colors.unSelectedText};

@@ -34,6 +34,7 @@ const Menu = styled.nav`
   bottom: 0px;
   height: 50px;
   background-color: ${props => props.theme.colors.primaryWhite};
+  /* width: 100%; */
 
   a {
     display: flex;
@@ -52,6 +53,15 @@ const Menu = styled.nav`
   }
 `;
 
+const ContentWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 768px;
+  padding: 0 1rem;
+`;
+
 export default function LayoutMenuBar() {
   const { accessToken } = useAccessToken();
 
@@ -60,35 +70,37 @@ export default function LayoutMenuBar() {
       <MenuWrap>
         <h2>Navigation Menu</h2>
         <Menu>
-          <Link to="/">
-            <div><CiHome size="24" /></div>
-            <span>홈</span>
-          </Link>
-          {!!accessToken && (
-            <>
-              <Link to="/mysize">
-                <div><CiViewList size="24" /></div>
-                <span>목록</span>
-              </Link>
-              <Link to="/mysize/new">
-                <div><CiEdit size="24" /></div>
-                <span>작성</span>
-              </Link>
-            </>
-          )}
-          <Link to={!!accessToken ? "/mypage" : "/login"}>
-            {!!accessToken ? (
+          <ContentWrapper>
+            <Link to="/">
+              <div><CiHome size="24" /></div>
+              <span>홈</span>
+            </Link>
+            {!!accessToken && (
               <>
-                <div><CiUser size="24" /></div>
-                <span>마이</span>
-              </>
-            ) : (
-              <>
-                <div><CiLogin size="24" /></div>
-                <span>로그인</span>
+                <Link to="/mysize">
+                  <div><CiViewList size="24" /></div>
+                  <span>목록</span>
+                </Link>
+                <Link to="/mysize/new">
+                  <div><CiEdit size="24" /></div>
+                  <span>작성</span>
+                </Link>
               </>
             )}
-          </Link>
+            <Link to={!!accessToken ? "/mypage" : "/login"}>
+              {!!accessToken ? (
+                <>
+                  <div><CiUser size="24" /></div>
+                  <span>마이</span>
+                </>
+              ) : (
+                <>
+                  <div><CiLogin size="24" /></div>
+                  <span>로그인</span>
+                </>
+              )}
+            </Link>
+          </ContentWrapper>
         </Menu>
       </MenuWrap>
     </Container>
