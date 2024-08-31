@@ -46,6 +46,7 @@ const ContentWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  height: 100%;
   max-width: 768px;
   padding: 0 1rem;
 `;

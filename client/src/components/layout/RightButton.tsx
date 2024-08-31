@@ -13,6 +13,7 @@ import usePortal from "../../hooks/usePortal";
 
 const HomeWrapper = styled.div`
   display: flex;
+  width: 40px;
 `
 
 const Blank = styled.div`

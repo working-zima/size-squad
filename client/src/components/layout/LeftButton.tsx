@@ -9,13 +9,20 @@ const Blank = styled.div`
   flex-basis: 40px;
 `
 
+const HomeWrapper = styled.div`
+  display: flex;
+  width: 40px;
+`
+
 export default function LeftButton({ page }: { page: PageConfig }) {
 
   if (page.LEFTBUTTON === 'backspace') {
     return (
-      <BackSpace>
-        <LiaAngleLeftSolid size="24" />
-      </BackSpace>
+      <HomeWrapper>
+        <BackSpace>
+          <LiaAngleLeftSolid size="24" />
+        </BackSpace>
+      </HomeWrapper>
     )
   }
 
