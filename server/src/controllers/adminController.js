@@ -39,14 +39,14 @@ const adminController = {
       const accessToken = req.headers["authorization"];
       const { name, type, subCategories, measurements } = req.body;
 
-      const categoryData = {name, type, subCategories, measurements}
+      const categoryData = { name, type, subCategories, measurements }
 
       await adminService.updateCategory(
         { accessToken, categoryId, categoryData }
       );
 
       res.status(201).json();
-    } catch(error) {
+    } catch (error) {
       next(error);
     }
   },
@@ -127,7 +127,7 @@ const adminController = {
       const { name, gender, type } = req.body;
       const accessToken = req.headers["authorization"];
 
-      await adminService.addSize({ accessToken, name, gender, type  });
+      await adminService.addSize({ accessToken, name, gender, type });
 
       res.status(201).json();
     } catch (error) {
@@ -135,7 +135,7 @@ const adminController = {
     }
   },
 
-  /** 치수 등록 */
+  /** 실측 등록 */
   postAddMeasurements: async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

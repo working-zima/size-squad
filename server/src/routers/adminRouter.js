@@ -51,7 +51,7 @@ adminRouter.post(
   adminController.postAddSize
 )
 
-/** 치수 등록 */
+/** 실측 등록 */
 adminRouter.post(
   "/measurements",
   tokenValidationRules,

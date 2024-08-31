@@ -66,7 +66,7 @@ export default function SideButtons() {
     <Container>
       <ScrollToTopButton onClick={() => scrollToTop()} />
       <SizeInfoSwitch onClick={() => store.setIsDescriptionView()}>
-        {isDescriptionView ? '치수' : '설명'}
+        {isDescriptionView ? '후기' : '실측'}
       </SizeInfoSwitch>
     </Container>
   );
