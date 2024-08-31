@@ -47,7 +47,6 @@ const userController = {
       const {
         keyword, categoryId, subCategoryId, sortField, sortOrder, page, per
       } = req.query;
-
       let sort = {};
       if (sortField && sortOrder) sort[sortField] = parseInt(sortOrder, 10)
 
@@ -79,6 +78,7 @@ const userController = {
 
       res.status(200).json({ products: productData });
     } catch (error) {
+
       next(error);
     }
   },

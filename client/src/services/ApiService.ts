@@ -8,7 +8,6 @@ import {
   Size,
   User,
   PaginationResponse,
-  SortOption
 } from '../types';
 
 const MOCK_BASE_URL = 'http://localhost:5000';

@@ -26,7 +26,6 @@ const useInfiniteScroll = ({
     sortOption,
     totalDocs,
   }, store] = useProductsStore();
-
   const moreRef = useRef<HTMLDivElement>(null)
 
   const { entries: [entry] } = useIntersectionObserver(moreRef, ioOptions)

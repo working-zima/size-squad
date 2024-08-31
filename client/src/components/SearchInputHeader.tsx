@@ -51,6 +51,8 @@ export default function SearchInputHeader({
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (keyword === '') return;
+
     setIsFocused(false);
     if (inputRef.current) inputRef.current.blur();
 

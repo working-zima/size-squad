@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import styled from 'styled-components';
 
@@ -11,11 +11,15 @@ import Product from '../components/mySize/Product';
 import BorderlessComboBox from '../components/ui/selectbox/BorderlessComboBox';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
 
+import { SortOption } from '../types';
+
 import usePortal from '../hooks/usePortal';
 import useInfiniteScroll from '../hooks/useInfiniteScroll';
 import useProductsStore from '../hooks/useProductsStore';
 
 import { SORT_OPTIONS } from '../constants';
+import useAccessToken from '../hooks/useAccessToken';
+import AccessDeniedPage from './AccessDeniedPage';
 
 const Container = styled.div`
   height: 100%;
@@ -37,10 +41,14 @@ const Products = styled.div`
 `;
 
 export default function SearchResultPage() {
+  const { accessToken } = useAccessToken();
   const [, store] = useProductsStore();
 
-  let [searchParams] = useSearchParams();
-  const query = searchParams.get('query') || '';
+  const navigate = useNavigate();
+
+  let [params] = useSearchParams();
+  const query = params.get('query') || '';
+  const sortCode = params.get('sortCode') ?? undefined;
 
   const {
     opened: headerOpened,
@@ -61,14 +69,19 @@ export default function SearchResultPage() {
     state: productsState,
     sortOption,
     totalDocs
-  } = useInfiniteScroll({ keyword: query });
+  } = useInfiniteScroll({ keyword: query, sortCode });
 
   useEffect(() => {
     openHeader();
     store.changeKeyword(query);
   }, [query])
 
-  const handleNavigate = (value: any) => { }
+  const handleNavigate = (sortOption: SortOption) => {
+    const path = `/search?query=${query}&sortCode=${sortOption.urlParam}`;
+    navigate(path);
+  }
+
+  if (!accessToken) return <AccessDeniedPage />;
 
   return (
     <Container>
