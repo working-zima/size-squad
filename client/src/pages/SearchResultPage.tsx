@@ -112,7 +112,7 @@ export default function SearchResultPage() {
             product={product}
           />
         ))}
-        {products.length === 0 && productsState === 'error' && <NoListPage />}
+        {products.length === 0 && <NoListPage />}
         {productsState === 'error' && <ErrorPage errorMessage={errorMessage} />}
       </Products>
       <div id='more button' ref={moreRef} />

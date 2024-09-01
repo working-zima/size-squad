@@ -12,6 +12,8 @@ import { nullUser } from "../nullObject";
 class UserStore {
   user: User = nullUser;
 
+  errorMessage = '';
+
   state: 'loading' | 'fetched' | 'idle' | 'error' = 'idle'
 
   get passwordValid() {
@@ -26,6 +28,7 @@ class UserStore {
   @Action()
   reset() {
     this.user = nullUser;
+    this.errorMessage = ''
     this.state = 'idle';
   }
 
@@ -37,19 +40,22 @@ class UserStore {
       this.setUser(user);
       this.setDone();
     } catch (error) {
+      const typedError = error as { status?: number; message: string };
+      this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
+
       this.setError();
     }
-  }
-
-  @Action()
-  private setDone() {
-    this.state = 'fetched';
   }
 
   @Action()
   private startLoading() {
     this.reset()
     this.state = 'loading';
+  }
+
+  @Action()
+  private setDone() {
+    this.state = 'fetched';
   }
 
   @Action()

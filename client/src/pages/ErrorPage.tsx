@@ -8,7 +8,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   flex-grow: 1;
-  height: calc(100vh - 243px);
+  height: calc(100vh - 100px);
 
   button {
     display: inline-block;
@@ -23,6 +23,7 @@ const Container = styled.div`
 const MessageBox = styled.div`
   text-align: center;
   padding: 10px;
+  word-break: keep-all;
 
   h2 {
     font-size: 2em;
@@ -40,6 +41,7 @@ const MessageBox = styled.div`
 export default function ErrorPage({
   errorMessage
 }: { errorMessage?: string }) {
+
   return (
     <Container>
       <MessageBox>

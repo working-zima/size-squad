@@ -14,6 +14,7 @@ import useFetchUserStore from "../hooks/useFetchUserStore";
 import { apiService } from "../services/ApiService";
 
 import { GENDER_MESSAGES } from "../constants";
+import ErrorPage from "./ErrorPage";
 
 const Container = styled.div`
   overflow: hidden;
@@ -95,7 +96,7 @@ export default function MyPage() {
   const navigate = useNavigate();
 
   const { accessToken, setAccessToken } = useAccessToken();
-  const { user, state, store } = useFetchUserStore();
+  const { user, state, errorMessage, store } = useFetchUserStore();
 
   const handleClickLogout = async () => {
     await apiService.logout();
@@ -110,6 +111,10 @@ export default function MyPage() {
 
   if (!accessToken) {
     return <AccessDeniedPage />;
+  }
+
+  if (state === 'error') {
+    return (<ErrorPage errorMessage={errorMessage} />);
   }
 
   return (

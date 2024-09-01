@@ -82,7 +82,11 @@ export default function MySizeListPage() {
     navigate(path);
   }
 
-  if (!accessToken) return <AccessDeniedPage />;
+  if (!accessToken) return (<AccessDeniedPage />);
+  if (productsState === 'error') {
+    return (<ErrorPage errorMessage={errorMessage} />);
+  }
+  if (products.length === 0) return (<NoListPage />);
 
   return (
     <Container>
@@ -111,8 +115,6 @@ export default function MySizeListPage() {
             product={product}
           />
         ))}
-        {products.length === 0 && <NoListPage />}
-        {productsState === 'error' && <ErrorPage errorMessage={errorMessage} />}
       </Products>
       <div id='more button' ref={moreRef} />
     </Container>

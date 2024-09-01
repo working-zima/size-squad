@@ -2,23 +2,23 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import AccessDeniedPage from "./AccessDeniedPage";
+import ErrorPage from "./ErrorPage";
 
 import MySizeNewForm from "../components/mySize/MySizeNewForm";
+import LoadingSpinner from "../components/ui/LoadingSpinner";
 
 import useAccessToken from "../hooks/useAccessToken";
 import useFetchUser from "../hooks/useFetchUserStore";
 import useFetchInitialData from "../hooks/useFetchInitialData";
 import useProductFormStore from "../hooks/useProductFormStore";
-import LoadingSpinner from "../components/ui/LoadingSpinner";
 
 export default function MySizeNewPage() {
   const navigate = useNavigate();
 
   const { accessToken } = useAccessToken();
   const { user, state: userState } = useFetchUser()
-  const {
-    categories, fits, sizes, state: initialDataState
-  } = useFetchInitialData()
+  const { categories, fits, sizes, state: initialDataState, errorMessage }
+    = useFetchInitialData()
   const [{ product }, store] = useProductFormStore();
 
   const loading = userState === 'loading' || initialDataState === 'loading';
@@ -53,15 +53,9 @@ export default function MySizeNewPage() {
     navigate('/mysize');
   };
 
-  if (loading) {
-    return <LoadingSpinner />;
-  }
-
-  if (!accessToken) {
-    return (
-      <AccessDeniedPage />
-    );
-  }
+  if (loading) return (<LoadingSpinner />);
+  if (!accessToken) return (<AccessDeniedPage />);
+  if (initialDataState === 'error') return (<ErrorPage errorMessage={errorMessage} />);
 
   return (
     <MySizeNewForm
