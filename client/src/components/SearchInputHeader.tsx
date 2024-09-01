@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom"
 import styled from 'styled-components'
 import { LiaAngleLeftSolid } from 'react-icons/lia'
 
-import { SearchTextInputBox } from './ui/textbox/TextBoxComponents'
 import Button from "./ui/Button"
+import { SearchTextInputBox } from './ui/textbox/TextBoxComponents'
 
 import useProductsStore from '../hooks/useProductsStore'
 
@@ -14,7 +14,7 @@ const Container = styled.header`
   flex-basis: 50px;
   justify-content: flex-start;
   align-items: center;
-  padding: 6px 16px 6px 10px;
+  padding: 6px 10px 6px 10px;
   width: 100%;
   max-width: 768px;
   height: 50px;
@@ -33,17 +33,19 @@ const Container = styled.header`
 `
 
 type SearchInputProps = {
+  isAutoSave: boolean;
   hideHeader: () => void;
   hideBody: () => void;
   setIsFocused: Dispatch<SetStateAction<boolean>>;
+  addKeywordHistory: (value: string) => void;
 }
 
 export default function SearchInputHeader({
-  hideHeader, hideBody, setIsFocused
+  isAutoSave, hideHeader, hideBody, setIsFocused, addKeywordHistory
 }: SearchInputProps) {
   const navigate = useNavigate();
-  const [{ keyword }, store] = useProductsStore()
   const inputRef = useRef<HTMLInputElement>(null);
+  const [{ keyword }, store] = useProductsStore()
 
   const stopPropagation = (event: MouseEvent<HTMLDivElement>) => {
     event.stopPropagation()
@@ -52,10 +54,10 @@ export default function SearchInputHeader({
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (keyword === '') return;
-
-    setIsFocused(false);
     if (inputRef.current) inputRef.current.blur();
-
+    if (isAutoSave) addKeywordHistory(keyword);
+    setIsFocused(false);
+    hideBody();
     navigate(`/search?query=${encodeURIComponent(keyword)}`);
   }
 

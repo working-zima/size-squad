@@ -72,6 +72,7 @@ export default function SearchResultPage() {
   } = useInfiniteScroll({ keyword: query, sortCode });
 
   useEffect(() => {
+    hideBody();
     openHeader();
     store.changeKeyword(query);
   }, [query])
@@ -82,6 +83,9 @@ export default function SearchResultPage() {
   }
 
   if (!accessToken) return <AccessDeniedPage />;
+  if (productsState === 'error') {
+    return (<ErrorPage errorMessage={errorMessage} />);
+  }
 
   return (
     <Container>
@@ -106,14 +110,13 @@ export default function SearchResultPage() {
       </SortWrapper>
       <Products>
         {productsState === 'loading' && <LoadingSpinner />}
-        {products.map(product => (
+        {productsState !== 'loading' && products.length === 0 && <NoListPage />}
+        {productsState !== 'loading' && products.map(product => (
           <Product
             key={product._id}
             product={product}
           />
         ))}
-        {products.length === 0 && <NoListPage />}
-        {productsState === 'error' && <ErrorPage errorMessage={errorMessage} />}
       </Products>
       <div id='more button' ref={moreRef} />
     </Container>

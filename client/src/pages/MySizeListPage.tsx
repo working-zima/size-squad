@@ -8,7 +8,6 @@ import NoListPage from './NoListPage';
 
 import CategoryBar from '../components/category/CategoryBar';
 import Product from '../components/mySize/Product';
-
 import LoadingSpinner from '../components/ui/LoadingSpinner';
 import BorderlessComboBox from '../components/ui/selectbox/BorderlessComboBox';
 

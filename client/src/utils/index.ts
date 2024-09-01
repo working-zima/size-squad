@@ -2,6 +2,12 @@ export function append<T>(items: T[], item: T) {
   return [...items, item];
 }
 
+/**
+ * 아이템 배열과, 삭제할 아이템의 index
+ * @param items
+ * @param index
+ * @returns
+ */
 export function remove<T>(items: T[], index: number) {
   return [
     ...items.slice(0, index),
@@ -36,7 +42,7 @@ export function key(value: string, index: number) {
  * @param delay
  * @returns `fn()`
  */
-export function debounceCallback<T extends(...args: unknown[]) => void>(
+export function debounceCallback<T extends (...args: unknown[]) => void>(
   callback: T, delay = 300) {
   let timerId: ReturnType<typeof setTimeout> | null = null;
 
