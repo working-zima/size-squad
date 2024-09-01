@@ -86,7 +86,6 @@ export default function MySizeListPage() {
   if (productsState === 'error') {
     return (<ErrorPage errorMessage={errorMessage} />);
   }
-  if (products.length === 0) return (<NoListPage />);
 
   return (
     <Container>
@@ -109,12 +108,12 @@ export default function MySizeListPage() {
       </SortWrapper>
       <Products>
         {productsState === 'loading' && <LoadingSpinner />}
-        {products.map(product => (
-          <Product
-            key={product._id}
-            product={product}
-          />
-        ))}
+        {productsState !== 'loading' && products.length === 0 && <NoListPage />}
+        {productsState !== 'loading' &&
+          products.length > 0 &&
+          products.map((product) => (
+            <Product key={product._id} product={product} />
+          ))}
       </Products>
       <div id='more button' ref={moreRef} />
     </Container>
