@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom"
 
 import styled from "styled-components"
-import { CiHome } from "react-icons/ci"
-import { CiSearch } from "react-icons/ci";
+import { RiHome5Line, RiSearchLine } from "react-icons/ri";
 
-import SearchInput from "../SearchInput";
+import SearchInput from "../searchInput/SearchInput";
 import Button from "../ui/Button";
 
 import { PageConfig } from "../../types"
@@ -41,7 +40,7 @@ const SearchTrigger = ({ id }: { id: string; }) => {
     <>
       <HomeWrapper>
         <Button onClick={openBoth}>
-          <CiSearch size="24" />
+          <RiSearchLine size="24" />
         </Button>
       </HomeWrapper>
       <SearchInput
@@ -61,7 +60,7 @@ export default function RightButton({ page }: { page: PageConfig }) {
     return (
       <Link to="/">
         <HomeWrapper>
-          <CiHome size="24" />
+          <RiHome5Line size="24" />
         </HomeWrapper>
       </Link>
     )

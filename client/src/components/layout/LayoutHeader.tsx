@@ -2,9 +2,10 @@ import { useMatch } from 'react-router-dom';
 
 import styled from 'styled-components';
 
-import { PageConfig } from '../../types';
 import LeftButton from './LeftButton';
 import RightButton from './RightButton';
+
+import { PageConfig } from '../../types';
 
 type ContainerProps = {
   isHeaderless: boolean;
@@ -39,6 +40,13 @@ const Container = styled.header<ContainerProps>`
       white-space: nowrap;
     }
   }
+
+  img {
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+    padding: 14px;
+  }
 `;
 
 const ContentWrapper = styled.div`
@@ -61,11 +69,19 @@ export default function LayoutHeader({
       <h1>사이즈 스쿼드</h1>
       <ContentWrapper>
         <LeftButton page={page} />
-        <h2>
-          <p>
-            {page.PAGETITLE}
-          </p>
-        </h2>
+        {
+          page.PAGETITLE === 'Size Squad'
+            ? (
+              <img src='/images/size-squad-logo.png' alt='Logo' />
+            )
+            : (
+              <h2>
+                <p>
+                  {page.PAGETITLE}
+                </p>
+              </h2>
+            )
+        }
         <RightButton page={page} />
       </ContentWrapper>
     </Container>

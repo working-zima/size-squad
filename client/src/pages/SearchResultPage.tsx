@@ -5,8 +5,9 @@ import styled from 'styled-components';
 
 import NoListPage from './NoListPage';
 import ErrorPage from './ErrorPage';
+import AccessDeniedPage from './AccessDeniedPage';
 
-import SearchInput from '../components/SearchInput';
+import SearchInput from '../components/searchInput/SearchInput';
 import Product from '../components/mySize/Product';
 import BorderlessComboBox from '../components/ui/selectbox/BorderlessComboBox';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
@@ -16,10 +17,9 @@ import { SortOption } from '../types';
 import usePortal from '../hooks/usePortal';
 import useInfiniteScroll from '../hooks/useInfiniteScroll';
 import useProductsStore from '../hooks/useProductsStore';
+import useAccessToken from '../hooks/useAccessToken';
 
 import { SORT_OPTIONS } from '../constants';
-import useAccessToken from '../hooks/useAccessToken';
-import AccessDeniedPage from './AccessDeniedPage';
 
 const Container = styled.div`
   height: 100%;

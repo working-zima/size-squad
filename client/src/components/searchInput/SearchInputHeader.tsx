@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom"
 import styled from 'styled-components'
 import { LiaAngleLeftSolid } from 'react-icons/lia'
 
-import Button from "./ui/Button"
-import { SearchTextInputBox } from './ui/textbox/TextBoxComponents'
+import Button from "../ui/Button"
+import { SearchTextInputBox } from '../ui/textbox/TextBoxComponents'
 
-import useProductsStore from '../hooks/useProductsStore'
+import useProductsStore from '../../hooks/useProductsStore'
 
 const Container = styled.header`
   display: flex;

@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom"
 
 import styled from "styled-components"
-import { CiSearch } from "react-icons/ci"
+import { RiSearchLine } from "react-icons/ri";
 
-import Button from "./ui/Button"
-
-import { key } from "../utils"
 import SearchInputListOff from "./SearchInputListOff"
+
+import Button from "../ui/Button"
+
+import { key } from "../../utils"
 
 const Container = styled.ul`
   flex: 1 1;
@@ -87,7 +88,7 @@ export default function SearchInputList({
         ? (keywordHistory.map((keyword, index) => (
           <SearchInputItem key={key(keyword, index)}>
             <StyledLink to={`/search?query=${keyword}`}>
-              <CiSearch size="15" color="#666" />
+              <RiSearchLine size="15" color="#666" />
               <SearchInputKeyword>
                 {keyword}
               </SearchInputKeyword>

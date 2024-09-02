@@ -1,6 +1,8 @@
-import { Dispatch, ForwardedRef, forwardRef, RefObject, SetStateAction, useRef, useState } from "react";
+import {
+  Dispatch, ForwardedRef, forwardRef, RefObject, SetStateAction, useRef, useState
+} from "react";
 
-import { CiSearch } from "react-icons/ci";
+import { RiSearchLine } from "react-icons/ri";
 
 import Label from "./Label";
 import TextBox from "./TextBox";
@@ -196,7 +198,7 @@ export const SearchTextInputBox = forwardRef<HTMLInputElement, TextSimpleInputBo
             onReset={onReset}
           />
           <Button type="submit">
-            <CiSearch size="24" />
+            <RiSearchLine size="24" />
           </Button>
         </TextSimpleBox>
       </>

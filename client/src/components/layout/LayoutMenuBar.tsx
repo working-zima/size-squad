@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
 
 import styled from 'styled-components';
-import { CiUser, CiHome, CiEdit, CiLogin, CiViewList } from "react-icons/ci";
+import {
+  RiHome5Line, RiEditLine, RiLoginBoxLine, RiListView, RiUserLine
+} from "react-icons/ri";
 
 import useAccessToken from '../../hooks/useAccessToken';
 
@@ -72,17 +74,17 @@ export default function LayoutMenuBar() {
         <Menu>
           <ContentWrapper>
             <Link to="/">
-              <div><CiHome size="24" /></div>
+              <div><RiHome5Line size="24" /></div>
               <span>홈</span>
             </Link>
             {!!accessToken && (
               <>
                 <Link to="/mysize">
-                  <div><CiViewList size="24" /></div>
+                  <div><RiListView size="24" /></div>
                   <span>목록</span>
                 </Link>
                 <Link to="/mysize/new">
-                  <div><CiEdit size="24" /></div>
+                  <div><RiEditLine size="24" /></div>
                   <span>작성</span>
                 </Link>
               </>
@@ -90,12 +92,12 @@ export default function LayoutMenuBar() {
             <Link to={!!accessToken ? "/mypage" : "/login"}>
               {!!accessToken ? (
                 <>
-                  <div><CiUser size="24" /></div>
+                  <div><RiUserLine size="24" /></div>
                   <span>마이</span>
                 </>
               ) : (
                 <>
-                  <div><CiLogin size="24" /></div>
+                  <div><RiLoginBoxLine size="24" /></div>
                   <span>로그인</span>
                 </>
               )}
