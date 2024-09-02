@@ -1,6 +1,5 @@
-import { Dispatch, SetStateAction } from "react";
-
 import styled from "styled-components";
+
 import Button from "./ui/Button";
 
 const Container = styled.div`
@@ -30,17 +29,17 @@ const Container = styled.div`
 `
 
 type SearchInputListOffProps = {
-  setIsAutoSave: Dispatch<SetStateAction<boolean>>;
+  toggleAutoSave: () => void;
 }
 
 export default function SearchInputListOff({
-  setIsAutoSave
+  toggleAutoSave
 }: SearchInputListOffProps) {
   return (
     <Container>
       <p>검색 저장 기능이 꺼져 있습니다.</p>
       <Button
-        onClick={() => setIsAutoSave(prev => !prev)}
+        onClick={toggleAutoSave}
       >
         자동저장 켜기
       </Button>

@@ -56,10 +56,15 @@ export default function SearchInput({
   const portalRoot = document.querySelector('#portalRoot')!;
 
   const [isFocused, setIsFocused] = useState(false);
-  const [isAutoSave, setIsAutoSave] = useState(true);
+  // const [isAutoSave, setIsAutoSave] = useState(true);
 
   const {
-    keywordHistory, addKeywordHistory, removeKeywordHistory, clearHistory
+    keywordHistory,
+    isAutoSave,
+    addKeywordHistory,
+    removeKeywordHistory,
+    clearHistory,
+    toggleAutoSave
   } = useKeywordHistory()
 
   useEffect(() => {
@@ -97,11 +102,11 @@ export default function SearchInput({
           <SearchInputList
             isAutoSave={isAutoSave}
             keywordHistory={keywordHistory}
-            setIsAutoSave={setIsAutoSave}
+            toggleAutoSave={toggleAutoSave}
             removeKeywordHistory={removeKeywordHistory}
           />
           <SearchInputBox>
-            <Button onClick={() => setIsAutoSave(prev => !prev)}>
+            <Button onClick={toggleAutoSave}>
               자동저장 끄기
             </Button>
             <Button onClick={hideBody}>

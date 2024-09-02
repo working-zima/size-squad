@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction } from "react"
 import { Link } from "react-router-dom"
 
 import styled from "styled-components"
@@ -71,12 +70,12 @@ const SearchInputRemoveButton = styled(Button)`
 type SearchInputListProps = {
   isAutoSave: boolean;
   keywordHistory: string[];
-  setIsAutoSave: Dispatch<SetStateAction<boolean>>;
+  toggleAutoSave: () => void;
   removeKeywordHistory: (index: number) => void;
 }
 
 export default function SearchInputList({
-  isAutoSave, keywordHistory, setIsAutoSave, removeKeywordHistory
+  isAutoSave, keywordHistory, toggleAutoSave, removeKeywordHistory
 }: SearchInputListProps) {
   const handleClickDeleteKeyword = (index: number) => {
     removeKeywordHistory(index);
@@ -100,7 +99,7 @@ export default function SearchInputList({
         )))
         : (
           <SearchInputListOff
-            setIsAutoSave={setIsAutoSave}
+            toggleAutoSave={toggleAutoSave}
           />
         )
       }

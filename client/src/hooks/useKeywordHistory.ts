@@ -5,9 +5,11 @@ import { remove } from '../utils';
 
 export function useKeywordHistory() {
   const [keywordHistory, setKeywordHistory] = useState<string[]>([]);
+  const [isAutoSave, setIsAutoSave] = useState<boolean>(true);
 
   useEffect(() => {
     setKeywordHistory(loadHistory());
+    setIsAutoSave(loadAutoSaveSetting());
   }, [])
 
   /**
@@ -16,6 +18,14 @@ export function useKeywordHistory() {
   const loadHistory = () => {
     const storedHistory = localStorage.getItem("keywordHistory");
     return storedHistory ? storedHistory.split(",") : [];
+  };
+
+  /**
+   * 로컬 스토리지에서 isAutoSave 설정을 가져오기
+   */
+  const loadAutoSaveSetting = () => {
+    const storedAutoSave = localStorage.getItem("isAutoSave");
+    return storedAutoSave ? storedAutoSave === 'true' : true;
   };
 
   /**
@@ -54,10 +64,25 @@ export function useKeywordHistory() {
     setKeywordHistory([]);
   };
 
+  /**
+   * isAutoSave 상태 업데이트 및 로컬 스토리지에 저장
+   * @param value
+   */
+  const toggleAutoSave = () => {
+    setIsAutoSave((prev) => {
+      const newValue = !prev;
+      localStorage.setItem("isAutoSave", newValue.toString());
+      return newValue;
+    });
+  };
+
+
   return {
     keywordHistory,
+    isAutoSave,
     addKeywordHistory,
     removeKeywordHistory,
     clearHistory,
+    toggleAutoSave
   };
 }
