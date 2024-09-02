@@ -20,7 +20,7 @@ type ContainerProps = {
 
 const Container = styled.div<ContainerProps>`
   display: grid;
-  grid-template-rows: 50px 1fr ${({ FOOTER }) => (FOOTER ? '50px' : '')};
+  grid-template-rows: 50px 1fr ${({ FOOTER }) => (FOOTER ? 'auto' : '')};
   grid-template-columns: 100%;
   grid-template-areas:
     'header'
