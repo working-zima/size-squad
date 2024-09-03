@@ -65,9 +65,9 @@ export const PAGES: Record<string, PageConfig> = {
   '/': {
     PAGETITLE: 'Size Squad',
     LEFTBUTTON: '',
-    RIGHTBUTTON: '',
+    RIGHTBUTTON: 'search',
     FOOTER: true,
-    SWITCHER: true,
+    SWITCHER: false,
     SHOWMENU: true,
   },
   '/mysize': {
@@ -133,6 +133,14 @@ export const PAGES: Record<string, PageConfig> = {
     FOOTER: false,
     SWITCHER: false,
     SHOWMENU: false,
+  },
+  '/search': {
+    PAGETITLE: '사이즈 검색',
+    LEFTBUTTON: 'backspace',
+    RIGHTBUTTON: '',
+    FOOTER: false,
+    SWITCHER: true,
+    SHOWMENU: true,
   }
 }
 

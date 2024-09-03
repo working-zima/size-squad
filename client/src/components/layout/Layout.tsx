@@ -5,13 +5,13 @@ import styled from 'styled-components';
 import LayoutHeader from './LayoutHeader';
 import LayoutMenuBar from './LayoutMenuBar';
 import LayoutFooter from './LayoutFooter';
-
-import useCheckAccessToken from '../../hooks/useCheckAccessToken';
-
-import { PAGES, USERFIELDS } from '../../constants';
-import useUserStore from '../../hooks/useUserStore';
 import SideButtons from './SideButtons';
 import PortalRoot from './PortalRoot';
+
+import useCheckAccessToken from '../../hooks/useCheckAccessToken';
+import useUserStore from '../../hooks/useUserStore';
+
+import { PAGES, USERFIELDS } from '../../constants';
 
 type ContainerProps = {
   SHOWMENU: boolean;
@@ -76,7 +76,7 @@ export default function Layout() {
         <Outlet />
       </Main>
       {page.FOOTER && <LayoutFooter />}
-      {page.SHOWMENU
+      {page.SWITCHER
         ? <SideButtons />
         : null
       }

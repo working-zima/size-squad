@@ -53,12 +53,12 @@ export const EmailForm = () => {
     }
 
     try {
-      // await emailjs.sendForm(
-      //   process.env.REACT_APP_SERVICE_ID || '',
-      //   process.env.REACT_APP_TEMPLATE_ID || '',
-      //   form.current || '',
-      //   process.env.REACT_APP_PUBLIC_KEY || ''
-      // );
+      await emailjs.sendForm(
+        process.env.REACT_APP_SERVICE_ID || '',
+        process.env.REACT_APP_TEMPLATE_ID || '',
+        form.current || '',
+        process.env.REACT_APP_PUBLIC_KEY || ''
+      );
 
       navigate(0);
     } catch (error) {

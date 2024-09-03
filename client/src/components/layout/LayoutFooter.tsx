@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import styled from 'styled-components';
 
@@ -22,6 +22,10 @@ const Wrapper = styled.div`
   max-width: 768px;
   width: 100%;
   padding: 20px 20px 80px 20px;
+
+  @media (min-width: 480px) {
+    flex-direction: row;
+  }
 `
 
 const CopyrightWrapper = styled.div`
@@ -29,6 +33,8 @@ const CopyrightWrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
   height: 100%;
+  width: 100%;
+  margin-bottom: 2.4rem;
 
 
   p {
@@ -50,11 +56,19 @@ const WhiteLogo = styled.div`
 `
 
 const EmailWrapper = styled.div`
-  margin-top: 2.4rem;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 
   h2 {
     font-size: 18px;
     font-weight: 800;
+    color: ${props => props.theme.colors.primaryWhite};
+  }
+
+  p {
+    margin: 10px 0;
+    font-size: 1.4rem;
     color: ${props => props.theme.colors.primaryWhite};
   }
 `
@@ -79,10 +93,14 @@ export default function LayoutFooter() {
           <p>Copyright © 2024 working-zima. All rights reserved.</p>
         </CopyrightWrapper>
         <EmailWrapper>
-          <h2>문의 메일</h2>
+          <h2>문의메일</h2>
           {accessToken
-            ? <EmailForm />
-            : <p>로그인 후 이용해 주세요.</p>
+            ? (<EmailForm />)
+            : (
+              <p>
+                문의메일은 <Link to='login'>로그인</Link> 후 이용할 수 있습니다..
+              </p>
+            )
           }
         </EmailWrapper>
       </Wrapper>

@@ -36,7 +36,6 @@ const Menu = styled.nav`
   bottom: 0px;
   height: 50px;
   background-color: ${props => props.theme.colors.primaryWhite};
-  /* width: 100%; */
 
   a {
     display: flex;
