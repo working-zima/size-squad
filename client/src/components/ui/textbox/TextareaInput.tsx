@@ -5,6 +5,9 @@ import styled from 'styled-components';
 const Container = styled.div`
   position: relative;
   width: 100%;
+  height: 100%;
+  background-color: white;
+  border-radius:6px;
 `
 
 const Textarea = styled.textarea`
@@ -28,10 +31,13 @@ const CloneTextarea = styled(Textarea)`
   opacity: 0;
   z-index: -1;
   white-space: pre-wrap;
+  pointer-events: none;
+  overflow: hidden;
 `;
 
 type TextareaInputProps = {
   idRef?: RefObject<string>;
+  name?: string;
   placeholder?: string;
   lines?: number;
   defaultValue?: string;
@@ -43,6 +49,7 @@ type TextareaInputProps = {
 
 export default function TextareaInput({
   idRef,
+  name = '',
   placeholder = undefined,
   lines = 3,
   defaultValue = '',
@@ -98,6 +105,7 @@ export default function TextareaInput({
       <Textarea
         id={idRef?.current || ''}
         ref={textareaRef}
+        name={name}
         placeholder={placeholder}
         rows={lines}
         maxLength={maxLength}

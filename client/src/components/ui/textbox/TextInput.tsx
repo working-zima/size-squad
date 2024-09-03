@@ -20,6 +20,7 @@ const Input = styled.input`
 
 type TextInputProps = {
   idRef?: RefObject<string>;
+  name?: string;
   placeholder?: string;
   value: string;
   type?: 'text' | 'number' | 'password' | 'tel';
@@ -31,6 +32,7 @@ type TextInputProps = {
 
 export default function TextInput({
   idRef,
+  name = "",
   placeholder = undefined,
   value,
   type,
@@ -52,6 +54,7 @@ export default function TextInput({
   return (
     <Input
       id={idRef?.current || ''}
+      name={name}
       type={type}
       placeholder={placeholder}
       value={value}

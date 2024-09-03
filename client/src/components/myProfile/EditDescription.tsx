@@ -26,6 +26,8 @@ const ButtonWrapper = styled.div`
 
   & > button:disabled {
     background-color: ${props => props.theme.colors.unSelectedText};
+    opacity: 0.6;
+    cursor: not-allowed;
   }
 `
 

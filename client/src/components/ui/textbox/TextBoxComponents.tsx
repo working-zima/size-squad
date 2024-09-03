@@ -1,5 +1,11 @@
 import {
-  Dispatch, ForwardedRef, forwardRef, RefObject, SetStateAction, useRef, useState
+  Dispatch,
+  ForwardedRef,
+  forwardRef,
+  RefObject,
+  SetStateAction,
+  useRef,
+  useState
 } from "react";
 
 import { RiSearchLine } from "react-icons/ri";
@@ -14,8 +20,9 @@ import Buttons from "./Buttons";
 import Button from "../Button";
 
 type TextareaTextBoxProps = {
-  label: string;
-  placeholder: string;
+  label?: string;
+  name?: string;
+  placeholder?: string;
   value?: string;
   maxLength?: number;
   onChange?: (value: string) => void;
@@ -23,7 +30,8 @@ type TextareaTextBoxProps = {
 }
 
 export const TextareaBox = ({
-  label,
+  label = '',
+  name = '',
   placeholder,
   value,
   maxLength,
@@ -50,6 +58,7 @@ export const TextareaBox = ({
       >
         <TextareaInput
           idRef={id}
+          name={name}
           placeholder={placeholder}
           defaultValue={value}
           maxLength={maxLength}
@@ -64,6 +73,7 @@ export const TextareaBox = ({
 
 type TextInputProps = {
   value: string;
+  name?: string
   placeholder: string;
   label?: string;
   type?: 'text' | 'number' | 'password' | 'tel';
@@ -81,6 +91,7 @@ type TextInputProps = {
 
 export const TextInputBox = ({
   value,
+  name = '',
   placeholder,
   label,
   type = 'text',
@@ -119,6 +130,7 @@ export const TextInputBox = ({
         <>
           <TextInput
             idRef={id}
+            name={name}
             placeholder={placeholder}
             value={value}
             type={type}

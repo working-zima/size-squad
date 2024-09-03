@@ -1,7 +1,9 @@
 import { useLocation } from 'react-router-dom';
 
 import styled from 'styled-components';
+
 import { EmailForm } from './EmailForm';
+import useAccessToken from '../../hooks/useAccessToken';
 
 const Container = styled.footer`
   grid-area: footer;
@@ -19,7 +21,7 @@ const Wrapper = styled.div`
   justify-content: space-between;
   max-width: 768px;
   width: 100%;
-  padding: 20px 20px 130px 20px;
+  padding: 20px 20px 80px 20px;
 `
 
 const CopyrightWrapper = styled.div`
@@ -59,6 +61,7 @@ const EmailWrapper = styled.div`
 
 export default function LayoutFooter() {
   const location = useLocation();
+  const { accessToken } = useAccessToken();
 
   const noFooterPaths = ['/login', '/signup', '/mysize/new'];
 
@@ -76,8 +79,11 @@ export default function LayoutFooter() {
           <p>Copyright © 2024 working-zima. All rights reserved.</p>
         </CopyrightWrapper>
         <EmailWrapper>
-          <h2>고객 지원</h2>
-          <EmailForm />
+          <h2>문의 메일</h2>
+          {accessToken
+            ? <EmailForm />
+            : <p>로그인 후 이용해 주세요.</p>
+          }
         </EmailWrapper>
       </Wrapper>
     </Container>

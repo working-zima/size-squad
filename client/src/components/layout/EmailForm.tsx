@@ -1,40 +1,91 @@
-import { FormEvent, useRef } from 'react';
+import { FormEvent, useRef, useState } from 'react';
+
+import styled from 'styled-components';
 import emailjs from '@emailjs/browser';
 
-export const EmailForm = () => {
-  const form = useRef<HTMLFormElement>(null);
+import { TextareaBox } from '../ui/textbox/TextBoxComponents';
 
-  const sendEmail = (event: FormEvent<HTMLFormElement>) => {
+import useFetchUserStore from '../../hooks/useFetchUserStore';
+import Button from '../ui/Button';
+import { useNavigate } from 'react-router-dom';
+
+const Form = styled.form`
+  font-size: 1.3rem;
+  margin-top: 1rem;
+
+  & > button {
+    width: 100%;
+    height: 48px;
+    margin-top: 1rem;
+    border: 2px solid ${props => props.theme.colors.primaryWhite};
+    border-radius: ${props => props.theme.sizes.borderRadius};
+    color: ${props => props.theme.colors.primaryWhite};
+    font-size: 1.6rem;
+    font-weight: 800;
+  }
+
+  & > button:disabled {
+    background-color: ${props => props.theme.colors.borderColor};
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+`
+
+export const EmailForm = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const form = useRef<HTMLFormElement>(null);
+  const navigate = useNavigate();
+  const { user: { email, name } } = useFetchUserStore()
+
+  const sendEmail = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(`REACT_APP_SERVICE_ID: `, process.env.REACT_APP_SERVICE_ID)
-    console.log(`REACT_APP_TEMPLATE_ID: `, process.env.REACT_APP_TEMPLATE_ID)
-    console.log(`REACT_APP_PUBLIC_KEY: `, process.env.REACT_APP_PUBLIC_KEY)
-    emailjs
-      .sendForm(
-        process.env.REACT_APP_SERVICE_ID || '',
-        process.env.REACT_APP_TEMPLATE_ID || '',
-        form.current || '',
-        process.env.REACT_APP_PUBLIC_KEY || ''
-      )
-      .then(
-        () => {
-          console.log('SUCCESS!');
-        },
-        (error) => {
-          console.log('FAILED...', error);
-        },
-      );
+    setIsSubmitting(true);
+
+    if (form.current) {
+      const formData = new FormData(form.current);
+      const message = formData.get('message');
+
+      if (!message || typeof message !== 'string' || message.trim() === '') {
+        alert('문의 내용을 입력 후 메일을 보내주세요.');
+        setIsSubmitting(false);
+        return;
+      }
+    }
+
+    try {
+      // await emailjs.sendForm(
+      //   process.env.REACT_APP_SERVICE_ID || '',
+      //   process.env.REACT_APP_TEMPLATE_ID || '',
+      //   form.current || '',
+      //   process.env.REACT_APP_PUBLIC_KEY || ''
+      // );
+
+      navigate(0);
+    } catch (error) {
+      console.log('FAILED...', error);
+      alert('문의하기를 실패했습니다.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <form ref={form} onSubmit={sendEmail}>
-      <label>Name</label>
-      <input type="text" name="from_name" />
-      <label>Email</label>
-      <input type="email" name="from_email" />
-      <label>Message</label>
-      <textarea name="message" />
-      <input type="submit" value="Send" />
-    </form>
+    <Form ref={form} onSubmit={sendEmail}>
+      <input type="hidden" name="from_name" value={name} />
+      <input type="hidden" name="from_email" value={email} />
+      <TextareaBox
+        name="message"
+        placeholder='문의 내용을 입력해주세요.'
+      />
+      <Button
+        type="submit"
+        value="Send"
+        disabled={isSubmitting}
+      >
+        <p>
+          {isSubmitting ? '보내는 중...' : '메일 보내기'}
+        </p>
+      </Button>
+    </Form>
   );
 };
