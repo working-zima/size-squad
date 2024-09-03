@@ -10,6 +10,10 @@ import useAccessToken from '../../hooks/useAccessToken';
 const Container = styled.div.attrs({ className: 'LayoutMenuBar' })`
   grid-area: menu;
   z-index: 550;
+
+  /* @media (min-width: 480px) {
+    display: none;
+  } */
 `;
 
 const MenuWrap = styled.div.attrs({ className: 'MenuWrap' })`

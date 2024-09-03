@@ -46,6 +46,7 @@ const Container = styled.header<ContainerProps>`
     width: 100%;
     height: 100%;
     padding: 14px;
+    -webkit-user-drag: none;
   }
 `;
 
@@ -71,16 +72,8 @@ export default function LayoutHeader({
         <LeftButton page={page} />
         {
           page.PAGETITLE === 'Size Squad'
-            ? (
-              <img src='/images/size-squad-logo.png' alt='Logo' />
-            )
-            : (
-              <h2>
-                <p>
-                  {page.PAGETITLE}
-                </p>
-              </h2>
-            )
+            ? (<img src='/images/size-squad-logo.png' alt='Logo' />)
+            : (<h2><p>{page.PAGETITLE}</p></h2>)
         }
         <RightButton page={page} />
       </ContentWrapper>

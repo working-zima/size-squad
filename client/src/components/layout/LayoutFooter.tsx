@@ -21,7 +21,7 @@ const Wrapper = styled.div`
   justify-content: space-between;
   max-width: 768px;
   width: 100%;
-  padding: 20px 20px 80px 20px;
+  padding: 20px;
 
   @media (min-width: 480px) {
     flex-direction: row;
@@ -52,6 +52,7 @@ const WhiteLogo = styled.div`
     height: 100%;
     width: 100%;
     object-fit: contain;
+    -webkit-user-drag: none;
   }
 `
 
