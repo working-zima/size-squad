@@ -57,13 +57,16 @@ export default function ChangePasswordForm() {
   }, [confirmed]);
 
   return (
-    <>
+    <form>
       <OldPasswordInput
         placeholder="현재 비밀번호를 입력해주세요."
+        autocomplete="current-password"
       />
       <PasswordInputs
         pwdPlaceholder="새 비밀번호를 입력해주세요."
         confirmPlaceholder="새 비밀번호를 다시 입력해주세요."
+        pwdAutocomplete="new-password"
+        confirmAutocomplete="new-password"
       />
       <ButtonWrapper>
         <ConfirmTrigger
@@ -82,6 +85,6 @@ export default function ChangePasswordForm() {
         <p>비밀번호 변경 실패</p>
         <p>{errorMessage}</p>
       </AlertModal>
-    </>
+    </form>
   )
 }

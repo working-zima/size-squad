@@ -36,11 +36,11 @@ const PasswordErrorMessage = ({
 type SignUpPasswordInputProps = {
   label: string;
   placeholder: string;
+  pwdAutocomplete?: string;
 }
 
 export default function SignUpPasswordInput({
-  label,
-  placeholder,
+  label, placeholder, pwdAutocomplete = ''
 }: SignUpPasswordInputProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [isTouched, setIsTouched] = useState({
@@ -77,12 +77,13 @@ export default function SignUpPasswordInput({
         type={showPassword ? "text" : "password"}
         maxLength={16}
         isShowPw={showPassword}
+        isValid={isPasswordValid}
+        autocomplete={pwdAutocomplete}
+        useBorderColor={true}
         onChange={handleChangePassword}
         handleShowPassword={handleShowPassword}
-        isValid={isPasswordValid}
-        useBorderColor={true}
-        required
         onReset={handleResetPassword}
+        required
       />
       {!!passwordErrorMessage
         && <ValidTextWrapper>{passwordErrorMessage}</ValidTextWrapper>

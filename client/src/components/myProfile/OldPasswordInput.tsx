@@ -36,11 +36,11 @@ const PasswordErrorMessage = ({
 type OldPasswordInputProps = {
   label?: string;
   placeholder: string;
+  autocomplete?: string;
 };
 
 export default function OldPasswordInput({
-  label,
-  placeholder,
+  label, placeholder, autocomplete = ''
 }: OldPasswordInputProps) {
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [isTouched, setIsTouched] = useState(false);
@@ -72,12 +72,13 @@ export default function OldPasswordInput({
         type={showOldPassword ? "text" : "password"}
         maxLength={16}
         isShowPw={showOldPassword}
-        onChange={handleChangeOldPassword}
-        handleShowPassword={handleShowOldPassword}
         isValid={isOldPasswordValid}
         useBorderColor={true}
-        required
+        autocomplete={autocomplete}
+        onChange={handleChangeOldPassword}
+        handleShowPassword={handleShowOldPassword}
         onReset={handleResetPassword}
+        required
       />
       {!!passwordErrorMessage
         && <ValidTextWrapper>{passwordErrorMessage}</ValidTextWrapper>

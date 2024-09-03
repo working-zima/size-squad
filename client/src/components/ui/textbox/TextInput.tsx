@@ -25,6 +25,7 @@ type TextInputProps = {
   value: string;
   type?: 'text' | 'number' | 'password' | 'tel';
   maxLength?: number;
+  autocomplete?: string;
   setIsTouched: Dispatch<SetStateAction<boolean>>;
   setIsFocused: Dispatch<SetStateAction<boolean>>;
   onChange?: (value: string) => void;
@@ -37,6 +38,7 @@ export default function TextInput({
   value,
   type,
   maxLength,
+  autocomplete = '',
   setIsTouched,
   setIsFocused,
   onChange = undefined,
@@ -59,6 +61,7 @@ export default function TextInput({
       placeholder={placeholder}
       value={value}
       maxLength={maxLength}
+      autoComplete={autocomplete}
       onFocus={handleFocus}
       onBlur={handleBlur}
       onChange={handleChange}

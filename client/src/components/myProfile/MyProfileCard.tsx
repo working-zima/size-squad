@@ -61,7 +61,7 @@ const ProfileWrapper = styled.div<ProfileWrapperProps>`
   margin: ${props => props.isEditable ? '0 30px 0 0' : '0'};
 `
 
-const EditLink = styled.div`
+const EditLinkWrapper = styled.div`
   a {
     inset: 0px; // 부모 요소의 각 경계에서 0px 떨어진 곳에 위치하게 되어 전체 영역을 덮음
     position: absolute;
@@ -87,11 +87,11 @@ export default function MyProfileCard({
       </ProfileWrapper>
       {isEditable && (
         <>
-          <EditLink>
+          <EditLinkWrapper>
             <Link to={path}>
               <span>Edit</span>
             </Link>
-          </EditLink>
+          </EditLinkWrapper>
           <Arrow />
         </>
       )}

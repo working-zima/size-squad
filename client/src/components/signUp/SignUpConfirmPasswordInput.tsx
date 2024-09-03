@@ -35,10 +35,11 @@ const ConfirmErrorMessage = ({
 
 type SignUpConfirmPasswordInputProps = {
   placeholder: string;
+  confirmAutocomplete?: string;
 }
 
 export default function SignUpConfirmPasswordInput({
-  placeholder
+  placeholder, confirmAutocomplete = ''
 }: SignUpConfirmPasswordInputProps) {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [isTouched, setIsTouched] = useState({
@@ -76,10 +77,11 @@ export default function SignUpConfirmPasswordInput({
         type={showConfirmation ? "text" : "password"}
         maxLength={16}
         isShowPw={showConfirmation}
-        onChange={handleChangePasswordConfirmation}
-        handleShowPassword={handleShowConfirmation}
         isValid={isPasswordConfirmationValid}
         useBorderColor={true}
+        autocomplete={confirmAutocomplete}
+        onChange={handleChangePasswordConfirmation}
+        handleShowPassword={handleShowConfirmation}
         onReset={handleResetPasswordConfirmation}
       />
       {!!confirmErrorMessage

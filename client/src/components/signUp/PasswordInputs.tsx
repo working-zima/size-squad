@@ -5,12 +5,16 @@ type SignUpPasswordProps = {
   pwdLabel?: string;
   pwdPlaceholder?: string;
   confirmPlaceholder?: string;
+  pwdAutocomplete?: string;
+  confirmAutocomplete?: string;
 }
 
 export default function PasswordInputs({
   pwdLabel = "",
   pwdPlaceholder = "",
-  confirmPlaceholder = ""
+  confirmPlaceholder = "",
+  pwdAutocomplete = "",
+  confirmAutocomplete = ""
 }: SignUpPasswordProps) {
 
   return (
@@ -18,9 +22,11 @@ export default function PasswordInputs({
       <SignUpPasswordInput
         label={pwdLabel}
         placeholder={pwdPlaceholder}
+        pwdAutocomplete={pwdAutocomplete}
       />
       <SignUpConfirmPasswordInput
         placeholder={confirmPlaceholder}
+        confirmAutocomplete={confirmAutocomplete}
       />
     </>
   )

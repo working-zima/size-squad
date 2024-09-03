@@ -78,6 +78,7 @@ type TextInputProps = {
   label?: string;
   type?: 'text' | 'number' | 'password' | 'tel';
   maxLength?: number;
+  autocomplete?: string;
   unitType?: 'kg' | 'cm' | 'none'
   isShowPw?: boolean
   isValid?: boolean,
@@ -98,6 +99,7 @@ export const TextInputBox = ({
   maxLength,
   unitType = 'none',
   isShowPw,
+  autocomplete = '',
   isValid = false,
   isDuplicated = false,
   useBorderColor = false,
@@ -135,6 +137,7 @@ export const TextInputBox = ({
             value={value}
             type={type}
             maxLength={maxLength}
+            autocomplete={autocomplete}
             setIsTouched={setIsTouched}
             setIsFocused={setIsFocused}
             onChange={onChange}
