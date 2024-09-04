@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import MainCategoryBar from './MainCategoryBar';
 import SubCategoryBar from './SubCategoryBar';
 
-import { Category, Summary } from '../../types';
 import LoadingSpinner from '../ui/LoadingSpinner';
+
+import { Category, Summary } from '../../types';
 
 const Container = styled.div`
   position: sticky;
@@ -24,7 +25,7 @@ type CategoryBarProps = {
 export default function CategoryBar({
   categories, subCategories, categoriesState
 }: CategoryBarProps) {
-
+  console.log(`check`)
   return (
     <Container>
       {categoriesState === 'loading' ? (

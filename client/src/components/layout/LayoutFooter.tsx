@@ -44,11 +44,28 @@ const CopyrightWrapper = styled.div`
   }
 `
 
+const Images = styled.div`
+  display: flex;
+  gap: 5px;
+`
+
 const WhiteLogo = styled.div`
   height: 16px;
 
   img {
     filter: invert(100%);
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    -webkit-user-drag: none;
+  }
+`
+
+const WhiteIcon = styled.div`
+  height: 16.5px;
+
+  img {
+    filter: opacity(50%);
     height: 100%;
     width: 100%;
     object-fit: contain;
@@ -88,9 +105,14 @@ export default function LayoutFooter() {
     <Container>
       <Wrapper>
         <CopyrightWrapper>
-          <WhiteLogo>
-            <img src='/images/size-squad-logo.png' alt='Logo' />
-          </WhiteLogo>
+          <Images>
+            <WhiteLogo>
+              <img src='/images/size-squad-logo.png' alt='Logo' />
+            </WhiteLogo>
+            <WhiteIcon>
+              <img src='/images/size-squad-icon.png' alt='Icon' />
+            </WhiteIcon>
+          </Images>
           <p>Copyright © 2024 working-zima. All rights reserved.</p>
         </CopyrightWrapper>
         <EmailWrapper>

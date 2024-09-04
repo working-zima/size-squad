@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 
 
 const Container = styled.div`
-  padding: 1rem 0.1rem;
+  padding: 1rem 0;
   font-size: 1.4rem;
   line-height: 1.67;
   border-bottom: 1px solid ${props => props.theme.colors.dividerColor};
