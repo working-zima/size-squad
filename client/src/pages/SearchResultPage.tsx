@@ -15,9 +15,9 @@ import LoadingSpinner from '../components/ui/LoadingSpinner';
 import { SortOption } from '../types';
 
 import usePortal from '../hooks/usePortal';
-import useInfiniteScroll from '../hooks/useInfiniteScroll';
 import useProductsStore from '../hooks/useProductsStore';
 import useAccessToken from '../hooks/useAccessToken';
+import useFetchMyProducts from '../hooks/useFetchMyProducts';
 
 import { SORT_OPTIONS } from '../constants';
 
@@ -69,7 +69,7 @@ export default function SearchResultPage() {
     state: productsState,
     sortOption,
     totalDocs
-  } = useInfiniteScroll({ keyword: query, sortCode });
+  } = useFetchMyProducts({ keyword: query, sortCode });
 
   useEffect(() => {
     hideBody();

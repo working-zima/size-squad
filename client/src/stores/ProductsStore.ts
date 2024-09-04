@@ -62,6 +62,11 @@ class ProductsStore {
   }
 
   @Action()
+  private setPer(per: number) {
+    this.per = per;
+  }
+
+  @Action()
   changeKeyword(keyword: string) {
     this.keyword = keyword;
   }
@@ -79,18 +84,20 @@ class ProductsStore {
   }
 
   /**
-   * 첫 렌더링 fetch
+   * 내 사이즈 첫 렌더링 fetch
    */
-  async fetchInitialProducts({
+  async fetchMyInitialProducts({
     keyword,
     categoryId,
     subCategoryId,
     sortCode,
+    per = 10,
   }: {
     keyword?: string,
     categoryId?: string,
     subCategoryId?: string,
-    sortCode?: string
+    sortCode?: string,
+    per?: number
   }) {
     this.reset();
     this.startLoading();
@@ -108,11 +115,12 @@ class ProductsStore {
         sortField,
         sortOrder,
         page: 1,
-        per: this.per
+        per: per
       });
 
       this.handleProductResponse(products);
       this.setSortOption(sortOption);
+      this.setPer(per);
       this.setTotalDocs(products.totalDocs);
       this.setDone();
     } catch (error) {
@@ -123,9 +131,9 @@ class ProductsStore {
   }
 
   /**
-   * 첫 렌더링 이후 fetch
+   * 내 사이즈 첫 렌더링 이후 fetch
    */
-  async fetchMoreProducts({ keyword, categoryId, subCategoryId }: {
+  async fetchMoreMyProducts({ keyword, categoryId, subCategoryId }: {
     keyword?: string, categoryId?: string, subCategoryId?: string
   }) {
     if (this.state === 'loading' || !this.hasNextPage) return;
@@ -153,11 +161,90 @@ class ProductsStore {
     }
   }
 
-  async deleteAndFetchProducts(productId: string) {
+  async fetchInitialProducts({
+    keyword,
+    categoryId,
+    subCategoryId,
+    sortCode,
+    per = 10,
+  }: {
+    keyword?: string,
+    categoryId?: string,
+    subCategoryId?: string,
+    sortCode?: string,
+    per?: number
+  }) {
+    this.reset();
+    this.startLoading();
+
+    try {
+      const sortOption = sortCode
+        ? SORT_OPTIONS[sortCode]
+        : SORT_OPTIONS.RECENT;
+      const sortField = Object.keys(sortOption.sort)[0];
+      const sortOrder = Object.values(sortOption.sort)[0];
+
+      const products = await apiService.fetchProducts({
+        keyword,
+        categoryId,
+        subCategoryId,
+        sortField,
+        sortOrder,
+        page: 1,
+        per: per
+      });
+
+      this.handleProductResponse(products);
+      this.setSortOption(sortOption);
+      this.setPer(per);
+      this.setTotalDocs(products.totalDocs);
+      this.setDone();
+    } catch (error) {
+      const typedError = error as { message: string };
+      this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
+      this.setError();
+    }
+  }
+
+  async fetchMoreProducts({
+    keyword,
+    categoryId,
+    subCategoryId
+  }: {
+    keyword?: string,
+    categoryId?: string,
+    subCategoryId?: string
+  }) {
+    if (this.state === 'loading' || !this.hasNextPage) return;
+    this.startLoading();
+    try {
+      const sortField = Object.keys(this.sortOption.sort)[0];
+      const sortOrder = Object.values(this.sortOption.sort)[0];
+
+      const products = await apiService.fetchProducts({
+        keyword,
+        categoryId,
+        subCategoryId,
+        sortField,
+        sortOrder,
+        page: this.page,
+        per: this.per
+      });
+
+      this.handleProductResponse(products);
+      this.setDone();
+    } catch (error) {
+      const typedError = error as { message: string };
+      this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.';
+      this.setError();
+    }
+  }
+
+  async deleteAndFetchMyProducts(productId: string) {
     try {
       this.startLoading();
       await apiService.deleteMyProducts({ productId });
-      await this.fetchInitialProducts({});
+      await this.fetchMyInitialProducts({});
       this.setDone();
     } catch (error) {
       const typedError = error as { message: string };

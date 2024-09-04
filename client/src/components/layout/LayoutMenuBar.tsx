@@ -10,10 +10,6 @@ import useAccessToken from '../../hooks/useAccessToken';
 const Container = styled.div.attrs({ className: 'LayoutMenuBar' })`
   grid-area: menu;
   z-index: 550;
-
-  /* @media (min-width: 480px) {
-    display: none;
-  } */
 `;
 
 const MenuWrap = styled.div.attrs({ className: 'MenuWrap' })`
@@ -65,6 +61,7 @@ const ContentWrapper = styled.div`
   width: 100%;
   max-width: 768px;
   padding: 0 1rem;
+  -webkit-tap-highlight-color: transparent;
 `;
 
 export default function LayoutMenuBar() {

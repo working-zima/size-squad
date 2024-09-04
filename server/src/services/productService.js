@@ -13,9 +13,37 @@ const productService = {
   },
 
   /** product 조회 */
-  getAllProducts: async () => {
+  getAllProducts: async ({
+    keyword, sort, page, limit
+  }) => {
     try {
-      const productData = await Product.findAll();
+      const queryCriteria = {};
+
+      if (keyword) {
+        queryCriteria.$or = [
+          { brand: { $regex: keyword, $options: 'i' } },
+          { name: { $regex: keyword, $options: 'i' } }
+        ];
+      }
+
+      const options = {
+        page,
+        limit,
+        sort: sort,
+        populate: [
+          { path: "category", select: ["_id", "name"] },
+          { path: "subCategory", select: ["_id", "name"] },
+          { path: "author", select: ["_id", "name"] },
+          { path: "gender", select: ["_id", "name"] },
+          { path: "fit", select: ["_id", "name"] },
+          { path: "size", select: ["_id", "name"] }
+        ],
+        lean: true
+      };
+
+      const productData = await Product.findAll({
+        queryCriteria, options
+      });
 
       return productData;
     } catch (error) {
@@ -124,10 +152,27 @@ const productService = {
   },
 
   /** categoryId로 product 조회 */
-  getProductByCategoryId: async ({ categoryId }) => {
+  getProductByCategoryId: async ({
+    category, sort, page, limit
+  }) => {
     try {
+      const options = {
+        page,
+        limit,
+        sort: sort,
+        populate: [
+          { path: "category", select: ["_id", "name"] },
+          { path: "subCategory", select: ["_id", "name"] },
+          { path: "author", select: ["_id", "name"] },
+          { path: "gender", select: ["_id", "name"] },
+          { path: "fit", select: ["_id", "name"] },
+          { path: "size", select: ["_id", "name"] }
+        ],
+        lean: true
+      };
+
       const productData = await Product.findByCategoryId({
-        categoryId
+        category, options
       });
 
       return productData;
@@ -137,10 +182,27 @@ const productService = {
   },
 
   /** subCategoryId로 product 조회 */
-  getProductBySubCategoryId: async ({ subCategoryId }) => {
+  getProductBySubCategoryId: async ({
+    subCategory, sort, page, limit
+  }) => {
     try {
+      const options = {
+        page,
+        limit,
+        sort: sort,
+        populate: [
+          { path: "category", select: ["_id", "name"] },
+          { path: "subCategory", select: ["_id", "name"] },
+          { path: "author", select: ["_id", "name"] },
+          { path: "gender", select: ["_id", "name"] },
+          { path: "fit", select: ["_id", "name"] },
+          { path: "size", select: ["_id", "name"] }
+        ],
+        lean: true
+      };
+
       const productData = await Product.findBySubCategoryId({
-        subCategoryId
+        subCategory, options
       });
 
       return productData;

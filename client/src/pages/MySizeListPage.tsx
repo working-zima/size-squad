@@ -15,9 +15,10 @@ import { SortOption } from '../types';
 
 import useAccessToken from '../hooks/useAccessToken';
 import useFetchCategories from '../hooks/useFetchCategories';
-import useInfiniteScroll from '../hooks/useInfiniteScroll';
+import useFetchMyProducts from '../hooks/useFetchMyProducts';
 
 import { SORT_OPTIONS } from '../constants';
+import useFetchUserStore from '../hooks/useFetchUserStore';
 
 const Container = styled.div`
   height: 100%;
@@ -60,7 +61,9 @@ export default function MySizeListPage() {
     state: productsState,
     sortOption,
     totalDocs
-  } = useInfiniteScroll({ categoryId, subCategoryId, sortCode });
+  } = useFetchMyProducts({ categoryId, subCategoryId, sortCode });
+
+  const { user } = useFetchUserStore();
 
   const subCategories = categoryId
     ? categories
@@ -111,7 +114,7 @@ export default function MySizeListPage() {
         {productsState !== 'loading' &&
           products.length > 0 &&
           products.map((product) => (
-            <Product key={product._id} product={product} />
+            <Product key={product._id} product={product} user={user} />
           ))}
       </Products>
       <div id='more button' ref={moreRef} />

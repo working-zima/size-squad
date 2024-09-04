@@ -78,7 +78,6 @@ const userController = {
 
       res.status(200).json({ products: productData });
     } catch (error) {
-
       next(error);
     }
   },

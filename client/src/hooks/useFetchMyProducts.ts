@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 
 import useIntersectionObserver from './useIntersectionObserver';
-
 import useProductsStore from './useProductsStore';
 
 const ioOptions = { threshold: 1 }
@@ -10,15 +9,17 @@ type useInfiniteScrollProps = {
   keyword?: string,
   categoryId?: string,
   subCategoryId?: string,
-  sortCode?: string
+  sortCode?: string,
+  per?: number
 }
 
-const useInfiniteScroll = ({
+export default function useFetchMyProducts({
   keyword,
   categoryId,
   subCategoryId,
-  sortCode
-}: useInfiniteScrollProps) => {
+  sortCode,
+  per = 10
+}: useInfiniteScrollProps) {
   const [{
     products = [],
     errorMessage,
@@ -32,12 +33,14 @@ const useInfiniteScroll = ({
   const isIntersecting = entry?.isIntersecting
 
   useEffect(() => {
-    store.fetchInitialProducts({ keyword, categoryId, subCategoryId, sortCode });
-  }, [categoryId, subCategoryId, sortCode, keyword, store]);
+    store.fetchMyInitialProducts({
+      keyword, categoryId, subCategoryId, sortCode, per
+    });
+  }, [categoryId, subCategoryId, sortCode, keyword, per, store]);
 
   useEffect(() => {
     if (isIntersecting) {
-      store.fetchMoreProducts({ keyword, categoryId, subCategoryId })
+      store.fetchMoreMyProducts({ keyword, categoryId, subCategoryId })
     }
   }, [isIntersecting, store]);
 
@@ -51,5 +54,3 @@ const useInfiniteScroll = ({
     store
   };
 };
-
-export default useInfiniteScroll;

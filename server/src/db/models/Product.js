@@ -78,6 +78,7 @@ const Product = {
         { author: userId, subCategory },
         options
       );
+
       return productData;
     } catch (error) {
       throw error;
@@ -85,17 +86,12 @@ const Product = {
   },
 
   /** 모든 product 조회 */
-  findAll: async () => {
+  findAll: async ({ queryCriteria, options }) => {
     try {
-      const productData = await ProductModel.find({},
-        "_id author name brand category subCategory gender size fit measurements description"
-      ).populate({ path: "category", select: ["_id", "name"] })
-        .populate({ path: "subCategory", select: ["_id", "name"] })
-        .populate({ path: "author", select: ["_id", "name"] })
-        .populate({ path: "gender", select: ["_id", "name"] })
-        .populate({ path: "fit", select: ["_id", "name"] })
-        .populate({ path: "size", select: ["_id", "name"] })
-        .lean();
+      const productData = await ProductModel.paginate(
+        queryCriteria,
+        options
+      )
 
       return productData;
     } catch (error) {
@@ -104,17 +100,12 @@ const Product = {
   },
 
   /** categoryId로 product list 가져오기 */
-  findByCategoryId: async ({ categoryId }) => {
+  findByCategoryId: async ({ category, options }) => {
     try {
-      const productData = await ProductModel.find({ category: categoryId },
-        "_id author name brand category subCategory gender size fit measurements description"
-      ).populate({ path: "category", select: ["_id", "name"] })
-        .populate({ path: "subCategory", select: ["_id", "name"] })
-        .populate({ path: "author", select: ["_id", "name"] })
-        .populate({ path: "gender", select: ["_id", "name"] })
-        .populate({ path: "fit", select: ["_id", "name"] })
-        .populate({ path: "size", select: ["_id", "name"] })
-        .lean();
+      const productData = await ProductModel.paginate(
+        { category },
+        options
+      );
 
       return productData;
     } catch (error) {
@@ -123,17 +114,12 @@ const Product = {
   },
 
   /** subCategoryId로 product list 가져오기 */
-  findBySubCategoryId: async ({ subCategoryId }) => {
+  findBySubCategoryId: async ({ subCategory, options }) => {
     try {
-      const productData = await ProductModel.find({ subCategory: subCategoryId },
-        "_id author name brand category subCategory gender size fit measurements description"
-      ).populate({ path: "category", select: ["_id", "name"] })
-        .populate({ path: "subCategory", select: ["_id", "name"] })
-        .populate({ path: "author", select: ["_id", "name"] })
-        .populate({ path: "gender", select: ["_id", "name"] })
-        .populate({ path: "fit", select: ["_id", "name"] })
-        .populate({ path: "size", select: ["_id", "name"] })
-        .lean();
+      const productData = await ProductModel.paginate(
+        { subCategory },
+        options
+      )
 
       return productData;
     } catch (error) {

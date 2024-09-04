@@ -11,28 +11,34 @@ const productController = {
   /** product 리스트 조회 */
   getProducts: async (req, res, next) => {
     try {
-      const { categoryId, subCategoryId } = req.query;
+      const {
+        keyword, categoryId, subCategoryId, sortField, sortOrder, page, per
+      } = req.query;
+
+      let sort = {};
+      if (sortField && sortOrder) sort[sortField] = parseInt(sortOrder, 10);
 
       let productData = [];
 
       // 서브 카테고리
       if (subCategoryId) {
         productData = await productService.getProductBySubCategoryId({
-          subCategoryId
+          subCategory: subCategoryId, sort, page, limit: per
         });
       }
 
       // 카테고리
       if (categoryId && !subCategoryId) {
         productData = await productService.getProductByCategoryId({
-          categoryId
+          category: categoryId, sort, page, limit: per
         });
       }
 
       // 전체
       if (!categoryId && !subCategoryId) {
-
-        productData = await productService.getAllProducts();
+        productData = await productService.getAllProducts({
+          keyword, sort, page, limit: per
+        });
       }
 
       res.status(200).json({ products: productData });

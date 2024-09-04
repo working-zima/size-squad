@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 
 import styled from 'styled-components';
 
 import SizeCard from './SizeCard';
 import InfoCard from './InfoCard';
+import EditDeleteButtons from './EditDeleteButtons';
 
-import { ConfirmTrigger } from '../ui/modal/ModalTrigger';
-
-import { ProductResponse } from '../../types';
+import { ProductResponse, User } from '../../types';
 
 import useViewModeStore from '../../hooks/useViewModeStore';
 import useProductsStore from '../../hooks/useProductsStore';
+import { Link } from 'react-router-dom';
+
 
 const Container = styled.div`
   padding: 1rem 0.1rem;
@@ -20,7 +20,7 @@ const Container = styled.div`
   border-bottom: 1px solid ${props => props.theme.colors.dividerColor};
 `;
 
-const InfoContainer = styled.div`
+const InfoWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -58,79 +58,63 @@ const Name = styled.div`
   }
 `;
 
-const EditDeleteWrapper = styled.div`
-  display: flex;
-  flex: 1;
-  white-space: nowrap;
-  font-weight: bold;
-  font-size: 1.3rem;
-  -webkit-tap-highlight-color: transparent;
-
-  .edit-link {
-    color: ${(props) => props.theme.colors.primaryBlack};
-    margin-right: 1rem;
-  }
-
-  .delete-link > button:first-of-type {
-    color: ${(props) => props.theme.colors.primaryRed};
-    font-weight: bold;
-    font-size: 1.3rem;
-    margin-right: 1rem;
-  }
-`;
+const Author = styled.div`
+  /* flex: 1; */
+  font-size: 1.4rem;
+  font-weight: 700;
+`
 
 type ProductProps = {
   product: ProductResponse;
+  user?: User;
 }
 
 export default function Product({
-  product,
+  product, user
 }: ProductProps) {
   const [{ isDescriptionView }] = useViewModeStore();
   const [confirmed, setConfirmed] = useState<boolean | null>(null)
   const [, store] = useProductsStore();
 
+  const isMyCard = product.author?._id === user?._id
+
   useEffect(() => {
     if (!!confirmed) {
-      store.deleteAndFetchProducts(product._id);
+      store.deleteAndFetchMyProducts(product._id);
     }
   }, [confirmed]);
 
   return (
     <Container>
-      <InfoContainer>
+      <InfoWrapper>
         <Brand>
           <h3>{product.brand}</h3>
         </Brand>
         <Name>
           <p><strong>{product.name}</strong></p>
         </Name>
-        <EditDeleteWrapper>
-          <Link
-            to={`/mysize/${product._id}/edit`}
-            className="edit-link"
-          >
-            수정
-          </Link>
-          <Link
-            to="/mysize"
-            className="delete-link"
-          >
-            <ConfirmTrigger
-              title={'사이즈 삭제'}
-              buttonText={'삭제'}
+        {isMyCard
+          ? (
+            <EditDeleteButtons
+              product={product}
               confirmed={confirmed}
               setConfirmed={setConfirmed}
-            >
-              <p>정말로 삭제하시겠습니까?</p>
-            </ConfirmTrigger>
-          </Link>
-        </EditDeleteWrapper>
-      </InfoContainer>
-      {isDescriptionView
-        ? (<SizeCard product={product} />)
-        : (<InfoCard product={product} />)
+            />
+          )
+          : (
+            <Author>
+              <Link to=''>
+                {product.author?.name}
+              </Link>
+            </Author>
+          )
+        }
+      </InfoWrapper>
+      {
+        isDescriptionView
+          ? (<SizeCard product={product} />)
+          : (<InfoCard product={product} />)
       }
-    </Container>
+    </Container >
   );
 }
