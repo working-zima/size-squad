@@ -16,10 +16,11 @@ const Container = styled.div`
   margin: 0 1rem;
   padding: 1rem 0;
   white-space: nowrap;
-  scrollbar-width: none;
 
+  scrollbar-width: none; // 파이어폭스
+  -ms-overflow-style: none; // 인터넷 익스플로러
   &::-webkit-scrollbar {
-    display: none;
+    display: none; // 크롬, 사파리, 오페라, 엣지
   }
 `;
 

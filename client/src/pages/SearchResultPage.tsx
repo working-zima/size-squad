@@ -17,7 +17,8 @@ import { SortOption } from '../types';
 import usePortal from '../hooks/usePortal';
 import useProductsStore from '../hooks/useProductsStore';
 import useAccessToken from '../hooks/useAccessToken';
-import useFetchMyProducts from '../hooks/useFetchMyProducts';
+import useFetchProducts from '../hooks/useFetchProducts';
+import useFetchUserStore from '../hooks/useFetchUserStore';
 
 import { SORT_OPTIONS } from '../constants';
 
@@ -69,7 +70,8 @@ export default function SearchResultPage() {
     state: productsState,
     sortOption,
     totalDocs
-  } = useFetchMyProducts({ keyword: query, sortCode });
+  } = useFetchProducts({ keyword: query, sortCode });
+  const { user } = useFetchUserStore();
 
   useEffect(() => {
     hideBody();
@@ -112,10 +114,7 @@ export default function SearchResultPage() {
         {productsState === 'loading' && <LoadingSpinner />}
         {productsState !== 'loading' && products.length === 0 && <NoListPage />}
         {productsState !== 'loading' && products.map(product => (
-          <Product
-            key={product._id}
-            product={product}
-          />
+          <Product key={product._id} product={product} user={user} />
         ))}
       </Products>
       <div id='more button' ref={moreRef} />

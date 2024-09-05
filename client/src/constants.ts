@@ -135,8 +135,8 @@ export const PAGES: Record<string, PageConfig> = {
     SHOWMENU: false,
   },
   '/search': {
-    PAGETITLE: '사이즈 검색',
-    LEFTBUTTON: 'backspace',
+    PAGETITLE: '',
+    LEFTBUTTON: '',
     RIGHTBUTTON: '',
     FOOTER: false,
     SWITCHER: true,
