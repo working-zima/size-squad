@@ -6,6 +6,7 @@ import {
 } from "react-icons/ri";
 
 import useAccessToken from '../../hooks/useAccessToken';
+import useFetchMyUserData from '../../hooks/useFetchMyUserData';
 
 const Container = styled.div.attrs({ className: 'LayoutMenuBar' })`
   grid-area: menu;
@@ -48,7 +49,7 @@ const ContentWrapper = styled.div`
   -webkit-tap-highlight-color: transparent;
 `;
 
-const MenuLink = styled(Link) <{ isActive: boolean }>`
+const MenuLink = styled(Link) <{ $isActive: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -56,7 +57,7 @@ const MenuLink = styled(Link) <{ isActive: boolean }>`
   position: relative;
   flex: 1 1 0%;
   height: 100%;
-  color: ${props => props.isActive
+  color: ${props => props.$isActive
     ? props.theme.colors.primaryBlack
     : props.theme.colors.unSelectedText
   };
@@ -71,6 +72,7 @@ const MenuLink = styled(Link) <{ isActive: boolean }>`
 export default function LayoutMenuBar() {
   const location = useLocation();
   const { accessToken } = useAccessToken();
+  const { user } = useFetchMyUserData()
 
   const isActive = (path: string) => (location.pathname === path);
 
@@ -82,7 +84,7 @@ export default function LayoutMenuBar() {
           <ContentWrapper>
             <MenuLink
               to="/"
-              isActive={isActive('/')}
+              $isActive={isActive('/')}
             >
               <div><RiHome5Line size="24" /></div>
               <span>홈</span>
@@ -91,14 +93,14 @@ export default function LayoutMenuBar() {
               <>
                 <MenuLink
                   to="/mysize"
-                  isActive={isActive('/mysize')}
+                  $isActive={isActive('/mysize')}
                 >
                   <div><RiListView size="24" /></div>
                   <span>목록</span>
                 </MenuLink>
                 <MenuLink
                   to="/mysize/new"
-                  isActive={isActive('/mysize/new')}
+                  $isActive={isActive('/mysize/new')}
                 >
                   <div><RiEditLine size="24" /></div>
                   <span>작성</span>
@@ -106,8 +108,8 @@ export default function LayoutMenuBar() {
               </>
             )}
             <MenuLink
-              to={!!accessToken ? "/mypage" : "/login"}
-              isActive={isActive('/mypage') || isActive('/login')}
+              to={!!accessToken ? `/mypage/${user._id}` : "/login"}
+              $isActive={isActive('/mypage') || isActive('/login')}
             >
               {!!accessToken ? (
                 <>
