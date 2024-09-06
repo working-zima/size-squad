@@ -28,6 +28,7 @@ const Title = styled.div`
   p {
     margin-top: 3.2rem;
     font-size: 2rem;
+    color: ${props => props.theme.colors.secondaryTextColor};
   }
 `
 
@@ -53,12 +54,12 @@ export default function HomePage() {
   } = useFetchProducts({ per: 10 });
   const { user } = useFetchUserStore()
   const { users } = useFetchUsersStore({});
-  console.log(`check: `, users)
+
   return (
     <Container>
       <Title>
         <h2>새로운 인사이트</h2>
-        <p>최신 사이즈 정보를 확인하고, 다양한 핏과 스타일링 팁도 얻어보세요.</p>
+        <p>최근 공유된 사이즈 정보를 확인하고, 다양한 핏과 스타일링 팁도 얻어보세요.</p>
       </Title>
       <Cards>
         {productsState === 'error' && <ErrorPage errorMessage={errorMessage} />}

@@ -77,17 +77,9 @@ const WhiteIcon = styled.div`
 const EmailWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
   width: 100%;
-
-  h2 {
-    font-size: 18px;
-    font-weight: 800;
-    color: ${props => props.theme.colors.primaryWhite};
-  }
-
-  div {
-    margin: 10px 0;
-  }
 
   p {
     line-height: 1.67;
@@ -125,7 +117,6 @@ export default function LayoutFooter() {
           <p>Copyright © 2024 working-zima. All rights reserved.</p>
         </CopyrightWrapper>
         <EmailWrapper>
-          <h2>문의메일</h2>
           {accessToken
             ? (<EmailForm />)
             : (

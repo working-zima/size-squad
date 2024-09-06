@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import styled from 'styled-components';
 import {
@@ -36,22 +36,6 @@ const Menu = styled.nav`
   bottom: 0px;
   height: 50px;
   background-color: ${props => props.theme.colors.primaryWhite};
-
-  a {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    flex: 1 1 0%;
-    height: 100%;
-  }
-
-  span {
-    line-height: 1.5rem;
-    font-size: 1.1rem;
-    user-select: none;
-  }
 `;
 
 const ContentWrapper = styled.div`
@@ -64,8 +48,31 @@ const ContentWrapper = styled.div`
   -webkit-tap-highlight-color: transparent;
 `;
 
+const MenuLink = styled(Link) <{ isActive: boolean }>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex: 1 1 0%;
+  height: 100%;
+  color: ${props => props.isActive
+    ? props.theme.colors.primaryBlack
+    : props.theme.colors.unSelectedText
+  };
+
+  span {
+    line-height: 1.5rem;
+    font-size: 1.1rem;
+    user-select: none;
+  }
+`
+
 export default function LayoutMenuBar() {
+  const location = useLocation();
   const { accessToken } = useAccessToken();
+
+  const isActive = (path: string) => (location.pathname === path);
 
   return (
     <Container>
@@ -73,23 +80,35 @@ export default function LayoutMenuBar() {
         <h2>Navigation Menu</h2>
         <Menu>
           <ContentWrapper>
-            <Link to="/">
+            <MenuLink
+              to="/"
+              isActive={isActive('/')}
+            >
               <div><RiHome5Line size="24" /></div>
               <span>홈</span>
-            </Link>
+            </MenuLink>
             {!!accessToken && (
               <>
-                <Link to="/mysize">
+                <MenuLink
+                  to="/mysize"
+                  isActive={isActive('/mysize')}
+                >
                   <div><RiListView size="24" /></div>
                   <span>목록</span>
-                </Link>
-                <Link to="/mysize/new">
+                </MenuLink>
+                <MenuLink
+                  to="/mysize/new"
+                  isActive={isActive('/mysize/new')}
+                >
                   <div><RiEditLine size="24" /></div>
                   <span>작성</span>
-                </Link>
+                </MenuLink>
               </>
             )}
-            <Link to={!!accessToken ? "/mypage" : "/login"}>
+            <MenuLink
+              to={!!accessToken ? "/mypage" : "/login"}
+              isActive={isActive('/mypage') || isActive('/login')}
+            >
               {!!accessToken ? (
                 <>
                   <div><RiUserLine size="24" /></div>
@@ -101,7 +120,7 @@ export default function LayoutMenuBar() {
                   <span>로그인</span>
                 </>
               )}
-            </Link>
+            </MenuLink>
           </ContentWrapper>
         </Menu>
       </MenuWrap>

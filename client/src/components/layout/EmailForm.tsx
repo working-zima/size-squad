@@ -11,14 +11,21 @@ import { useNavigate } from 'react-router-dom';
 
 const Form = styled.form`
   font-size: 1.3rem;
-  margin-top: 1rem;
+  width: 100%;
+`
+
+const FormRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  h2 {
+    font-size: 18px;
+    font-weight: 800;
+    color: ${props => props.theme.colors.primaryWhite};
+  }
 
   & > button {
-    width: 100%;
-    height: 48px;
-    margin-top: 1rem;
-    border: 2px solid ${props => props.theme.colors.primaryWhite};
-    border-radius: ${props => props.theme.sizes.borderRadius};
     color: ${props => props.theme.colors.primaryWhite};
     font-size: 1.6rem;
     font-weight: 800;
@@ -71,21 +78,25 @@ export const EmailForm = () => {
 
   return (
     <Form ref={form} onSubmit={sendEmail}>
+      <FormRow>
+        <h2>문의메일</h2>
+        <Button
+          type="submit"
+          value="Send"
+          disabled={isSubmitting}
+        >
+          <p>
+            {isSubmitting ? '보내는 중...' : '문의 메일 보내기'}
+          </p>
+        </Button>
+      </FormRow>
       <input type="hidden" name="from_name" value={name} />
       <input type="hidden" name="from_email" value={email} />
       <TextareaBox
         name="message"
         placeholder='스쿼드의 어떤 지원이 필요하신가요?'
       />
-      <Button
-        type="submit"
-        value="Send"
-        disabled={isSubmitting}
-      >
-        <p>
-          {isSubmitting ? '보내는 중...' : '문의 메일 보내기'}
-        </p>
-      </Button>
+
     </Form>
   );
 };

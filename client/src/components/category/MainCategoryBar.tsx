@@ -42,7 +42,7 @@ const CustomButton = styled(Button) <{ active: boolean }>`
 
     ${(props) => props.active && css`
       font-weight: 500;
-      color: black;
+      color: ${props => props.theme.colors.primaryBlack};
   `}
   }
 `;

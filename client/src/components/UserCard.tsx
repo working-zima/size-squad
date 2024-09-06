@@ -1,6 +1,8 @@
 import styled from "styled-components";
+
 import { User } from "../types"
-import { USERFIELDS } from "../constants";
+
+import { GENDER_MESSAGES, USERFIELDS } from "../constants";
 
 const Container = styled.div`
   padding: 1.2rem 0.2rem;
@@ -19,7 +21,7 @@ const UserRow = styled.div`
   justify-content: space-between;
   align-items: center;
   align-items: center;
-  height: 40px;
+  min-height: 30px;
   margin-bottom: 1.6rem;
   background-color: ${props => props.theme.colors.backgroundColor};
 
@@ -35,14 +37,14 @@ const UserRow = styled.div`
 const UserInfo = styled.div`
   display: flex;
   flex-direction: row;
-  margin: 0;
+  height: 30px;
   align-items: center;
   color: ${props => props.theme.colors.secondaryTextColor};
 
   p {
-    font-weight: bold;
+    font-weight: 600;
     font-size: 1.4rem;
-    margin-left: 0.5rem;
+    margin-right: 0.5rem;
     color: ${props => props.theme.colors.primaryBlack};
   }
 `;
@@ -68,10 +70,14 @@ export default function UserCard({ user }: UserCardProps) {
   return (
     <Container>
       <UserRow>
-        <UserInfo>{USERFIELDS['name']}:  <p>{user.name}</p></UserInfo>
-        <UserInfo>{USERFIELDS['gender']}: <p>{user.gender.name}</p></UserInfo>
         <UserInfo>
-          {USERFIELDS['physical']}: <p>{user.height} cm / {user.weight} kg</p>
+          <p>{USERFIELDS['name']}:</p>  {user.name}
+        </UserInfo>
+        <UserInfo>
+          <p>{USERFIELDS['gender']}:</p> {GENDER_MESSAGES[user.gender.name]}
+        </UserInfo>
+        <UserInfo>
+          <p>{USERFIELDS['physical']}:</p> {user.height} cm / {user.weight} kg
         </UserInfo>
       </UserRow>
       <Description>{user.description}</Description>
