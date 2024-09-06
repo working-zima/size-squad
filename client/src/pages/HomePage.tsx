@@ -1,30 +1,42 @@
 import styled from "styled-components";
 
 import NoListPage from "./NoListPage";
+import ErrorPage from "./ErrorPage";
 
 import Product from "../components/mySize/Product";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
+import UserCard from "../components/UserCard";
 
 import useAccessToken from "../hooks/useAccessToken";
 import useFetchProducts from "../hooks/useFetchProducts";
+import useFetchUsersStore from '../hooks/useFetchUsersStore'
 import useFetchUserStore from "../hooks/useFetchUserStore";
 
 const Container = styled.div`
-  margin-bottom: 40px;
+  margin-bottom: 80px;
+  word-break: keep-all;
 `
 
 const Title = styled.div`
-  font-size: 2.4rem;
-  font-weight: 500;
-  padding: 2rem 1rem 1.6rem 1rem;
+  padding: 4rem 1rem 1.6rem 1rem;
+
+  h2 {
+    font-size: 3.6rem;
+    font-weight: 500;
+  }
+
+  p {
+    margin-top: 3.2rem;
+    font-size: 2rem;
+  }
 `
 
-const Products = styled.div`
-  margin: 0 10px;
+const Cards = styled.div`
+  margin: 4rem 10px 4rem 10px;
   border: 1px solid ${props => props.theme.colors.borderColor};
   border-width: 1px 0;
   border-radius: 2px;
-  height: 260px;
+  height: 262px;
   overflow-y: scroll;
 
   scrollbar-width: none; // 파이어폭스
@@ -36,23 +48,39 @@ const Products = styled.div`
 
 export default function HomePage() {
   useAccessToken();
-  const { products, state: productsState, } = useFetchProducts({ per: 10 });
-  const { user } = useFetchUserStore();
-
+  const {
+    products, state: productsState, errorMessage
+  } = useFetchProducts({ per: 10 });
+  const { user } = useFetchUserStore()
+  const { users } = useFetchUsersStore({});
+  console.log(`check: `, users)
   return (
     <Container>
       <Title>
-        <p>최근 등록된 사이즈</p>
+        <h2>새로운 인사이트</h2>
+        <p>최신 사이즈 정보를 확인하고, 다양한 핏과 스타일링 팁도 얻어보세요.</p>
       </Title>
-      <Products>
+      <Cards>
+        {productsState === 'error' && <ErrorPage errorMessage={errorMessage} />}
         {productsState === 'loading' && <LoadingSpinner />}
-        {productsState !== 'loading' && products.length === 0 && <NoListPage />}
-        {productsState !== 'loading' &&
-          products.length > 0 &&
-          products.map((product) => (
-            <Product key={product._id} product={product} user={user} />
-          ))}
-      </Products>
+        {productsState !== 'loading'
+          && productsState !== 'error'
+          && products.length === 0
+          && <NoListPage />
+        }
+        {products.map(product => (
+          <Product key={product._id} product={product} user={user} />
+        ))}
+      </Cards>
+      <Title>
+        <h2>새로운 얼굴들</h2>
+        <p>새로 가입한 멤버를 소개합니다! 비슷한 사이즈의 멤버를 찾아 스타일을 참고해보세요.</p>
+      </Title>
+      <Cards>
+        {users.map(user => (
+          <UserCard key={user._id} user={user} />
+        ))}
+      </Cards>
     </Container>
   );
 }

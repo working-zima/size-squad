@@ -12,6 +12,16 @@ const User = {
     }
   },
 
+  findAll: async ({ queryCriteria, options }) => {
+    try {
+      const userData = await UserModel.paginate(queryCriteria, options)
+
+      return userData;
+    } catch (error) {
+      throw error;
+    }
+  },
+
   /** _id로 검색 */
   findById: async (_id) => {
     try {

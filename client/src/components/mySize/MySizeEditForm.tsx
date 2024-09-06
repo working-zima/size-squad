@@ -95,8 +95,8 @@ export default function MySizeEditForm({ onComplete }: MySizeEditFormProps) {
           changeGender={(value) => store.changeGender(value)}
         />
         <MySizeSizeBox />
-        <MySizeFitBox />
         <MySizeMeasurementsInput />
+        <MySizeFitBox />
         <MySizeDescriptionInput />
         <ButtonWrapper>
           <Button type="submit" disabled={!valid}>

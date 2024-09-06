@@ -11,7 +11,7 @@ export default function MySizeFitBox() {
 
   return (
     <ComboBox
-      label="핏"
+      label="의도한 핏"
       selectedItem={fit}
       items={fits}
       itemToId={(item) => item?._id || ''}

@@ -50,7 +50,7 @@ export function LoginUtils({ state, errorMessage }: LoginUtils) {
       <ButtonWrapper>
         <p>
           <Link to="/signup">
-            회원 가입
+            스쿼드 합류
           </Link>
         </p>
       </ButtonWrapper>

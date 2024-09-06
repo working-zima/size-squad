@@ -77,7 +77,7 @@ class ProductsStore {
   }
 
   @Action()
-  private handleProductResponse(products: PaginationResponse) {
+  private handleProductResponse(products: PaginationResponse<ProductResponse>) {
     if (!products.hasNextPage) this.setHasNextPage();
     if (products.totalPages >= this.page) this.setProducts(products.docs);
     if (products.nextPage) this.setPage(products.nextPage);

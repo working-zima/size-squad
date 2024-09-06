@@ -40,6 +40,7 @@ const CopyrightWrapper = styled.div`
   p {
     font-size: 1.4rem;
     margin: 10px 0;
+    line-height: 1.67;
     color: ${props => props.theme.colors.primaryWhite};
   }
 `
@@ -84,10 +85,18 @@ const EmailWrapper = styled.div`
     color: ${props => props.theme.colors.primaryWhite};
   }
 
-  p {
+  div {
     margin: 10px 0;
+  }
+
+  p {
+    line-height: 1.67;
     font-size: 1.4rem;
     color: ${props => props.theme.colors.primaryWhite};
+  }
+
+  a {
+    color: ${props => props.theme.colors.PrimaryBlue};
   }
 `
 
@@ -120,9 +129,14 @@ export default function LayoutFooter() {
           {accessToken
             ? (<EmailForm />)
             : (
-              <p>
-                문의메일은 <Link to='login'>로그인</Link> 후 이용할 수 있습니다..
-              </p>
+              <div>
+                <p>
+                  팀원만 이용할 수 있는 문의 기능입니다. <Link to='login'>로그인</Link> 후 이용해 보세요.
+                </p>
+                <p>
+                  아직 스쿼드의 일원이 아니라면 지금 <Link to='signup'>합류</Link>해 보세요.
+                </p>
+              </div>
             )
           }
         </EmailWrapper>

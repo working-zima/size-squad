@@ -67,7 +67,7 @@ export const PAGES: Record<string, PageConfig> = {
     LEFTBUTTON: '',
     RIGHTBUTTON: 'search',
     FOOTER: true,
-    SWITCHER: false,
+    SWITCHER: true,
     SHOWMENU: true,
   },
   '/mysize': {
@@ -80,7 +80,7 @@ export const PAGES: Record<string, PageConfig> = {
   },
   '/login': {
     PAGETITLE: '로그인',
-    LEFTBUTTON: '',
+    LEFTBUTTON: 'backspace',
     RIGHTBUTTON: '',
     FOOTER: false,
     SWITCHER: false,
@@ -146,12 +146,13 @@ export const PAGES: Record<string, PageConfig> = {
 
 export const USERFIELDS: Record<string, string> = {
   email: '이메일',
-  name: '이름',
+  name: '코드네임',
   password: '비밀번호',
   gender: '성별',
   height: '키',
   weight: '몸무게',
-  description: '체형'
+  description: '체형',
+  physical: '피지컬'
 }
 
 export const SORT_OPTIONS: Record<string, SortOption> = {

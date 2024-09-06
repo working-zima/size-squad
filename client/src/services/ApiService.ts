@@ -143,7 +143,7 @@ export default class ApiService {
     sortOrder?: number;
     page?: number;
     per?: number;
-  } = {}): Promise<PaginationResponse> {
+  } = {}): Promise<PaginationResponse<ProductResponse>> {
     const { data } = await this.instance.get('/products', {
       params: {
         keyword, categoryId, subCategoryId, sortField, sortOrder, page, per
@@ -238,6 +238,30 @@ export default class ApiService {
     return user;
   }
 
+  async fetchUsers({
+    keyword,
+    sortField,
+    sortOrder,
+    page,
+    per
+  }: {
+    keyword?: string,
+    sortField?: string,
+    sortOrder?: number,
+    page?: number,
+    per?: number
+  }): Promise<PaginationResponse<User>> {
+    const { data } = await this.instance.get('/users/all', {
+      params: {
+        keyword, sortField, sortOrder, page, per
+      },
+    });
+
+    const { users } = data;
+
+    return users;
+  }
+
   async fetchMyProducts({
     keyword,
     categoryId,
@@ -245,7 +269,7 @@ export default class ApiService {
     sortField,
     sortOrder,
     page,
-    per = 10,
+    per,
   }: {
     keyword?: string;
     categoryId?: string;
@@ -254,7 +278,7 @@ export default class ApiService {
     sortOrder?: number;
     page?: number;
     per?: number;
-  } = {}): Promise<PaginationResponse> {
+  } = {}): Promise<PaginationResponse<ProductResponse>> {
     const { data } = await this.instance.get('/users/product', {
       params: {
         keyword, categoryId, subCategoryId, sortField, sortOrder, page, per

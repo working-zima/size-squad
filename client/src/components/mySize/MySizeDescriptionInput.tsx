@@ -11,8 +11,8 @@ export default function MySizeNewDescription() {
 
   return (
     <TextareaBox
-      label="후기"
-      placeholder="후기를 입력해주세요."
+      label="인사이트"
+      placeholder="수선, 스타일링 또는 착용법에 대한 팁을 나눠보세요!"
       maxLength={100}
       value={description}
       onChange={handleChangeDescription}

@@ -4,16 +4,16 @@ export type Summary = {
 }
 
 export type User = {
-  _id: string;
+  _id?: string;
   name: string;
-  email: string;
-  password: string;
+  email?: string;
+  password?: string;
   gender: Summary;
   height: number;
   weight: number;
   description: string;
-  followers: Pick<User, '_id' | 'name'>[];
-  following: Pick<User, '_id' | 'name'>[];
+  followers?: Pick<User, '_id' | 'name'>[];
+  following?: Pick<User, '_id' | 'name'>[];
 };
 
 export type Category = {
@@ -85,8 +85,8 @@ export type ProductResponse = {
   description: string;
 }
 
-export type PaginationResponse = {
-  docs: ProductResponse[];
+export type PaginationResponse<T> = {
+  docs: T[];
   hasNextPage: boolean;
   hasPrevPage: boolean;
   nextPage: number | null;

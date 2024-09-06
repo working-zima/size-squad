@@ -75,7 +75,7 @@ export const EmailForm = () => {
       <input type="hidden" name="from_email" value={email} />
       <TextareaBox
         name="message"
-        placeholder='문의 내용을 입력해주세요.'
+        placeholder='스쿼드의 어떤 지원이 필요하신가요?'
       />
       <Button
         type="submit"
@@ -83,7 +83,7 @@ export const EmailForm = () => {
         disabled={isSubmitting}
       >
         <p>
-          {isSubmitting ? '보내는 중...' : '메일 보내기'}
+          {isSubmitting ? '보내는 중...' : '문의 메일 보내기'}
         </p>
       </Button>
     </Form>

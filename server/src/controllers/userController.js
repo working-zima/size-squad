@@ -104,6 +104,25 @@ const userController = {
     }
   },
 
+  /** 로그인 회원 정보 조회 */
+  getAllUser: async (req, res, next) => {
+    try {
+      const {
+        keyword, sortField, sortOrder, page, per
+      } = req.query;
+      let sort = {};
+      if (sortField && sortOrder) sort[sortField] = parseInt(sortOrder, 10)
+
+      const userData = await userService.getAllUser({
+        keyword, sort, page, limit: per
+      });
+
+      res.status(200).json({ users: userData });
+    } catch (error) {
+      next(error);
+    }
+  },
+
   /** 이메일로 id 조회 */
   getIdByEmail: async (req, res, next) => {
     try {

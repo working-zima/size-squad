@@ -14,13 +14,14 @@ import { Link } from 'react-router-dom';
 
 
 const Container = styled.div`
-  padding: 1rem 0;
+  padding: 1rem 0.2rem;
   font-size: 1.4rem;
   line-height: 1.67;
+  height: 130px;
   border-bottom: 1px solid ${props => props.theme.colors.dividerColor};
 `;
 
-const InfoWrapper = styled.div`
+const InfoRow = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -59,7 +60,6 @@ const Name = styled.div`
 `;
 
 const Author = styled.div`
-  /* flex: 1; */
   font-size: 1.4rem;
   font-weight: 700;
 `
@@ -86,13 +86,9 @@ export default function Product({
 
   return (
     <Container>
-      <InfoWrapper>
-        <Brand>
-          <h3>{product.brand}</h3>
-        </Brand>
-        <Name>
-          <p><strong>{product.name}</strong></p>
-        </Name>
+      <InfoRow>
+        <Brand><h3>{product.brand}</h3></Brand>
+        <Name><p><strong>{product.name}</strong></p></Name>
         {isMyCard
           ? (
             <EditDeleteButtons
@@ -109,7 +105,7 @@ export default function Product({
             </Author>
           )
         }
-      </InfoWrapper>
+      </InfoRow>
       {
         isDescriptionView
           ? (<SizeCard product={product} />)

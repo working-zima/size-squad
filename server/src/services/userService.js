@@ -49,6 +49,35 @@ const userService = {
     }
   },
 
+  getAllUser: async ({
+    keyword, sort, page, limit
+  }) => {
+    try {
+      const queryCriteria = {};
+
+      if (keyword) {
+        queryCriteria.$or = [{ name: { $regex: keyword, $options: 'i' } }];
+      }
+
+      const options = {
+        page,
+        limit,
+        sort: sort,
+        populate: [
+          { path: "gender", select: ["_id", "name"] },
+        ],
+        select: "_id, name gender height weight description",
+        lean: true
+      };
+
+      const userData = await User.findAll({ queryCriteria, options });
+
+      return userData;
+    } catch (error) {
+      throw error;
+    }
+  },
+
   getIdByEmail: async ({ email }) => {
     try {
       const userData = await User.findByEmail({ email })

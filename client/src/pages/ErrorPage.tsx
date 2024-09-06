@@ -8,7 +8,8 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   flex-grow: 1;
-  height: calc(100vh - 100px);
+  /* height: calc(100vh - 100px); */
+  height: 100%;
 
   button {
     display: inline-block;

@@ -16,9 +16,9 @@ import { SortOption } from '../types';
 import useAccessToken from '../hooks/useAccessToken';
 import useFetchCategories from '../hooks/useFetchCategories';
 import useFetchMyProducts from '../hooks/useFetchMyProducts';
+import useFetchUserStore from '../hooks/useFetchUserStore';
 
 import { SORT_OPTIONS } from '../constants';
-import useFetchUserStore from '../hooks/useFetchUserStore';
 
 const Container = styled.div`
   height: 100%;

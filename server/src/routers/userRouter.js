@@ -18,6 +18,10 @@ userRouter.get(
   "/me", tokenValidationRules, userController.getMyInfo
 );
 
+userRouter.get(
+  "/all", userController.getAllUser
+)
+
 /* 로그인한 회원 탈퇴 */
 userRouter.delete(
   "/", tokenValidationRules, userController.deleteMe

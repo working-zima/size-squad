@@ -15,9 +15,9 @@ const Container = styled.div`
   position: relative;
   height: 4.7rem;
   margin: 0 0.4rem;
+
   overflow: auto hidden;
   white-space: nowrap;
-
   scrollbar-width: none; // 파이어폭스
   -ms-overflow-style: none; // 인터넷 익스플로러
   &::-webkit-scrollbar {
