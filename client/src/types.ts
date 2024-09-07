@@ -3,6 +3,11 @@ export type Summary = {
   name: string;
 }
 
+export type SummaryUndefined = {
+  _id: string | undefined;
+  name: string | undefined;
+}
+
 export type UserWithOwnership = {
   user: User;
   isOwner: boolean;

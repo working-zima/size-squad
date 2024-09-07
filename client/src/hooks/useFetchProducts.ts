@@ -23,6 +23,7 @@ export default function useFetchProducts({
   const [{
     products = [],
     errorMessage,
+    subCategoryId: selectedSubCategoryId,
     state,
     sortOption,
     totalDocs,
@@ -40,11 +41,18 @@ export default function useFetchProducts({
 
   useEffect(() => {
     if (isIntersecting) {
-      store.fetchMoreProducts({ keyword, categoryId, subCategoryId })
+      store.fetchMoreProducts({ keyword })
     }
   }, [isIntersecting, store]);
 
   return {
-    products, state, moreRef, errorMessage, sortOption, totalDocs, store
+    products,
+    sortOption,
+    selectedSubCategoryId,
+    totalDocs,
+    errorMessage,
+    state,
+    moreRef,
+    store
   };
 }

@@ -7,20 +7,31 @@ import { apiService } from '../services/ApiService';
 
 import { SORT_OPTIONS } from '../constants';
 
+type handleParameterProps = {
+  sortOption: SortOption;
+  per: number;
+  categoryId: string;
+  subCategoryId: string;
+}
+
 @singleton()
 @Store()
 class ProductsStore {
   products: ProductResponse[] = [];
 
-  page = 1;
-
   sortOption: SortOption = SORT_OPTIONS[0];
 
-  hasNextPage = true;
+  categoryId = '';
+
+  subCategoryId = '';
 
   keyword = '';
 
   per = 10;
+
+  hasNextPage = true;
+
+  page = 1;
 
   totalDocs = 0;
 
@@ -31,8 +42,14 @@ class ProductsStore {
   @Action()
   reset() {
     this.products = [];
+    this.sortOption = SORT_OPTIONS[0];
     this.page = 1;
+    // this.category = nullSummary;
+    // this.subCategory = nullSummary;
+    this.keyword = '';
+    this.per = 10;
     this.hasNextPage = true;
+    this.totalDocs = 0;
     this.state = 'idle';
   }
 
@@ -72,8 +89,13 @@ class ProductsStore {
   }
 
   @Action()
-  resetKeyword() {
-    this.keyword = '';
+  private setCategoryId(categoryId: string) {
+    this.categoryId = categoryId;
+  }
+
+  @Action()
+  private setSubCategoryId(subCategoryId: string) {
+    this.subCategoryId = subCategoryId;
   }
 
   @Action()
@@ -81,15 +103,26 @@ class ProductsStore {
     if (!products.hasNextPage) this.setHasNextPage();
     if (products.totalPages >= this.page) this.setProducts(products.docs);
     if (products.nextPage) this.setPage(products.nextPage);
+    this.setTotalDocs(products.totalDocs);
+  }
+
+  @Action()
+  private handleParameter({
+    sortOption, per, categoryId, subCategoryId
+  }: handleParameterProps) {
+    this.setSortOption(sortOption);
+    this.setPer(per);
+    this.setCategoryId(categoryId)
+    this.setSubCategoryId(subCategoryId)
   }
 
   /**
-   * 내 사이즈 첫 렌더링 fetch
+   * 내 사이즈 정보 fetch
    */
   async fetchMyInitialProducts({
     keyword,
-    categoryId,
-    subCategoryId,
+    categoryId = '',
+    subCategoryId = '',
     sortCode,
     per = 10,
   }: {
@@ -119,9 +152,7 @@ class ProductsStore {
       });
 
       this.handleProductResponse(products);
-      this.setSortOption(sortOption);
-      this.setPer(per);
-      this.setTotalDocs(products.totalDocs);
+      this.handleParameter({ sortOption, per, categoryId, subCategoryId })
       this.setDone();
     } catch (error) {
       const typedError = error as { message: string };
@@ -130,12 +161,7 @@ class ProductsStore {
     }
   }
 
-  /**
-   * 내 사이즈 첫 렌더링 이후 fetch
-   */
-  async fetchMoreMyProducts({ keyword, categoryId, subCategoryId }: {
-    keyword?: string, categoryId?: string, subCategoryId?: string
-  }) {
+  async fetchMoreMyProducts({ keyword }: { keyword?: string }) {
     if (this.state === 'loading' || !this.hasNextPage) return;
     this.startLoading();
     try {
@@ -144,8 +170,8 @@ class ProductsStore {
 
       const products = await apiService.fetchMyProducts({
         keyword,
-        categoryId,
-        subCategoryId,
+        categoryId: this.categoryId,
+        subCategoryId: this.subCategoryId,
         sortField,
         sortOrder,
         page: this.page,
@@ -161,10 +187,13 @@ class ProductsStore {
     }
   }
 
+  /**
+   * 전체 유저 사이즈 정보 fetch
+   */
   async fetchInitialProducts({
     keyword,
-    categoryId,
-    subCategoryId,
+    categoryId = '',
+    subCategoryId = '',
     sortCode,
     per = 10,
   }: {
@@ -195,9 +224,7 @@ class ProductsStore {
       });
 
       this.handleProductResponse(products);
-      this.setSortOption(sortOption);
-      this.setPer(per);
-      this.setTotalDocs(products.totalDocs);
+      this.handleParameter({ sortOption, per, categoryId, subCategoryId })
       this.setDone();
     } catch (error) {
       const typedError = error as { message: string };
@@ -206,15 +233,7 @@ class ProductsStore {
     }
   }
 
-  async fetchMoreProducts({
-    keyword,
-    categoryId,
-    subCategoryId
-  }: {
-    keyword?: string,
-    categoryId?: string,
-    subCategoryId?: string
-  }) {
+  async fetchMoreProducts({ keyword }: { keyword?: string }) {
     if (this.state === 'loading' || !this.hasNextPage) return;
     this.startLoading();
     try {
@@ -223,8 +242,8 @@ class ProductsStore {
 
       const products = await apiService.fetchProducts({
         keyword,
-        categoryId,
-        subCategoryId,
+        categoryId: this.categoryId,
+        subCategoryId: this.subCategoryId,
         sortField,
         sortOrder,
         page: this.page,
@@ -240,6 +259,9 @@ class ProductsStore {
     }
   }
 
+  /**
+  * 사이즈 정보 삭제
+  */
   async deleteAndFetchMyProducts(productId: string) {
     try {
       this.startLoading();

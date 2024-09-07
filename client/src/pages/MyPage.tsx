@@ -10,12 +10,19 @@ import Button from "../components/ui/Button";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 
 import useAccessToken from "../hooks/useAccessToken";
-import useFetchMyUserData from "../hooks/useFetchMyUserData";
+import useFetchUser from "../hooks/useFetchUser";
 
 import { apiService } from "../services/ApiService";
 
-import { GENDER_MESSAGES } from "../constants";
-import useFetchUser from "../hooks/useFetchUser";
+import { GENDER_MESSAGES, SORT_OPTIONS } from "../constants";
+import Product from "../components/mySize/Product";
+import NoListPage from "./NoListPage";
+import useFetchProducts from "../hooks/useFetchProducts";
+import BorderlessComboBox from "../components/ui/selectbox/BorderlessComboBox";
+import { SortOption, Summary } from "../types";
+import useFetchCategories from "../hooks/useFetchCategories";
+import { useEffect } from "react";
+
 
 const Container = styled.div`
   overflow: hidden;
@@ -93,19 +100,81 @@ const ButtonLike = styled.div`
   }
 `
 
+const SortWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px;
+  font-size: 1.3rem;
+  line-height: 20px;
+  color: ${props => props.theme.colors.unSelectedText};
+`
+
+const ComboBoxWrapper = styled.div`
+  display: flex;
+`
+
+const Products = styled.div`
+  margin: 0 10px;
+`;
+
 export default function MyPage() {
   const navigate = useNavigate();
   const params = useParams();
 
+  const [querys] = useSearchParams();
+  const subCategoryId = querys.get('category2DepthCode') ?? undefined;
+  const sortCode = querys.get('sortCode') ?? undefined;
+
   const { accessToken, setAccessToken } = useAccessToken();
-  const { user, state, errorMessage, isOwner, store } = useFetchUser({
-    id: params.id
-  });
+  const { allSubCategories } = useFetchCategories();
+  const {
+    user,
+    state,
+    errorMessage: userErrorMessage,
+    isOwner,
+    store: userStore
+  } = useFetchUser({ id: params.id });
+  const {
+    products,
+    state: productsState,
+    selectedSubCategoryId,
+    totalDocs,
+    sortOption,
+    store: productStore
+  } = useFetchProducts({ subCategoryId, sortCode });
+
+  const findCategoryById = (id: string) => {
+    return [{ _id: '', name: 'all' }, ...allSubCategories]
+      .find(subCategory => subCategory._id === id)
+  };
+
+  const handleNavigate = (
+    updatedParams: { category2DepthCode?: string, sortCode?: string }
+  ) => {
+    console.log(!!updatedParams.category2DepthCode)
+
+    const queryParams: string[] = [];
+    const subCategoryParam = updatedParams.category2DepthCode === '' ? undefined : updatedParams.category2DepthCode;
+    const sortParam = updatedParams.sortCode || '';
+
+    if (subCategoryParam) {
+      queryParams.push(`category2DepthCode=${subCategoryParam}`);
+    }
+    if (sortParam) {
+      queryParams.push(`sortCode=${sortParam}`);
+    }
+
+    const queryString = queryParams.join('&');
+    const path = `/mypage/${params.id}/${queryString ? `?${queryString}` : ''}`;
+    navigate(path);
+  };
 
   const handleClickLogout = async () => {
     await apiService.logout();
     setAccessToken('');
-    store.reset();
+    userStore.reset();
     navigate('/');
   };
 
@@ -118,7 +187,7 @@ export default function MyPage() {
   }
 
   if (state === 'error') {
-    return (<ErrorPage errorMessage={errorMessage} />);
+    return (<ErrorPage errorMessage={userErrorMessage} />);
   }
 
   return (
@@ -154,6 +223,38 @@ export default function MyPage() {
           }
         </ButtonWrapper>
       </ProfileWrapper>
+      <SortWrapper>
+        <p>
+          Total {totalDocs.toLocaleString()}
+        </p>
+        <ComboBoxWrapper>
+          <BorderlessComboBox
+            selectedItem={findCategoryById(selectedSubCategoryId)}
+            items={[{ _id: '', name: 'all' }, ...allSubCategories]}
+            itemToId={(item) => item?._id || ''}
+            itemToText={(item) => item?.name || ''}
+            onChange={(value) => {
+              return value && handleNavigate({ category2DepthCode: value._id })
+            }}
+          />
+          <BorderlessComboBox
+            selectedItem={sortOption}
+            items={Object.values(SORT_OPTIONS)}
+            itemToId={(item) => item?._id || ''}
+            itemToText={(item) => item?.name || ''}
+            onChange={(value) => {
+              return value && handleNavigate({ sortCode: value.urlParam })
+            }}
+          />
+        </ComboBoxWrapper>
+      </SortWrapper>
+      <Products>
+        {productsState === 'loading' && <LoadingSpinner />}
+        {productsState !== 'loading' && products.length === 0 && <NoListPage />}
+        {products.map((product) => (
+          <Product key={product._id} product={product} user={user} />
+        ))}
+      </Products>
     </Container>
   )
 }

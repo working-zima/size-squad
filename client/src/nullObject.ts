@@ -1,8 +1,13 @@
-import { Summary, Category, Size, ProductResponse, Measurement, User, Product, SortOption } from "./types";
+import { Summary, Category, Size, ProductResponse, Measurement, User, Product, SortOption, SummaryUndefined } from "./types";
 
 export const nullSummary: Summary = {
   _id: '',
   name: '',
+};
+
+export const nullSummaryUndefined: SummaryUndefined = {
+  _id: undefined,
+  name: undefined,
 };
 
 export const nullSize: Size = {
