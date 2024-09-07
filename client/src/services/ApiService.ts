@@ -8,6 +8,7 @@ import {
   Size,
   User,
   PaginationResponse,
+  UserWithOwnership,
 } from '../types';
 
 const MOCK_BASE_URL = 'http://localhost:5000';
@@ -231,6 +232,12 @@ export default class ApiService {
     return accessToken;
   }
 
+  async fetchUser({ userId }: { userId: string }): Promise<UserWithOwnership> {
+    const { data } = await this.instance.get(`/users/${userId}`);
+
+    return { user: data.user, isOwner: data.isOwner }
+  }
+
   async fetchCurrentUser(): Promise<User> {
     const { data } = await this.instance.get('/users/me');
     const { user } = data;
@@ -251,12 +258,10 @@ export default class ApiService {
     page?: number,
     per?: number
   }): Promise<PaginationResponse<User>> {
-    const { data } = await this.instance.get('/users/all', {
-      params: {
-        keyword, sortField, sortOrder, page, per
-      },
-    });
-
+    const { data } = await this.instance.get(
+      '/users/all',
+      { params: { keyword, sortField, sortOrder, page, per } }
+    );
     const { users } = data;
 
     return users;
@@ -284,6 +289,7 @@ export default class ApiService {
         keyword, categoryId, subCategoryId, sortField, sortOrder, page, per
       },
     });
+
     const { products } = data;
 
     return products;

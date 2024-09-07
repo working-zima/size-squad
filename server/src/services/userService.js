@@ -78,6 +78,16 @@ const userService = {
     }
   },
 
+  getUserById: async ({ _id }) => {
+    try {
+      const userData = await User.findById({ _id });
+
+      return userData;
+    } catch (error) {
+      throw error;
+    }
+  },
+
   getIdByEmail: async ({ email }) => {
     try {
       const userData = await User.findByEmail({ email })

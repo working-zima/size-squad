@@ -110,7 +110,7 @@ export const PAGES: Record<string, PageConfig> = {
     SWITCHER: false,
     SHOWMENU: false,
   },
-  '/mypage': {
+  '/mypage/:id': {
     PAGETITLE: '내 페이지',
     LEFTBUTTON: 'backspace',
     RIGHTBUTTON: '',

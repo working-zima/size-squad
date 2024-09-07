@@ -25,7 +25,7 @@ type CategoryBarProps = {
 export default function CategoryBar({
   categories, subCategories, categoriesState
 }: CategoryBarProps) {
-  console.log(`check`)
+
   return (
     <Container>
       {categoriesState === 'loading' ? (

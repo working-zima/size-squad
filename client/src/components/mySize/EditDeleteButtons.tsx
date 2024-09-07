@@ -12,7 +12,7 @@ const Container = styled.div`
   justify-content: flex-end;
   flex: 1;
   white-space: nowrap;
-  font-weight: bold;
+  font-weight: 500;
   font-size: 1.3rem;
   -webkit-tap-highlight-color: transparent;
 
@@ -23,7 +23,7 @@ const Container = styled.div`
 
   .delete-link > button:first-of-type {
     color: ${(props) => props.theme.colors.primaryRed};
-    font-weight: bold;
+    font-weight: 500;
     font-size: 1.3rem;
     padding-right: 0;
   }

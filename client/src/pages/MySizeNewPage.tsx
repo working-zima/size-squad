@@ -8,7 +8,7 @@ import MySizeNewForm from "../components/mySize/MySizeNewForm";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 
 import useAccessToken from "../hooks/useAccessToken";
-import useFetchUser from "../hooks/useFetchUserStore";
+import useFetchUser from "../hooks/useFetchMyUserData";
 import useFetchInitialData from "../hooks/useFetchInitialData";
 import useProductFormStore from "../hooks/useProductFormStore";
 

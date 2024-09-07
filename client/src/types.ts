@@ -3,6 +3,11 @@ export type Summary = {
   name: string;
 }
 
+export type UserWithOwnership = {
+  user: User;
+  isOwner: boolean;
+};
+
 export type User = {
   _id?: string;
   name: string;

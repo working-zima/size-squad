@@ -28,6 +28,8 @@ class UserStore {
 
   totalDocs = 0;
 
+  isOwner = false;
+
   errorMessage = '';
 
   state: 'loading' | 'fetched' | 'idle' | 'error' = 'idle'
@@ -67,9 +69,16 @@ class UserStore {
   }
 
   @Action()
+  private setIsOwner(isOwner: boolean) {
+    this.isOwner = isOwner;
+  }
+
+  @Action()
   reset() {
     this.user = nullUser;
     this.users = [nullUser];
+    this.isOwner = false;
+    this.page = 1;
     this.errorMessage = '';
     this.state = 'idle';
   }
@@ -86,12 +95,28 @@ class UserStore {
     this.hasNextPage = false;
   }
 
-  async fetchUser() {
+  async fetchMyUserData() {
     try {
       this.startLoading();
       const user = await apiService.fetchCurrentUser();
 
       this.setUser(user);
+      this.setDone();
+    } catch (error) {
+      const typedError = error as { status?: number; message: string };
+      this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
+
+      this.setError();
+    }
+  }
+
+  async fetchUser({ id }: { id: string }) {
+    this.startLoading();
+    try {
+      const { user, isOwner } = await apiService.fetchUser({ userId: id })
+
+      this.setUser(user);
+      this.setIsOwner(isOwner);
       this.setDone();
     } catch (error) {
       const typedError = error as { status?: number; message: string };

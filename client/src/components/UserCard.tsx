@@ -40,9 +40,10 @@ const UserInfo = styled.div`
   height: 30px;
   align-items: center;
   color: ${props => props.theme.colors.secondaryTextColor};
+  font-weight: 500;
 
   p {
-    font-weight: 600;
+
     font-size: 1.4rem;
     margin-right: 0.5rem;
     color: ${props => props.theme.colors.primaryBlack};

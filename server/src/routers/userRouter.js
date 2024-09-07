@@ -22,20 +22,10 @@ userRouter.get(
   "/all", userController.getAllUser
 )
 
-/* 로그인한 회원 탈퇴 */
-userRouter.delete(
-  "/", tokenValidationRules, userController.deleteMe
-);
-
 /* 로그인한 회원 product 조회 */
 userRouter.get(
   "/product", tokenValidationRules, userController.getMyProduct
 );
-
-/* 로그인한 회원 product 삭제 */
-userRouter.delete(
-  "/product/:productId", tokenValidationRules, userController.deleteMyProduct
-)
 
 /* 이메일 조회 */
 userRouter.get(
@@ -46,6 +36,10 @@ userRouter.get(
 userRouter.get(
   "/name-valid/:name", userController.getIdByName
 )
+
+userRouter.get(
+  "/:userId", tokenValidationRules, userController.getUserInfo
+);
 
 /* 비밀번호 변경 */
 userRouter.patch(
@@ -70,6 +64,16 @@ userRouter.patch(
 /* 체형 변경 */
 userRouter.patch(
   "/modify-description", tokenValidationRules, userController.patchDescription
+)
+
+/* 로그인한 회원 탈퇴 */
+userRouter.delete(
+  "/", tokenValidationRules, userController.deleteMe
+);
+
+/* 로그인한 회원 product 삭제 */
+userRouter.delete(
+  "/product/:productId", tokenValidationRules, userController.deleteMyProduct
 )
 
 module.exports = userRouter;

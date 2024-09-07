@@ -10,7 +10,7 @@ import UserCard from "../components/UserCard";
 import useAccessToken from "../hooks/useAccessToken";
 import useFetchProducts from "../hooks/useFetchProducts";
 import useFetchUsersStore from '../hooks/useFetchUsersStore'
-import useFetchUserStore from "../hooks/useFetchUserStore";
+import useFetchMyUserData from "../hooks/useFetchMyUserData";
 
 const Container = styled.div`
   margin-bottom: 80px;
@@ -52,7 +52,7 @@ export default function HomePage() {
   const {
     products, state: productsState, errorMessage
   } = useFetchProducts({ per: 10 });
-  const { user } = useFetchUserStore()
+  const { user } = useFetchMyUserData()
   const { users } = useFetchUsersStore({});
 
   return (

@@ -38,7 +38,7 @@ const Brand = styled.div`
   scrollbar-width: none;
 
   h3 {
-    font-weight: bold;
+    font-weight: 500;
     margin-right: 1rem;
     color: ${(props) => props.theme.colors.PrimaryBlue}
   }
@@ -54,14 +54,14 @@ const Name = styled.div`
   scrollbar-width: none;
 
   strong {
-    font-weight: bold;
+    font-weight: 500;
     color: ${(props) => props.theme.colors.primaryBlack}
   }
 `;
 
 const Author = styled.div`
   font-size: 1.4rem;
-  font-weight: 700;
+  font-weight: 500;
 `
 
 type ProductProps = {
@@ -99,7 +99,7 @@ export default function Product({
           )
           : (
             <Author>
-              <Link to=''>
+              <Link to={`/mypage/${product.author?._id}`}>
                 {product.author?.name}
               </Link>
             </Author>

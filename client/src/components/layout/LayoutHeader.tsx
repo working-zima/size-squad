@@ -63,7 +63,8 @@ const ContentWrapper = styled.div`
 export default function LayoutHeader({
   page
 }: { page: PageConfig }) {
-  const isSignupCompletePage = useMatch('/signup/complete') || useMatch('/search');
+  const isSignupCompletePage =
+    useMatch('/signup/complete') || useMatch('/search');
 
   return (
     <Container isHeaderless={!!isSignupCompletePage}>

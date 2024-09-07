@@ -25,7 +25,7 @@ const routes = [
       { path: '/mysize', element: <MySizeListPage /> },
       { path: '/mysize/new', element: <MySizeNewPage /> },
       { path: '/mysize/:id/edit', element: <MySizeEditPage /> },
-      { path: '/mypage', element: <MyPage /> },
+      { path: '/mypage/:id', element: <MyPage /> },
       { path: '/mypage/:id/edit', element: <MyProfileEditPage /> },
       { path: '/mypage/:id/edit/:path', element: <MyProfileInputPage /> },
       { path: '/search', element: <SearchResultPage /> },

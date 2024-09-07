@@ -7,7 +7,7 @@ import AccessDeniedPage from './AccessDeniedPage';
 import MyProfileEditForm from '../components/myProfile/MyProfileEditForm';
 
 import useAccessToken from '../hooks/useAccessToken';
-import useFetchUserStore from '../hooks/useFetchUserStore';
+import useFetchMyUserData from '../hooks/useFetchMyUserData';
 import { ConfirmTrigger } from '../components/ui/modal/ModalTrigger';
 import { useEffect, useState } from 'react';
 import useSignupFormStore from '../hooks/useSignupFormStore';
@@ -39,7 +39,7 @@ export default function MyProfileEditPage() {
   const navigate = useNavigate();
 
   const { accessToken, setAccessToken } = useAccessToken();
-  const { user, state } = useFetchUserStore()
+  const { user, state } = useFetchMyUserData()
   const [, store] = useSignupFormStore()
   const [confirmed, setConfirmed] = useState<boolean | null>(false);
 

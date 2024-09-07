@@ -50,7 +50,7 @@ export default function Layout() {
   const isEditSizePage = useMatch('/mysize/:id/edit');
   const isEditProfilePage = useMatch('/mypage/:id/edit');
   const isEditProfile = useMatch('/mypage/:id/edit/:editField')
-  const isMyPage = useMatch('/mypage');
+  const isMyPage = useMatch('/mypage/:id');
 
   let page = PAGES[location.pathname]
     || {
@@ -63,7 +63,10 @@ export default function Layout() {
 
   if (isEditSizePage) page = PAGES['/mysize/:id/edit'];
   if (isEditProfilePage) page = PAGES['/mypage/:id/edit'];
-  if (isMyPage && user) page.PAGETITLE = `${user.name}님의 페이지`;
+  if (isMyPage && user) {
+    page = PAGES['/mypage/:id'];
+    page.PAGETITLE = `${user.name}의 락커룸`
+  }
   if (isEditProfile && user) {
     page = PAGES['/mypage/:id/edit/:editField'];
     page.PAGETITLE = USERFIELDS[path] ? `${USERFIELDS[path]} 변경` : ''

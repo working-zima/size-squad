@@ -1,20 +1,21 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 import styled from "styled-components";
 
 import AccessDeniedPage from "./AccessDeniedPage";
+import ErrorPage from "./ErrorPage";
 
 import LineClampedText from "../components/ui/LineClamp";
 import Button from "../components/ui/Button";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 
 import useAccessToken from "../hooks/useAccessToken";
-import useFetchUserStore from "../hooks/useFetchUserStore";
+import useFetchMyUserData from "../hooks/useFetchMyUserData";
 
 import { apiService } from "../services/ApiService";
 
 import { GENDER_MESSAGES } from "../constants";
-import ErrorPage from "./ErrorPage";
+import useFetchUser from "../hooks/useFetchUser";
 
 const Container = styled.div`
   overflow: hidden;
@@ -94,9 +95,12 @@ const ButtonLike = styled.div`
 
 export default function MyPage() {
   const navigate = useNavigate();
+  const params = useParams();
 
   const { accessToken, setAccessToken } = useAccessToken();
-  const { user, state, errorMessage, store } = useFetchUserStore();
+  const { user, state, errorMessage, isOwner, store } = useFetchUser({
+    id: params.id
+  });
 
   const handleClickLogout = async () => {
     await apiService.logout();
@@ -136,14 +140,18 @@ export default function MyPage() {
           />
         </Description>
         <ButtonWrapper>
-          <ButtonLike>
-            <Link to={`/mypage/${user._id}/edit`}>
-              회원정보 변경
-            </Link>
-          </ButtonLike>
-          <Button onClick={handleClickLogout}>
-            로그아웃
-          </Button>
+          {isOwner &&
+            <>
+              <ButtonLike>
+                <Link to={`/mypage/${user._id}/edit`}>
+                  회원정보 변경
+                </Link>
+              </ButtonLike>
+              <Button onClick={handleClickLogout}>
+                로그아웃
+              </Button>
+            </>
+          }
         </ButtonWrapper>
       </ProfileWrapper>
     </Container>

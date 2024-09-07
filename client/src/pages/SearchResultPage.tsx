@@ -18,7 +18,7 @@ import usePortal from '../hooks/usePortal';
 import useProductsStore from '../hooks/useProductsStore';
 import useAccessToken from '../hooks/useAccessToken';
 import useFetchProducts from '../hooks/useFetchProducts';
-import useFetchUserStore from '../hooks/useFetchUserStore';
+import useFetchMyUserData from '../hooks/useFetchMyUserData';
 
 import { SORT_OPTIONS } from '../constants';
 
@@ -71,7 +71,7 @@ export default function SearchResultPage() {
     sortOption,
     totalDocs
   } = useFetchProducts({ keyword: query, sortCode });
-  const { user } = useFetchUserStore();
+  const { user } = useFetchMyUserData();
 
   useEffect(() => {
     hideBody();
