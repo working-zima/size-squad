@@ -130,7 +130,49 @@ const productController = {
     } catch (error) {
       next(error);
     }
-  }
+  },
+
+  /** 회원 product 조회 */
+  getProductsByUserId: async (req, res, next) => {
+    try {
+      const { userId } = req.params;
+      const {
+        keyword, categoryId, subCategoryId, sortField, sortOrder, page, per
+      } = req.query;
+
+      let sort = {};
+      if (sortField && sortOrder) sort[sortField] = parseInt(sortOrder, 10)
+
+      let productData = [];
+
+      // 서브 카테고리
+      if (subCategoryId) {
+        productData = await productService.getProductByUserIdAndSubCategoryId({
+          userId, subCategory: subCategoryId, sort, page, limit: per
+        });
+      }
+
+      // 카테고리
+      if (categoryId && !subCategoryId) {
+        productData = await productService.getProductByUserIdAndCategoryId({
+          userId, category: categoryId, sort, page, limit: per
+        });
+      }
+
+      // 전체
+      if (!categoryId && !subCategoryId) {
+        productData = await productService.getProductByUserId({
+          userId, keyword, sort, page, limit: per
+        });
+      }
+
+      res.status(200).json({ products: productData });
+    } catch (error) {
+      next(error);
+    }
+  },
 }
+
+
 
 exports.productController = productController;

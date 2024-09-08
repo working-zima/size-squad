@@ -12,6 +12,7 @@ type handleParameterProps = {
   per: number;
   categoryId: string;
   subCategoryId: string;
+  userId?: string;
 }
 
 @singleton()
@@ -24,6 +25,8 @@ class ProductsStore {
   categoryId = '';
 
   subCategoryId = '';
+
+  userId = '';
 
   keyword = '';
 
@@ -44,8 +47,6 @@ class ProductsStore {
     this.products = [];
     this.sortOption = SORT_OPTIONS[0];
     this.page = 1;
-    // this.category = nullSummary;
-    // this.subCategory = nullSummary;
     this.keyword = '';
     this.per = 10;
     this.hasNextPage = true;
@@ -84,11 +85,6 @@ class ProductsStore {
   }
 
   @Action()
-  changeKeyword(keyword: string) {
-    this.keyword = keyword;
-  }
-
-  @Action()
   private setCategoryId(categoryId: string) {
     this.categoryId = categoryId;
   }
@@ -96,6 +92,22 @@ class ProductsStore {
   @Action()
   private setSubCategoryId(subCategoryId: string) {
     this.subCategoryId = subCategoryId;
+  }
+
+  @Action()
+  private setUserId(userId: string) {
+    this.userId = userId;
+  }
+
+
+  @Action()
+  changeKeyword(keyword: string) {
+    this.keyword = keyword;
+  }
+
+  @Action()
+  resetKeyword() {
+    this.keyword = '';
   }
 
   @Action()
@@ -108,12 +120,13 @@ class ProductsStore {
 
   @Action()
   private handleParameter({
-    sortOption, per, categoryId, subCategoryId
+    sortOption, per, categoryId, subCategoryId, userId
   }: handleParameterProps) {
     this.setSortOption(sortOption);
     this.setPer(per);
     this.setCategoryId(categoryId)
     this.setSubCategoryId(subCategoryId)
+    this.setUserId(this.userId)
   }
 
   /**
@@ -125,12 +138,14 @@ class ProductsStore {
     subCategoryId = '',
     sortCode,
     per = 10,
+    userId = ''
   }: {
-    keyword?: string,
-    categoryId?: string,
-    subCategoryId?: string,
-    sortCode?: string,
-    per?: number
+    keyword?: string;
+    categoryId?: string;
+    subCategoryId?: string;
+    sortCode?: string;
+    per?: number;
+    userId?: string;
   }) {
     this.reset();
     this.startLoading();
@@ -148,11 +163,12 @@ class ProductsStore {
         sortField,
         sortOrder,
         page: 1,
-        per: per
+        per: per,
+        userId,
       });
 
       this.handleProductResponse(products);
-      this.handleParameter({ sortOption, per, categoryId, subCategoryId })
+      this.handleParameter({ sortOption, per, categoryId, subCategoryId, userId })
       this.setDone();
     } catch (error) {
       const typedError = error as { message: string };
@@ -175,7 +191,8 @@ class ProductsStore {
         sortField,
         sortOrder,
         page: this.page,
-        per: this.per
+        per: this.per,
+        userId: this.userId
       });
 
       this.handleProductResponse(products);

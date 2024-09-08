@@ -34,6 +34,7 @@ export const FIT_MESSAGES: Record<string, string> = {
 };
 
 export const SUBCATEGORY_MESSAGES: Record<string, string> = {
+  all: '전체',
   shortSleeves: '반소매 상의',
   longSleeves: '긴소매 상의',
   longOutwears: '롱 아우터',

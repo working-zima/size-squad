@@ -4,25 +4,22 @@ import styled from "styled-components";
 
 import AccessDeniedPage from "./AccessDeniedPage";
 import ErrorPage from "./ErrorPage";
+import NoListPage from "./NoListPage";
 
+import Product from "../components/mySize/Product";
 import LineClampedText from "../components/ui/LineClamp";
 import Button from "../components/ui/Button";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
+import BorderlessComboBox from "../components/ui/selectbox/BorderlessComboBox";
 
 import useAccessToken from "../hooks/useAccessToken";
 import useFetchUser from "../hooks/useFetchUser";
+import useFetchProducts from "../hooks/useFetchProducts";
+import useFetchCategories from "../hooks/useFetchCategories";
 
 import { apiService } from "../services/ApiService";
 
-import { GENDER_MESSAGES, SORT_OPTIONS } from "../constants";
-import Product from "../components/mySize/Product";
-import NoListPage from "./NoListPage";
-import useFetchProducts from "../hooks/useFetchProducts";
-import BorderlessComboBox from "../components/ui/selectbox/BorderlessComboBox";
-import { SortOption, Summary } from "../types";
-import useFetchCategories from "../hooks/useFetchCategories";
-import { useEffect } from "react";
-
+import { GENDER_MESSAGES, SORT_OPTIONS, SUBCATEGORY_MESSAGES } from "../constants";
 
 const Container = styled.div`
   overflow: hidden;
@@ -230,7 +227,7 @@ export default function MyPage() {
             selectedItem={findCategoryById(selectedSubCategoryId)}
             items={[{ _id: '', name: 'all' }, ...allSubCategories]}
             itemToId={(item) => item?._id || ''}
-            itemToText={(item) => item?.name || ''}
+            itemToText={(item) => SUBCATEGORY_MESSAGES[item?.name || '']}
             onChange={(value) => {
               return value && handleNavigate({ category2DepthCode: value._id })
             }}

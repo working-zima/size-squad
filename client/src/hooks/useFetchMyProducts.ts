@@ -10,7 +10,8 @@ type useInfiniteScrollProps = {
   categoryId?: string,
   subCategoryId?: string,
   sortCode?: string,
-  per?: number
+  per?: number,
+  userId?: string,
 }
 
 export default function useFetchMyProducts({
@@ -18,7 +19,8 @@ export default function useFetchMyProducts({
   categoryId,
   subCategoryId,
   sortCode,
-  per = 10
+  per = 10,
+  userId
 }: useInfiniteScrollProps) {
   const [{
     products = [],
@@ -34,13 +36,13 @@ export default function useFetchMyProducts({
 
   useEffect(() => {
     store.fetchMyInitialProducts({
-      keyword, categoryId, subCategoryId, sortCode, per
+      keyword, categoryId, subCategoryId, sortCode, per, userId
     });
-  }, [categoryId, subCategoryId, sortCode, keyword, per, store]);
+  }, [keyword, categoryId, subCategoryId, sortCode, per, userId, store]);
 
   useEffect(() => {
     if (isIntersecting) {
-      store.fetchMoreMyProducts({ keyword, categoryId, subCategoryId })
+      store.fetchMoreMyProducts({ keyword })
     }
   }, [isIntersecting, store]);
 

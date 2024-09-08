@@ -18,6 +18,7 @@ userRouter.get(
   "/me", tokenValidationRules, userController.getMyInfo
 );
 
+/* 모든 회원 정보 조회 */
 userRouter.get(
   "/all", userController.getAllUser
 )

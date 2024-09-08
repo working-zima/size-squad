@@ -48,6 +48,8 @@ export default function MySizeListPage() {
   const subCategoryId = params.get('category2DepthCode') ?? undefined;
   const sortCode = params.get('sortCode') ?? undefined;
 
+  const { user } = useFetchMyUserData();
+
   const {
     categories,
     allSubCategories,
@@ -61,9 +63,12 @@ export default function MySizeListPage() {
     state: productsState,
     sortOption,
     totalDocs
-  } = useFetchMyProducts({ categoryId, subCategoryId, sortCode });
-
-  const { user } = useFetchMyUserData();
+  } = useFetchMyProducts({
+    categoryId,
+    subCategoryId,
+    sortCode,
+    userId: user._id
+  });
 
   const subCategories = categoryId
     ? categories

@@ -163,6 +163,39 @@ export default class ApiService {
     return product;
   }
 
+  async fetchMyProducts({
+    keyword,
+    categoryId,
+    subCategoryId,
+    sortField,
+    sortOrder,
+    page,
+    per,
+    userId
+  }: {
+    keyword?: string;
+    categoryId?: string;
+    subCategoryId?: string;
+    sortField?: string;
+    sortOrder?: number;
+    page?: number;
+    per?: number;
+    userId?: string;
+  } = {}): Promise<PaginationResponse<ProductResponse>> {
+    const url = userId
+      ? `/products/user/${userId}`
+      : `/products/user/`;
+
+    const { data } = await this.instance.get(url, {
+      params: {
+        keyword, categoryId, subCategoryId, sortField, sortOrder, page, per
+      },
+    });
+    const { products } = data;
+
+    return products;
+  }
+
   async createProduct(newProduct: ProductRequest): Promise<void> {
     await this.instance.post('/products', newProduct);
   }
@@ -265,34 +298,6 @@ export default class ApiService {
     const { users } = data;
 
     return users;
-  }
-
-  async fetchMyProducts({
-    keyword,
-    categoryId,
-    subCategoryId,
-    sortField,
-    sortOrder,
-    page,
-    per,
-  }: {
-    keyword?: string;
-    categoryId?: string;
-    subCategoryId?: string;
-    sortField?: string;
-    sortOrder?: number;
-    page?: number;
-    per?: number;
-  } = {}): Promise<PaginationResponse<ProductResponse>> {
-    const { data } = await this.instance.get('/users/product', {
-      params: {
-        keyword, categoryId, subCategoryId, sortField, sortOrder, page, per
-      },
-    });
-
-    const { products } = data;
-
-    return products;
   }
 
   async checkUserEmail({ email }: {
