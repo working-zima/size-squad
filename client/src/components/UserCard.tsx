@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import styled from "styled-components";
 
 import { User } from "../types"
@@ -72,7 +74,9 @@ export default function UserCard({ user }: UserCardProps) {
     <Container>
       <UserRow>
         <UserInfo>
-          <p>{USERFIELDS['name']}:</p>  {user.name}
+          <Link to={`/mypage/${user?._id}`}>
+            <p>{USERFIELDS['name']}: {user.name} </p>
+          </Link>
         </UserInfo>
         <UserInfo>
           <p>{USERFIELDS['gender']}:</p> {GENDER_MESSAGES[user.gender.name]}
@@ -82,6 +86,6 @@ export default function UserCard({ user }: UserCardProps) {
         </UserInfo>
       </UserRow>
       <Description>{user.description}</Description>
-    </Container>
+    </Container >
   )
 }
