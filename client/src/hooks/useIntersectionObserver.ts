@@ -10,7 +10,6 @@ const useIntersectionObserver = (
   const [entries, setEntries] = useState<IntersectionObserverEntry[]>([])
 
   useEffect(() => {
-    console.log(`check`)
     const node = elemRef.current
     if (!node) return
 

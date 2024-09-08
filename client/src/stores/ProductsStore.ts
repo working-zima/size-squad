@@ -120,13 +120,13 @@ class ProductsStore {
 
   @Action()
   private handleParameter({
-    sortOption, per, categoryId, subCategoryId, userId
+    sortOption, per, categoryId, subCategoryId, userId = ''
   }: handleParameterProps) {
     this.setSortOption(sortOption);
     this.setPer(per);
     this.setCategoryId(categoryId)
     this.setSubCategoryId(subCategoryId)
-    this.setUserId(this.userId)
+    this.setUserId(userId)
   }
 
   /**
@@ -147,6 +147,7 @@ class ProductsStore {
     per?: number;
     userId?: string;
   }) {
+    if (this.state === 'loading') return;
     this.reset();
     this.startLoading();
     try {
@@ -178,7 +179,7 @@ class ProductsStore {
   }
 
   async fetchMoreMyProducts({ keyword }: { keyword?: string }) {
-    if (this.state === 'loading' || !this.hasNextPage) return;
+    if (this.state === 'loading') return;
     this.startLoading();
     try {
       const sortField = Object.keys(this.sortOption.sort)[0];
@@ -220,6 +221,7 @@ class ProductsStore {
     sortCode?: string,
     per?: number
   }) {
+    if (this.state === 'loading') return;
     this.reset();
     this.startLoading();
 
@@ -251,7 +253,7 @@ class ProductsStore {
   }
 
   async fetchMoreProducts({ keyword }: { keyword?: string }) {
-    if (this.state === 'loading' || !this.hasNextPage) return;
+    if (this.state === 'loading') return;
     this.startLoading();
     try {
       const sortField = Object.keys(this.sortOption.sort)[0];

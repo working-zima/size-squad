@@ -27,6 +27,7 @@ export default function useFetchProducts({
     state,
     sortOption,
     totalDocs,
+    hasNextPage
   }, store] = useProductsStore();
   const moreRef = useRef<HTMLDivElement>(null)
 
@@ -40,7 +41,7 @@ export default function useFetchProducts({
   }, [categoryId, subCategoryId, sortCode, keyword, per, store]);
 
   useEffect(() => {
-    if (isIntersecting) {
+    if (isIntersecting && hasNextPage) {
       store.fetchMoreProducts({ keyword })
     }
   }, [isIntersecting, store]);
