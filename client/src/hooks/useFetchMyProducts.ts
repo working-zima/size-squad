@@ -42,7 +42,6 @@ export default function useFetchMyProducts({
   }, [keyword, categoryId, subCategoryId, sortCode, per, userId, store]);
 
   useEffect(() => {
-    console.log(`check: `, isIntersecting)
     if (isIntersecting && hasNextPage) {
       store.fetchMoreMyProducts({ keyword })
     }

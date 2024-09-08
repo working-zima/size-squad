@@ -75,7 +75,6 @@ export default function Product({
   const [{ isDescriptionView }] = useViewModeStore();
   const [confirmed, setConfirmed] = useState<boolean | null>(null)
   const [, store] = useProductsStore();
-
   const isMyCard = product.author?._id === user?._id
 
   useEffect(() => {

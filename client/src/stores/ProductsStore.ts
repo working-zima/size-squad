@@ -285,8 +285,8 @@ class ProductsStore {
     try {
       this.startLoading();
       await apiService.deleteMyProducts({ productId });
-      await this.fetchMyInitialProducts({});
       this.setDone();
+      await this.fetchMyInitialProducts({ userId: this.userId });
     } catch (error) {
       const typedError = error as { message: string };
       this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
