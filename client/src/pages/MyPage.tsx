@@ -14,13 +14,12 @@ import BorderlessComboBox from "../components/ui/selectbox/BorderlessComboBox";
 
 import useAccessToken from "../hooks/useAccessToken";
 import useFetchUser from "../hooks/useFetchUser";
-import useFetchProducts from "../hooks/useFetchProducts";
+import useFetchMyProducts from "../hooks/useFetchMyProducts";
 import useFetchCategories from "../hooks/useFetchCategories";
 
 import { apiService } from "../services/ApiService";
 
 import { GENDER_MESSAGES, SORT_OPTIONS, SUBCATEGORY_MESSAGES } from "../constants";
-import useFetchMyProducts from "../hooks/useFetchMyProducts";
 import useFetchMyUserData from "../hooks/useFetchMyUserData";
 
 const Container = styled.div`
@@ -134,6 +133,7 @@ export default function MyPage() {
   const sortCode = querys.get('sortCode') ?? undefined;
 
   const { accessToken, setAccessToken } = useAccessToken();
+  const { user: LoginUser } = useFetchMyUserData()
   const { allSubCategories } = useFetchCategories();
   const {
     user,
@@ -256,7 +256,7 @@ export default function MyPage() {
         {productsState === 'loading' && <LoadingSpinner />}
         {productsState !== 'loading' && products.length === 0 && <NoListPage />}
         {products.map((product) => (
-          <Product key={product._id} product={product} user={user} />
+          <Product key={product._id} product={product} user={LoginUser} />
         ))}
       </Products>
       <div id='more button' ref={moreRef} />

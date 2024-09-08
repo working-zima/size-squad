@@ -8,7 +8,7 @@ type useFetchUserStoreProps = {
   per?: number
 }
 
-export default function useFetchMyUserData({
+export default function useFetchUsers({
   keyword,
   sortCode,
   per = 10

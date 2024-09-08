@@ -11,15 +11,15 @@ productRouter.get(
   productController.getProducts
 );
 
+productRouter.get(
+  "/user/:userId",
+  productController.getProductsByUserId
+);
+
 /** productId로 조회 */
 productRouter.get(
   "/:productId",
   productController.getProduct
-);
-
-productRouter.get(
-  "/user/:userId",
-  productController.getProductsByUserId
 );
 
 /** product 등록 */

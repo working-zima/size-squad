@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
 
-import useUserStore from './useUserStore'
+import useAuthStore from './useAuthStore';
 
 export default function useFetchMyUserData() {
-  const [{ user, state, errorMessage }, store] = useUserStore();
+  const [{ user, state, errorMessage }, store] = useAuthStore();
 
   useEffect(() => {
     store.fetchMyUserData();

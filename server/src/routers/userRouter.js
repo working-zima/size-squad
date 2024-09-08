@@ -3,7 +3,7 @@ const express = require("express");
 const { userController } = require("../controllers/userController");
 
 const {
-  SignupValidationRules, tokenValidationRules, createProductRules
+  SignupValidationRules, tokenValidationRules
 } = require("../utils/combinedValidation");
 
 const userRouter = express.Router();

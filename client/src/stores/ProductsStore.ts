@@ -47,6 +47,7 @@ class ProductsStore {
     this.products = [];
     this.sortOption = SORT_OPTIONS[0];
     this.page = 1;
+    this.userId = '';
     this.keyword = '';
     this.per = 10;
     this.hasNextPage = true;

@@ -8,9 +8,9 @@ import { LoginUtils } from './LoginUtils';
 
 import Divider from '../ui/Divider';
 
-import useAutoLoginStore from '../../hooks/useAutoLoginStore';
 import useAccessToken from '../../hooks/useAccessToken';
 import useLoginFormStore from '../../hooks/useLoginFormStore';
+import useAuthStore from '../../hooks/useAuthStore';
 
 const Container = styled.div.attrs({ className: 'MemberWrapper' })`
   padding: 20px ${props => props.theme.sizes.contentPadding} 0;
@@ -30,7 +30,7 @@ export default function LoginForm() {
     { email, password, valid, state, errorMessage, accessToken }, store
   ] = useLoginFormStore();
 
-  const [{ isAutoLogin }, AutoLoginstore] = useAutoLoginStore();
+  const [{ isAutoLogin }, AuthStoreStore] = useAuthStore();
 
   useEffect(() => {
     if (accessToken) {
@@ -39,7 +39,7 @@ export default function LoginForm() {
   }, [accessToken]);
 
   const toggleAutoLogin = () => {
-    AutoLoginstore.setIaAutoLogin()
+    AuthStoreStore.setIsAutoLogin()
   }
 
   const handleChangeEmail = (value: string) => {

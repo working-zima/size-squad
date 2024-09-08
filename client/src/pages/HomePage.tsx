@@ -9,7 +9,7 @@ import UserCard from "../components/UserCard";
 
 import useAccessToken from "../hooks/useAccessToken";
 import useFetchProducts from "../hooks/useFetchProducts";
-import useFetchUsersStore from '../hooks/useFetchUsersStore'
+import useFetchUsers from '../hooks/useFetchUsers'
 import useFetchMyUserData from "../hooks/useFetchMyUserData";
 
 const Container = styled.div`
@@ -53,7 +53,7 @@ export default function HomePage() {
     products, state: productsState, errorMessage
   } = useFetchProducts({ per: 10 });
   const { user } = useFetchMyUserData()
-  const { users } = useFetchUsersStore({});
+  const { users } = useFetchUsers({});
 
   return (
     <Container>
