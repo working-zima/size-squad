@@ -20,17 +20,25 @@ import useFetchCategories from "../hooks/useFetchCategories";
 import { apiService } from "../services/ApiService";
 
 import { GENDER_MESSAGES, SORT_OPTIONS, SUBCATEGORY_MESSAGES } from "../constants";
+import useFetchMyProducts from "../hooks/useFetchMyProducts";
+import useFetchMyUserData from "../hooks/useFetchMyUserData";
 
 const Container = styled.div`
-  overflow: hidden;
+  /* overflow: hidden; */
+  height: 100%;
 `
 
 const ProfileWrapper = styled.div`
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
   font-size: 1.3rem;
   line-height: ${(props) => props.theme.sizes.lineHeight};
   padding: ${props => props.theme.sizes.contentPadding};
   padding-bottom: 0;
   border-bottom: 1px solid ${props => props.theme.colors.dividerColor};
+  background-color: ${props => props.theme.colors.primaryWhite};
+  z-index: 100;
 `
 
 const UserSummary = styled.div`
@@ -134,14 +142,15 @@ export default function MyPage() {
     isOwner,
     store: userStore
   } = useFetchUser({ id: params.id });
+
   const {
     products,
-    state: productsState,
-    selectedSubCategoryId,
-    totalDocs,
+    subCategoryId: selectedSubCategoryId,
     sortOption,
-    store: productStore
-  } = useFetchProducts({ subCategoryId, sortCode });
+    totalDocs,
+    state: productsState,
+    moreRef,
+  } = useFetchMyProducts({ subCategoryId, sortCode, userId: user._id });
 
   const findCategoryById = (id: string) => {
     return [{ _id: '', name: 'all' }, ...allSubCategories]
@@ -224,7 +233,7 @@ export default function MyPage() {
         </p>
         <ComboBoxWrapper>
           <BorderlessComboBox
-            selectedItem={findCategoryById(selectedSubCategoryId)}
+            selectedItem={findCategoryById(selectedSubCategoryId || '')}
             items={[{ _id: '', name: 'all' }, ...allSubCategories]}
             itemToId={(item) => item?._id || ''}
             itemToText={(item) => SUBCATEGORY_MESSAGES[item?.name || '']}
@@ -250,6 +259,7 @@ export default function MyPage() {
           <Product key={product._id} product={product} user={user} />
         ))}
       </Products>
+      <div id='more button' ref={moreRef} />
     </Container>
   )
 }

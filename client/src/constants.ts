@@ -114,7 +114,7 @@ export const PAGES: Record<string, PageConfig> = {
   '/mypage/:id': {
     PAGETITLE: '내 페이지',
     LEFTBUTTON: 'backspace',
-    RIGHTBUTTON: '',
+    RIGHTBUTTON: 'home',
     FOOTER: false,
     SWITCHER: true,
     SHOWMENU: false,

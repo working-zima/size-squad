@@ -36,13 +36,13 @@ export default function useFetchMyProducts({
   const isIntersecting = entry?.isIntersecting
 
   useEffect(() => {
-    console.log(`useFetchMyProducts: `, userId)
     store.fetchMyInitialProducts({
       keyword, categoryId, subCategoryId, sortCode, per, userId
     });
   }, [keyword, categoryId, subCategoryId, sortCode, per, userId, store]);
 
   useEffect(() => {
+    console.log(`check: `, isIntersecting)
     if (isIntersecting && hasNextPage) {
       store.fetchMoreMyProducts({ keyword })
     }
@@ -51,10 +51,11 @@ export default function useFetchMyProducts({
   return {
     products,
     state,
-    moreRef,
+    subCategoryId,
     errorMessage,
     sortOption,
     totalDocs,
-    store
+    store,
+    moreRef,
   };
 };

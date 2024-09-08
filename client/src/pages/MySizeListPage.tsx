@@ -58,11 +58,11 @@ export default function MySizeListPage() {
 
   const {
     products,
-    errorMessage,
-    moreRef,
-    state: productsState,
     sortOption,
-    totalDocs
+    totalDocs,
+    errorMessage,
+    state: productsState,
+    moreRef,
   } = useFetchMyProducts({
     categoryId,
     subCategoryId,

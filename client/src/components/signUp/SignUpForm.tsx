@@ -100,7 +100,7 @@ export default function SignUpForm({ genders }: SignUpFormProps) {
         />
         <SignUpNameInput
           label="코드네임"
-          placeholder="다른 사람에게 보여질 닉네임을 2 ~ 10자리 이내로 입력해주세요."
+          placeholder="닉네임 2 ~ 10자리 이내로 입력해주세요."
         />
         <PasswordInputs
           pwdLabel="비밀번호"

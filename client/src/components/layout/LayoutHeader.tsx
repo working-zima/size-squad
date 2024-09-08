@@ -63,11 +63,13 @@ const ContentWrapper = styled.div`
 export default function LayoutHeader({
   page
 }: { page: PageConfig }) {
-  const isSignupCompletePage =
-    useMatch('/signup/complete') || useMatch('/search');
+  const isSignupCompletePage = useMatch('/signup/complete');
+  const isSearchPage = useMatch('/search');
+
+  const isHeaderless = isSignupCompletePage || isSearchPage;
 
   return (
-    <Container isHeaderless={!!isSignupCompletePage}>
+    <Container isHeaderless={!!isHeaderless}>
       <h1>사이즈 스쿼드</h1>
       <ContentWrapper>
         <LeftButton page={page} />

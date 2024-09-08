@@ -19,7 +19,7 @@ const Blank = styled.div`
   flex-basis: 40px;
 `
 
-const SearchTrigger = ({ id }: { id: string; }) => {
+const SearchTrigger = () => {
   const {
     opened: headerOpened,
     openModal: openHeader,
@@ -68,7 +68,7 @@ export default function RightButton({ page }: { page: PageConfig }) {
 
   if (page.RIGHTBUTTON === 'search') {
     return (
-      <SearchTrigger id="1" />
+      <SearchTrigger />
     )
   }
 
