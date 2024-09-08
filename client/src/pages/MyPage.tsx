@@ -113,6 +113,7 @@ const SortWrapper = styled.div`
 
 const ComboBoxWrapper = styled.div`
   display: flex;
+  gap: 12px;
 `
 
 const Products = styled.div`
@@ -150,21 +151,18 @@ export default function MyPage() {
       .find(subCategory => subCategory._id === id)
   };
 
-  const handleNavigate = (
-    updatedParams: { category2DepthCode?: string, sortCode?: string }
-  ) => {
-    console.log(!!updatedParams.category2DepthCode)
-
+  const handleNavigate = ({
+    category2DepthCode, sortCode
+  }: { category2DepthCode?: string, sortCode?: string }) => {
     const queryParams: string[] = [];
-    const subCategoryParam = updatedParams.category2DepthCode === '' ? undefined : updatedParams.category2DepthCode;
-    const sortParam = updatedParams.sortCode || '';
 
-    if (subCategoryParam) {
-      queryParams.push(`category2DepthCode=${subCategoryParam}`);
-    }
-    if (sortParam) {
-      queryParams.push(`sortCode=${sortParam}`);
-    }
+    const subCategoryParam = category2DepthCode === ''
+      ? undefined
+      : category2DepthCode || subCategoryId;
+    const sortParam = sortCode || '';
+
+    if (subCategoryParam) queryParams.push(`category2DepthCode=${subCategoryParam}`);
+    if (sortParam) queryParams.push(`sortCode=${sortParam}`);
 
     const queryString = queryParams.join('&');
     const path = `/mypage/${params.id}/${queryString ? `?${queryString}` : ''}`;
