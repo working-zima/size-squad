@@ -43,7 +43,6 @@ const userController = {
       return next(error);
     }
     try {
-      console.log(`check`)
       const userAccessToken = req.headers["authorization"];
       const {
         keyword, categoryId, subCategoryId, sortField, sortOrder, page, per

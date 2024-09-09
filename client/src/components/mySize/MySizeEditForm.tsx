@@ -65,7 +65,7 @@ type MySizeEditFormProps = {
 export default function MySizeEditForm({ onComplete }: MySizeEditFormProps) {
   const [{ product, valid, errorMessage }, store] = useProductFormStore();
   const { modalRef, openModal, closeModal } = useModal();
-  console.log(product)
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
