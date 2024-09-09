@@ -30,6 +30,7 @@ export default function useFetchMyProducts({
     totalDocs,
     hasNextPage
   }, store] = useProductsStore();
+
   const moreRef = useRef<HTMLDivElement>(null)
 
   const { entries: [entry] } = useIntersectionObserver(moreRef, ioOptions)

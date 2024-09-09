@@ -3,7 +3,7 @@ import { Action, Store } from "usestore-ts";
 
 import { apiService } from "../services/ApiService";
 
-import { PaginationResponse, SortOption, User } from "../types";
+import { ApiState, PaginationResponse, SortOption, User } from "../types";
 
 import { nullUser } from "../nullObject";
 
@@ -32,7 +32,7 @@ class UserStore {
 
   errorMessage = '';
 
-  state: 'loading' | 'fetched' | 'idle' | 'error' = 'idle'
+  state: ApiState = 'idle'
 
   get passwordValid() {
     return

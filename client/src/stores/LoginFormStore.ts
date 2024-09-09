@@ -3,6 +3,7 @@ import { singleton } from 'tsyringe';
 import { Store, Action } from 'usestore-ts';
 
 import { apiService } from '../services/ApiService';
+import { ApiState } from '../types';
 
 @singleton()
 @Store()
@@ -15,7 +16,7 @@ class LoginFormStore {
 
   errorMessage = '';
 
-  state: 'loading' | 'fetched' | 'idle' | 'error' = 'idle'
+  state: ApiState = 'idle'
 
   get valid() {
     return this.email.includes('@') && !!this.password;

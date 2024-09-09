@@ -1,7 +1,7 @@
 import { singleton } from 'tsyringe';
 import { Action, Store } from 'usestore-ts';
 
-import { PaginationResponse, ProductResponse, SortOption } from '../types';
+import { ApiState, PaginationResponse, ProductResponse, SortOption } from '../types';
 
 import { apiService } from '../services/ApiService';
 
@@ -40,7 +40,7 @@ class ProductsStore {
 
   errorMessage = '';
 
-  state: 'loading' | 'fetched' | 'idle' | 'error' = 'idle'
+  state: ApiState = 'idle'
 
   @Action()
   reset() {

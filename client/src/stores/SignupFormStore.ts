@@ -2,7 +2,7 @@ import { singleton } from "tsyringe";
 
 import { Action, Store } from "usestore-ts";
 
-import { Summary, User } from "../types";
+import { ApiState, Summary, User } from "../types";
 
 import { apiService } from "../services/ApiService";
 
@@ -21,7 +21,7 @@ class SignupFormStore {
 
   errorMessage = '';
 
-  state: 'loading' | 'fetched' | 'idle' | 'error' = 'idle'
+  state: ApiState = 'idle'
 
   isEmailDuplicated = false;
 

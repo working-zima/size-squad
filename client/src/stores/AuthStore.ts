@@ -1,7 +1,7 @@
 import { singleton } from 'tsyringe';
 import { Store, Action } from 'usestore-ts';
 
-import { User } from '../types';
+import { ApiState, User } from '../types';
 import { nullUser } from '../nullObject';
 
 import { apiService } from '../services/ApiService';
@@ -15,7 +15,7 @@ class AuthStore {
 
   errorMessage = '';
 
-  state: 'loading' | 'fetched' | 'idle' | 'error' = 'idle'
+  state: ApiState = 'idle'
 
   @Action()
   reset() {

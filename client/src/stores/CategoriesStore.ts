@@ -1,7 +1,7 @@
 import { singleton } from 'tsyringe';
 import { Action, Store } from 'usestore-ts';
 
-import { Category, Summary } from '../types';
+import { ApiState, Category, Summary } from '../types';
 
 import { apiService } from '../services/ApiService';
 
@@ -14,7 +14,7 @@ class CategoriesStore {
 
   errorMessage = '';
 
-  state: 'loading' | 'fetched' | 'idle' | 'error' = 'idle'
+  state: ApiState = 'idle'
 
   @Action()
   reset() {

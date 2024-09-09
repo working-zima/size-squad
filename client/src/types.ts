@@ -1,3 +1,5 @@
+export type ApiState = 'loading' | 'fetched' | 'idle' | 'error';
+
 export type Summary = {
   _id: string;
   name: string;
@@ -16,8 +18,8 @@ export type UserWithOwnership = {
 export type User = {
   _id?: string;
   name: string;
-  email?: string;
-  password?: string;
+  email: string;
+  password: string;
   gender: Summary;
   height: number;
   weight: number;

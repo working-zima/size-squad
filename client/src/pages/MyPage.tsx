@@ -1,16 +1,13 @@
-import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 import styled from "styled-components";
 
 import AccessDeniedPage from "./AccessDeniedPage";
 import ErrorPage from "./ErrorPage";
-import NoListPage from "./NoListPage";
 
-import Product from "../components/mySize/Product";
-import LineClampedText from "../components/ui/LineClamp";
-import Button from "../components/ui/Button";
-import LoadingSpinner from "../components/ui/LoadingSpinner";
-import BorderlessComboBox from "../components/ui/selectbox/BorderlessComboBox";
+import Profile from "../components/mypage/Profile";
+import Sort from "../components/mypage/Sort";
+import Products from "../components/mypage/Products";
 
 import useAccessToken from "../hooks/useAccessToken";
 import useFetchUser from "../hooks/useFetchUser";
@@ -20,108 +17,9 @@ import useFetchMyUserData from "../hooks/useFetchMyUserData";
 
 import { apiService } from "../services/ApiService";
 
-import { GENDER_MESSAGES, SORT_OPTIONS, SUBCATEGORY_MESSAGES } from "../constants";
-
 const Container = styled.div`
   height: 100%;
 `
-
-const ProfileWrapper = styled.div`
-  position: sticky;
-  position: -webkit-sticky;
-  top: 0;
-  font-size: 1.3rem;
-  line-height: ${(props) => props.theme.sizes.lineHeight};
-  padding: ${props => props.theme.sizes.contentPadding};
-  padding-bottom: 0;
-  border-bottom: 1px solid ${props => props.theme.colors.dividerColor};
-  background-color: ${props => props.theme.colors.primaryWhite};
-  z-index: 100;
-`
-
-const UserSummary = styled.div`
-  display: flex;
-  flex-direction: column;
-  font-weight: 500;
-  margin-bottom: 4px;
-
-  div {
-    font-size: 1.4rem;
-  }
-
-  span {
-    padding: 4px 0;
-    font-weight: 400;
-    color: ${props => props.theme.colors.unSelectedText};
-  }
-`
-
-const Description = styled.div`
-  font-weight: 500;
-`
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding: 14px 0;
-
-  button {
-    width: 100%;
-    height: 34px;
-    padding: 0;
-    margin-left: 4px;
-    background-color: ${props => props.theme.colors.primaryWhite};
-    color: ${props => props.theme.colors.primaryBlack};
-    border: 1px solid ${(props) => props.theme.colors.buttonBorderColor};
-    border-radius: 4px;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  & > button:first-of-type {
-      margin-left: 0px;
-  }
-`
-
-const ButtonLike = styled.div`
-  width: 100%;
-  height: 100%;
-  height: 34px;
-  padding: 0;
-  margin-right: 4px;
-  font-size: 1.4rem;
-  background-color: ${props => props.theme.colors.primaryWhite};
-  color: ${props => props.theme.colors.primaryBlack};
-  border: 1px solid ${(props) => props.theme.colors.buttonBorderColor};
-  border-radius: 4px;
-
-  a {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-  }
-`
-
-const SortWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: 10px;
-  font-size: 1.3rem;
-  line-height: 20px;
-  color: ${props => props.theme.colors.unSelectedText};
-`
-
-const ComboBoxWrapper = styled.div`
-  display: flex;
-  gap: 12px;
-`
-
-const Products = styled.div`
-  margin: 0 10px;
-`;
 
 export default function MyPage() {
   const navigate = useNavigate();
@@ -137,7 +35,6 @@ export default function MyPage() {
 
   const {
     user,
-    state,
     errorMessage: userErrorMessage,
     isOwner,
     store: userStore
@@ -189,69 +86,19 @@ export default function MyPage() {
 
   return (
     <Container>
-      <ProfileWrapper>
-        <UserSummary>
-          <div>{user?.name}</div>
-          <span>
-            {user?.height}cm / {user.weight}kg · {GENDER_MESSAGES[user.gender?.name]}
-          </span>
-        </UserSummary>
-        <Description>
-          <LineClampedText
-            text={[user.description
-              ? user.description
-              : '간단한 체형 정보를 적어보세요'
-            ]}
-            lines={1}
-          />
-        </Description>
-        <ButtonWrapper>
-          {isOwner &&
-            <>
-              <ButtonLike>
-                <Link to={`/mypage/${user._id}/edit`}>
-                  회원정보 변경
-                </Link>
-              </ButtonLike>
-              <Button onClick={handleClickLogout}>
-                로그아웃
-              </Button>
-            </>
-          }
-        </ButtonWrapper>
-      </ProfileWrapper>
-      <SortWrapper>
-        <p>
-          Total {totalDocs.toLocaleString()}
-        </p>
-        <ComboBoxWrapper>
-          <BorderlessComboBox
-            selectedItem={findCategoryById(selectedSubCategoryId || '')}
-            items={[{ _id: '', name: 'all' }, ...allSubCategories]}
-            itemToId={(item) => item?._id || ''}
-            itemToText={(item) => SUBCATEGORY_MESSAGES[item?.name || '']}
-            onChange={(value) => {
-              return value && handleNavigate({ category2DepthCode: value._id })
-            }}
-          />
-          <BorderlessComboBox
-            selectedItem={sortOption}
-            items={Object.values(SORT_OPTIONS)}
-            itemToId={(item) => item?._id || ''}
-            itemToText={(item) => item?.name || ''}
-            onChange={(value) => {
-              return value && handleNavigate({ sortCode: value.urlParam })
-            }}
-          />
-        </ComboBoxWrapper>
-      </SortWrapper>
-      <Products>
-        {productsState === 'loading' && <LoadingSpinner />}
-        {productsState !== 'loading' && products.length === 0 && <NoListPage />}
-        {products.map((product) => (
-          <Product key={product._id} product={product} user={LoginUser} />
-        ))}
-      </Products>
+      <Profile user={user} isOwner={isOwner} handleClickLogout={handleClickLogout} />
+      <Sort
+        totalDocs={totalDocs}
+        allSubCategories={allSubCategories}
+        selectedSubCategoryId={selectedSubCategoryId}
+        sortOption={sortOption}
+        findCategoryById={findCategoryById}
+        handleNavigate={handleNavigate} />
+      <Products
+        productsState={productsState}
+        products={products}
+        LoginUser={LoginUser}
+      />
       <div id='more button' ref={moreRef} />
     </Container>
   )

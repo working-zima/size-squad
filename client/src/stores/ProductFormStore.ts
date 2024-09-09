@@ -1,7 +1,7 @@
 import { singleton } from 'tsyringe';
 import { Action, Store } from 'usestore-ts';
 
-import { Summary, ProductResponse, Product } from '../types';
+import { Summary, ProductResponse, Product, ApiState } from '../types';
 import { nullProduct, nullSummary } from '../nullObject';
 
 import { apiService } from '../services/ApiService';
@@ -19,7 +19,7 @@ class ProductFormStore {
 
   errorMessage = '';
 
-  state: 'loading' | 'fetched' | 'idle' | 'error' = 'idle'
+  state: ApiState = 'idle'
 
   private isBrandValid = false;
 

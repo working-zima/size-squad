@@ -1,7 +1,7 @@
 import { singleton } from 'tsyringe';
 import { Action, Store } from 'usestore-ts';
 
-import { Category, InitialData, Size, Summary } from '../types';
+import { ApiState, Category, InitialData, Size, Summary } from '../types';
 import { nullCategory, nullSize, nullSummary } from '../nullObject';
 
 import { apiService } from '../services/ApiService';
@@ -19,7 +19,7 @@ class InitialDataStore {
 
   errorMessage = '';
 
-  state: 'loading' | 'fetched' | 'idle' | 'error' = 'idle'
+  state: ApiState = 'idle'
 
   @Action()
   reset() {

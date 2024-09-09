@@ -1,7 +1,7 @@
 import { singleton } from "tsyringe";
 import { Action, Store } from "usestore-ts";
 
-import { Summary } from "../types";
+import { ApiState, Summary } from "../types";
 import { nullSummary } from "../nullObject";
 
 import { apiService } from "../services/ApiService";
@@ -13,7 +13,7 @@ class GendersStore {
 
   errorMessage = '';
 
-  state: 'loading' | 'fetched' | 'idle' | 'error' = 'idle'
+  state: ApiState = 'idle'
 
   @Action()
   reset() {

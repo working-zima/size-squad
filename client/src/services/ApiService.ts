@@ -45,7 +45,7 @@ export default class ApiService {
   }
 
   logOnDev = (message: string) => {
-    if (process.env.NODE_ENV === "development") {
+    if (process.env.REACT_APP_NODE_ENV === "development") {
       console.log(message);
     }
   };
