@@ -16,14 +16,13 @@ import useAccessToken from "../hooks/useAccessToken";
 import useFetchUser from "../hooks/useFetchUser";
 import useFetchMyProducts from "../hooks/useFetchMyProducts";
 import useFetchCategories from "../hooks/useFetchCategories";
+import useFetchMyUserData from "../hooks/useFetchMyUserData";
 
 import { apiService } from "../services/ApiService";
 
 import { GENDER_MESSAGES, SORT_OPTIONS, SUBCATEGORY_MESSAGES } from "../constants";
-import useFetchMyUserData from "../hooks/useFetchMyUserData";
 
 const Container = styled.div`
-  /* overflow: hidden; */
   height: 100%;
 `
 
@@ -135,6 +134,7 @@ export default function MyPage() {
   const { accessToken, setAccessToken } = useAccessToken();
   const { user: LoginUser } = useFetchMyUserData()
   const { allSubCategories } = useFetchCategories();
+
   const {
     user,
     state,
@@ -182,15 +182,8 @@ export default function MyPage() {
     navigate('/');
   };
 
-  if (state === 'loading') {
-    return <LoadingSpinner />;
-  }
-
-  if (!accessToken) {
-    return <AccessDeniedPage />;
-  }
-
-  if (state === 'error') {
+  if (!accessToken) return (<AccessDeniedPage />);
+  if (productsState === 'error') {
     return (<ErrorPage errorMessage={userErrorMessage} />);
   }
 

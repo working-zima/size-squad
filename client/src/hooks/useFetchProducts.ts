@@ -38,7 +38,7 @@ export default function useFetchProducts({
     store.fetchInitialProducts({
       keyword, categoryId, subCategoryId, sortCode, per
     });
-  }, [categoryId, subCategoryId, sortCode, keyword, per, store]);
+  }, [keyword, categoryId, subCategoryId, sortCode, per, store]);
 
   useEffect(() => {
     if (isIntersecting && hasNextPage) {

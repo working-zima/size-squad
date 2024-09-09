@@ -131,7 +131,7 @@ class ProductsStore {
   }
 
   /**
-   * 내 사이즈 정보 fetch
+   * 특정 유저 사이즈 정보 fetch
    */
   async fetchMyInitialProducts({
     keyword,
@@ -179,15 +179,15 @@ class ProductsStore {
     }
   }
 
-  async fetchMoreMyProducts({ keyword }: { keyword?: string }) {
-    if (this.state === 'loading') return;
+  async fetchMoreMyProducts() {
+    if (this.state === 'loading' || !this.hasNextPage) return;
     this.startLoading();
     try {
       const sortField = Object.keys(this.sortOption.sort)[0];
       const sortOrder = Object.values(this.sortOption.sort)[0];
 
       const products = await apiService.fetchMyProducts({
-        keyword,
+        keyword: this.keyword,
         categoryId: this.categoryId,
         subCategoryId: this.subCategoryId,
         sortField,
@@ -254,7 +254,7 @@ class ProductsStore {
   }
 
   async fetchMoreProducts({ keyword }: { keyword?: string }) {
-    if (this.state === 'loading') return;
+    if (this.state === 'loading' || !this.hasNextPage) return;
     this.startLoading();
     try {
       const sortField = Object.keys(this.sortOption.sort)[0];

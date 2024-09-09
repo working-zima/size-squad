@@ -37,6 +37,7 @@ const Main = styled.main`
   max-width: 768px;
   width: 100%;
   margin: 0 auto;
+  height: 100%;
 `;
 
 export default function Layout() {
@@ -65,7 +66,7 @@ export default function Layout() {
   if (isEditProfilePage) page = PAGES['/mypage/:id/edit'];
   if (isMyPage && user) {
     page = PAGES['/mypage/:id'];
-    page.PAGETITLE = `${user.name}의 락커룸`
+    page.PAGETITLE = `${user.name}의 옷장`
   }
   if (isEditProfile && user) {
     page = PAGES['/mypage/:id/edit/:editField'];

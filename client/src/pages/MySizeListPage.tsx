@@ -50,11 +50,8 @@ export default function MySizeListPage() {
 
   const { user } = useFetchMyUserData();
 
-  const {
-    categories,
-    allSubCategories,
-    state: categoriesState
-  } = useFetchCategories();
+  const { categories, allSubCategories, state: categoriesState }
+    = useFetchCategories();
 
   const {
     products,
@@ -64,10 +61,7 @@ export default function MySizeListPage() {
     state: productsState,
     moreRef,
   } = useFetchMyProducts({
-    categoryId,
-    subCategoryId,
-    sortCode,
-    userId: user._id
+    categoryId, subCategoryId, sortCode, userId: user?._id
   });
 
   const subCategories = categoryId

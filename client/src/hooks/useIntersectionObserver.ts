@@ -12,8 +12,12 @@ const useIntersectionObserver = (
   useEffect(() => {
     const node = elemRef.current
     if (!node) return
-
-    observerRef.current = new IntersectionObserver(setEntries, options)
+    observerRef.current = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        console.log(entry)
+      });
+      setEntries(entries);
+    }, options)
     observerRef.current.observe(node)
 
     return () => {
