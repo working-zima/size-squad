@@ -11,6 +11,7 @@ import useAccessToken from "../hooks/useAccessToken";
 import useFetchProducts from "../hooks/useFetchProducts";
 import useFetchUsers from '../hooks/useFetchUsers'
 import useFetchMyUserData from "../hooks/useFetchMyUserData";
+import { Carousel } from "../components/ui/Carousel";
 
 const Container = styled.div`
   margin-bottom: 80px;
@@ -82,6 +83,7 @@ export default function HomePage() {
           <UserCard key={user._id} user={user} />
         ))}
       </Cards>
+      <Carousel datas={users} />
     </Container>
   );
 }
