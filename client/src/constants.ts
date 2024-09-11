@@ -1,5 +1,7 @@
 import { PageConfig, SortOption } from "./types";
 
+export const PER = 16;
+
 export const MEASUREMENT_MESSAGES: Record<string, string> = {
   totalLength: '총장',
   shoulderWidth: '어깨너비',

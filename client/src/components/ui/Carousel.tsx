@@ -1,18 +1,17 @@
-import { useCallback, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from 'react'
+import styled, { keyframes } from 'styled-components'
+import Pagination from './Pagination';
 
-import styled, { keyframes } from "styled-components"
-import UserCard from "../UserCard"
-
-type Direction = 'left' | 'right'
-
+// 애니메이션 정의
 const leftCurrent = keyframes`
   0% {
+    left: 0;
     transform: translateX(0);
   }
   100% {
     transform: translateX(100%);
   }
-`
+`;
 
 const leftNext = keyframes`
   0% {
@@ -21,7 +20,7 @@ const leftNext = keyframes`
   100% {
     transform: translateX(0);
   }
-`
+`;
 
 const rightCurrent = keyframes`
   0% {
@@ -30,7 +29,7 @@ const rightCurrent = keyframes`
   100% {
     transform: translateX(-100%);
   }
-`
+`;
 
 const rightNext = keyframes`
   0% {
@@ -39,104 +38,92 @@ const rightNext = keyframes`
   100% {
     transform: translateX(0);
   }
-`
+`;
 
-const Carousel1 = styled.div`
+// 스타일 정의
+const CarouselWrapper = styled.div`
   position: relative;
-  border: 1px solid #ccc;
   margin: 0;
   padding: 0;
   list-style: none;
-  /* width: 600px; */
-  height: 260px;
-  overflow: hidden;
-`
-
-const Container = styled.ul`
-  position: relative;
-  list-style: none;
-  padding: 0;
-  margin: 0;
   width: 100%;
-  height: 320px;
-`
+  height: 180px;
+  overflow: hidden;
 
-const Item = styled.li<{ isCurrent: boolean; direction?: Direction }>`
-  position: absolute;
-  top: 0;
-  padding: 0;
-  margin: 0;
-  left: 0;
-  transform: ${props => (
-    props.isCurrent ? 'translateX(0)' : 'translateX(-200%)'
-  )};
-
-  &.left_current {
-    animation: ${leftCurrent} 0.3s forwards;
+  .container {
+    position: relative;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 130px;
   }
 
-  &.left_next {
-    animation: ${leftNext} 0.3s forwards;
-  }
-
-  &.right_current {
-    animation: ${rightCurrent} 0.3s forwards;
-  }
-
-  &.right_next {
-    animation: ${rightNext} 0.3s forwards;
-  }
-`
-
-const NavButton = styled.button<{ isLeft?: boolean }>`
-  position: absolute;
-  top: 50%;
-  margin-top: -20px;
-  width: 40px;
-  height: 40px;
-  background-color: #333;
-  border-radius: 50%;
-  border: 0;
-  outline: 0;
-  opacity: 0.3;
-  left: ${props => (props.isLeft ? '10px' : 'auto')};
-  right: ${props => (!props.isLeft ? '10px' : 'auto')};
-
-  &:hover {
-    opacity: 1;
-  }
-
-  &::before,
-  &::after {
-    content: '';
+  .item {
     position: absolute;
-    display: block;
-    width: 6px;
-    height: 17px;
-    background-color: #fff;
-    transform-origin: 3px 14px;
-    left: ${props => (props.isLeft ? '11px' : 'auto')};
-    right: ${props => (!props.isLeft ? '11px' : 'auto')};
-    transform: ${props => (props.isLeft ? 'rotate(45deg)' : 'rotate(-45deg)')};
-  }
+    top: 0;
+    padding: 0;
+    margin: 0;
+    left: 0;
+    width: 100%;
+    // 기본적으로 item은 왼쪽으로 숨기기
+    transform: translateX(-200%);
 
-  &::after {
-    transform: ${props => (props.isLeft ? 'rotate(135deg)' : 'rotate(-135deg)')};
-  }
-`
+    img {
+      display: block;
+    }
 
-export const Carousel = ({
-  datas,
-  initialIndex = 0,
-}: {
-  datas: any[]
+    span {
+      position: absolute;
+      display: block;
+      left: 10px;
+      top: 10px;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 3px 10px;
+    }
+
+    &.left_current {
+      animation: ${leftCurrent} ease-out 0.3s forwards;
+    }
+
+    &.left_next {
+      animation: ${leftNext} ease-out 0.3s forwards;
+    }
+
+    &.right_current {
+      animation: ${rightCurrent} ease-out 0.3s forwards;
+    }
+
+    &.right_next {
+      animation: ${rightNext} ease-out 0.3s forwards;
+    }
+
+    &.current {
+      transform: translateX(0);
+    }
+  }
+`;
+
+type CarouselProps<T> = {
+  items: T[]
   initialIndex?: number
-}) => {
+  renderItem: (data: T) => JSX.Element
+}
+
+export const Carousel = <T,>({
+  items,
+  initialIndex = 0,
+  renderItem
+}: CarouselProps<T>
+) => {
   const [currentIndex, setCurrentIndex] = useState(initialIndex)
   const itemsRef = useRef<(HTMLLIElement | null)[]>([])
 
   const moveTo = useCallback((
-    nextIndex: number, direction?: Direction
+    nextIndex: number, direction?: 'left' | 'right'
   ) => {
     const $current = itemsRef.current[currentIndex] as HTMLLIElement
     const $next = itemsRef.current[nextIndex] as HTMLLIElement
@@ -149,46 +136,41 @@ export const Carousel = ({
 
     // 애니메이션이 끝나면 클래스 바꿔주기
     const handleAnimationEnd = () => {
-      $current.classList.remove(`${dir}_current`);
-      $next.classList.remove(`${dir}_next`);
-      $current.removeEventListener('animationend', handleAnimationEnd);
-      setCurrentIndex(nextIndex);
+      $current.className = 'item'
+      $next.className = 'item current'
+      $current.removeEventListener('animationend', handleAnimationEnd)
+      setCurrentIndex(nextIndex)
     }
-
     // animate 효과가 완료된 후 이벤트 발생
-    $current.addEventListener('animationend', handleAnimationEnd);
+    $current.addEventListener('animationend', handleAnimationEnd)
 
-    $current.classList.add(`${dir}_current`);
-    $next.classList.add(`${dir}_next`);
+    $current.classList.add(`${dir}_current`)
+    $next.classList.add(`${dir}_next`)
   }, [currentIndex])
 
-  // 방향 버튼 클릭시 호출
-  const move = useCallback((direction: Direction) => {
-    const nextIndex = ((
-      direction === 'right'
-        ? currentIndex + 1
-        : currentIndex - 1
-    ) + datas.length) % datas.length
-    moveTo(nextIndex, direction)
-  },
-    [datas, currentIndex, moveTo],
-  )
+  useEffect(() => {
+    setCurrentIndex(initialIndex)
+  }, [items, initialIndex])
 
   return (
-    <Carousel1>
-      <Container>
-        {datas.map((data, index) => (
-          <Item
+    <CarouselWrapper>
+      <ul className="container">
+        {items.map((item, index) => (
+          <li
             key={index}
-            isCurrent={index === currentIndex}
-            ref={item => { itemsRef.current[index] = item }}
+            className={`item ${index === currentIndex ? 'current' : ''}`}
+            ref={li => { itemsRef.current[index] = li }}
           >
-            <UserCard key={data._id} user={data} />
-          </Item>
+            {renderItem(item)}
+          </li>
         ))}
-      </Container>
-      <NavButton isLeft onClick={() => move('left')} />
-      <NavButton onClick={() => move('right')} />
-    </Carousel1>
+      </ul>
+      <Pagination
+        totalPages={items.length}
+        currentIndex={currentIndex}
+        visibleCount={8}
+        handleMove={moveTo}
+      />
+    </CarouselWrapper>
   )
 }

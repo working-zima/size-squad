@@ -37,6 +37,10 @@ const SortWrapper = styled.div`
 
 const Products = styled.div`
   margin: 0 10px;
+
+  & > div:first-of-type {
+    border: 0;
+  }
 `;
 
 export default function MySizeListPage() {

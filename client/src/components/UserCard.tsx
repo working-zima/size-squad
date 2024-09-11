@@ -1,91 +1,90 @@
 import { Link } from "react-router-dom";
-
 import styled from "styled-components";
-
-import { User } from "../types"
-
-import { GENDER_MESSAGES, USERFIELDS } from "../constants";
+import { User } from "../types";
+import { GENDER_MESSAGES } from "../constants";
 
 const Container = styled.div`
-  padding: 1.2rem 0.2rem;
-  font-size: 1.4rem;
-  line-height: 1.67;
-  border-bottom: 1px solid ${props => props.theme.colors.dividerColor};
-  height: 130px;
   display: flex;
-  flex-direction: column;
+  padding: 1rem;
+  border-bottom: 1px solid ${props => props.theme.colors.dividerColor};
   justify-content: space-between;
-  white-space: nowrap;
+  align-items: center;
+  font-size: 1.6rem;
+  height: 130px;
 `;
 
-const UserRow = styled.div`
+const UserColumn = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  align-items: center;
-  min-height: 30px;
-  margin-bottom: 1.6rem;
-  background-color: ${props => props.theme.colors.backgroundColor};
-
-  overflow: auto;
-  white-space: nowrap;
-  scrollbar-width: none; // 파이어폭스
-  -ms-overflow-style: none; // 인터넷 익스플로러
-  &::-webkit-scrollbar {
-    display: none; // 크롬, 사파리, 오페라, 엣지
-  }
+  flex: 1;
+  flex-direction: column;
+  gap: 0.8rem;
+  border-right: 1px solid black;
 `;
 
 const UserInfo = styled.div`
   display: flex;
-  flex-direction: row;
-  height: 30px;
   align-items: center;
-  color: ${props => props.theme.colors.secondaryTextColor};
-  font-weight: 500;
+  color: ${props => props.theme.colors.primaryBlack};
 
-  p {
-
-    font-size: 1.4rem;
-    margin-right: 0.5rem;
+  h3 {
+    font-size: 2rem;
+    font-weight: 500;
+    margin: 0;
     color: ${props => props.theme.colors.primaryBlack};
   }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 `;
+
+const InfoText = styled.p`
+  margin: 0;
+  font-size: 1.4rem;
+  color: ${props => props.theme.colors.secondaryTextColor};
+`;
+
+const DescriptionColumn = styled.div`
+    flex: 3;
+`
 
 const Description = styled.p`
   margin: 0;
   font-size: 1.2rem;
   color: ${props => props.theme.colors.primaryBlack};
-  height: 100%;
-  white-space: pre-line;
-
+  -webkit-line-clamp: 2;
   display: -webkit-box;
   overflow: hidden;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
 `;
 
 type UserCardProps = {
-  user: User
-}
+  user: User;
+};
 
 export default function UserCard({ user }: UserCardProps) {
+  console.log(!!user.description)
   return (
     <Container>
-      <UserRow>
+      <UserColumn>
         <UserInfo>
           <Link to={`/mypage/${user?._id}`}>
-            <p>{USERFIELDS['name']}: {user.name} </p>
+            <h3>{user.name}</h3>
           </Link>
         </UserInfo>
-        <UserInfo>
-          <p>{USERFIELDS['gender']}:</p> {GENDER_MESSAGES[user.gender.name]}
-        </UserInfo>
-        <UserInfo>
-          <p>{USERFIELDS['physical']}:</p> {user.height} cm / {user.weight} kg
-        </UserInfo>
-      </UserRow>
-      <Description>{user.description}</Description>
-    </Container >
-  )
+        <InfoText>{GENDER_MESSAGES[user.gender.name]}</InfoText>
+        <InfoText>{user.height} cm / {user.weight} kg</InfoText>
+      </UserColumn>
+      <DescriptionColumn>
+        {user.description
+          ? <Description>{user.description}</Description>
+          : <div>조금 과묵한 타입</div>
+        }
+      </DescriptionColumn>
+    </Container>
+  );
 }

@@ -24,6 +24,7 @@ const PageItem = styled.li<{ isCurrent: boolean }>`
     border: 0;
     padding: 25px 10px 10px;
     background: none;
+    color: ${props => props.theme.colors.secondaryTextColor};
     text-align: center;
     cursor: pointer;
 
@@ -33,12 +34,12 @@ const PageItem = styled.li<{ isCurrent: boolean }>`
       display: block;
       width: 7px;
       height: 7px;
-      border: 1px solid #000;
+      border: 1px solid ${props => props.theme.colors.secondaryTextColor};
       border-radius: 50%;
       top: 10px;
       left: 50%;
       transform: translateX(-50%);
-      background-color: ${({ isCurrent }) => (isCurrent ? '#000' : 'transparent')};
+      background-color: ${({ isCurrent, theme }) => (isCurrent ? theme.colors.secondaryTextColor : 'transparent')};
     }
   }
 

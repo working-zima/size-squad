@@ -4,14 +4,14 @@ import NoListPage from "./NoListPage";
 import ErrorPage from "./ErrorPage";
 
 import Product from "../components/mySize/Product";
-import LoadingSpinner from "../components/ui/LoadingSpinner";
 import UserCard from "../components/UserCard";
+import LoadingSpinner from "../components/ui/LoadingSpinner";
+import { Carousel } from "../components/ui/Carousel";
 
 import useAccessToken from "../hooks/useAccessToken";
 import useFetchProducts from "../hooks/useFetchProducts";
 import useFetchUsers from '../hooks/useFetchUsers'
 import useFetchMyUserData from "../hooks/useFetchMyUserData";
-import { Carousel } from "../components/ui/Carousel";
 
 const Container = styled.div`
   margin-bottom: 80px;
@@ -38,8 +38,7 @@ const Cards = styled.div`
   border: 1px solid ${props => props.theme.colors.borderColor};
   border-width: 1px 0;
   border-radius: 2px;
-  height: 262px;
-  overflow-y: scroll;
+  height: 180px;
 
   scrollbar-width: none; // 파이어폭스
   -ms-overflow-style: none; // 인터넷 익스플로러
@@ -50,9 +49,8 @@ const Cards = styled.div`
 
 export default function HomePage() {
   useAccessToken();
-  const {
-    products, state: productsState, errorMessage
-  } = useFetchProducts({ per: 10 });
+  const { products, state: productsState, errorMessage }
+    = useFetchProducts({ per: 8 });
   const { user } = useFetchMyUserData()
   const { users } = useFetchUsers({});
 
@@ -70,20 +68,21 @@ export default function HomePage() {
           && products.length === 0
           && <NoListPage />
         }
-        {products.map(product => (
-          <Product key={product._id} product={product} user={user} />
-        ))}
+        <Carousel
+          items={products}
+          renderItem={(item) => <Product key={item._id} product={item} user={user} />}
+        />
       </Cards>
       <Title>
         <h2>새로운 얼굴들</h2>
         <p>새로 가입한 멤버를 소개합니다! 비슷한 사이즈의 멤버를 찾아 스타일을 참고해보세요.</p>
       </Title>
       <Cards>
-        {users.map(user => (
-          <UserCard key={user._id} user={user} />
-        ))}
+        <Carousel
+          items={users}
+          renderItem={(item) => <UserCard key={item._id} user={item} />}
+        />
       </Cards>
-      <Carousel datas={users} />
     </Container>
   );
 }

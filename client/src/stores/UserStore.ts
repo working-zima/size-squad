@@ -7,7 +7,7 @@ import { ApiState, PaginationResponse, SortOption, User } from "../types";
 
 import { nullUser } from "../nullObject";
 
-import { SORT_OPTIONS } from "../constants";
+import { PER, SORT_OPTIONS } from "../constants";
 
 @singleton()
 @Store()
@@ -24,7 +24,7 @@ class UserStore {
 
   keyword = '';
 
-  per = 10;
+  per = PER;
 
   totalDocs = 0;
 

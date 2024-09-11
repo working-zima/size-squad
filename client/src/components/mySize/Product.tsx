@@ -18,7 +18,7 @@ const Container = styled.div`
   font-size: 1.4rem;
   line-height: 1.67;
   height: 130px;
-  border-bottom: 1px solid ${props => props.theme.colors.dividerColor};
+  border-top: 1px solid ${props => props.theme.colors.dividerColor};
 `;
 
 const InfoRow = styled.div`
@@ -45,8 +45,8 @@ const Brand = styled.div`
 `;
 
 const Name = styled.div`
-  flex: 6.5;
   display: flex;
+  flex: 6.5;
   text-align: left;
   word-break: break-all;
   overflow: auto hidden;
@@ -72,14 +72,15 @@ type ProductProps = {
 export default function Product({
   product, user
 }: ProductProps) {
-  const [{ isDescriptionView }] = useViewModeStore();
   const [confirmed, setConfirmed] = useState<boolean | null>(null)
+  const [{ isDescriptionView }] = useViewModeStore();
   const [, store] = useProductsStore();
   const isMyCard = product.author?._id === user?._id
 
   useEffect(() => {
     if (!!confirmed) {
       store.deleteAndFetchMyProducts(product._id);
+      setConfirmed(null);
     }
   }, [confirmed]);
 

@@ -5,7 +5,7 @@ import { ApiState, PaginationResponse, ProductResponse, SortOption } from '../ty
 
 import { apiService } from '../services/ApiService';
 
-import { SORT_OPTIONS } from '../constants';
+import { PER, SORT_OPTIONS } from '../constants';
 
 type handleParameterProps = {
   sortOption: SortOption;
@@ -30,7 +30,7 @@ class ProductsStore {
 
   keyword = '';
 
-  per = 10;
+  per = PER;
 
   hasNextPage = true;
 
@@ -49,7 +49,7 @@ class ProductsStore {
     this.page = 1;
     this.userId = '';
     this.keyword = '';
-    this.per = 10;
+    this.per = PER;
     this.hasNextPage = true;
     this.totalDocs = 0;
     this.state = 'idle';
@@ -138,7 +138,7 @@ class ProductsStore {
     categoryId = '',
     subCategoryId = '',
     sortCode,
-    per = 10,
+    per = PER,
     userId = ''
   }: {
     keyword?: string;
@@ -214,7 +214,7 @@ class ProductsStore {
     categoryId = '',
     subCategoryId = '',
     sortCode,
-    per = 10,
+    per = PER,
   }: {
     keyword?: string,
     categoryId?: string,

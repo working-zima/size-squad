@@ -6,6 +6,10 @@ import { ApiState, ProductResponse, User } from "../../types";
 
 const Container = styled.div`
   margin: 0 10px;
+
+  & > div:first-of-type {
+    border: 0;
+  }
 `;
 
 type ProductsProps = {
