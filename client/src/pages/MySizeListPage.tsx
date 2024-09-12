@@ -22,20 +22,22 @@ import { SORT_OPTIONS } from '../constants';
 
 const Container = styled.div`
   height: 100%;
+
+  section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px;
+    font-size: 1.3rem;
+    line-height: 20px;
+    color: ${props => props.theme.colors.unSelectedText};
+  }
 `;
 
-const SortWrapper = styled.div`
+const Products = styled.section`
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: 10px;
-  font-size: 1.3rem;
-  line-height: 20px;
-  color: ${props => props.theme.colors.unSelectedText};
-`
-
-const Products = styled.div`
+  flex-direction: column;
   margin: 0 10px;
 
   & > div:first-of-type {
@@ -99,10 +101,8 @@ export default function MySizeListPage() {
         subCategories={subCategories}
         categoriesState={categoriesState}
       />
-      <SortWrapper>
-        <p>
-          Total {totalDocs.toLocaleString()}
-        </p>
+      <section>
+        <p>Total {totalDocs.toLocaleString()}</p>
         <BorderlessComboBox
           selectedItem={sortOption}
           items={Object.values(SORT_OPTIONS)}
@@ -110,7 +110,7 @@ export default function MySizeListPage() {
           itemToText={(item) => item?.name || ''}
           onChange={(value) => value && handleNavigate(value)}
         />
-      </SortWrapper>
+      </section>
       <Products>
         {productsState === 'loading' && <LoadingSpinner />}
         {productsState !== 'loading' && products.length === 0 && <NoListPage />}

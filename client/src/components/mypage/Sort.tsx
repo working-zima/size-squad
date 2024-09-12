@@ -6,7 +6,7 @@ import { SortOption, Summary } from "../../types";
 
 import { SORT_OPTIONS, SUBCATEGORY_MESSAGES } from "../../constants";
 
-const Container = styled.div`
+const Container = styled.section`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -41,9 +41,7 @@ export default function Sort({
 }: SortProps) {
   return (
     <Container>
-      <p>
-        Total {totalDocs.toLocaleString()}
-      </p>
+      <p>Total {totalDocs.toLocaleString()}</p>
       <ComboBoxWrapper>
         <BorderlessComboBox
           selectedItem={findCategoryById(selectedSubCategoryId || '')}

@@ -6,7 +6,7 @@ import ButtonsRow from "./ButtonsRow";
 
 import { User } from "../../types";
 
-const Container = styled.div`
+const Container = styled.section`
   position: sticky;
   position: -webkit-sticky;
   top: 0;

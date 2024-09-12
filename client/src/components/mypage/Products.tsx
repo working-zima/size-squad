@@ -4,7 +4,7 @@ import NoListPage from "../../pages/NoListPage";
 import Product from "../mySize/Product";
 import { ApiState, ProductResponse, User } from "../../types";
 
-const Container = styled.div`
+const Container = styled.section`
   margin: 0 10px;
 
   & > div:first-of-type {

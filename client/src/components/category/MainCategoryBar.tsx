@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import styled, { css } from 'styled-components';
 
@@ -14,6 +14,7 @@ const Container = styled.div`
   align-items: center;
   position: relative;
   height: 4.7rem;
+  width: 100%;
   margin: 0 0.4rem;
 
   overflow: auto hidden;
@@ -25,7 +26,7 @@ const Container = styled.div`
   }
 `;
 
-const CustomButton = styled(Button) <{ active: boolean }>`
+const CategoryButton = styled(Button) <{ active: boolean }>`
   display: flex;
   align-items: center;
   position: relative;
@@ -100,7 +101,7 @@ export default function MainCategoryBar({
 
   return (
     <Container>
-      <CustomButton
+      <CategoryButton
         ref={(elem) => {
           buttonsRef.current[0] = elem;
         }}
@@ -109,10 +110,10 @@ export default function MainCategoryBar({
         onClick={() => handleNavigate('/mysize', 'all')}
       >
         <p>전체</p>
-      </CustomButton>
+      </CategoryButton>
       {!!categories.length && (
         categories.map((category, idx) => (
-          <CustomButton
+          <CategoryButton
             key={category._id}
             ref={(elem) => {
               buttonsRef.current[idx + 1] = elem;
@@ -127,7 +128,7 @@ export default function MainCategoryBar({
             }
           >
             <p>{CATEGORY_MESSAGES[category.name]}</p>
-          </CustomButton>
+          </CategoryButton>
         ))
       )}
       <ActiveBar

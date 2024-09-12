@@ -6,7 +6,7 @@ import ErrorPage from "./ErrorPage";
 import Product from "../components/mySize/Product";
 import UserCard from "../components/UserCard";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
-import { Carousel } from "../components/ui/Carousel";
+import { Carousel } from "../components/ui/Slide/Carousel";
 
 import useAccessToken from "../hooks/useAccessToken";
 import useFetchProducts from "../hooks/useFetchProducts";
@@ -16,6 +16,10 @@ import useFetchMyUserData from "../hooks/useFetchMyUserData";
 const Container = styled.div`
   margin-bottom: 80px;
   word-break: keep-all;
+`
+
+const Section = styled.section`
+
 `
 
 const Title = styled.div`
@@ -35,7 +39,6 @@ const Title = styled.div`
 
 const Cards = styled.div`
   margin: 4rem 10px 4rem 10px;
-  border: 1px solid ${props => props.theme.colors.borderColor};
   border-width: 1px 0;
   border-radius: 2px;
   height: 180px;

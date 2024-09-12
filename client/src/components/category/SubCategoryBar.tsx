@@ -13,6 +13,7 @@ const Container = styled.div`
   display: flex;
   flex-wrap: nowrap;
   overflow: auto hidden;
+  width: 100%;
   margin: 0 1rem;
   padding: 1rem 0;
   white-space: nowrap;
@@ -24,7 +25,7 @@ const Container = styled.div`
   }
 `;
 
-const CustomButton = styled(Button) <{ active: boolean }>`
+const SubCategoryButton = styled(Button) <{ active: boolean }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -82,21 +83,21 @@ export default function SubCategoryBar(
 
   return (
     <Container>
-      <CustomButton
+      <SubCategoryButton
         active={activeBtn === 'all'}
         onClick={() => handleNavigate('all')}
       >
         전체
-      </CustomButton>
+      </SubCategoryButton>
       {!!subCategories.length && (
         subCategories.map(subCategory => (
-          <CustomButton
+          <SubCategoryButton
             key={subCategory._id}
             active={activeBtn === subCategory._id}
             onClick={() => handleNavigate(subCategory._id)}
           >
             {SUBCATEGORY_MESSAGES[subCategory.name]}
-          </CustomButton>
+          </SubCategoryButton>
         ))
       )}
     </Container>

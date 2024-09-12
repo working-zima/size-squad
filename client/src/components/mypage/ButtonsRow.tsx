@@ -26,7 +26,7 @@ const Container = styled.div`
   }
 `
 
-const ButtonLike = styled.div`
+const LinkButton = styled.div`
   width: 100%;
   height: 100%;
   height: 34px;
@@ -60,11 +60,11 @@ export default function ButtonsRow({
     <Container>
       {isOwner &&
         <>
-          <ButtonLike>
+          <LinkButton>
             <Link to={`/mypage/${userId}/edit`}>
               회원정보 변경
             </Link>
-          </ButtonLike>
+          </LinkButton>
           <Button onClick={handleClickLogout}>
             로그아웃
           </Button>

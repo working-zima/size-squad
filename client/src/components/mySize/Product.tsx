@@ -18,6 +18,7 @@ const Container = styled.div`
   font-size: 1.4rem;
   line-height: 1.67;
   height: 130px;
+  width: 100%;
   border-top: 1px solid ${props => props.theme.colors.dividerColor};
 `;
 
@@ -29,7 +30,7 @@ const InfoRow = styled.div`
   height: 40px;
 `;
 
-const Brand = styled.div`
+const Brand = styled.p`
   display: flex;
   flex: 2.5;
   word-break: break-all;
@@ -44,7 +45,7 @@ const Brand = styled.div`
   }
 `;
 
-const Name = styled.div`
+const Name = styled.p`
   display: flex;
   flex: 6.5;
   text-align: left;
@@ -59,8 +60,7 @@ const Name = styled.div`
   }
 `;
 
-const Author = styled.div`
-  font-size: 1.4rem;
+const Author = styled.p`
   font-weight: 500;
 `
 
@@ -88,7 +88,7 @@ export default function Product({
     <Container>
       <InfoRow>
         <Brand><h3>{product.brand}</h3></Brand>
-        <Name><p><strong>{product.name}</strong></p></Name>
+        <Name><strong>{product.name}</strong></Name>
         {isMyCard
           ? (
             <EditDeleteButtons

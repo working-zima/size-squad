@@ -1,28 +1,22 @@
 import { Link } from "react-router-dom";
+
 import styled from "styled-components";
+
 import { User } from "../types";
+
 import { GENDER_MESSAGES } from "../constants";
 
 const Container = styled.div`
   display: flex;
   padding: 1rem;
-  border-bottom: 1px solid ${props => props.theme.colors.dividerColor};
-  justify-content: space-between;
+  border-top: 1px solid ${props => props.theme.colors.dividerColor};
   align-items: center;
-  font-size: 1.6rem;
   height: 130px;
 `;
 
-const UserColumn = styled.div`
+const Name = styled.div`
   display: flex;
   flex: 1;
-  flex-direction: column;
-  gap: 0.8rem;
-  border-right: 1px solid black;
-`;
-
-const UserInfo = styled.div`
-  display: flex;
   align-items: center;
   color: ${props => props.theme.colors.primaryBlack};
 
@@ -36,10 +30,17 @@ const UserInfo = styled.div`
   a {
     text-decoration: none;
     color: inherit;
+
     &:hover {
       text-decoration: underline;
     }
   }
+`;
+
+const Info = styled.div`
+  display: flex;
+  flex: 3;
+  flex-direction: column;
 `;
 
 const InfoText = styled.p`
@@ -47,10 +48,6 @@ const InfoText = styled.p`
   font-size: 1.4rem;
   color: ${props => props.theme.colors.secondaryTextColor};
 `;
-
-const DescriptionColumn = styled.div`
-    flex: 3;
-`
 
 const Description = styled.p`
   margin: 0;
@@ -70,21 +67,22 @@ export default function UserCard({ user }: UserCardProps) {
   console.log(!!user.description)
   return (
     <Container>
-      <UserColumn>
-        <UserInfo>
-          <Link to={`/mypage/${user?._id}`}>
-            <h3>{user.name}</h3>
-          </Link>
-        </UserInfo>
-        <InfoText>{GENDER_MESSAGES[user.gender.name]}</InfoText>
-        <InfoText>{user.height} cm / {user.weight} kg</InfoText>
-      </UserColumn>
-      <DescriptionColumn>
-        {user.description
-          ? <Description>{user.description}</Description>
-          : <div>조금 과묵한 타입</div>
-        }
-      </DescriptionColumn>
+      <Name>
+        <Link to={`/mypage/${user?._id}`}>
+          <h3>{user.name}</h3>
+        </Link>
+      </Name>
+      <Info>
+        <InfoText>
+          {GENDER_MESSAGES[user.gender.name]} {user.height} cm / {user.weight} kg
+        </InfoText>
+        <div>
+          {user.description
+            ? <Description>{user.description}</Description>
+            : <div>조금 과묵한 타입</div>
+          }
+        </div>
+      </Info>
     </Container>
   );
 }

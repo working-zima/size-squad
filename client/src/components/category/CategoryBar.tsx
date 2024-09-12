@@ -7,7 +7,10 @@ import LoadingSpinner from '../ui/LoadingSpinner';
 
 import { Category, Summary } from '../../types';
 
-const Container = styled.div`
+const Container = styled.section`
+  display: flex;
+  flex-direction: column;
+  display: block;
   position: sticky;
   position: -webkit-sticky;
   top: 0;

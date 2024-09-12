@@ -79,9 +79,7 @@ const Pagination = ({
             key={pageIndex}
             isCurrent={currentIndex === pageIndex}
           >
-            <button onClick={() => handleMove(pageIndex)}>
-              {pageIndex + 1}
-            </button>
+            <button onClick={() => handleMove(pageIndex)} />
           </PageItem>
         ))}
       </PageList>
