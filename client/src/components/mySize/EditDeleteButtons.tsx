@@ -15,6 +15,7 @@ const Container = styled.div`
   font-weight: 500;
   font-size: 1.3rem;
   -webkit-tap-highlight-color: transparent;
+  user-select: none;
 
   .edit-link {
     color: ${(props) => props.theme.colors.primaryBlack};

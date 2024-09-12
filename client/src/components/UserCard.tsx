@@ -69,7 +69,7 @@ type UserCardProps = {
 };
 
 export default function UserCard({ user }: UserCardProps) {
-  console.log(!!user.description)
+
   return (
     <Container>
       <Name>
@@ -92,7 +92,7 @@ export default function UserCard({ user }: UserCardProps) {
         <LineClampedText
           text={user.description
             ? [user.description]
-            : ['아직 자신의 신체 정보를 업데이트하지 않았습니다.']
+            : ['아직 자신의 핏 정보를 작성하지 않았지만, 곧 멋진 업데이트가 있을 거예요']
           }
           lines={3}
           hasButton={false}

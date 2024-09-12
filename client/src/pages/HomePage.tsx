@@ -20,6 +20,7 @@ const Container = styled.div`
 
 const Title = styled.div`
   padding: 4rem 1rem 1.6rem 1rem;
+  user-select: none;
 
   h2 {
     font-size: 3.6rem;
@@ -34,7 +35,7 @@ const Title = styled.div`
 `
 
 const Cards = styled.div`
-  margin: 4rem 10px 4rem 10px;
+  margin: 4rem 10px 10rem 10px;
   border-width: 1px 0;
   border-radius: 2px;
   height: 180px;

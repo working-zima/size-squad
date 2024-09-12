@@ -6,13 +6,13 @@ const defaultTheme = {
     PrimaryBlue: '#0078ff',
     unSelectedText: '#666',
     secondaryTextColor: '#777777',
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#F1F6F9',
     dividerColor: '#e7e9ec',
     lineColor: '#f3f3f3',
     borderColor: '#C2C4C8',
     buttonBorderColor: '#e5e5e5',
-
   },
+
   sizes: {
     layoutWidth: '1080px',
     contentPadding: '1.6rem',

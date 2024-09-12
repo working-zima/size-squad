@@ -5,6 +5,11 @@ import styled from 'styled-components';
 const Container = styled.div`
   display: flex;
   justify-content: center;
+  position: relative;
+  width: 100%;
+  z-index: 100;
+  padding-bottom: 100px;
+  background-color: ${(props) => (props.theme.colors.primaryWhite)};
 `;
 
 const PageList = styled.ul`

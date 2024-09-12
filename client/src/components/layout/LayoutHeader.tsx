@@ -21,6 +21,7 @@ const Container = styled.header<ContainerProps>`
     ? 'white'
     : props.theme.colors.backgroundColor
   };
+  user-select: none;
 
   h1 {
     overflow: hidden;
@@ -29,6 +30,7 @@ const Container = styled.header<ContainerProps>`
     height: 1px;
     margin: -1px;
     clip: rect(0px, 0px, 0px, 0px);
+    -webkit-tap-highlight-color: transparent;
   }
 
   h2 {

@@ -1,42 +1,45 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+
 import styled, { keyframes } from 'styled-components'
+
 import Pagination from './Pagination';
 
-// 애니메이션 정의
+type Direction = 'left' | 'right'
+
 const leftCurrent = keyframes`
   0% {
     left: 0;
-    transform: translateX(0);
+    transform: translateY(0);
   }
   100% {
-    transform: translateX(100%);
+    transform: translateY(100%);
   }
 `;
 
 const leftNext = keyframes`
   0% {
-    transform: translateX(-100%);
+    transform: translateY(-100%);
   }
   100% {
-    transform: translateX(0);
+    transform: translateY(0);
   }
 `;
 
 const rightCurrent = keyframes`
   0% {
-    transform: translateX(0);
+    transform: translateY(0);
   }
   100% {
-    transform: translateX(-100%);
+    transform: translateY(-100%);
   }
 `;
 
 const rightNext = keyframes`
   0% {
-    transform: translateX(100%);
+    transform: translateY(100%);
   }
   100% {
-    transform: translateX(0);
+    transform: translateY(0);
   }
 `;
 
@@ -67,7 +70,7 @@ const CarouselWrapper = styled.div`
     left: 0;
     width: 100%;
     // 기본적으로 item은 왼쪽으로 숨기기
-    transform: translateX(-200%);
+    transform: translateY(-200%);
 
     img {
       display: block;
@@ -102,15 +105,15 @@ const CarouselWrapper = styled.div`
     }
 
     &.current {
-      transform: translateX(0);
+      transform: translateY(0);
     }
   }
 `;
 
 type CarouselProps<T> = {
-  items: T[]
-  initialIndex?: number
-  renderItem: (data: T) => JSX.Element
+  items: T[];
+  initialIndex?: number;
+  renderItem: (data: T) => JSX.Element;
 }
 
 export const Carousel = <T,>({
@@ -127,13 +130,10 @@ export const Carousel = <T,>({
   ) => {
     const $current = itemsRef.current[currentIndex] as HTMLLIElement
     const $next = itemsRef.current[nextIndex] as HTMLLIElement
-
     // 같은 Pagination 버튼을 클릭할 때는 animation이 없도록(nextIndex가 버튼 누른 인덱스)
     if (nextIndex === currentIndex) return
-
     // Pagination은 direction이 없음
     const dir = direction || (nextIndex > currentIndex ? 'right' : 'left')
-
     // 애니메이션이 끝나면 클래스 바꿔주기
     const handleAnimationEnd = () => {
       $current.className = 'item'
@@ -148,9 +148,26 @@ export const Carousel = <T,>({
     $next.classList.add(`${dir}_next`)
   }, [currentIndex])
 
+  // 방향 버튼 클릭시 호출
+  const move = useCallback((direction: Direction) => {
+    const nextIndex = ((
+      direction === 'right'
+        ? currentIndex + 1
+        : currentIndex - 1
+    ) + items.length) % items.length
+    moveTo(nextIndex, direction)
+  },
+    [items, currentIndex, moveTo],
+  )
+
   useEffect(() => {
     setCurrentIndex(initialIndex)
   }, [items, initialIndex])
+
+  useEffect(() => {
+    const timer = setInterval(() => { move('right') }, 5000);
+    return () => clearInterval(timer);
+  }, [move]);
 
   return (
     <CarouselWrapper>

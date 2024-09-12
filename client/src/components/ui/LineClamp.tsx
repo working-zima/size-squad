@@ -105,7 +105,7 @@ const LineClampedText = ({ text, lines, hasButton }: LineClampedText) => {
       <Text ref={elemRef} className='text'>
         {text}
       </Text>
-      {isClamped && hasButton
+      {(isClamped && hasButton)
         && <MoreButton
           isCollapsed={isCollapsed}
           onClick={() => setIsCollapsed(prev => !prev)}

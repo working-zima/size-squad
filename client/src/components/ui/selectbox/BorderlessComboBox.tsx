@@ -6,6 +6,7 @@ const SelectWrapper = styled.div`
   display: flex;
   position: relative;
   height: 21px;
+  user-select: none;
 
   select {
     appearance: none;

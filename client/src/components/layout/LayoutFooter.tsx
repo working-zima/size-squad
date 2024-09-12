@@ -35,7 +35,7 @@ const CopyrightWrapper = styled.div`
   height: 100%;
   width: 100%;
   margin-bottom: 2.4rem;
-
+  user-select: none;
 
   p {
     font-size: 1.4rem;

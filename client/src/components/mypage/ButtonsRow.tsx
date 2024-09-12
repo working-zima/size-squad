@@ -8,6 +8,7 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 14px 0;
+  user-select: none;
 
   button {
     width: 100%;

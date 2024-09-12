@@ -9,6 +9,7 @@ const Container = styled.div`
   flex-direction: column;
   font-weight: 500;
   margin-bottom: 4px;
+  user-select: none;
 
   div {
     font-size: 1.4rem;

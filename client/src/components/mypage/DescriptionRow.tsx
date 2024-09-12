@@ -4,6 +4,7 @@ import LineClampedText from "../ui/LineClamp"
 
 const Container = styled.div`
   font-weight: 500;
+  user-select: none;
 `
 
 export default function DescriptionRow({
