@@ -52,18 +52,6 @@ const InfoText = styled.p`
   color: ${props => props.theme.colors.secondaryTextColor};
 `;
 
-const Description = styled.p`
-  color: ${props => props.theme.colors.primaryBlack};
-  height: 100%;
-  line-height: 1.67;
-
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
-  -webkit-box-orient: vertical;
-`;
-
 type UserCardProps = {
   user: User;
 };

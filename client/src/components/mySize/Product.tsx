@@ -30,7 +30,7 @@ const InfoRow = styled.div`
   height: 40px;
 `;
 
-const Brand = styled.p`
+const Brand = styled.div`
   display: flex;
   flex: 2.5;
   word-break: break-all;
