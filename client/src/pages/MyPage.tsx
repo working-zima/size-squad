@@ -86,7 +86,11 @@ export default function MyPage() {
 
   return (
     <Container>
-      <Profile user={user} isOwner={isOwner} handleClickLogout={handleClickLogout} />
+      <Profile
+        user={user}
+        isOwner={isOwner}
+        handleClickLogout={handleClickLogout}
+      />
       <Sort
         totalDocs={totalDocs}
         allSubCategories={allSubCategories}

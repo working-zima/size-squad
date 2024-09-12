@@ -17,6 +17,7 @@ export default function DescriptionRow({
           : '간단한 체형 정보를 적어보세요'
         ]}
         lines={1}
+        hasButton={true}
       />
     </Container>
   )

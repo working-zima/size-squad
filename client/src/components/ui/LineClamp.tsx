@@ -77,9 +77,10 @@ const MoreButton = styled.button<MoreButtonProps>`
 type LineClampedText = {
   text: string[];
   lines: number;
+  hasButton: boolean;
 }
 
-const LineClampedText = ({ text, lines }: LineClampedText) => {
+const LineClampedText = ({ text, lines, hasButton }: LineClampedText) => {
   const cloneRef = useRef<HTMLInputElement>(null);
   const elemRef = useRef<HTMLInputElement>(null);
   const [isClamped, setIsClamped] = useState(true);
@@ -97,7 +98,6 @@ const LineClampedText = ({ text, lines }: LineClampedText) => {
     <Content
       isCollapsed={isCollapsed}
       lines={lines}
-      onClick={() => setIsCollapsed(prev => !prev)}
     >
       <TextClone ref={cloneRef}>
         {text}
@@ -105,9 +105,10 @@ const LineClampedText = ({ text, lines }: LineClampedText) => {
       <Text ref={elemRef} className='text'>
         {text}
       </Text>
-      {isClamped
+      {isClamped && hasButton
         && <MoreButton
           isCollapsed={isCollapsed}
+          onClick={() => setIsCollapsed(prev => !prev)}
         />
       }
     </Content>
