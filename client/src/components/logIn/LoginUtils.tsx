@@ -29,9 +29,9 @@ type LoginUtils = {
 export function LoginUtils({ state, errorMessage }: LoginUtils) {
   const [, store] = useLoginFormStore();
   const { modalRef, openModal, closeModal } = useModal();
-
+  console.log(errorMessage)
   useEffect(() => {
-    if (state === 'loading') openModal();
+    if (state === 'error') openModal();
   }, [state]);
 
   const handleConfirm = (event?: React.MouseEvent) => {
