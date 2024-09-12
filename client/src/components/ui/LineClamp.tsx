@@ -41,11 +41,11 @@ const TextClone = styled.div`
   z-index: -1;
 `;
 
-type ButtonMoreProps = {
+type MoreButtonProps = {
   isCollapsed: boolean;
 }
 
-const ButtonMore = styled.button<ButtonMoreProps>`
+const MoreButton = styled.button<MoreButtonProps>`
   position: absolute;
   right: 10px;
   bottom: ${props => props.isCollapsed ? `15px` : `10px`};
@@ -87,12 +87,9 @@ const LineClampedText = ({ text, lines }: LineClampedText) => {
 
   useEffect(() => {
     if (elemRef.current && cloneRef.current) {
-      setIsClamped(
-        Math.floor(
-          cloneRef.current.offsetHeight /
-          parseInt(getComputedStyle(elemRef.current).lineHeight)
-        ) > (lines || 0)
-      );
+      const cloneHeight = cloneRef.current.offsetHeight;
+      const lineHeight = parseInt(getComputedStyle(elemRef.current).lineHeight);
+      setIsClamped(Math.ceil(cloneHeight / lineHeight) > (lines || 0));
     }
   }, [lines]);
 
@@ -109,7 +106,7 @@ const LineClampedText = ({ text, lines }: LineClampedText) => {
         {text}
       </Text>
       {isClamped
-        && <ButtonMore
+        && <MoreButton
           isCollapsed={isCollapsed}
         />
       }
