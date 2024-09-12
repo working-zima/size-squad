@@ -12,6 +12,7 @@ const Container = styled.div`
   border-top: 1px solid ${props => props.theme.colors.dividerColor};
   align-items: center;
   height: 130px;
+  gap: 18px;
 `;
 
 const Name = styled.div`
@@ -41,20 +42,22 @@ const Info = styled.div`
   display: flex;
   flex: 3;
   flex-direction: column;
+  height: 100%;
 `;
 
 const InfoText = styled.p`
-  margin: 0;
+  margin: 12px 0;
   font-size: 1.4rem;
   color: ${props => props.theme.colors.secondaryTextColor};
 `;
 
 const Description = styled.p`
-  margin: 0;
-  font-size: 1.2rem;
+  display: flex;
   color: ${props => props.theme.colors.primaryBlack};
+  height: 100%;
+  line-height: 1.67;
+
   -webkit-line-clamp: 2;
-  display: -webkit-box;
   overflow: hidden;
   -webkit-box-orient: vertical;
 `;
@@ -74,14 +77,14 @@ export default function UserCard({ user }: UserCardProps) {
       </Name>
       <Info>
         <InfoText>
-          {GENDER_MESSAGES[user.gender.name]} {user.height} cm / {user.weight} kg
+          {user.height ? `${user.height}cm` : ''} {user.weight ? `${user.weight}kg` : ''} {GENDER_MESSAGES[user.gender.name]}
         </InfoText>
-        <div>
+        <>
           {user.description
             ? <Description>{user.description}</Description>
-            : <div>조금 과묵한 타입</div>
+            : <Description>아직 자신의 신체 정보를 업데이트하지 않았습니다.</Description>
           }
-        </div>
+        </>
       </Info>
     </Container>
   );

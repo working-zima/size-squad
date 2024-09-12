@@ -18,10 +18,6 @@ const Container = styled.div`
   word-break: keep-all;
 `
 
-const Section = styled.section`
-
-`
-
 const Title = styled.div`
   padding: 4rem 1rem 1.6rem 1rem;
 
