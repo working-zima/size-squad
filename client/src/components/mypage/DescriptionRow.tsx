@@ -10,13 +10,11 @@ const Container = styled.div`
 export default function DescriptionRow({
   description
 }: { description: string }) {
+
   return (
     <Container>
       <LineClampedText
-        text={[description
-          ? description
-          : '간단한 체형 정보를 적어보세요'
-        ]}
+        text={[description]}
         lines={1}
         hasButton={true}
       />

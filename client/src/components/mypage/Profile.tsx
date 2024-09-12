@@ -28,6 +28,7 @@ type ProfileProps = {
 export default function Profile({
   user, isOwner, handleClickLogout
 }: ProfileProps) {
+
   return (
     <Container>
       <UserRow user={user} />
