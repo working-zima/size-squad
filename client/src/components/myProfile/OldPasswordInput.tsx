@@ -17,7 +17,7 @@ const ValidTextWrapper = styled.p`
   margin-top: 4px;
   font-size: 1.2rem;
   line-height: 16px;
-  color: #e72a1d;
+  color: ${props => props.theme.colors.primaryRed};
 `
 
 type OldPasswordErrorMessageProps = {
@@ -28,8 +28,8 @@ type OldPasswordErrorMessageProps = {
 const PasswordErrorMessage = ({
   oldPassword, isOldPasswordValid
 }: OldPasswordErrorMessageProps) => {
-  if (oldPassword === "") return ERROR_MESSAGES.PASSWORD_EMPTY_MESSAGE;
-  if (!isOldPasswordValid) return ERROR_MESSAGES.PASSWORD_INVALID_MESSAGE;
+  if (oldPassword === "") return ERROR_MESSAGES.PASSWORD_EMPTY;
+  if (!isOldPasswordValid) return ERROR_MESSAGES.PASSWORD_INVALID;
   return null;
 };
 

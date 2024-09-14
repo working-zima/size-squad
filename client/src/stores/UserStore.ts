@@ -7,7 +7,7 @@ import { ApiState, PaginationResponse, SortOption, User } from "../types";
 
 import { nullUser } from "../nullObject";
 
-import { PER, SORT_OPTIONS } from "../constants";
+import { ERROR_MESSAGES, FETCH_STATE, DEFAULT_PER, SORT_OPTIONS } from "../constants";
 
 @singleton()
 @Store()
@@ -24,7 +24,7 @@ class UserStore {
 
   keyword = '';
 
-  per = PER;
+  per = DEFAULT_PER;
 
   totalDocs = 0;
 
@@ -32,7 +32,7 @@ class UserStore {
 
   errorMessage = '';
 
-  state: ApiState = 'idle'
+  state: ApiState = FETCH_STATE.IDLE;
 
   get passwordValid() {
     return
@@ -80,7 +80,7 @@ class UserStore {
     this.isOwner = false;
     this.page = 1;
     this.errorMessage = '';
-    this.state = 'idle';
+    this.state = FETCH_STATE.IDLE;;
   }
 
   @Action()
@@ -105,7 +105,7 @@ class UserStore {
       this.setDone();
     } catch (error) {
       const typedError = error as { status?: number; message: string };
-      this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
+      this.errorMessage = typedError.message || ERROR_MESSAGES.UNEXPECTED;
 
       this.setError();
     }
@@ -143,7 +143,7 @@ class UserStore {
       this.setDone();
     } catch (error) {
       const typedError = error as { status?: number; message: string };
-      this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
+      this.errorMessage = typedError.message || ERROR_MESSAGES.UNEXPECTED;
 
       this.setError();
     }
@@ -152,18 +152,18 @@ class UserStore {
   @Action()
   private startLoading() {
     this.reset()
-    this.state = 'loading';
+    this.state = FETCH_STATE.LOADING;
   }
 
   @Action()
   private setDone() {
-    this.state = 'fetched';
+    this.state = FETCH_STATE.FETCHED;
   }
 
   @Action()
   private setError() {
     this.user = nullUser;
-    this.state = 'error';
+    this.state = FETCH_STATE.ERROR;
   }
 }
 

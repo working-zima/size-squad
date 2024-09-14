@@ -5,7 +5,7 @@ import { ApiState, PaginationResponse, ProductResponse, SortOption } from '../ty
 
 import { apiService } from '../services/ApiService';
 
-import { PER, SORT_OPTIONS } from '../constants';
+import { ERROR_MESSAGES, FETCH_STATE, DEFAULT_PER, SORT_OPTIONS } from '../constants';
 
 type handleParameterProps = {
   sortOption: SortOption;
@@ -30,7 +30,7 @@ class ProductsStore {
 
   keyword = '';
 
-  per = PER;
+  per = DEFAULT_PER;
 
   hasNextPage = true;
 
@@ -40,7 +40,7 @@ class ProductsStore {
 
   errorMessage = '';
 
-  state: ApiState = 'idle'
+  state: ApiState = FETCH_STATE.IDLE;
 
   @Action()
   reset() {
@@ -49,10 +49,10 @@ class ProductsStore {
     this.page = 1;
     this.userId = '';
     this.keyword = '';
-    this.per = PER;
+    this.per = DEFAULT_PER;
     this.hasNextPage = true;
     this.totalDocs = 0;
-    this.state = 'idle';
+    this.state = FETCH_STATE.IDLE;;
   }
 
   @Action()
@@ -138,7 +138,7 @@ class ProductsStore {
     categoryId = '',
     subCategoryId = '',
     sortCode,
-    per = PER,
+    per = DEFAULT_PER,
     userId = ''
   }: {
     keyword?: string;
@@ -148,7 +148,7 @@ class ProductsStore {
     per?: number;
     userId?: string;
   }) {
-    if (this.state === 'loading') return;
+    if (this.state === FETCH_STATE.LOADING) return;
     this.reset();
     this.startLoading();
     try {
@@ -165,22 +165,21 @@ class ProductsStore {
         sortField,
         sortOrder,
         page: 1,
-        per: per,
+        per: 2,
         userId,
       });
-
       this.handleProductResponse(products);
       this.handleParameter({ sortOption, per, categoryId, subCategoryId, userId })
       this.setDone();
     } catch (error) {
       const typedError = error as { message: string };
-      this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.';
+      this.errorMessage = typedError.message || ERROR_MESSAGES.UNEXPECTED;;
       this.setError();
     }
   }
 
   async fetchMoreMyProducts() {
-    if (this.state === 'loading' || !this.hasNextPage) return;
+    if (this.state === FETCH_STATE.LOADING || !this.hasNextPage) return;
     this.startLoading();
     try {
       const sortField = Object.keys(this.sortOption.sort)[0];
@@ -196,12 +195,11 @@ class ProductsStore {
         per: this.per,
         userId: this.userId
       });
-
       this.handleProductResponse(products);
       this.setDone();
     } catch (error) {
       const typedError = error as { message: string };
-      this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.';
+      this.errorMessage = typedError.message || ERROR_MESSAGES.UNEXPECTED;;
       this.setError();
     }
   }
@@ -214,7 +212,7 @@ class ProductsStore {
     categoryId = '',
     subCategoryId = '',
     sortCode,
-    per = PER,
+    per = DEFAULT_PER,
   }: {
     keyword?: string,
     categoryId?: string,
@@ -222,7 +220,7 @@ class ProductsStore {
     sortCode?: string,
     per?: number
   }) {
-    if (this.state === 'loading') return;
+    if (this.state === FETCH_STATE.LOADING) return;
     this.reset();
     this.startLoading();
 
@@ -248,13 +246,13 @@ class ProductsStore {
       this.setDone();
     } catch (error) {
       const typedError = error as { message: string };
-      this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
+      this.errorMessage = typedError.message || ERROR_MESSAGES.UNEXPECTED;
       this.setError();
     }
   }
 
   async fetchMoreProducts({ keyword }: { keyword?: string }) {
-    if (this.state === 'loading' || !this.hasNextPage) return;
+    if (this.state === FETCH_STATE.LOADING || !this.hasNextPage) return;
     this.startLoading();
     try {
       const sortField = Object.keys(this.sortOption.sort)[0];
@@ -274,7 +272,7 @@ class ProductsStore {
       this.setDone();
     } catch (error) {
       const typedError = error as { message: string };
-      this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.';
+      this.errorMessage = typedError.message || ERROR_MESSAGES.UNEXPECTED;
       this.setError();
     }
   }
@@ -290,24 +288,24 @@ class ProductsStore {
       await this.fetchMyInitialProducts({ userId: this.userId });
     } catch (error) {
       const typedError = error as { message: string };
-      this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
+      this.errorMessage = typedError.message || ERROR_MESSAGES.UNEXPECTED;
       this.setError();
     }
   }
 
   @Action()
   private startLoading() {
-    this.state = 'loading';
+    this.state = FETCH_STATE.LOADING;
   }
 
   @Action()
   private setDone() {
-    this.state = 'fetched';
+    this.state = FETCH_STATE.FETCHED;
   }
 
   @Action()
   private setError() {
-    this.state = 'error';
+    this.state = FETCH_STATE.ERROR;
   }
 }
 

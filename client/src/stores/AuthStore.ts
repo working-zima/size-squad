@@ -6,28 +6,30 @@ import { nullUser } from '../nullObject';
 
 import { apiService } from '../services/ApiService';
 
+import { ERROR_MESSAGES, FETCH_STATE, LOCAL_STORAGE } from '../constants';
+
 @singleton()
 @Store()
 class AuthStore {
-  isAutoLogin = localStorage.getItem('isAutoLogin') === 'true';
+  isAutoLogin = localStorage.getItem(LOCAL_STORAGE.AUTO_LOGIN) === 'true';
 
   user: User = nullUser;
 
   errorMessage = '';
 
-  state: ApiState = 'idle'
+  state: ApiState = FETCH_STATE.IDLE;
 
   @Action()
   reset() {
     this.user = nullUser;
     this.errorMessage = '';
-    this.state = 'idle';
+    this.state = FETCH_STATE.IDLE;
   }
 
   @Action()
   setIsAutoLogin() {
     this.isAutoLogin = !this.isAutoLogin;
-    localStorage.setItem('isAutoLogin', this.isAutoLogin.toString())
+    localStorage.setItem(LOCAL_STORAGE.AUTO_LOGIN, this.isAutoLogin.toString())
   }
 
   @Action()
@@ -44,7 +46,7 @@ class AuthStore {
       this.setDone();
     } catch (error) {
       const typedError = error as { status?: number; message: string };
-      this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
+      this.errorMessage = typedError.message || ERROR_MESSAGES.UNEXPECTED;
 
       this.setError();
     }
@@ -53,17 +55,17 @@ class AuthStore {
   @Action()
   private startLoading() {
     this.reset()
-    this.state = 'loading';
+    this.state = FETCH_STATE.LOADING;
   }
 
   @Action()
   private setDone() {
-    this.state = 'fetched';
+    this.state = FETCH_STATE.FETCHED;
   }
 
   @Action()
   private setError() {
-    this.state = 'error';
+    this.state = FETCH_STATE.ERROR;
   }
 }
 

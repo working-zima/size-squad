@@ -8,6 +8,8 @@ import { apiService } from "../services/ApiService";
 
 import { nullUser } from "../nullObject";
 
+import { ERROR_MESSAGES, FETCH_STATE } from "../constants";
+
 @singleton()
 @Store()
 class SignupFormStore {
@@ -21,8 +23,7 @@ class SignupFormStore {
 
   errorMessage = '';
 
-  state: ApiState = 'idle'
-
+  state: ApiState = FETCH_STATE.IDLE;
   isEmailDuplicated = false;
 
   isEmailValid = false;
@@ -83,7 +84,7 @@ class SignupFormStore {
         this.changeIsEmailDuplicated(!!isDuplicated);
       } catch (error) {
         const typedError = error as { message: string };
-        this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
+        this.errorMessage = typedError.message || ERROR_MESSAGES.UNEXPECTED;
 
         this.setError()
       }
@@ -110,7 +111,7 @@ class SignupFormStore {
         this.changeIsNameDuplicated(!!isDuplicated);
       } catch (error) {
         const typedError = error as { message: string };
-        this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
+        this.errorMessage = typedError.message || ERROR_MESSAGES.UNEXPECTED;
 
         this.setError()
       }
@@ -208,7 +209,7 @@ class SignupFormStore {
     this.oldPassword = '';
     this.accessToken = '';
 
-    this.state = 'idle';
+    this.state = FETCH_STATE.IDLE;
 
     this.isNameDuplicated = false;
     this.isEmailValid = false;
@@ -231,7 +232,7 @@ class SignupFormStore {
       this.setDone()
     } catch (error) {
       const typedError = error as { message: string };
-      this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
+      this.errorMessage = typedError.message || ERROR_MESSAGES.UNEXPECTED;
 
       this.setError()
     }
@@ -249,7 +250,7 @@ class SignupFormStore {
     } catch (error) {
       const typedError = error as { status?: number; message: string };
       if (typedError.status === 400) this.errorMessage = '현재 비밀번호가 맞지 않습니다.'
-      else this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
+      else this.errorMessage = typedError.message || ERROR_MESSAGES.UNEXPECTED;
 
       this.setError()
       throw error
@@ -266,7 +267,7 @@ class SignupFormStore {
       this.reset();
     } catch (error) {
       const typedError = error as { message: string };
-      this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
+      this.errorMessage = typedError.message || ERROR_MESSAGES.UNEXPECTED;
 
       this.setError()
     }
@@ -282,7 +283,7 @@ class SignupFormStore {
       this.reset();
     } catch (error) {
       const typedError = error as { message: string };
-      this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
+      this.errorMessage = typedError.message || ERROR_MESSAGES.UNEXPECTED;
 
       this.setError()
     }
@@ -298,7 +299,7 @@ class SignupFormStore {
       this.reset();
     } catch (error) {
       const typedError = error as { message: string };
-      this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
+      this.errorMessage = typedError.message || ERROR_MESSAGES.UNEXPECTED;
 
       this.setError()
     }
@@ -314,7 +315,7 @@ class SignupFormStore {
       this.reset();
     } catch (error) {
       const typedError = error as { message: string };
-      this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
+      this.errorMessage = typedError.message || ERROR_MESSAGES.UNEXPECTED;
 
       this.setError()
     }
@@ -322,12 +323,12 @@ class SignupFormStore {
 
   @Action()
   private startLoading() {
-    this.state = 'loading';
+    this.state = FETCH_STATE.LOADING;
   }
 
   @Action()
   private setDone() {
-    this.state = 'fetched';
+    this.state = FETCH_STATE.FETCHED;
   }
 
   @Action()
@@ -335,7 +336,7 @@ class SignupFormStore {
     this.user = nullUser;
     this.passwordConfirmation = '';
     this.oldPassword = '';
-    this.state = 'error';
+    this.state = FETCH_STATE.ERROR;
   }
 }
 

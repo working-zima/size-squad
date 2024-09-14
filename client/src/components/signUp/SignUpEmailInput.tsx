@@ -15,7 +15,7 @@ const ValidTextWrapper = styled.p`
   margin-top: 4px;
   font-size: 1.2rem;
   line-height: 1.67;
-  color: #e72a1d;
+  color: ${props => props.theme.colors.primaryRed};
 `
 
 type ErrorMessageProps = {
@@ -27,9 +27,9 @@ type ErrorMessageProps = {
 const ErrorMessage = ({
   email, isEmailDuplicated, isEmailValid
 }: ErrorMessageProps) => {
-  if (email === "") return ERROR_MESSAGES.EMAIL_EMPTY_MESSAGE;
-  if (isEmailDuplicated) return ERROR_MESSAGES.EMAIL_DUPLICATED_MESSAGE;
-  if (!isEmailValid) return ERROR_MESSAGES.EMAIL_INVALID_MESSAGE;
+  if (email === "") return ERROR_MESSAGES.EMAIL_EMPTY;
+  if (isEmailDuplicated) return ERROR_MESSAGES.EMAIL_DUPLICATED;
+  if (!isEmailValid) return ERROR_MESSAGES.EMAIL_INVALID;
   return null;
 };
 

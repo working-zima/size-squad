@@ -6,6 +6,8 @@ import { nullCategory, nullSize, nullSummary } from '../nullObject';
 
 import { apiService } from '../services/ApiService';
 
+import { ERROR_MESSAGES, FETCH_STATE } from '../constants';
+
 @singleton()
 @Store()
 class InitialDataStore {
@@ -19,7 +21,7 @@ class InitialDataStore {
 
   errorMessage = '';
 
-  state: ApiState = 'idle'
+  state: ApiState = FETCH_STATE.IDLE;
 
   @Action()
   reset() {
@@ -28,7 +30,7 @@ class InitialDataStore {
     this.sizes = [nullSize];
     this.fits = [nullSummary];
     this.errorMessage = ''
-    this.state = 'idle';
+    this.state = FETCH_STATE.IDLE;;
   }
 
   @Action()
@@ -48,7 +50,7 @@ class InitialDataStore {
       this.setDone();
     } catch (error) {
       const typedError = error as { status?: number; message: string };
-      this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
+      this.errorMessage = typedError.message || ERROR_MESSAGES.UNEXPECTED;
 
       this.setError()
     }
@@ -60,17 +62,17 @@ class InitialDataStore {
     this.genders = [nullSummary];
     this.sizes = [nullSize];
     this.fits = [nullSummary];
-    this.state = 'loading';
+    this.state = FETCH_STATE.LOADING;
   }
 
   @Action()
   private setDone() {
-    this.state = 'fetched';
+    this.state = FETCH_STATE.FETCHED;
   }
 
   @Action()
   private setError() {
-    this.state = 'error';
+    this.state = FETCH_STATE.ERROR;
   }
 }
 

@@ -16,7 +16,7 @@ const ValidTextWrapper = styled.p`
   margin-top: 4px;
   font-size: 1.2rem;
   line-height: 16px;
-  color: #e72a1d;
+  color: ${props => props.theme.colors.primaryRed};
 `
 
 type ConfirmErrorMessageProps = {
@@ -28,7 +28,7 @@ const ConfirmErrorMessage = ({
   isPasswordConfirmationValid
 }: ConfirmErrorMessageProps) => {
   if (!isPasswordConfirmationValid) {
-    return ERROR_MESSAGES.CONFIRM_INVALID_MESSAGE;
+    return ERROR_MESSAGES.CONFIRM_INCORRECT;
   }
   return null;
 };

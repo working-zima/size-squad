@@ -7,6 +7,7 @@ import { nullProduct, nullSummary } from '../nullObject';
 import { apiService } from '../services/ApiService';
 
 import { append, sanitizeMeasurementInput, update } from '../utils';
+import { ERROR_MESSAGES, FETCH_STATE } from '../constants';
 
 @singleton()
 @Store()
@@ -19,7 +20,7 @@ class ProductFormStore {
 
   errorMessage = '';
 
-  state: ApiState = 'idle'
+  state: ApiState = FETCH_STATE.IDLE;
 
   private isBrandValid = false;
 
@@ -161,7 +162,7 @@ class ProductFormStore {
     this.type = nullSummary;
     this.currentSubCategories = [];
     this.errorMessage = '';
-    this.state = 'idle';
+    this.state = FETCH_STATE.IDLE;
   }
 
   @Action()
@@ -203,7 +204,7 @@ class ProductFormStore {
       this.setDone();
     } catch (error) {
       const typedError = error as { status?: number; message: string };
-      this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
+      this.errorMessage = typedError.message || ERROR_MESSAGES.UNEXPECTED;
 
       this.setError();
     }
@@ -232,7 +233,7 @@ class ProductFormStore {
       this.setDone();
     } catch (error) {
       const typedError = error as { status?: number; message: string };
-      this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
+      this.errorMessage = typedError.message || ERROR_MESSAGES.UNEXPECTED;
 
       this.setError();
     }
@@ -247,7 +248,7 @@ class ProductFormStore {
       this.setDone();
     } catch (error) {
       const typedError = error as { status?: number; message: string };
-      this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
+      this.errorMessage = typedError.message || ERROR_MESSAGES.UNEXPECTED;
 
       this.setError();
     }
@@ -257,17 +258,17 @@ class ProductFormStore {
   private startLoading() {
     this.reset()
     this.errorMessage = '';
-    this.state = 'loading';
+    this.state = FETCH_STATE.LOADING;
   }
 
   @Action()
   private setDone() {
-    this.state = 'fetched';
+    this.state = FETCH_STATE.FETCHED;
   }
 
   @Action()
   private setError() {
-    this.state = 'error';
+    this.state = FETCH_STATE.ERROR;
   }
 }
 

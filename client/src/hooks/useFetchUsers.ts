@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 
 import useUserStore from './useUserStore'
-import { PER } from '../constants';
+import { DEFAULT_PER } from '../constants';
 
 type useFetchUserStoreProps = {
   keyword?: string,
@@ -12,7 +12,7 @@ type useFetchUserStoreProps = {
 export default function useFetchUsers({
   keyword,
   sortCode,
-  per = PER
+  per = DEFAULT_PER
 }: useFetchUserStoreProps) {
   const [{ users, state, errorMessage }, store] = useUserStore();
 

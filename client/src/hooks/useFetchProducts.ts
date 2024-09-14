@@ -2,7 +2,8 @@ import { useEffect, useRef } from 'react';
 
 import useProductsStore from './useProductsStore';
 import useIntersectionObserver from './useIntersectionObserver';
-import { PER } from '../constants';
+
+import { DEFAULT_PER } from '../constants';
 
 const ioOptions = { threshold: 1 }
 
@@ -19,7 +20,7 @@ export default function useFetchProducts({
   categoryId,
   subCategoryId,
   sortCode,
-  per = PER
+  per = DEFAULT_PER
 }: useInfiniteScrollProps) {
   const [{
     products = [],

@@ -5,7 +5,7 @@ import Button from '../ui/Button';
 import useViewModeStore from '../../hooks/useViewModeStore';
 import useAccessToken from '../../hooks/useAccessToken';
 
-const Container = styled.div`
+const Container = styled.aside`
   display: flex;
   flex-direction: column;
   position: fixed;

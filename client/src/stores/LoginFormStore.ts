@@ -4,6 +4,7 @@ import { Store, Action } from 'usestore-ts';
 
 import { apiService } from '../services/ApiService';
 import { ApiState } from '../types';
+import { ERROR_MESSAGES, FETCH_STATE } from '../constants';
 
 @singleton()
 @Store()
@@ -16,7 +17,7 @@ class LoginFormStore {
 
   errorMessage = '';
 
-  state: ApiState = 'idle'
+  state: ApiState = FETCH_STATE.IDLE;
 
   get valid() {
     return this.email.includes('@') && !!this.password;
@@ -44,7 +45,7 @@ class LoginFormStore {
     this.password = '';
     this.accessToken = '';
     this.errorMessage = '';
-    this.state = 'idle';
+    this.state = FETCH_STATE.IDLE;
   }
 
   async login() {
@@ -58,8 +59,8 @@ class LoginFormStore {
       this.setDone();
     } catch (error) {
       const typedError = error as { status?: number; message: string };
-      if (typedError.status === 400) this.errorMessage = '아이디 또는 비밀번호가 맞지 않습니다.'
-      else this.errorMessage = typedError.message || '예기치 못한 오류가 발생했습니다.'
+      if (typedError.status === 400) this.errorMessage = ERROR_MESSAGES.INVALID_LOGIN
+      else this.errorMessage = typedError.message || ERROR_MESSAGES.UNEXPECTED;
 
       this.setError()
     }
@@ -68,17 +69,17 @@ class LoginFormStore {
   private startLoading() {
     this.email = '';
     this.password = '';
-    this.state = 'loading';
+    this.state = FETCH_STATE.LOADING;
   }
 
   @Action()
   private setDone() {
-    this.state = 'fetched';
+    this.state = FETCH_STATE.FETCHED;
   }
 
   @Action()
   private setError() {
-    this.state = 'error';
+    this.state = FETCH_STATE.ERROR;
   }
 }
 

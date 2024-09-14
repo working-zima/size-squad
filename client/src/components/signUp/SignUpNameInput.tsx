@@ -16,7 +16,7 @@ const ValidTextWrapper = styled.p`
   margin-top: 4px;
   font-size: 1.2rem;
   line-height: 16px;
-  color: #e72a1d;
+  color: ${props => props.theme.colors.primaryRed};
 `
 
 type ErrorMessageProps = {
@@ -28,9 +28,9 @@ type ErrorMessageProps = {
 const ErrorMessage = ({
   name, isNameDuplicated, isNameValid
 }: ErrorMessageProps) => {
-  if (name === "") return ERROR_MESSAGES.NAME_EMPTY_MESSAGE;
-  if (isNameDuplicated) return ERROR_MESSAGES.NAME_DUPLICATED_MESSAGE;
-  if (!isNameValid) return ERROR_MESSAGES.NAME_INVALID_MESSAGE;
+  if (name === "") return ERROR_MESSAGES.NAME_EMPTY;
+  if (isNameDuplicated) return ERROR_MESSAGES.NAME_DUPLICATED;
+  if (!isNameValid) return ERROR_MESSAGES.NAME_INVALID;
   return null;
 };
 

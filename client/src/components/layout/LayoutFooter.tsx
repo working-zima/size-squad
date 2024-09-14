@@ -122,10 +122,10 @@ export default function LayoutFooter() {
             : (
               <div>
                 <p>
-                  팀원만 이용할 수 있는 문의 기능입니다. <Link to='login'>로그인</Link> 후 이용해 보세요.
+                  팀원만 이용할 수 있는 문의 기능입니다. <Link to='login'>로그인</Link> 후 이용해 주세요.
                 </p>
                 <p>
-                  아직 스쿼드의 일원이 아니라면 지금 <Link to='signup'>합류</Link>해 보세요.
+                  혹시 아직 스쿼드의 일원이 아니라면 지금 <Link to='signup'>합류</Link>해 보세요.
                 </p>
               </div>
             )
