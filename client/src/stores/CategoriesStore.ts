@@ -32,6 +32,7 @@ class CategoriesStore {
     this.allSubCategories = categories.reduce<Summary[]>(
       (acc, category) => [...acc, ...category.subCategories], []
     )
+    this.errorMessage = '';
   }
 
   async fetchCategories() {

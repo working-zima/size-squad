@@ -41,11 +41,13 @@ class UserStore {
   @Action()
   private setUser(user: User) {
     this.user = user;
+    this.errorMessage = '';
   }
 
   @Action()
   private setUsers(users: User[]) {
     this.users = users;
+    this.errorMessage = '';
   }
 
   @Action()

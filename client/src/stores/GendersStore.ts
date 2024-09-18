@@ -27,6 +27,7 @@ class GendersStore {
   @Action()
   private setGender(genders: Summary[]) {
     this.genders = genders;
+    this.errorMessage = '';
   }
 
   async fetchGenders() {

@@ -10,6 +10,7 @@ import {
   PaginationResponse,
   UserWithOwnership,
 } from '../types';
+import { LOCAL_STORAGE } from '../constants';
 
 const MOCK_BASE_URL = 'http://localhost:5000';
 
@@ -17,6 +18,16 @@ export default class ApiService {
   private instance = axios.create({ baseURL: MOCK_BASE_URL });
 
   private accessToken = '';
+
+  private isAutoLogin = false;
+
+  private isRefreshing = false;
+
+  private failedQueue: Array<(token: string) => void> = [];
+
+  setIsAutoLogin(isAutoLogin: boolean) {
+    this.isAutoLogin = isAutoLogin;
+  }
 
   constructor() {
     // 응답 인터셉트
@@ -67,22 +78,57 @@ export default class ApiService {
 
   onErrorResponse = async (error: AxiosError | Error) => {
     if (axios.isAxiosError(error)) {
-      const { message } = error;
+      const { message, response } = error;
       const { method, url } = error.config as AxiosRequestConfig;
 
       // 네트워크 오류 처리
-      if (!error.response) {
+      if (!response) {
         this.logOnDev(
           `[API] ${method?.toUpperCase()} ${url} | Network Error: ${message}`
         );
-
-        this.onError(
-          undefined, "네트워크 오류가 발생했습니다."
-        );
+        this.onError(undefined, "네트워크 오류가 발생했습니다.");
         return Promise.reject(error);
       }
 
-      const { status, statusText } = error.response as AxiosResponse;
+      const { status, statusText } = response as AxiosResponse;
+
+      // 토큰 재발급 요청
+      if (status === 401 && response.data.message === "TokenExpired") {
+        console.log(`isRefreshing`, this.isRefreshing)
+        if (!this.isRefreshing) {
+          try {
+            const tokenRefreshResult = await this.reissueToken();
+            console.log(`accessToken: `, tokenRefreshResult)
+            const { accessToken } = tokenRefreshResult.data
+
+            // 새로 발급받은 토큰을 스토리지에 저장
+            const storage = this.isAutoLogin ? localStorage : sessionStorage;
+            storage.setItem(LOCAL_STORAGE.ACCESS_TOKEN, accessToken);
+            this.setAccessToken(accessToken);
+
+            console.log(`failedQueue: `, this.failedQueue)
+            // 큐에 있는 모든 요청에 대해 토큰을 설정하고 다시 요청
+            this.failedQueue.forEach(callback => callback(accessToken));
+            this.failedQueue = [];
+
+            // 토큰 갱신 성공. API 재요청
+            return this.instance.request(error.config as AxiosRequestConfig)
+          } catch (error) {
+            console.log(`check onErrorResponse1`)
+            this.onError(401, "인증 실패입니다.");
+          } finally {
+            this.isRefreshing = false;
+          }
+        }
+
+        return new Promise((resolve) => {
+          this.failedQueue.push((token: string) => {
+            // this.setAccessToken(token);
+            this.instance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            resolve(this.instance.request(error.config as AxiosRequestConfig));
+          });
+        });
+      }
 
       this.logOnDev(
         `[API] ${method?.toUpperCase()} ${url}
@@ -95,6 +141,7 @@ export default class ApiService {
           this.onError(status, "잘못된 요청입니다.");
           break;
         case 401: {
+          console.log(`check onErrorResponse2`)
           this.onError(status, "인증 실패입니다.");
           break;
         }
@@ -238,6 +285,18 @@ export default class ApiService {
 
   async logout(): Promise<void> {
     await this.instance.delete('/session');
+  }
+
+  async reissueToken() {
+    try {
+      const tokenRefreshResult = await this.instance.get('/session');
+      console.log('Token refresh result:', tokenRefreshResult);
+      this.setAccessToken(tokenRefreshResult.data.accessToken);
+      return tokenRefreshResult;
+    } catch (error) {
+      console.log('Error refreshing token:', error);
+      throw error;
+    }
   }
 
   // users

@@ -3,7 +3,8 @@ import { ApiState, PageConfig, SortOption } from "./types";
 export const DEFAULT_PER = 8;
 
 export const LOCAL_STORAGE: Record<string, string> = {
-  AUTO_LOGIN: 'isAutoLogin'
+  AUTO_LOGIN: 'isAutoLogin',
+  ACCESS_TOKEN: 'accessToken'
 }
 
 export const FETCH_STATE: Record<string, ApiState> = {

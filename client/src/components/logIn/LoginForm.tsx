@@ -10,7 +10,8 @@ import Divider from '../ui/Divider';
 
 import useAccessToken from '../../hooks/useAccessToken';
 import useLoginFormStore from '../../hooks/useLoginFormStore';
-import useAuthStore from '../../hooks/useAuthStore';
+
+import { apiService } from '../../services/ApiService';
 
 const Container = styled.div.attrs({ className: 'MemberWrapper' })`
   padding: 20px ${props => props.theme.sizes.contentPadding} 0;
@@ -24,13 +25,11 @@ const Container = styled.div.attrs({ className: 'MemberWrapper' })`
 export default function LoginForm() {
   const [isShowPw, setIsShowPw] = useState(false);
 
-  const { setAccessToken } = useAccessToken();
+  const { isAutoLogin, setAccessToken, setIsAutoLogin } = useAccessToken();
 
   const [
     { email, password, valid, state, errorMessage, accessToken }, store
   ] = useLoginFormStore();
-
-  const [{ isAutoLogin }, AuthStoreStore] = useAuthStore();
 
   useEffect(() => {
     if (accessToken) {
@@ -39,7 +38,7 @@ export default function LoginForm() {
   }, [accessToken]);
 
   const toggleAutoLogin = () => {
-    AuthStoreStore.setIsAutoLogin()
+    setIsAutoLogin(prev => !prev)
   }
 
   const handleChangeEmail = (value: string) => {
@@ -66,8 +65,8 @@ export default function LoginForm() {
     event.preventDefault();
     store.login();
 
-    if (!isAutoLogin) localStorage.removeItem('accessToken')
-    else sessionStorage.removeItem('accessToken')
+    apiService.setIsAutoLogin(isAutoLogin);
+    setAccessToken('')
   };
 
   return (

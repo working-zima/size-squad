@@ -6,13 +6,11 @@ import { nullUser } from '../nullObject';
 
 import { apiService } from '../services/ApiService';
 
-import { ERROR_MESSAGES, FETCH_STATE, LOCAL_STORAGE } from '../constants';
+import { ERROR_MESSAGES, FETCH_STATE } from '../constants';
 
 @singleton()
 @Store()
 class AuthStore {
-  isAutoLogin = localStorage.getItem(LOCAL_STORAGE.AUTO_LOGIN) === 'true';
-
   user: User = nullUser;
 
   errorMessage = '';
@@ -24,12 +22,6 @@ class AuthStore {
     this.user = nullUser;
     this.errorMessage = '';
     this.state = FETCH_STATE.IDLE;
-  }
-
-  @Action()
-  setIsAutoLogin() {
-    this.isAutoLogin = !this.isAutoLogin;
-    localStorage.setItem(LOCAL_STORAGE.AUTO_LOGIN, this.isAutoLogin.toString())
   }
 
   @Action()

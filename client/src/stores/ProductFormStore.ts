@@ -180,6 +180,7 @@ class ProductFormStore {
     this.validateBrand(productResponse.brand);
     this.validateName(productResponse.name);
     this.validateMeasurement()
+    this.errorMessage = '';
   }
 
   async create() {

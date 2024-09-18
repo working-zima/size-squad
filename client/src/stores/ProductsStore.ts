@@ -58,6 +58,7 @@ class ProductsStore {
   @Action()
   private setProducts(products: ProductResponse[]) {
     this.products = [...this.products, ...products];
+    this.errorMessage = '';
   }
 
   @Action()

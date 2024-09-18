@@ -49,6 +49,7 @@ const Cards = styled.div`
 
 export default function HomePage() {
   useAccessToken();
+
   const { products, state: productsState, errorMessage }
     = useFetchProducts({ per: 8 });
   const { user } = useFetchMyUserData()

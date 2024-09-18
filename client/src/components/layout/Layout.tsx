@@ -42,6 +42,7 @@ const Main = styled.main`
 
 export default function Layout() {
   useCheckAccessToken();
+
   const location = useLocation();
   const params = useParams();
   const path = String(params.path);

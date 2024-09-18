@@ -39,6 +39,7 @@ class InitialDataStore {
     this.genders = initialData.genders;
     this.sizes = initialData.sizes;
     this.fits = initialData.fits;
+    this.errorMessage = '';
   }
 
   async fetchInitialData() {
