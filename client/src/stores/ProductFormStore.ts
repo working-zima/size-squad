@@ -7,7 +7,9 @@ import { nullProduct, nullSummary } from '../nullObject';
 import { apiService } from '../services/ApiService';
 
 import { append, sanitizeMeasurementInput, update } from '../utils';
-import { ERROR_MESSAGES, FETCH_STATE } from '../constants';
+
+import { FETCH_STATE } from '../constants/constants';
+import { ERROR_MESSAGES } from '../constants/messages';
 
 @singleton()
 @Store()

@@ -2,7 +2,7 @@ import ComboBox from "../ui/selectbox/ComboBox";
 
 import { Summary } from "../../types";
 
-import { GENDER_MESSAGES } from "../../constants";
+import { GENDER } from "../../constants/apiLocalizationMap";
 
 type SignUpGenderInputProps = {
   label?: string
@@ -23,7 +23,7 @@ export default function SignUpGenderInput({
       selectedItem={gender}
       items={genders}
       itemToId={(item) => item?._id}
-      itemToText={(item) => GENDER_MESSAGES[item?.name]}
+      itemToText={(item) => GENDER[item?.name]}
       onChange={(value) => value && changeGender(value)}
     />
   )

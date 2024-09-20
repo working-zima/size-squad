@@ -7,7 +7,8 @@ import { ApiState, PaginationResponse, SortOption, User } from "../types";
 
 import { nullUser } from "../nullObject";
 
-import { ERROR_MESSAGES, FETCH_STATE, DEFAULT_PER, SORT_OPTIONS } from "../constants";
+import { FETCH_STATE, DEFAULT_PER, SORT_OPTIONS } from "../constants/constants";
+import { ERROR_MESSAGES } from "../constants/messages";
 
 @singleton()
 @Store()

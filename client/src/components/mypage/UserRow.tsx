@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import { User } from "../../types";
 
-import { GENDER_MESSAGES } from "../../constants";
+import { GENDER } from "../../constants/apiLocalizationMap";
 
 const Container = styled.div`
   display: flex;
@@ -27,7 +27,7 @@ export default function UserRow({ user }: { user: User }) {
     <Container>
       <div>{user?.name}</div>
       <span>
-        {user?.height}cm / {user.weight}kg · {GENDER_MESSAGES[user.gender?.name]}
+        {user?.height}cm / {user.weight}kg · {GENDER[user.gender?.name]}
       </span>
     </Container>
   )

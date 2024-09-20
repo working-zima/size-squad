@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import useProductsStore from './useProductsStore';
 import useIntersectionObserver from './useIntersectionObserver';
 
-import { DEFAULT_PER } from '../constants';
+import { DEFAULT_PER } from '../constants/constants';
 
 const ioOptions = { threshold: 1 }
 

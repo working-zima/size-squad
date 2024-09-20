@@ -11,7 +11,8 @@ import PortalRoot from './PortalRoot';
 import useCheckAccessToken from '../../hooks/useCheckAccessToken';
 import useUserStore from '../../hooks/useUserStore';
 
-import { PAGES, USERFIELDS } from '../../constants';
+import { PAGES } from '../../constants/constants';
+import { USERFIELDS } from '../../constants/apiLocalizationMap';
 
 type ContainerProps = {
   SHOWMENU: boolean;

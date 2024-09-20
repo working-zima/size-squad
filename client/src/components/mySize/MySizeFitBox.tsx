@@ -1,7 +1,7 @@
 import useProductFormStore from "../../hooks/useProductFormStore";
 import useInitialDataStore from "../../hooks/useInitialDataStore";
 
-import { FIT_MESSAGES } from "../../constants";
+import { FIT } from "../../constants/apiLocalizationMap";
 
 import ComboBox from "../ui/selectbox/ComboBox";
 
@@ -15,7 +15,7 @@ export default function MySizeFitBox() {
       selectedItem={fit}
       items={fits}
       itemToId={(item) => item?._id || ''}
-      itemToText={(item) => FIT_MESSAGES[item?.name] || ''}
+      itemToText={(item) => FIT[item?.name] || ''}
       onChange={(value) => value && store.changeFit(value)}
     />
   )

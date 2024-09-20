@@ -5,7 +5,9 @@ import { ApiState, PaginationResponse, ProductResponse, SortOption } from '../ty
 
 import { apiService } from '../services/ApiService';
 
-import { ERROR_MESSAGES, FETCH_STATE, DEFAULT_PER, SORT_OPTIONS } from '../constants';
+import { FETCH_STATE, DEFAULT_PER, SORT_OPTIONS } from '../constants/constants';
+
+import { ERROR_MESSAGES } from '../constants/messages';
 
 type handleParameterProps = {
   sortOption: SortOption;

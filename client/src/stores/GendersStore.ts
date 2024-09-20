@@ -6,7 +6,8 @@ import { nullSummary } from "../nullObject";
 
 import { apiService } from "../services/ApiService";
 
-import { ERROR_MESSAGES, FETCH_STATE } from "../constants";
+import { FETCH_STATE } from "../constants/constants";
+import { ERROR_MESSAGES } from "../constants/messages";
 
 @singleton()
 @Store()

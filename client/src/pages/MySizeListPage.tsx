@@ -18,7 +18,7 @@ import useFetchCategories from '../hooks/useFetchCategories';
 import useFetchMyProducts from '../hooks/useFetchMyProducts';
 import useFetchMyUserData from '../hooks/useFetchMyUserData';
 
-import { SORT_OPTIONS } from '../constants';
+import { SORT_OPTIONS } from '../constants/constants';
 
 const Container = styled.div`
   height: 100%;

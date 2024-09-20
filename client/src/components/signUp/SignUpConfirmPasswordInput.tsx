@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import useSignupFormStore from "../../hooks/useSignupFormStore";
 
-import { ERROR_MESSAGES } from "../../constants";
+import { ERROR_MESSAGES } from "../../constants/messages";
 
 import { TextInputBox } from "../ui/textbox/TextBoxComponents";
 

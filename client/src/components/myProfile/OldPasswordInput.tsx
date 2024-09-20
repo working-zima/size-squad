@@ -4,9 +4,9 @@ import styled from "styled-components";
 
 import useSignupFormStore from "../../hooks/useSignupFormStore";
 
-import { ERROR_MESSAGES } from "../../constants";
-
 import { TextInputBox } from "../ui/textbox/TextBoxComponents";
+
+import { ERROR_MESSAGES } from "../../constants/messages";
 
 const PasswordWrapper = styled.div`
   max-height: 105px;

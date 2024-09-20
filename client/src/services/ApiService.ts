@@ -10,7 +10,8 @@ import {
   PaginationResponse,
   UserWithOwnership,
 } from '../types';
-import { LOCAL_STORAGE } from '../constants';
+
+import { LOCAL_STORAGE } from '../auth/constants';
 
 const MOCK_BASE_URL = 'http://localhost:5000';
 

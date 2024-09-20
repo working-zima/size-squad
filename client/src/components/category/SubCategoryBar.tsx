@@ -7,7 +7,7 @@ import Button from '../ui/Button';
 
 import { Summary } from '../../types';
 
-import { SUBCATEGORY_MESSAGES } from '../../constants';
+import { SUBCATEGORY } from '../../constants/apiLocalizationMap';
 
 const Container = styled.div`
   display: flex;
@@ -96,7 +96,7 @@ export default function SubCategoryBar(
             active={activeBtn === subCategory._id}
             onClick={() => handleNavigate(subCategory._id)}
           >
-            {SUBCATEGORY_MESSAGES[subCategory.name]}
+            {SUBCATEGORY[subCategory.name]}
           </SubCategoryButton>
         ))
       )}

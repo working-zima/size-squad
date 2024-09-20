@@ -18,7 +18,7 @@ import ComboBox from "../ui/selectbox/ComboBox";
 
 import { RequiredStar } from "../../utils/RequiredStar";
 
-import { GENDER_MESSAGES } from "../../constants";
+import { GENDER } from "../../constants/apiLocalizationMap";
 
 const Container = styled.div`
   padding: 20px ${props => props.theme.sizes.contentPadding} 0;
@@ -112,7 +112,7 @@ export default function SignUpForm({ genders }: SignUpFormProps) {
           selectedItem={user.gender}
           items={genders}
           itemToId={(item) => item?._id}
-          itemToText={(item) => GENDER_MESSAGES[item?.name]}
+          itemToText={(item) => GENDER[item?.name]}
           onChange={(value) => value && store.changeGender(value)}
         />
         <BodyMetricInput

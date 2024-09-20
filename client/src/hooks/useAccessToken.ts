@@ -4,7 +4,7 @@ import { apiService } from '../services/ApiService';
 
 import { useLocalStorage, useSessionStorage } from 'usehooks-ts';
 
-import { LOCAL_STORAGE } from '../constants';
+import { LOCAL_STORAGE } from '../auth/constants';
 
 export default function useAccessToken() {
   const [isAutoLogin, setIsAutoLogin] = useLocalStorage(LOCAL_STORAGE.AUTO_LOGIN, false)

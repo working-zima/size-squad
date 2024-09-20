@@ -5,7 +5,7 @@ import styled from "styled-components";
 import useSignupFormStore from '../../hooks/useSignupFormStore';
 import useDebounce from '../../hooks/useDebounce';
 
-import { ERROR_MESSAGES } from '../../constants';
+import { ERROR_MESSAGES } from '../../constants/messages';
 import { TextInputBox } from '../ui/textbox/TextBoxComponents';
 
 const Container = styled.div`

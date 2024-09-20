@@ -8,7 +8,8 @@ import { apiService } from "../services/ApiService";
 
 import { nullUser } from "../nullObject";
 
-import { ERROR_MESSAGES, FETCH_STATE } from "../constants";
+import { FETCH_STATE } from "../constants/constants";
+import { ERROR_MESSAGES } from "../constants/messages";
 
 @singleton()
 @Store()

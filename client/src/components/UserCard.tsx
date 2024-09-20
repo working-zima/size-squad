@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { User } from "../types";
 
-import { GENDER_MESSAGES } from "../constants";
+import { GENDER } from "../constants/apiLocalizationMap";
 import LineClampedText from "./ui/LineClamp";
 
 const Container = styled.div`
@@ -75,7 +75,7 @@ export default function UserCard({ user }: UserCardProps) {
             user.weight
               ? `${user.weight}kg`
               : ''
-          } {GENDER_MESSAGES[user.gender.name]}
+          } {GENDER[user.gender.name]}
         </InfoText>
         <LineClampedText
           text={user.description

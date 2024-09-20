@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { FIT_MESSAGES, MEASUREMENT_MESSAGES } from '../../constants';
+import { FIT, MEASUREMENT } from '../../constants/apiLocalizationMap';
 import { ProductResponse } from '../../types';
 
 type ContainerProps = {
@@ -54,7 +54,7 @@ export default function SizeCard({ product }: SizeCardProps) {
         gridColumn={1}
         gridRow={1}
       >
-        {FIT_MESSAGES[product.fit.name]}핏 (cm)
+        {FIT[product.fit.name]}핏 (cm)
       </Cell>
       {product.measurements.map((measurement, index) => (
         <Cell
@@ -62,7 +62,7 @@ export default function SizeCard({ product }: SizeCardProps) {
           gridColumn={2 + index}
           gridRow={1}
         >
-          {MEASUREMENT_MESSAGES[measurement.name]}
+          {MEASUREMENT[measurement.name]}
         </Cell>
       ))}
 

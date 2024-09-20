@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 
 import useUserStore from './useUserStore'
-import { DEFAULT_PER } from '../constants';
+import { DEFAULT_PER } from '../constants/constants';
 
 type useFetchUserStoreProps = {
   keyword?: string,

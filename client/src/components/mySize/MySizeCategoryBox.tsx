@@ -5,7 +5,7 @@ import useInitialDataStore from '../../hooks/useInitialDataStore';
 
 import { nullCategory, nullSummary } from '../../nullObject';
 
-import { CATEGORY_MESSAGES, SUBCATEGORY_MESSAGES } from '../../constants';
+import { CATEGORY, SUBCATEGORY } from '../../constants/apiLocalizationMap';
 
 import { useEffect } from 'react';
 
@@ -41,7 +41,7 @@ export default function MySizeCategoryBox() {
         selectedItem={category}
         items={categories}
         itemToId={(item) => item?._id || ''}
-        itemToText={(item) => CATEGORY_MESSAGES[item?.name] || ''}
+        itemToText={(item) => CATEGORY[item?.name] || ''}
         onChange={(value) => value
           && store.changeCategory({ _id: value._id, name: value.name })}
       />
@@ -50,7 +50,7 @@ export default function MySizeCategoryBox() {
         selectedItem={subCategory}
         items={subCategories}
         itemToId={(item) => item?._id || ''}
-        itemToText={(item) => SUBCATEGORY_MESSAGES[item?.name] || ''}
+        itemToText={(item) => SUBCATEGORY[item?.name] || ''}
         onChange={(value) => value && store.changeSubCategory(value)}
       />
     </>

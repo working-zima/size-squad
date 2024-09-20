@@ -4,7 +4,9 @@ import { Store, Action } from 'usestore-ts';
 
 import { apiService } from '../services/ApiService';
 import { ApiState } from '../types';
-import { ERROR_MESSAGES, FETCH_STATE } from '../constants';
+
+import { FETCH_STATE } from '../constants/constants';
+import { ERROR_MESSAGES } from '../constants/messages';
 
 @singleton()
 @Store()

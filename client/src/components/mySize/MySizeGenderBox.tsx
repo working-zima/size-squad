@@ -1,9 +1,8 @@
 import ComboBox from '../ui/selectbox/ComboBox';
 
-import useProductFormStore from '../../hooks/useProductFormStore';
 import useInitialDataStore from '../../hooks/useInitialDataStore';
 
-import { GENDER_MESSAGES } from '../../constants';
+import { GENDER } from '../../constants/apiLocalizationMap';
 import { Summary } from '../../types';
 
 type MySizeGenderBoxProps = {
@@ -23,7 +22,7 @@ export default function MySizeGenderBox({
       items={genders}
       itemToId={(item) => item?._id || ''}
       itemToText={(item) => item?._id
-        ? `${GENDER_MESSAGES[item?.name]}용`
+        ? `${GENDER[item?.name]}용`
         : item?.name || ''
       }
       onChange={(value) => value && changeGender(value)}

@@ -5,12 +5,13 @@ import styled from "styled-components";
 
 import { ConfirmTrigger } from "../ui/modal/ModalTrigger";
 import { AlertModal } from "../ui/modal/ModalComponents";
+import ComboBox from "../ui/selectbox/ComboBox";
 
 import useFetchInitialData from "../../hooks/useFetchInitialData";
 import useSignupFormStore from "../../hooks/useSignupFormStore";
 import useModal from "../../hooks/useModal";
-import ComboBox from "../ui/selectbox/ComboBox";
-import { GENDER_MESSAGES } from "../../constants";
+
+import { GENDER } from "../../constants/apiLocalizationMap";
 
 const ButtonWrapper = styled.div`
   & > button {
@@ -66,7 +67,7 @@ export default function EditGender() {
         selectedItem={user.gender}
         items={genders}
         itemToId={(item) => item?._id}
-        itemToText={(item) => GENDER_MESSAGES[item?.name]}
+        itemToText={(item) => GENDER[item?.name]}
         onChange={(value) => value && store.changeGender(value)}
       />
       <ButtonWrapper>

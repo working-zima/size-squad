@@ -7,7 +7,7 @@ import Button from '../ui/Button';
 
 import { Category } from '../../types';
 
-import { CATEGORY_MESSAGES } from '../../constants';
+import { CATEGORY } from '../../constants/apiLocalizationMap';
 
 const Container = styled.div`
   display: flex;
@@ -127,7 +127,7 @@ export default function MainCategoryBar({
               )
             }
           >
-            <p>{CATEGORY_MESSAGES[category.name]}</p>
+            <p>{CATEGORY[category.name]}</p>
           </CategoryButton>
         ))
       )}

@@ -5,7 +5,7 @@ import { TextInputBox } from '../ui/textbox/TextBoxComponents';
 import useProductFormStore from '../../hooks/useProductFormStore';
 import useInitialDataStore from '../../hooks/useInitialDataStore';
 
-import { MEASUREMENT_MESSAGES } from '../../constants';
+import { MEASUREMENT } from '../../constants/apiLocalizationMap';
 
 export default function MySizeMeasurementsInput() {
   const [{ product: { category, measurements } }, store] = useProductFormStore();
@@ -40,8 +40,8 @@ export default function MySizeMeasurementsInput() {
         .map((measurement, index) => (
           <TextInputBox
             key={measurement._id}
-            label={MEASUREMENT_MESSAGES[measurement.name]}
-            placeholder={`${MEASUREMENT_MESSAGES[measurement.name]}을 입력해주세요.`}
+            label={MEASUREMENT[measurement.name]}
+            placeholder={`${MEASUREMENT[measurement.name]}을 입력해주세요.`}
             type="text"
             maxLength={5}
             value={measurement.value}

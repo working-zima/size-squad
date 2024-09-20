@@ -4,7 +4,8 @@ import BorderlessComboBox from "../ui/selectbox/BorderlessComboBox";
 
 import { SortOption, Summary } from "../../types";
 
-import { SORT_OPTIONS, SUBCATEGORY_MESSAGES } from "../../constants";
+import { SORT_OPTIONS } from "../../constants/constants";
+import { SUBCATEGORY } from "../../constants/apiLocalizationMap";
 
 const Container = styled.section`
   display: flex;
@@ -47,7 +48,7 @@ export default function Sort({
           selectedItem={findCategoryById(selectedSubCategoryId || '')}
           items={[{ _id: '', name: 'all' }, ...allSubCategories]}
           itemToId={(item) => item?._id || ''}
-          itemToText={(item) => SUBCATEGORY_MESSAGES[item?.name || '']}
+          itemToText={(item) => SUBCATEGORY[item?.name || '']}
           onChange={(value) => {
             return value && handleNavigate({ category2DepthCode: value._id })
           }}
