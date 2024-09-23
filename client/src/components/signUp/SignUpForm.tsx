@@ -16,7 +16,7 @@ import useSignupFormStore from "../../hooks/useSignupFormStore";
 import Button from "../ui/Button";
 import ComboBox from "../ui/selectbox/ComboBox";
 
-import { RequiredStar } from "../../utils/RequiredStar";
+import { requiredStar } from "../../utils/requiredStar";
 
 import { GENDER } from "../../constants/apiLocalizationMap";
 
@@ -33,7 +33,7 @@ const Container = styled.div`
     flex-direction: row-reverse;
     font-size: 1.4rem;
     color: ${props => props.theme.colors.unSelectedText};
-    ${RequiredStar('after')}
+    ${requiredStar('after')}
   }
 `;
 

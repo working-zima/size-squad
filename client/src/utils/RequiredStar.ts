@@ -1,6 +1,6 @@
 import { css } from 'styled-components';
 
-export const RequiredStar = (position: 'before' | 'after') => css`
+export const requiredStar = (position: 'before' | 'after') => css`
   ${position === 'before'
     ? css`
         &::before {

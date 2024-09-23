@@ -7,6 +7,7 @@ import { ApiState } from '../types';
 
 import { FETCH_STATE } from '../constants/constants';
 import { ERROR_MESSAGES } from '../constants/messages';
+import { accessTokenUtil } from '../auth/accessTokenUtil';
 
 @singleton()
 @Store()
@@ -57,7 +58,7 @@ class LoginFormStore {
         password: this.password,
       });
       this.setAccessToken(accessToken);
-
+      accessTokenUtil.setAccessToken(accessToken)
       this.setDone();
     } catch (error) {
       const typedError = error as { status?: number; message: string };

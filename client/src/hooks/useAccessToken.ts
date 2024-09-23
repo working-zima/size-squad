@@ -19,7 +19,7 @@ export default function useAccessToken() {
   const setAccessToken = isAutoLogin ? setLocalAccessToken : setSessionAccessToken
 
   useEffect(() => {
-    apiService.setAccessToken(accessToken);
+    // apiService.setAccessToken(accessToken);
     apiService.setIsAutoLogin(isAutoLogin)
   }, [accessToken]);
 

@@ -33,7 +33,7 @@ export default function LoginForm() {
 
   useEffect(() => {
     if (accessToken) {
-      setAccessToken(accessToken);
+      // setAccessToken(accessToken);
     }
   }, [accessToken]);
 

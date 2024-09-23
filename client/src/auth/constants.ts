@@ -1,4 +1,4 @@
 export const LOCAL_STORAGE: Record<string, string> = {
-  AUTO_LOGIN: 'isAutoLogin',
-  ACCESS_TOKEN: 'accessToken'
+  AUTO_LOGIN: 'IS_AUTO_LOGIN',
+  ACCESS_TOKEN: 'ACCESS_TOKEN'
 }

@@ -20,7 +20,7 @@ const sessionController = {
       });
 
       res.status(201).json({ 'accessToken': accessToken });
-    } catch(error) {
+    } catch (error) {
       next(error);
     }
   },
@@ -36,28 +36,28 @@ const sessionController = {
     }
     try {
       const userAccessToken = req.headers["authorization"];
-      await sessionService.signOut({userAccessToken})
+      await sessionService.signOut({ userAccessToken })
 
       res.status(200).json({});
-    } catch(error) {
+    } catch (error) {
       next(error);
     }
   },
 
-    /** access 토큰 재발급 */
-    getReissueToken: async (req, res, next) => {
-      try {
-        const userAccessToken = req.headers["authorization"];
+  /** access 토큰 재발급 */
+  getReissueToken: async (req, res, next) => {
+    try {
+      const userAccessToken = req.headers["authorization"];
 
-        const newAccessToken = await sessionService.reissueToken({
-          accessToken: userAccessToken
-        });
+      const newAccessToken = await sessionService.reissueToken({
+        accessToken: userAccessToken
+      });
 
-        res.status(200).json({ accessToken: newAccessToken });
-      } catch(error) {
-        next(error);
-      }
-    },
+      res.status(200).json({ accessToken: newAccessToken });
+    } catch (error) {
+      next(error);
+    }
+  },
 }
 
 exports.sessionController = sessionController;

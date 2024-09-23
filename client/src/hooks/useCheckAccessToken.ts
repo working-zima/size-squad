@@ -1,23 +1,33 @@
 import { useEffect } from 'react';
 
-import useAccessToken from './useAccessToken';
-
 import { apiService } from '../services/ApiService';
 
-export default function useCheckAccessToken(): void {
-  const { accessToken, setAccessToken } = useAccessToken();
+import { accessTokenUtil } from '../auth/accessTokenUtil';
+import { LOCAL_STORAGE } from '../auth/constants';
 
+export default function useCheckAccessToken(): void {
   useEffect(() => {
     const fetchCurrentUser = async () => {
+      const accessToken = accessTokenUtil.getAccessToken();
+      if (!accessToken) return
+
       try {
         await apiService.fetchCurrentUser();
-
       } catch (error) {
-        console.log(`useCheckAccessToken: `, error)
-        setAccessToken('');
+        accessTokenUtil.setAccessToken('')
       }
     };
 
     fetchCurrentUser();
-  }, [accessToken, setAccessToken]);
+
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key === LOCAL_STORAGE.ACCESS_TOKEN) fetchCurrentUser();
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
 }

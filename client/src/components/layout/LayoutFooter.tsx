@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { EmailForm } from './EmailForm';
 import useAccessToken from '../../hooks/useAccessToken';
+import { accessTokenUtil } from '../../auth/accessTokenUtil';
 
 const Container = styled.footer`
   grid-area: footer;
@@ -94,8 +95,9 @@ const EmailWrapper = styled.div`
 
 export default function LayoutFooter() {
   const location = useLocation();
-  const { accessToken } = useAccessToken();
-
+  // const { accessToken } = useAccessToken();
+  const accessToken = accessTokenUtil.getAccessToken()
+  console.log(!!accessToken)
   const noFooterPaths = ['/login', '/signup', '/mysize/new'];
 
   if (noFooterPaths.some(path => location.pathname.startsWith(path))) {

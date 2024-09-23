@@ -7,6 +7,7 @@ import {
 
 import useAccessToken from '../../hooks/useAccessToken';
 import useFetchMyUserData from '../../hooks/useFetchMyUserData';
+import { accessTokenUtil } from '../../auth/accessTokenUtil';
 
 const Container = styled.div.attrs({ className: 'LayoutMenuBar' })`
   grid-area: menu;
@@ -71,7 +72,8 @@ const MenuLink = styled(Link) <{ $isActive: boolean }>`
 
 export default function LayoutMenuBar() {
   const location = useLocation();
-  const { accessToken } = useAccessToken();
+  // const { accessToken } = useAccessToken();
+  const accessToken = accessTokenUtil.getAccessToken()
   const { user } = useFetchMyUserData()
 
   const isActive = (path: string) => (location.pathname === path);

@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { RequiredStar } from "../../../utils/RequiredStar"
+import { requiredStar } from "../../../utils/requiredStar"
 import { RefObject } from "react";
 
 type ContainerProps = {
@@ -11,7 +11,7 @@ const Container = styled.label<ContainerProps>`
   margin: 12px 0 4px;
   font-size: 1.4rem;
   width: 100%;
-  ${(props) => props.required && RequiredStar('after')}
+  ${(props) => props.required && requiredStar('after')}
 `
 
 type LabelProps = {

@@ -69,7 +69,6 @@ export const EmailForm = () => {
 
       navigate(0);
     } catch (error) {
-      console.log('FAILED...', error);
       alert('문의하기를 실패했습니다.');
     } finally {
       setIsSubmitting(false);
