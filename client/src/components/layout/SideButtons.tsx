@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import Button from '../ui/Button';
 
 import useViewModeStore from '../../hooks/useViewModeStore';
-import useAccessToken from '../../hooks/useAccessToken';
+
+import { accessTokenUtil } from '../../auth/accessTokenUtil';
 
 const Container = styled.aside`
   display: flex;
@@ -49,7 +50,7 @@ const ScrollToTopButton = styled(SizeInfoSwitch)`
 `
 
 export default function SideButtons() {
-  const { accessToken } = useAccessToken();
+  const accessToken = accessTokenUtil.getAccessToken()
   const [{ isDescriptionView }, store] = useViewModeStore();
 
   if (!accessToken) return null

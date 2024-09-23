@@ -5,7 +5,6 @@ import LoadingSpinner from '../components/ui/LoadingSpinner';
 
 import useFetchInitialData from '../hooks/useFetchInitialData';
 import useFetchProductForm from '../hooks/useFetchProductForm';
-import useAccessToken from '../hooks/useAccessToken';
 
 export default function MySizeEditPage() {
   const navigate = useNavigate();

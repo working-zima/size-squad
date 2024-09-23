@@ -13,12 +13,12 @@ import BorderlessComboBox from '../components/ui/selectbox/BorderlessComboBox';
 
 import { SortOption } from '../types';
 
-import useAccessToken from '../hooks/useAccessToken';
 import useFetchCategories from '../hooks/useFetchCategories';
 import useFetchMyProducts from '../hooks/useFetchMyProducts';
 import useFetchMyUserData from '../hooks/useFetchMyUserData';
 
 import { SORT_OPTIONS } from '../constants/constants';
+import { accessTokenUtil } from '../auth/accessTokenUtil';
 
 const Container = styled.div`
   height: 100%;
@@ -46,9 +46,7 @@ const Products = styled.section`
 `;
 
 export default function MySizeListPage() {
-  const { accessToken } = useAccessToken();
   const navigate = useNavigate();
-
   const [params] = useSearchParams();
   const categoryId = params.get('category1DepthCode') ?? undefined;
   const subCategoryId = params.get('category2DepthCode') ?? undefined;
@@ -89,7 +87,7 @@ export default function MySizeListPage() {
     navigate(path);
   }
 
-  if (!accessToken) return (<AccessDeniedPage />);
+  if (!accessTokenUtil.getAccessToken()) return (<AccessDeniedPage />);
   if (productsState === 'error') {
     return (<ErrorPage errorMessage={errorMessage} />);
   }

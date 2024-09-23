@@ -10,11 +10,11 @@ import EditGender from "../components/myProfile/EditGender";
 import EditHeight from "../components/myProfile/EditHeight";
 import EditWeight from "../components/myProfile/EditWeight";
 import EditDescription from "../components/myProfile/EditDescription";
+import LoadingSpinner from "../components/ui/LoadingSpinner";
 
-import useAccessToken from "../hooks/useAccessToken";
 import useFetchMyUserData from "../hooks/useFetchMyUserData";
 import useSignupFormStore from "../hooks/useSignupFormStore";
-import LoadingSpinner from "../components/ui/LoadingSpinner";
+import { accessTokenUtil } from "../auth/accessTokenUtil";
 
 const Container = styled.div`
   display: flex;
@@ -24,11 +24,9 @@ const Container = styled.div`
 
 export default function MyProfileInputPage() {
   const { user, state } = useFetchMyUserData()
-  const { accessToken } = useAccessToken()
-  const [, store] = useSignupFormStore()
-
   const params = useParams()
   const path = String(params.path)
+  const [, store] = useSignupFormStore()
 
   useEffect(() => {
     store.changeGender(user.gender)
@@ -41,7 +39,7 @@ export default function MyProfileInputPage() {
     return <LoadingSpinner />;
   }
 
-  if (!accessToken) {
+  if (!accessTokenUtil.getAccessToken()) {
     return <AccessDeniedPage />
   }
 

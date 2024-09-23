@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import styled from 'styled-components';
@@ -5,14 +6,15 @@ import styled from 'styled-components';
 import AccessDeniedPage from './AccessDeniedPage';
 
 import MyProfileEditForm from '../components/myProfile/MyProfileEditForm';
-
-import useAccessToken from '../hooks/useAccessToken';
-import useFetchMyUserData from '../hooks/useFetchMyUserData';
 import { ConfirmTrigger } from '../components/ui/modal/ModalTrigger';
-import { useEffect, useState } from 'react';
-import useSignupFormStore from '../hooks/useSignupFormStore';
-import { apiService } from '../services/ApiService';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
+
+import useFetchMyUserData from '../hooks/useFetchMyUserData';
+import useSignupFormStore from '../hooks/useSignupFormStore';
+
+import { apiService } from '../services/ApiService';
+
+import { accessTokenUtil } from '../auth/accessTokenUtil';
 
 const Container = styled.div`
   display: flex;
@@ -37,8 +39,6 @@ const ButtonWrapper = styled.div`
 
 export default function MyProfileEditPage() {
   const navigate = useNavigate();
-
-  const { accessToken, setAccessToken } = useAccessToken();
   const { user, state } = useFetchMyUserData()
   const [, store] = useSignupFormStore()
   const [confirmed, setConfirmed] = useState<boolean | null>(false);
@@ -50,13 +50,13 @@ export default function MyProfileEditPage() {
   useEffect(() => {
     if (!!confirmed) {
       apiService.deleteUser();
-      setAccessToken('');
+      accessTokenUtil.setAccessToken('')
       store.reset();
       navigate('/');
     }
   }, [confirmed]);
 
-  if (!accessToken) {
+  if (!accessTokenUtil.getAccessToken()) {
     return <AccessDeniedPage />;
   }
 

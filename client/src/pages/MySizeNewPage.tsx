@@ -7,15 +7,13 @@ import ErrorPage from "./ErrorPage";
 import MySizeNewForm from "../components/mySize/MySizeNewForm";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 
-import useAccessToken from "../hooks/useAccessToken";
 import useFetchUser from "../hooks/useFetchMyUserData";
 import useFetchInitialData from "../hooks/useFetchInitialData";
 import useProductFormStore from "../hooks/useProductFormStore";
+import { accessTokenUtil } from "../auth/accessTokenUtil";
 
 export default function MySizeNewPage() {
   const navigate = useNavigate();
-
-  const { accessToken } = useAccessToken();
   const { user, state: userState } = useFetchUser()
   const { categories, fits, sizes, state: initialDataState, errorMessage }
     = useFetchInitialData()
@@ -54,7 +52,7 @@ export default function MySizeNewPage() {
   };
 
   if (loading) return (<LoadingSpinner />);
-  if (!accessToken) return (<AccessDeniedPage />);
+  if (!accessTokenUtil.getAccessToken()) return (<AccessDeniedPage />);
   if (initialDataState === 'error') return (<ErrorPage errorMessage={errorMessage} />);
 
   return (

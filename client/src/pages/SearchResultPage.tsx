@@ -16,11 +16,12 @@ import { SortOption } from '../types';
 
 import usePortal from '../hooks/usePortal';
 import useProductsStore from '../hooks/useProductsStore';
-import useAccessToken from '../hooks/useAccessToken';
 import useFetchProducts from '../hooks/useFetchProducts';
 import useFetchMyUserData from '../hooks/useFetchMyUserData';
 
 import { SORT_OPTIONS } from '../constants/constants';
+
+import { accessTokenUtil } from '../auth/accessTokenUtil';
 
 const Container = styled.div`
   height: 100%;
@@ -42,12 +43,10 @@ const Products = styled.div`
 `;
 
 export default function SearchResultPage() {
-  const { accessToken } = useAccessToken();
-  const [, store] = useProductsStore();
-
-  const navigate = useNavigate();
-
   let [params] = useSearchParams();
+
+  const [, store] = useProductsStore();
+  const navigate = useNavigate();
   const query = params.get('query') || '';
   const sortCode = params.get('sortCode') ?? undefined;
 
@@ -84,7 +83,7 @@ export default function SearchResultPage() {
     navigate(path);
   }
 
-  if (!accessToken) return <AccessDeniedPage />;
+  if (!accessTokenUtil.getAccessToken()) return <AccessDeniedPage />;
   if (productsState === 'error') {
     return (<ErrorPage errorMessage={errorMessage} />);
   }

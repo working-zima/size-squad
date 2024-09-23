@@ -8,17 +8,18 @@ import PasswordInputs from "./PasswordInputs";
 import BodyMetricInput from "./BodyMetricInput";
 import SignUpDescriptionInput from "./SignUpDescriptionInput";
 
-import { Summary } from "../../types";
-
-import useAccessToken from "../../hooks/useAccessToken";
-import useSignupFormStore from "../../hooks/useSignupFormStore";
-
 import Button from "../ui/Button";
 import ComboBox from "../ui/selectbox/ComboBox";
 
+import { Summary } from "../../types";
+
+import useSignupFormStore from "../../hooks/useSignupFormStore";
+
 import { requiredStar } from "../../utils/requiredStar";
+import { accessTokenUtil } from "../../auth/accessTokenUtil";
 
 import { GENDER } from "../../constants/apiLocalizationMap";
+
 
 const Container = styled.div`
   padding: 20px ${props => props.theme.sizes.contentPadding} 0;
@@ -74,13 +75,11 @@ type SignUpFormProps = {
 }
 
 export default function SignUpForm({ genders }: SignUpFormProps) {
-  const { setAccessToken } = useAccessToken();
-
   const [{ user, valid, state, accessToken }, store] = useSignupFormStore();
 
   useEffect(() => {
     if (accessToken) {
-      setAccessToken(accessToken);
+      accessTokenUtil.setAccessToken(accessToken)
     }
   }, [accessToken]);
 

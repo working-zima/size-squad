@@ -8,7 +8,6 @@ import UserCard from "../components/UserCard";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 import { Carousel } from "../components/ui/Slide/Carousel";
 
-import useAccessToken from "../hooks/useAccessToken";
 import useFetchProducts from "../hooks/useFetchProducts";
 import useFetchUsers from '../hooks/useFetchUsers'
 import useFetchMyUserData from "../hooks/useFetchMyUserData";
@@ -48,8 +47,6 @@ const Cards = styled.div`
 `;
 
 export default function HomePage() {
-  useAccessToken();
-
   const { products, state: productsState, errorMessage }
     = useFetchProducts({ per: 8 });
   const { user } = useFetchMyUserData()

@@ -9,13 +9,13 @@ import Profile from "../components/mypage/Profile";
 import Sort from "../components/mypage/Sort";
 import Products from "../components/mypage/Products";
 
-import useAccessToken from "../hooks/useAccessToken";
 import useFetchUser from "../hooks/useFetchUser";
 import useFetchMyProducts from "../hooks/useFetchMyProducts";
 import useFetchCategories from "../hooks/useFetchCategories";
 import useFetchMyUserData from "../hooks/useFetchMyUserData";
 
 import { apiService } from "../services/ApiService";
+import { accessTokenUtil } from "../auth/accessTokenUtil";
 
 const Container = styled.div`
   height: 100%;
@@ -24,12 +24,9 @@ const Container = styled.div`
 export default function MyPage() {
   const navigate = useNavigate();
   const params = useParams();
-
   const [querys] = useSearchParams();
   const subCategoryId = querys.get('category2DepthCode') ?? undefined;
   const sortCode = querys.get('sortCode') ?? undefined;
-
-  const { accessToken, setAccessToken } = useAccessToken();
   const { user: LoginUser } = useFetchMyUserData()
   const { allSubCategories } = useFetchCategories();
 
@@ -74,12 +71,12 @@ export default function MyPage() {
 
   const handleClickLogout = async () => {
     await apiService.logout();
-    setAccessToken('');
+    accessTokenUtil.setAccessToken('')
     userStore.reset();
     navigate('/');
   };
 
-  if (!accessToken) return (<AccessDeniedPage />);
+  if (!accessTokenUtil.getAccessToken()) return (<AccessDeniedPage />);
   if (productsState === 'error') {
     return (<ErrorPage errorMessage={userErrorMessage} />);
   }

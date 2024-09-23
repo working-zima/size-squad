@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useState } from 'react';
 
 import styled from 'styled-components';
 
@@ -8,10 +8,11 @@ import { LoginUtils } from './LoginUtils';
 
 import Divider from '../ui/Divider';
 
-import useAccessToken from '../../hooks/useAccessToken';
 import useLoginFormStore from '../../hooks/useLoginFormStore';
 
 import { apiService } from '../../services/ApiService';
+
+import { accessTokenUtil } from '../../auth/accessTokenUtil';
 
 const Container = styled.div.attrs({ className: 'MemberWrapper' })`
   padding: 20px ${props => props.theme.sizes.contentPadding} 0;
@@ -24,21 +25,14 @@ const Container = styled.div.attrs({ className: 'MemberWrapper' })`
 
 export default function LoginForm() {
   const [isShowPw, setIsShowPw] = useState(false);
-
-  const { isAutoLogin, setAccessToken, setIsAutoLogin } = useAccessToken();
+  const isAutoLogin = accessTokenUtil.getIsAutoLogin();
 
   const [
-    { email, password, valid, state, errorMessage, accessToken }, store
+    { email, password, valid, state, errorMessage }, store
   ] = useLoginFormStore();
 
-  useEffect(() => {
-    if (accessToken) {
-      // setAccessToken(accessToken);
-    }
-  }, [accessToken]);
-
   const toggleAutoLogin = () => {
-    setIsAutoLogin(prev => !prev)
+    accessTokenUtil.setIsAutoLogin(!isAutoLogin);
   }
 
   const handleChangeEmail = (value: string) => {
@@ -66,7 +60,7 @@ export default function LoginForm() {
     store.login();
 
     apiService.setIsAutoLogin(isAutoLogin);
-    setAccessToken('')
+    accessTokenUtil.setAccessToken('')
   };
 
   return (
