@@ -11,28 +11,17 @@ import {
   UserWithOwnership,
 } from '../types';
 
-import { LOCAL_STORAGE } from '../auth/constants';
 import { accessTokenUtil } from '../auth/accessTokenUtil';
 
 const MOCK_BASE_URL = 'http://localhost:5000';
 
 export default class ApiService {
-  setAccessToken(accessToken: string) {
-    throw new Error('Method not implemented.');
-  }
   private instance = axios.create({ baseURL: MOCK_BASE_URL });
-
-  private accessToken = '';
-
-  private isAutoLogin = false;
 
   private isRefreshing = false;
 
   private failedQueue: Array<(token: string) => void> = [];
 
-  setIsAutoLogin(isAutoLogin: boolean) {
-    this.isAutoLogin = isAutoLogin;
-  }
 
   constructor() {
     // 응답 인터셉트
@@ -44,25 +33,6 @@ export default class ApiService {
       this.onRequest, this.onErrorRequest
     );
   }
-
-  // setAccessToken(accessToken: string) {
-  //   if (accessToken === this.accessToken) {
-  //     return;
-  //   }
-
-  //   const authorization = accessToken ? `Bearer ${accessToken}` : undefined;
-
-  //   this.instance = axios.create({
-  //     baseURL: MOCK_BASE_URL,
-  //     headers: { Authorization: authorization },
-  //   });
-
-  //   this.instance.interceptors.response.use(
-  //     this.onResponse, this.onErrorResponse
-  //   );
-
-  //   this.accessToken = accessToken;
-  // }
 
   logOnDev = (message: string) => {
     if (process.env.REACT_APP_NODE_ENV === "development") {
@@ -98,8 +68,13 @@ export default class ApiService {
 
   onErrorResponse = async (error: AxiosError | Error) => {
     if (axios.isAxiosError(error)) {
-      const { message, response } = error;
-      const { method, url } = error.config as AxiosRequestConfig;
+      const { message, response, config } = error;
+      const { method, url } = config as AxiosRequestConfig;
+
+      if (!config) {
+        this.onError(0, "요청 설정을 찾을 수 없습니다.");
+        return Promise.reject(error);
+      }
 
       // 네트워크 오류 처리
       if (!response) {
@@ -113,42 +88,39 @@ export default class ApiService {
       const { status, statusText } = response as AxiosResponse;
 
       // 토큰 재발급 요청
-      // if (status === 401 && response.data.message === "TokenExpired") {
-      //   console.log(`isRefreshing`, this.isRefreshing)
-      //   if (!this.isRefreshing) {
-      //     try {
-      //       const tokenRefreshResult = await this.reissueToken();
-      //       console.log(`accessToken: `, tokenRefreshResult)
-      //       const { accessToken } = tokenRefreshResult.data
+      if (status === 401 && response.data.message === "TokenExpired") {
+        if (!this.isRefreshing) {
+          this.isRefreshing = true;
+          try {
+            const tokenRefreshResult = await this.reissueToken();
+            const { accessToken } = tokenRefreshResult.data
 
-      //       // 새로 발급받은 토큰을 스토리지에 저장
-      //       const storage = this.isAutoLogin ? localStorage : sessionStorage;
-      //       storage.setItem(LOCAL_STORAGE.ACCESS_TOKEN, accessToken);
-      //       this.setAccessToken(accessToken);
+            // 새로 발급받은 토큰을 스토리지에 저장
+            accessTokenUtil.setAccessToken(accessToken)
 
-      //       console.log(`failedQueue: `, this.failedQueue)
-      //       // 큐에 있는 모든 요청에 대해 토큰을 설정하고 다시 요청
-      //       this.failedQueue.forEach(callback => callback(accessToken));
-      //       this.failedQueue = [];
+            this.failedQueue.forEach(callback => callback(accessToken));
+            this.failedQueue = [];
 
-      //       // 토큰 갱신 성공. API 재요청
-      //       return this.instance.request(error.config as AxiosRequestConfig)
-      //     } catch (error) {
-      //       console.log(`check onErrorResponse1`)
-      //       this.onError(401, "인증 실패입니다.");
-      //     } finally {
-      //       this.isRefreshing = false;
-      //     }
-      //   }
+            config.headers.Authorization = `Bearer ${accessToken}`;
 
-      //   return new Promise((resolve) => {
-      //     this.failedQueue.push((token: string) => {
-      //       // this.setAccessToken(token);
-      //       this.instance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      //       resolve(this.instance.request(error.config as AxiosRequestConfig));
-      //     });
-      //   });
-      // }
+            // 토큰 갱신 성공. API 재요청
+            return this.instance(config)
+          } catch (error) {
+            this.onError(401, "인증 실패입니다.");
+            return Promise.reject(error);
+          } finally {
+            this.isRefreshing = false;
+          }
+        } else {
+          // TokenExpired로 인해 실패한 첫 요청 이후 요청들
+          return new Promise((resolve,) => {
+            this.failedQueue.push((token: string) => {
+              config.headers.Authorization = `Bearer ${token}`;
+              resolve(this.instance(config));  // 재요청
+            });
+          });
+        }
+      }
 
       this.logOnDev(
         `[API] ${method?.toUpperCase()} ${url}
@@ -161,7 +133,6 @@ export default class ApiService {
           this.onError(status, "잘못된 요청입니다.");
           break;
         case 401: {
-          console.log(`check onErrorResponse2`)
           this.onError(status, "인증 실패입니다.");
           break;
         }

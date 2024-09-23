@@ -10,8 +10,8 @@ const { Token } = require('../db/models/Token');
 /** 특정 필드 값의 유무 확인 */
 const isValueExist = (field) => [
   body(field)
-  .trim()
-  .notEmpty().withMessage(`${field} is required`)
+    .trim()
+    .notEmpty().withMessage(`${field} is required`)
 ];
 
 /** 배열인지 검사 */

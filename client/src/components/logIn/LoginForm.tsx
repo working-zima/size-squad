@@ -10,8 +10,6 @@ import Divider from '../ui/Divider';
 
 import useLoginFormStore from '../../hooks/useLoginFormStore';
 
-import { apiService } from '../../services/ApiService';
-
 import { accessTokenUtil } from '../../auth/accessTokenUtil';
 
 const Container = styled.div.attrs({ className: 'MemberWrapper' })`
@@ -25,7 +23,7 @@ const Container = styled.div.attrs({ className: 'MemberWrapper' })`
 
 export default function LoginForm() {
   const [isShowPw, setIsShowPw] = useState(false);
-  const isAutoLogin = accessTokenUtil.getIsAutoLogin();
+  const [isAutoLogin, setIsAutoLogin] = useState(accessTokenUtil.getIsAutoLogin());
 
   const [
     { email, password, valid, state, errorMessage }, store
@@ -33,6 +31,7 @@ export default function LoginForm() {
 
   const toggleAutoLogin = () => {
     accessTokenUtil.setIsAutoLogin(!isAutoLogin);
+    setIsAutoLogin(prev => !prev);
   }
 
   const handleChangeEmail = (value: string) => {
@@ -58,8 +57,6 @@ export default function LoginForm() {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     store.login();
-
-    apiService.setIsAutoLogin(isAutoLogin);
     accessTokenUtil.setAccessToken('')
   };
 
