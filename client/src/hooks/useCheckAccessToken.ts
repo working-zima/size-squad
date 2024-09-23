@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { apiService } from '../services/ApiService';
+import { userService } from '../services/UserService';
 
 import { accessTokenUtil } from '../auth/accessTokenUtil';
 import { LOCAL_STORAGE } from '../auth/constants';
@@ -12,7 +12,7 @@ export default function useCheckAccessToken(): void {
       if (!accessToken) return
 
       try {
-        await apiService.fetchCurrentUser();
+        await userService.fetchCurrentUser();
       } catch (error) {
         accessTokenUtil.setAccessToken('')
       }

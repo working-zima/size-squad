@@ -12,7 +12,7 @@ import LoadingSpinner from '../components/ui/LoadingSpinner';
 import useFetchMyUserData from '../hooks/useFetchMyUserData';
 import useSignupFormStore from '../hooks/useSignupFormStore';
 
-import { apiService } from '../services/ApiService';
+import { userService } from '../services/UserService';
 
 import { accessTokenUtil } from '../auth/accessTokenUtil';
 
@@ -49,7 +49,7 @@ export default function MyProfileEditPage() {
 
   useEffect(() => {
     if (!!confirmed) {
-      apiService.deleteUser();
+      userService.deleteUser();
       accessTokenUtil.setAccessToken('')
       store.reset();
       navigate('/');

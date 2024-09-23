@@ -4,7 +4,7 @@ import { Action, Store } from "usestore-ts";
 
 import { ApiState, Summary, User } from "../types";
 
-import { apiService } from "../services/ApiService";
+import { userService } from "../services/UserService";
 
 import { nullUser } from "../nullObject";
 
@@ -81,7 +81,7 @@ class SignupFormStore {
     this.validateEmail(email);
     if (this.isEmailValid) {
       try {
-        const isDuplicated = await apiService.checkUserEmail({ email });
+        const isDuplicated = await userService.checkUserEmail({ email });
         this.changeIsEmailDuplicated(!!isDuplicated);
       } catch (error) {
         const typedError = error as { message: string };
@@ -108,7 +108,7 @@ class SignupFormStore {
     this.validateName(name);
     if (this.isNameValid) {
       try {
-        const isDuplicated = await apiService.checkUserName({ name });
+        const isDuplicated = await userService.checkUserName({ name });
         this.changeIsNameDuplicated(!!isDuplicated);
       } catch (error) {
         const typedError = error as { message: string };
@@ -224,7 +224,7 @@ class SignupFormStore {
   async signup() {
     this.startLoading()
     try {
-      const accessToken = await apiService.signup({
+      const accessToken = await userService.signup({
         ...this.user,
         gender: this.user.gender?._id || '',
       });
@@ -242,7 +242,7 @@ class SignupFormStore {
   async updatePassword() {
     this.startLoading()
     try {
-      await apiService.updatePassword({
+      await userService.updatePassword({
         oldPassword: this.oldPassword,
         newPassword: this.user.password
       })
@@ -261,7 +261,7 @@ class SignupFormStore {
   async updateGender() {
     this.startLoading()
     try {
-      await apiService.updateGender({
+      await userService.updateGender({
         gender: this.user.gender
       })
 
@@ -277,7 +277,7 @@ class SignupFormStore {
   async updateHeight() {
     this.startLoading()
     try {
-      await apiService.updateHeight({
+      await userService.updateHeight({
         height: this.user.height
       })
 
@@ -293,7 +293,7 @@ class SignupFormStore {
   async updateWeight() {
     this.startLoading()
     try {
-      await apiService.updateWeight({
+      await userService.updateWeight({
         weight: this.user.weight
       })
 
@@ -309,7 +309,7 @@ class SignupFormStore {
   async updateDescription() {
     this.startLoading()
     try {
-      await apiService.updateDescription({
+      await userService.updateDescription({
         description: this.user.description
       })
 

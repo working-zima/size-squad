@@ -49,7 +49,7 @@ const Cards = styled.div`
 export default function HomePage() {
   const { products, state: productsState, errorMessage }
     = useFetchProducts({ per: 8 });
-  const { user } = useFetchMyUserData()
+  const { user } = useFetchMyUserData();
   const { users } = useFetchUsers({});
 
   return (

@@ -10,6 +10,7 @@ import { append, sanitizeMeasurementInput, update } from '../utils';
 
 import { FETCH_STATE } from '../constants/constants';
 import { ERROR_MESSAGES } from '../constants/messages';
+import { productService } from '../services/ProductService';
 
 @singleton()
 @Store()
@@ -187,7 +188,7 @@ class ProductFormStore {
 
   async create() {
     try {
-      await apiService.createProduct({
+      await productService.createProduct({
         author: this.product.author?._id || '',
         name: this.product.name,
         brand: this.product.brand,
@@ -215,7 +216,7 @@ class ProductFormStore {
 
   async update() {
     try {
-      await apiService.updateProduct({
+      await productService.updateProduct({
         _id: this.product._id,
         author: this.product.author?._id || '',
         name: this.product.name,
@@ -245,7 +246,7 @@ class ProductFormStore {
   async fetchProduct({ productId }: { productId: string }) {
     this.startLoading();
     try {
-      const productResponse = await apiService.fetchProduct({ productId });
+      const productResponse = await productService.fetchProduct({ productId });
       this.setProduct(productResponse);
 
       this.setDone();

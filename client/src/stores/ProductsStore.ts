@@ -3,7 +3,8 @@ import { Action, Store } from 'usestore-ts';
 
 import { ApiState, PaginationResponse, ProductResponse, SortOption } from '../types';
 
-import { apiService } from '../services/ApiService';
+import { userService } from '../services/UserService';
+import { productService } from '../services/ProductService';
 
 import { FETCH_STATE, DEFAULT_PER, SORT_OPTIONS } from '../constants/constants';
 
@@ -161,7 +162,7 @@ class ProductsStore {
       const sortField = Object.keys(sortOption.sort)[0];
       const sortOrder = Object.values(sortOption.sort)[0];
 
-      const products = await apiService.fetchMyProducts({
+      const products = await productService.fetchMyProducts({
         keyword,
         categoryId,
         subCategoryId,
@@ -188,7 +189,7 @@ class ProductsStore {
       const sortField = Object.keys(this.sortOption.sort)[0];
       const sortOrder = Object.values(this.sortOption.sort)[0];
 
-      const products = await apiService.fetchMyProducts({
+      const products = await productService.fetchMyProducts({
         keyword: this.keyword,
         categoryId: this.categoryId,
         subCategoryId: this.subCategoryId,
@@ -234,7 +235,7 @@ class ProductsStore {
       const sortField = Object.keys(sortOption.sort)[0];
       const sortOrder = Object.values(sortOption.sort)[0];
 
-      const products = await apiService.fetchProducts({
+      const products = await productService.fetchProducts({
         keyword,
         categoryId,
         subCategoryId,
@@ -261,7 +262,7 @@ class ProductsStore {
       const sortField = Object.keys(this.sortOption.sort)[0];
       const sortOrder = Object.values(this.sortOption.sort)[0];
 
-      const products = await apiService.fetchProducts({
+      const products = await productService.fetchProducts({
         keyword,
         categoryId: this.categoryId,
         subCategoryId: this.subCategoryId,
@@ -286,7 +287,7 @@ class ProductsStore {
   async deleteAndFetchMyProducts(productId: string) {
     try {
       this.startLoading();
-      await apiService.deleteMyProducts({ productId });
+      await userService.deleteMyProducts({ productId });
       this.setDone();
       await this.fetchMyInitialProducts({ userId: this.userId });
     } catch (error) {

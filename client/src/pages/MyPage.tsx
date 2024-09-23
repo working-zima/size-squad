@@ -14,8 +14,9 @@ import useFetchMyProducts from "../hooks/useFetchMyProducts";
 import useFetchCategories from "../hooks/useFetchCategories";
 import useFetchMyUserData from "../hooks/useFetchMyUserData";
 
-import { apiService } from "../services/ApiService";
 import { accessTokenUtil } from "../auth/accessTokenUtil";
+
+import { authService } from "../auth/AuthService";
 
 const Container = styled.div`
   height: 100%;
@@ -70,7 +71,7 @@ export default function MyPage() {
   };
 
   const handleClickLogout = async () => {
-    await apiService.logout();
+    await authService.logout();
     accessTokenUtil.setAccessToken('')
     userStore.reset();
     navigate('/');

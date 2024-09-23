@@ -4,7 +4,7 @@ import { Store, Action } from 'usestore-ts';
 import { ApiState, User } from '../types';
 import { nullUser } from '../nullObject';
 
-import { apiService } from '../services/ApiService';
+import { userService } from '../services/UserService';
 
 import { FETCH_STATE } from '../constants/constants';
 import { ERROR_MESSAGES } from '../constants/messages';
@@ -33,7 +33,7 @@ class AuthStore {
   async fetchMyUserData() {
     try {
       this.startLoading();
-      const user = await apiService.fetchCurrentUser();
+      const user = await userService.fetchCurrentUser(); // 문제
 
       this.setUser(user);
       this.setDone();

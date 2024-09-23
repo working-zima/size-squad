@@ -1,11 +1,10 @@
 import { singleton } from "tsyringe";
 import { Action, Store } from "usestore-ts";
 
-import { apiService } from "../services/ApiService";
-
 import { ApiState, PaginationResponse, SortOption, User } from "../types";
-
 import { nullUser } from "../nullObject";
+
+import { userService } from "../services/UserService";
 
 import { FETCH_STATE, DEFAULT_PER, SORT_OPTIONS } from "../constants/constants";
 import { ERROR_MESSAGES } from "../constants/messages";
@@ -101,7 +100,7 @@ class UserStore {
   async fetchUser({ id }: { id: string }) {
     this.startLoading();
     try {
-      const { user, isOwner } = await apiService.fetchUser({ userId: id })
+      const { user, isOwner } = await userService.fetchUser({ userId: id })
 
       this.setUser(user);
       this.setIsOwner(isOwner);
@@ -131,7 +130,7 @@ class UserStore {
       const sortField = Object.keys(sortOption.sort)[0];
       const sortOrder = Object.values(sortOption.sort)[0];
 
-      const users = await apiService.fetchUsers({
+      const users = await userService.fetchUsers({
         keyword,
         sortField,
         sortOrder,

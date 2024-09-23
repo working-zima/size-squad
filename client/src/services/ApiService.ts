@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import apiInstance from './ApiInstance';
 
 import {
   Category,
@@ -11,411 +11,137 @@ import {
   UserWithOwnership,
 } from '../types';
 
-import { accessTokenUtil } from '../auth/accessTokenUtil';
-
 const MOCK_BASE_URL = 'http://localhost:5000';
 
 export default class ApiService {
-  private instance = axios.create({ baseURL: MOCK_BASE_URL });
-
-  private isRefreshing = false;
-
-  private failedQueue: Array<(token: string) => void> = [];
-
-
-  constructor() {
-    // 응답 인터셉트
-    this.instance.interceptors.response.use(
-      this.onResponse, this.onErrorResponse
-    );
-
-    this.instance.interceptors.request.use(
-      this.onRequest, this.onErrorRequest
-    );
-  }
-
-  logOnDev = (message: string) => {
-    if (process.env.REACT_APP_NODE_ENV === "development") {
-      console.log(message);
-    }
-  };
-
-  onError = (status: number | undefined, message: string) => {
-    const error = { status, message };
-
-    throw error;
-  };
-
-  onRequest = (config: InternalAxiosRequestConfig) => {
-    const accessToken = accessTokenUtil.getAccessToken();
-    config.headers.Authorization = `Bearer ${accessToken}`;
-
-    return config;
-  };
-
-  onErrorRequest = (error: AxiosError | Error) => {
-    return Promise.reject(error);
-  }
-
-  onResponse = (response: AxiosResponse): AxiosResponse => {
-    const { method, url } = response.config;
-    const { status } = response;
-
-    this.logOnDev(`[API] ${method?.toUpperCase()} ${url} | Request ${status}`);
-
-    return response;
-  };
-
-  onErrorResponse = async (error: AxiosError | Error) => {
-    if (axios.isAxiosError(error)) {
-      const { message, response, config } = error;
-      const { method, url } = config as AxiosRequestConfig;
-
-      if (!config) {
-        this.onError(0, "요청 설정을 찾을 수 없습니다.");
-        return Promise.reject(error);
-      }
-
-      // 네트워크 오류 처리
-      if (!response) {
-        this.logOnDev(
-          `[API] ${method?.toUpperCase()} ${url} | Network Error: ${message}`
-        );
-        this.onError(undefined, "네트워크 오류가 발생했습니다.");
-        return Promise.reject(error);
-      }
-
-      const { status, statusText } = response as AxiosResponse;
-
-      // 토큰 재발급 요청
-      if (status === 401 && response.data.message === "TokenExpired") {
-        if (!this.isRefreshing) {
-          this.isRefreshing = true;
-          try {
-            const tokenRefreshResult = await this.reissueToken();
-            const { accessToken } = tokenRefreshResult.data
-
-            // 새로 발급받은 토큰을 스토리지에 저장
-            accessTokenUtil.setAccessToken(accessToken)
-
-            this.failedQueue.forEach(callback => callback(accessToken));
-            this.failedQueue = [];
-
-            config.headers.Authorization = `Bearer ${accessToken}`;
-
-            // 토큰 갱신 성공. API 재요청
-            return this.instance(config)
-          } catch (error) {
-            this.onError(401, "인증 실패입니다.");
-            return Promise.reject(error);
-          } finally {
-            this.isRefreshing = false;
-          }
-        } else {
-          // TokenExpired로 인해 실패한 첫 요청 이후 요청들
-          return new Promise((resolve,) => {
-            this.failedQueue.push((token: string) => {
-              config.headers.Authorization = `Bearer ${token}`;
-              resolve(this.instance(config));  // 재요청
-            });
-          });
-        }
-      }
-
-      this.logOnDev(
-        `[API] ${method?.toUpperCase()} ${url}
-        | Error ${status} ${statusText}
-        | ${message}`
-      );
-
-      switch (status) {
-        case 400:
-          this.onError(status, "잘못된 요청입니다.");
-          break;
-        case 401: {
-          this.onError(status, "인증 실패입니다.");
-          break;
-        }
-        case 403: {
-          this.onError(status, "권한이 없습니다.");
-          break;
-        }
-        case 404: {
-          this.onError(status, "찾을 수 없는 페이지입니다.");
-          break;
-        }
-        case 500: {
-          this.onError(status, "서버 오류입니다.");
-          break;
-        }
-        default: {
-          this.onError(status, `에러가 발생했습니다. ${error.message}`);
-        }
-      }
-    }
-
-    if (error instanceof Error && error.name === "TimeoutError") {
-      this.logOnDev(`[API] | TimeError ${error.toString()}`);
-      this.onError(0, "요청 시간이 초과되었습니다.");
-    } else {
-      this.logOnDev(`[API] | Error ${error.toString()}`);
-      this.onError(0, `에러가 발생했습니다. ${error.toString()}`);
-    }
-
-    return Promise.reject(error);
-  };
-
-  // products
-  async fetchProducts({
-    keyword,
-    categoryId,
-    subCategoryId,
-    sortField,
-    sortOrder,
-    page,
-    per
-  }: {
-    keyword?: string;
-    categoryId?: string;
-    subCategoryId?: string;
-    sortField?: string;
-    sortOrder?: number;
-    page?: number;
-    per?: number;
-  } = {}): Promise<PaginationResponse<ProductResponse>> {
-    const { data } = await this.instance.get('/products', {
-      params: {
-        keyword, categoryId, subCategoryId, sortField, sortOrder, page, per
-      },
-    });
-    const { products } = data;
-
-    return products;
-  }
-
-  async fetchProduct({ productId }: { productId: string })
-    : Promise<ProductResponse> {
-    const { data } = await this.instance.get(`/products/${productId}`);
-    const { product } = data;
-
-    return product;
-  }
-
-  async fetchMyProducts({
-    keyword,
-    categoryId,
-    subCategoryId,
-    sortField,
-    sortOrder,
-    page,
-    per,
-    userId
-  }: {
-    keyword?: string;
-    categoryId?: string;
-    subCategoryId?: string;
-    sortField?: string;
-    sortOrder?: number;
-    page?: number;
-    per?: number;
-    userId?: string;
-  } = {}): Promise<PaginationResponse<ProductResponse>> {
-    const url = userId
-      ? `/products/user/${userId}`
-      : `/products/user/`;
-
-    const { data } = await this.instance.get(url, {
-      params: {
-        keyword, categoryId, subCategoryId, sortField, sortOrder, page, per
-      },
-    });
-    const { products } = data;
-
-    return products;
-  }
-
-  async createProduct(newProduct: ProductRequest): Promise<void> {
-    await this.instance.post('/products', newProduct);
-  }
-
-  async updateProduct({
-    _id,
-    author,
-    name,
-    brand,
-    category,
-    subCategory,
-    gender,
-    size,
-    fit,
-    measurements,
-    description
-  }: ProductRequest): Promise<void> {
-    const productId = _id
-    const product = {
-      author, name, brand, category, subCategory, gender, size, fit,
-      measurements, description
-    }
-
-    await this.instance.patch(`/products/${productId}`, product);
-  }
-
-  // session
-  async login({
-    email,
-    password
-  }: {
-    email: string,
-    password: string
-  }): Promise<string> {
-    const { data } = await this.instance.post('/session', { email, password });
-    const { accessToken } = data;
-
-    return accessToken;
-  }
-
-  async logout(): Promise<void> {
-    await this.instance.delete('/session');
-  }
-
-  async reissueToken() {
-    try {
-      const tokenRefreshResult = await this.instance.get('/session');
-      // this.setAccessToken(tokenRefreshResult.data.accessToken);
-      return tokenRefreshResult;
-    } catch (error) {
-      throw error;
-    }
-  }
-
   // users
-  async signup({
-    email,
-    name,
-    password,
-    gender,
-    height,
-    weight,
-    description
-  }: {
-    email: string;
-    name: string;
-    password: string;
-    gender?: string;
-    height?: number;
-    weight?: number;
-    description?: string;
-  }): Promise<string> {
-    const { data } = await this.instance.post('/users', {
-      email, name, password, gender, height, weight, description
-    });
-    const { accessToken } = data;
-    return accessToken;
-  }
+  // async signup({
+  //   email,
+  //   name,
+  //   password,
+  //   gender,
+  //   height,
+  //   weight,
+  //   description
+  // }: {
+  //   email: string;
+  //   name: string;
+  //   password: string;
+  //   gender?: string;
+  //   height?: number;
+  //   weight?: number;
+  //   description?: string;
+  // }): Promise<string> {
+  //   const { data } = await apiInstance.post('/users', {
+  //     email, name, password, gender, height, weight, description
+  //   });
+  //   const { accessToken } = data;
+  //   return accessToken;
+  // }
 
-  async fetchUser({ userId }: { userId: string }): Promise<UserWithOwnership> {
-    const { data } = await this.instance.get(`/users/${userId}`);
+  // async fetchUser({ userId }: { userId: string }): Promise<UserWithOwnership> {
+  //   const { data } = await apiInstance.get(`/users/${userId}`);
 
-    return { user: data.user, isOwner: data.isOwner }
-  }
+  //   return { user: data.user, isOwner: data.isOwner }
+  // }
 
-  async fetchCurrentUser(): Promise<User> {
-    const { data } = await this.instance.get('/users/me');
-    const { user } = data;
+  // async fetchCurrentUser(): Promise<User> {
+  //   const { data } = await apiInstance.get('/users/me');
+  //   const { user } = data;
 
-    return user;
-  }
+  //   return user;
+  // }
 
-  async fetchUsers({
-    keyword,
-    sortField,
-    sortOrder,
-    page,
-    per
-  }: {
-    keyword?: string,
-    sortField?: string,
-    sortOrder?: number,
-    page?: number,
-    per?: number
-  }): Promise<PaginationResponse<User>> {
-    const { data } = await this.instance.get(
-      '/users/all',
-      { params: { keyword, sortField, sortOrder, page, per } }
-    );
-    const { users } = data;
+  // async fetchUsers({
+  //   keyword,
+  //   sortField,
+  //   sortOrder,
+  //   page,
+  //   per
+  // }: {
+  //   keyword?: string,
+  //   sortField?: string,
+  //   sortOrder?: number,
+  //   page?: number,
+  //   per?: number
+  // }): Promise<PaginationResponse<User>> {
+  //   const { data } = await apiInstance.get(
+  //     '/users/all',
+  //     { params: { keyword, sortField, sortOrder, page, per } }
+  //   );
+  //   const { users } = data;
 
-    return users;
-  }
+  //   return users;
+  // }
 
-  async checkUserEmail({ email }: {
-    email: string;
-  }): Promise<string> {
+  // async checkUserEmail({ email }: {
+  //   email: string;
+  // }): Promise<string> {
 
-    const { data } = await this.instance.get(`/users/email-valid/${email}`)
-    const { id } = data;
+  //   const { data } = await apiInstance.get(`/users/email-valid/${email}`)
+  //   const { id } = data;
 
-    return id;
-  }
+  //   return id;
+  // }
 
-  async checkUserName({ name }: {
-    name: string;
-  }): Promise<string> {
-    const { data } = await this.instance.get(`/users/name-valid/${name}`)
-    const { id } = data;
+  // async checkUserName({ name }: {
+  //   name: string;
+  // }): Promise<string> {
+  //   const { data } = await apiInstance.get(`/users/name-valid/${name}`)
+  //   const { id } = data;
 
-    return id;
-  }
+  //   return id;
+  // }
 
-  async updatePassword({
-    oldPassword,
-    newPassword
-  }: {
-    oldPassword: string;
-    newPassword: string;
-  }) {
-    await this.instance.patch(`/users/modify-password`, {
-      oldPassword, newPassword
-    });
-  }
+  // async updatePassword({
+  //   oldPassword,
+  //   newPassword
+  // }: {
+  //   oldPassword: string;
+  //   newPassword: string;
+  // }) {
+  //   await apiInstance.patch(`/users/modify-password`, {
+  //     oldPassword, newPassword
+  //   });
+  // }
 
-  async updateGender({ gender }: {
-    gender: Summary;
-  }) {
-    await this.instance.patch(`/users/modify-gender`, { gender });
-  }
+  // async updateGender({ gender }: {
+  //   gender: Summary;
+  // }) {
+  //   await apiInstance.patch(`/users/modify-gender`, { gender });
+  // }
 
-  async updateHeight({ height }: {
-    height: number;
-  }) {
-    await this.instance.patch(`/users/modify-height`, { height });
-  }
+  // async updateHeight({ height }: {
+  //   height: number;
+  // }) {
+  //   await apiInstance.patch(`/users/modify-height`, { height });
+  // }
 
-  async updateWeight({ weight }: {
-    weight: number;
-  }) {
-    await this.instance.patch(`/users/modify-weight`, { weight });
-  }
+  // async updateWeight({ weight }: {
+  //   weight: number;
+  // }) {
+  //   await apiInstance.patch(`/users/modify-weight`, { weight });
+  // }
 
-  async updateDescription({ description }: {
-    description: string;
-  }) {
-    await this.instance.patch(`/users/modify-description`, { description });
-  }
+  // async updateDescription({ description }: {
+  //   description: string;
+  // }) {
+  //   await apiInstance.patch(`/users/modify-description`, { description });
+  // }
 
-  async deleteMyProducts({ productId }: {
-    productId: string
-  }) {
-    await this.instance.delete(`/users/product/${productId}`);
-  }
+  // async deleteMyProducts({ productId }: {
+  //   productId: string
+  // }) {
+  //   await apiInstance.delete(`/users/product/${productId}`);
+  // }
 
-  async deleteUser() {
-    await this.instance.delete(`/users`);
-  }
+  // async deleteUser() {
+  //   await apiInstance.delete(`/users`);
+  // }
 
   // etc
   async fetchInitialData() {
-    const { data } = await this.instance.get('/initialData')
+    const { data } = await apiInstance.get('/initialData')
     const { initialData } = data;
 
     return initialData;
@@ -424,7 +150,7 @@ export default class ApiService {
   async fetchCategories({ categoryId }: {
     categoryId?: string
   } = {}): Promise<Category[]> {
-    const { data } = await this.instance.get('/categories', {
+    const { data } = await apiInstance.get('/categories', {
       params: { categoryId },
     });
     const { categories } = data;
@@ -433,21 +159,21 @@ export default class ApiService {
   }
 
   async fetchFits(): Promise<Summary[]> {
-    const { data } = await this.instance.get('/fits');
+    const { data } = await apiInstance.get('/fits');
     const { fits } = data;
 
     return fits
   }
 
   async fetchGenders(): Promise<Summary[]> {
-    const { data } = await this.instance.get('/genders');
+    const { data } = await apiInstance.get('/genders');
     const { genders } = data;
 
     return genders;
   }
 
   async fetchSizes(): Promise<Size[]> {
-    const { data } = await this.instance.get('/sizes');
+    const { data } = await apiInstance.get('/sizes');
     const { sizes } = data;
 
     return sizes;

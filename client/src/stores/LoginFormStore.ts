@@ -2,12 +2,14 @@ import { singleton } from 'tsyringe';
 
 import { Store, Action } from 'usestore-ts';
 
-import { apiService } from '../services/ApiService';
 import { ApiState } from '../types';
 
 import { FETCH_STATE } from '../constants/constants';
 import { ERROR_MESSAGES } from '../constants/messages';
+
 import { accessTokenUtil } from '../auth/accessTokenUtil';
+
+import { authService } from '../auth/AuthService';
 
 @singleton()
 @Store()
@@ -53,7 +55,7 @@ class LoginFormStore {
 
   async login() {
     try {
-      const accessToken = await apiService.login({
+      const accessToken = await authService.login({
         email: this.email,
         password: this.password,
       });
