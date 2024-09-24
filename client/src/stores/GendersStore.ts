@@ -4,7 +4,7 @@ import { Action, Store } from "usestore-ts";
 import { ApiState, Summary } from "../types";
 import { nullSummary } from "../nullObject";
 
-import { apiService } from "../services/ApiService";
+import { productAttributeService } from "../services/ProductAttributeService";
 
 import { FETCH_STATE } from "../constants/constants";
 import { ERROR_MESSAGES } from "../constants/messages";
@@ -34,7 +34,7 @@ class GendersStore {
   async fetchGenders() {
     this.startLoading();
     try {
-      const genders = await apiService.fetchGenders();
+      const genders = await productAttributeService.fetchGenders();
       this.setGender(genders);
 
       this.setDone();

@@ -4,8 +4,6 @@ import { Action, Store } from 'usestore-ts';
 import { Summary, ProductResponse, Product, ApiState } from '../types';
 import { nullProduct, nullSummary } from '../nullObject';
 
-import { apiService } from '../services/ApiService';
-
 import { append, sanitizeMeasurementInput, update } from '../utils';
 
 import { FETCH_STATE } from '../constants/constants';

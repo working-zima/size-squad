@@ -3,7 +3,7 @@ import { Action, Store } from 'usestore-ts';
 
 import { ApiState, Category, Summary } from '../types';
 
-import { apiService } from '../services/ApiService';
+import { productAttributeService } from '../services/ProductAttributeService';
 
 import { FETCH_STATE } from '../constants/constants';
 import { ERROR_MESSAGES } from '../constants/messages';
@@ -39,7 +39,7 @@ class CategoriesStore {
   async fetchCategories() {
     this.startLoading();
     try {
-      const categories = await apiService.fetchCategories();
+      const categories = await productAttributeService.fetchCategories();
       this.setCategories(categories);
 
       this.setDone();

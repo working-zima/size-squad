@@ -1,6 +1,6 @@
-import apiInstance from './ApiInstance';
 
 import { PaginationResponse, ProductRequest, ProductResponse } from '../types';
+import ApiService from './ApiService';
 
 export default class ProductService {
   async fetchProducts({
@@ -20,7 +20,7 @@ export default class ProductService {
     page?: number;
     per?: number;
   } = {}): Promise<PaginationResponse<ProductResponse>> {
-    const { data } = await apiInstance.get('/products', {
+    const { data } = await ApiService.get('/products', {
       params: {
         keyword, categoryId, subCategoryId, sortField, sortOrder, page, per
       },
@@ -31,7 +31,7 @@ export default class ProductService {
 
   async fetchProduct({ productId }: { productId: string })
     : Promise<ProductResponse> {
-    const { data } = await apiInstance.get(`/products/${productId}`);
+    const { data } = await ApiService.get(`/products/${productId}`);
     const { product } = data;
     return product;
   }
@@ -56,7 +56,7 @@ export default class ProductService {
     userId?: string;
   } = {}): Promise<PaginationResponse<ProductResponse>> {
     const url = userId ? `/products/user/${userId}` : `/products/user/`;
-    const { data } = await apiInstance.get(url, {
+    const { data } = await ApiService.get(url, {
       params: {
         keyword, categoryId, subCategoryId, sortField, sortOrder, page, per
       },
@@ -66,7 +66,7 @@ export default class ProductService {
   }
 
   async createProduct(newProduct: ProductRequest): Promise<void> {
-    await apiInstance.post('/products', newProduct);
+    await ApiService.post('/products', newProduct);
   }
 
   async updateProduct({
@@ -87,7 +87,7 @@ export default class ProductService {
       author, name, brand, category, subCategory, gender, size, fit,
       measurements, description
     }
-    await apiInstance.patch(`/products/${productId}`, product);
+    await ApiService.patch(`/products/${productId}`, product);
   }
 }
 

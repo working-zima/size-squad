@@ -4,7 +4,7 @@ import { Action, Store } from 'usestore-ts';
 import { ApiState, Category, InitialData, Size, Summary } from '../types';
 import { nullCategory, nullSize, nullSummary } from '../nullObject';
 
-import { apiService } from '../services/ApiService';
+import { productAttributeService } from '../services/ProductAttributeService';
 
 import { FETCH_STATE } from '../constants/constants';
 import { ERROR_MESSAGES } from '../constants/messages';
@@ -46,7 +46,7 @@ class InitialDataStore {
   async fetchInitialData() {
     this.startLoading();
     try {
-      const initialData = await apiService.fetchInitialData();
+      const initialData = await productAttributeService.fetchInitialData();
       this.setInitialData(initialData);
 
       this.setDone();

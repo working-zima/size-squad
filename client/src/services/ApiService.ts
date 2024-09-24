@@ -1,183 +1,154 @@
-import apiInstance from './ApiInstance';
+import { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
-import {
-  Category,
-  Summary,
-  ProductResponse,
-  ProductRequest,
-  Size,
-  User,
-  PaginationResponse,
-  UserWithOwnership,
-} from '../types';
+import ApiInstance from './ApiInstance';
 
-const MOCK_BASE_URL = 'http://localhost:5000';
+import { accessTokenUtil } from '../auth/accessTokenUtil';
+import AuthService from '../auth/AuthService';
+class ApiService {
+  private instance = ApiInstance.create();
 
-export default class ApiService {
-  // users
-  // async signup({
-  //   email,
-  //   name,
-  //   password,
-  //   gender,
-  //   height,
-  //   weight,
-  //   description
-  // }: {
-  //   email: string;
-  //   name: string;
-  //   password: string;
-  //   gender?: string;
-  //   height?: number;
-  //   weight?: number;
-  //   description?: string;
-  // }): Promise<string> {
-  //   const { data } = await apiInstance.post('/users', {
-  //     email, name, password, gender, height, weight, description
-  //   });
-  //   const { accessToken } = data;
-  //   return accessToken;
-  // }
+  private isRefreshing = false;
 
-  // async fetchUser({ userId }: { userId: string }): Promise<UserWithOwnership> {
-  //   const { data } = await apiInstance.get(`/users/${userId}`);
+  private failedQueue: Array<(token: string) => void> = [];
 
-  //   return { user: data.user, isOwner: data.isOwner }
-  // }
-
-  // async fetchCurrentUser(): Promise<User> {
-  //   const { data } = await apiInstance.get('/users/me');
-  //   const { user } = data;
-
-  //   return user;
-  // }
-
-  // async fetchUsers({
-  //   keyword,
-  //   sortField,
-  //   sortOrder,
-  //   page,
-  //   per
-  // }: {
-  //   keyword?: string,
-  //   sortField?: string,
-  //   sortOrder?: number,
-  //   page?: number,
-  //   per?: number
-  // }): Promise<PaginationResponse<User>> {
-  //   const { data } = await apiInstance.get(
-  //     '/users/all',
-  //     { params: { keyword, sortField, sortOrder, page, per } }
-  //   );
-  //   const { users } = data;
-
-  //   return users;
-  // }
-
-  // async checkUserEmail({ email }: {
-  //   email: string;
-  // }): Promise<string> {
-
-  //   const { data } = await apiInstance.get(`/users/email-valid/${email}`)
-  //   const { id } = data;
-
-  //   return id;
-  // }
-
-  // async checkUserName({ name }: {
-  //   name: string;
-  // }): Promise<string> {
-  //   const { data } = await apiInstance.get(`/users/name-valid/${name}`)
-  //   const { id } = data;
-
-  //   return id;
-  // }
-
-  // async updatePassword({
-  //   oldPassword,
-  //   newPassword
-  // }: {
-  //   oldPassword: string;
-  //   newPassword: string;
-  // }) {
-  //   await apiInstance.patch(`/users/modify-password`, {
-  //     oldPassword, newPassword
-  //   });
-  // }
-
-  // async updateGender({ gender }: {
-  //   gender: Summary;
-  // }) {
-  //   await apiInstance.patch(`/users/modify-gender`, { gender });
-  // }
-
-  // async updateHeight({ height }: {
-  //   height: number;
-  // }) {
-  //   await apiInstance.patch(`/users/modify-height`, { height });
-  // }
-
-  // async updateWeight({ weight }: {
-  //   weight: number;
-  // }) {
-  //   await apiInstance.patch(`/users/modify-weight`, { weight });
-  // }
-
-  // async updateDescription({ description }: {
-  //   description: string;
-  // }) {
-  //   await apiInstance.patch(`/users/modify-description`, { description });
-  // }
-
-  // async deleteMyProducts({ productId }: {
-  //   productId: string
-  // }) {
-  //   await apiInstance.delete(`/users/product/${productId}`);
-  // }
-
-  // async deleteUser() {
-  //   await apiInstance.delete(`/users`);
-  // }
-
-  // etc
-  async fetchInitialData() {
-    const { data } = await apiInstance.get('/initialData')
-    const { initialData } = data;
-
-    return initialData;
+  constructor() {
+    this.initializeInterceptors();
   }
 
-  async fetchCategories({ categoryId }: {
-    categoryId?: string
-  } = {}): Promise<Category[]> {
-    const { data } = await apiInstance.get('/categories', {
-      params: { categoryId },
-    });
-    const { categories } = data;
-
-    return categories;
+  private initializeInterceptors() {
+    this.instance.interceptors.request.use(
+      this.onRequest, this.onErrorRequest
+    );
+    this.instance.interceptors.response.use(
+      this.onResponse, this.onErrorResponse
+    );
   }
 
-  async fetchFits(): Promise<Summary[]> {
-    const { data } = await apiInstance.get('/fits');
-    const { fits } = data;
+  private logOnDev = (message: string) => {
+    if (process.env.REACT_APP_NODE_ENV === "development") console.log(message);
+  };
 
-    return fits
+  private onError = (status: number | undefined, message: string) => {
+    const error = { status, message };
+    throw error;
+  };
+
+  private onRequest = (config: InternalAxiosRequestConfig) => {
+    const accessToken = accessTokenUtil.getAccessToken();
+    if (accessToken) config.headers.Authorization = `Bearer ${accessToken}`;
+    return config;
+  };
+
+  private onErrorRequest = (error: AxiosError | Error) => {
+    return Promise.reject(error);
   }
 
-  async fetchGenders(): Promise<Summary[]> {
-    const { data } = await apiInstance.get('/genders');
-    const { genders } = data;
+  private onResponse = (response: AxiosResponse): AxiosResponse => {
+    const { method, url } = response.config;
+    const { status } = response;
+    this.logOnDev(`[API] ${method?.toUpperCase()} ${url} | Request ${status}`);
+    return response;
+  };
 
-    return genders;
+  private handleTokenRefresh = async (config: InternalAxiosRequestConfig) => {
+    if (!this.isRefreshing) {
+      this.isRefreshing = true;
+      try {
+        const tokenRefreshResult = await AuthService.reissueToken();
+        const { accessToken } = tokenRefreshResult.data;
+
+        // 새로 발급받은 토큰을 스토리지에 저장
+        accessTokenUtil.setAccessToken(accessToken);
+
+        this.failedQueue.forEach(callback => callback(accessToken));
+        this.failedQueue = [];
+
+        config.headers.Authorization = `Bearer ${accessToken}`;
+
+        // 토큰 갱신 성공. API 재요청
+        return this.instance(config);
+      } catch (error) {
+        this.onError(401, "인증 실패입니다.");
+        return Promise.reject(error);
+      } finally {
+        this.isRefreshing = false;
+      }
+    } else {
+      // TokenExpired로 인해 실패한 첫 요청 이후 요청들
+      return new Promise((resolve) => {
+        this.failedQueue.push((token: string) => {
+          config.headers.Authorization = `Bearer ${token}`;
+          resolve(this.instance(config));  // 재요청
+        });
+      });
+    }
   }
 
-  async fetchSizes(): Promise<Size[]> {
-    const { data } = await apiInstance.get('/sizes');
-    const { sizes } = data;
+  private onErrorResponse = async (error: AxiosError | Error) => {
+    if (error instanceof AxiosError) {
+      const { message, response, config } = error;
+      const { method, url } = config || {};
 
-    return sizes;
+      if (!config) {
+        this.onError(0, "요청 설정을 찾을 수 없습니다.");
+        return Promise.reject(error);
+      }
+
+      // 네트워크 오류 처리
+      if (!response) {
+        this.logOnDev(
+          `[API] ${method?.toUpperCase()} ${url} | Network Error: ${message}`
+        );
+        this.onError(undefined, "네트워크 오류가 발생했습니다.");
+        return Promise.reject(error);
+      }
+
+      const { status, statusText } = response;
+
+      // 토큰 재발급 요청
+      if (status === 401 && response.data.message === "TokenExpired") {
+        return await this.handleTokenRefresh(config);
+      }
+
+      this.logOnDev(
+        `[API] ${method?.toUpperCase()} ${url}
+        | Error ${status} ${statusText}
+        | ${message}`
+      );
+
+      switch (status) {
+        case 400:
+          this.onError(status, "잘못된 요청입니다.");
+          break;
+        case 401: {
+          this.onError(status, "인증 실패입니다.");
+          break;
+        }
+        case 403: {
+          this.onError(status, "권한이 없습니다.");
+          break;
+        }
+        case 404: {
+          this.onError(status, "찾을 수 없는 페이지입니다.");
+          break;
+        }
+        case 500: {
+          this.onError(status, "서버 오류입니다.");
+          break;
+        }
+        default: {
+          this.onError(status, `에러가 발생했습니다. ${message}`);
+        }
+      }
+    }
+
+    return Promise.reject(error);
+  };
+
+  public getInstance() {
+    return this.instance;
   }
 }
 
-export const apiService = new ApiService();
+export default new ApiService().getInstance();
+

@@ -1,5 +1,6 @@
 import { PaginationResponse, Summary, User, UserWithOwnership } from '../types';
-import apiInstance from './ApiInstance';
+
+import ApiService from './ApiService';
 
 export default class UserService {
   async signup({
@@ -19,7 +20,7 @@ export default class UserService {
     weight?: number;
     description?: string;
   }): Promise<string> {
-    const { data } = await apiInstance.post('/users', {
+    const { data } = await ApiService.post('/users', {
       email, name, password, gender, height, weight, description
     });
     const { accessToken } = data;
@@ -27,13 +28,13 @@ export default class UserService {
   }
 
   async fetchUser({ userId }: { userId: string }): Promise<UserWithOwnership> {
-    const { data } = await apiInstance.get(`/users/${userId}`);
+    const { data } = await ApiService.get(`/users/${userId}`);
 
     return { user: data.user, isOwner: data.isOwner }
   }
 
   async fetchCurrentUser(): Promise<User> {
-    const { data } = await apiInstance.get('/users/me');
+    const { data } = await ApiService.get('/users/me');
     const { user } = data;
 
     return user;
@@ -52,7 +53,7 @@ export default class UserService {
     page?: number,
     per?: number
   }): Promise<PaginationResponse<User>> {
-    const { data } = await apiInstance.get(
+    const { data } = await ApiService.get(
       '/users/all',
       { params: { keyword, sortField, sortOrder, page, per } }
     );
@@ -65,7 +66,7 @@ export default class UserService {
     email: string;
   }): Promise<string> {
 
-    const { data } = await apiInstance.get(`/users/email-valid/${email}`)
+    const { data } = await ApiService.get(`/users/email-valid/${email}`)
     const { id } = data;
 
     return id;
@@ -74,7 +75,7 @@ export default class UserService {
   async checkUserName({ name }: {
     name: string;
   }): Promise<string> {
-    const { data } = await apiInstance.get(`/users/name-valid/${name}`)
+    const { data } = await ApiService.get(`/users/name-valid/${name}`)
     const { id } = data;
 
     return id;
@@ -87,7 +88,7 @@ export default class UserService {
     oldPassword: string;
     newPassword: string;
   }) {
-    await apiInstance.patch(`/users/modify-password`, {
+    await ApiService.patch(`/users/modify-password`, {
       oldPassword, newPassword
     });
   }
@@ -95,35 +96,35 @@ export default class UserService {
   async updateGender({ gender }: {
     gender: Summary;
   }) {
-    await apiInstance.patch(`/users/modify-gender`, { gender });
+    await ApiService.patch(`/users/modify-gender`, { gender });
   }
 
   async updateHeight({ height }: {
     height: number;
   }) {
-    await apiInstance.patch(`/users/modify-height`, { height });
+    await ApiService.patch(`/users/modify-height`, { height });
   }
 
   async updateWeight({ weight }: {
     weight: number;
   }) {
-    await apiInstance.patch(`/users/modify-weight`, { weight });
+    await ApiService.patch(`/users/modify-weight`, { weight });
   }
 
   async updateDescription({ description }: {
     description: string;
   }) {
-    await apiInstance.patch(`/users/modify-description`, { description });
+    await ApiService.patch(`/users/modify-description`, { description });
   }
 
   async deleteMyProducts({ productId }: {
     productId: string
   }) {
-    await apiInstance.delete(`/users/product/${productId}`);
+    await ApiService.delete(`/users/product/${productId}`);
   }
 
   async deleteUser() {
-    await apiInstance.delete(`/users`);
+    await ApiService.delete(`/users`);
   }
 }
 
