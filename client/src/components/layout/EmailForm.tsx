@@ -5,9 +5,9 @@ import emailjs from '@emailjs/browser';
 
 import { TextareaBox } from '../ui/textbox/TextBoxComponents';
 
-import useFetchMyUserData from '../../hooks/useFetchMyUserData';
 import Button from '../ui/Button';
 import { useNavigate } from 'react-router-dom';
+import useAuthStore from '../../hooks/useAuthStore';
 
 const Form = styled.form`
   font-size: 1.3rem;
@@ -42,7 +42,7 @@ export const EmailForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const form = useRef<HTMLFormElement>(null);
   const navigate = useNavigate();
-  const { user: { email, name } } = useFetchMyUserData()
+  const [{ user: { email, name } }] = useAuthStore()
 
   const sendEmail = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

@@ -4,15 +4,18 @@ import { userService } from '../services/UserService';
 
 import { accessTokenUtil } from '../auth/accessTokenUtil';
 import { LOCAL_STORAGE } from '../auth/constants';
+import useAuthStore from './useAuthStore';
 
 export default function useCheckAccessToken(): void {
+  const [, store] = useAuthStore();
+
   useEffect(() => {
     const fetchCurrentUser = async () => {
       const accessToken = accessTokenUtil.getAccessToken();
       if (!accessToken) return
 
       try {
-        await userService.fetchCurrentUser();
+        await store.fetchMyUserData();
       } catch (error) {
         accessTokenUtil.setAccessToken('')
       }

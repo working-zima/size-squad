@@ -5,8 +5,8 @@ import {
   RiHome5Line, RiEditLine, RiLoginBoxLine, RiListView, RiUserLine
 } from "react-icons/ri";
 
-import useFetchMyUserData from '../../hooks/useFetchMyUserData';
 import { accessTokenUtil } from '../../auth/accessTokenUtil';
+import useAuthStore from '../../hooks/useAuthStore';
 
 const Container = styled.div.attrs({ className: 'LayoutMenuBar' })`
   grid-area: menu;
@@ -72,8 +72,7 @@ const MenuLink = styled(Link) <{ $isActive: boolean }>`
 export default function LayoutMenuBar() {
   const location = useLocation();
   const accessToken = accessTokenUtil.getAccessToken()
-  const { user } = useFetchMyUserData()
-
+  const [{ user }] = useAuthStore()
   const isActive = (path: string) => (location.pathname === path);
 
   return (

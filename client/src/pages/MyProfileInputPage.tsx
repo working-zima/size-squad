@@ -12,8 +12,9 @@ import EditWeight from "../components/myProfile/EditWeight";
 import EditDescription from "../components/myProfile/EditDescription";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 
-import useFetchMyUserData from "../hooks/useFetchMyUserData";
 import useSignupFormStore from "../hooks/useSignupFormStore";
+import useAuthStore from "../hooks/useAuthStore";
+
 import { accessTokenUtil } from "../auth/accessTokenUtil";
 
 const Container = styled.div`
@@ -23,7 +24,7 @@ const Container = styled.div`
 `
 
 export default function MyProfileInputPage() {
-  const { user, state } = useFetchMyUserData()
+  const [{ user, state }] = useAuthStore()
   const params = useParams()
   const path = String(params.path)
   const [, store] = useSignupFormStore()

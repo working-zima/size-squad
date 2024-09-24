@@ -10,7 +10,7 @@ import { Carousel } from "../components/ui/Slide/Carousel";
 
 import useFetchProducts from "../hooks/useFetchProducts";
 import useFetchUsers from '../hooks/useFetchUsers'
-import useFetchMyUserData from "../hooks/useFetchMyUserData";
+import useAuthStore from "../hooks/useAuthStore";
 
 const Container = styled.div`
   margin-bottom: 80px;
@@ -49,7 +49,7 @@ const Cards = styled.div`
 export default function HomePage() {
   const { products, state: productsState, errorMessage }
     = useFetchProducts({ per: 8 });
-  const { user } = useFetchMyUserData();
+  const [{ user }] = useAuthStore();
   const { users } = useFetchUsers({});
 
   return (

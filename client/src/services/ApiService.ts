@@ -60,6 +60,7 @@ class ApiService {
         // 새로 발급받은 토큰을 스토리지에 저장
         accessTokenUtil.setAccessToken(accessToken);
 
+        // 보관된 실패 요청들에 새 accessToken 부여
         this.failedQueue.forEach(callback => callback(accessToken));
         this.failedQueue = [];
 
@@ -74,11 +75,11 @@ class ApiService {
         this.isRefreshing = false;
       }
     } else {
-      // TokenExpired로 인해 실패한 첫 요청 이후 요청들
+      // TokenExpired로 인해 실패한 첫 요청 이후 요청들을 failedQueue에 보관
       return new Promise((resolve) => {
         this.failedQueue.push((token: string) => {
           config.headers.Authorization = `Bearer ${token}`;
-          resolve(this.instance(config));  // 재요청
+          resolve(this.instance(config));  // 새로 발급받은 토큰을 받으면 재요청
         });
       });
     }
@@ -105,7 +106,7 @@ class ApiService {
 
       const { status, statusText } = response;
 
-      // 토큰 재발급 요청
+      // 만료 토큰을 가져서 반환된 요청 처리
       if (status === 401 && response.data.message === "TokenExpired") {
         return await this.handleTokenRefresh(config);
       }

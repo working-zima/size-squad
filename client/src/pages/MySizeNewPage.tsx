@@ -7,14 +7,15 @@ import ErrorPage from "./ErrorPage";
 import MySizeNewForm from "../components/mySize/MySizeNewForm";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 
-import useFetchUser from "../hooks/useFetchMyUserData";
 import useFetchInitialData from "../hooks/useFetchInitialData";
 import useProductFormStore from "../hooks/useProductFormStore";
+import useAuthStore from "../hooks/useAuthStore";
+
 import { accessTokenUtil } from "../auth/accessTokenUtil";
 
 export default function MySizeNewPage() {
   const navigate = useNavigate();
-  const { user, state: userState } = useFetchUser()
+  const [{ user, state: userState }] = useAuthStore()
   const { categories, fits, sizes, state: initialDataState, errorMessage }
     = useFetchInitialData()
   const [{ product }, store] = useProductFormStore();

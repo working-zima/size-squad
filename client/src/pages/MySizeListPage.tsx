@@ -15,7 +15,7 @@ import { SortOption } from '../types';
 
 import useFetchCategories from '../hooks/useFetchCategories';
 import useFetchMyProducts from '../hooks/useFetchMyProducts';
-import useFetchMyUserData from '../hooks/useFetchMyUserData';
+import useAuthStore from '../hooks/useAuthStore';
 
 import { SORT_OPTIONS } from '../constants/constants';
 import { accessTokenUtil } from '../auth/accessTokenUtil';
@@ -52,7 +52,7 @@ export default function MySizeListPage() {
   const subCategoryId = params.get('category2DepthCode') ?? undefined;
   const sortCode = params.get('sortCode') ?? undefined;
 
-  const { user } = useFetchMyUserData();
+  const [{ user }] = useAuthStore();
 
   const { categories, allSubCategories, state: categoriesState }
     = useFetchCategories();

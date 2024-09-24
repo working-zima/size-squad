@@ -12,11 +12,11 @@ import Products from "../components/mypage/Products";
 import useFetchUser from "../hooks/useFetchUser";
 import useFetchMyProducts from "../hooks/useFetchMyProducts";
 import useFetchCategories from "../hooks/useFetchCategories";
-import useFetchMyUserData from "../hooks/useFetchMyUserData";
 
 import { accessTokenUtil } from "../auth/accessTokenUtil";
 
 import { authService } from "../auth/AuthService";
+import useAuthStore from "../hooks/useAuthStore";
 
 const Container = styled.div`
   height: 100%;
@@ -28,7 +28,7 @@ export default function MyPage() {
   const [querys] = useSearchParams();
   const subCategoryId = querys.get('category2DepthCode') ?? undefined;
   const sortCode = querys.get('sortCode') ?? undefined;
-  const { user: LoginUser } = useFetchMyUserData()
+  const [{ user: LoginUser }] = useAuthStore()
   const { allSubCategories } = useFetchCategories();
 
   const {

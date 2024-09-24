@@ -33,7 +33,7 @@ class AuthStore {
   async fetchMyUserData() {
     try {
       this.startLoading();
-      const user = await userService.fetchCurrentUser(); // 문제
+      const user = await userService.fetchCurrentUser();
 
       this.setUser(user);
       this.setDone();

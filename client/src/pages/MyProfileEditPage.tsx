@@ -9,8 +9,8 @@ import MyProfileEditForm from '../components/myProfile/MyProfileEditForm';
 import { ConfirmTrigger } from '../components/ui/modal/ModalTrigger';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
 
-import useFetchMyUserData from '../hooks/useFetchMyUserData';
 import useSignupFormStore from '../hooks/useSignupFormStore';
+import useAuthStore from '../hooks/useAuthStore';
 
 import { userService } from '../services/UserService';
 
@@ -39,8 +39,8 @@ const ButtonWrapper = styled.div`
 
 export default function MyProfileEditPage() {
   const navigate = useNavigate();
-  const { user, state } = useFetchMyUserData()
-  const [, store] = useSignupFormStore()
+  const [{ user, state }] = useAuthStore();
+  const [, store] = useSignupFormStore();
   const [confirmed, setConfirmed] = useState<boolean | null>(false);
 
   useEffect(() => {
