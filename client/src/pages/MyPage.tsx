@@ -4,23 +4,32 @@ import styled from "styled-components";
 
 import AccessDeniedPage from "./AccessDeniedPage";
 import ErrorPage from "./ErrorPage";
+import NoListPage from "./NoListPage";
 
 import Profile from "../components/mypage/Profile";
 import Sort from "../components/mypage/Sort";
-import Products from "../components/mypage/Products";
+import Product from "../components/mySize/Product";
+import LoadingSpinner from "../components/ui/LoadingSpinner";
 
 import useFetchUser from "../hooks/useFetchUser";
 import useFetchMyProducts from "../hooks/useFetchMyProducts";
 import useFetchCategories from "../hooks/useFetchCategories";
+import useAuthStore from "../hooks/useAuthStore";
 
 import { accessTokenUtil } from "../auth/accessTokenUtil";
-
 import { authService } from "../auth/AuthService";
-import useAuthStore from "../hooks/useAuthStore";
 
 const Container = styled.div`
   height: 100%;
 `
+
+const Products = styled.section`
+  margin: 0 10px;
+
+  & > div:first-of-type {
+    border: 0;
+  }
+`;
 
 export default function MyPage() {
   const navigate = useNavigate();
@@ -96,12 +105,14 @@ export default function MyPage() {
         sortOption={sortOption}
         findCategoryById={findCategoryById}
         handleNavigate={handleNavigate} />
-      <Products
-        productsState={productsState}
-        products={products}
-        LoginUser={LoginUser}
-      />
-      <div id='more button' ref={moreRef} />
+      <Products>
+        {products.map((product) => (
+          <Product key={product._id} product={product} user={LoginUser} />
+        ))}
+        <div id='more button' ref={moreRef} />
+        {productsState === 'loading' && <LoadingSpinner />}
+        {productsState !== 'loading' && products.length === 0 && <NoListPage />}
+      </Products>
     </Container>
   )
 }

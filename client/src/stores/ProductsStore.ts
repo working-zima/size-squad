@@ -169,7 +169,7 @@ class ProductsStore {
         sortField,
         sortOrder,
         page: 1,
-        per: 2,
+        per: DEFAULT_PER,
         userId,
       });
       this.handleProductResponse(products);

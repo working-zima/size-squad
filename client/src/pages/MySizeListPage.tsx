@@ -110,13 +110,13 @@ export default function MySizeListPage() {
         />
       </section>
       <Products>
-        {productsState === 'loading' && <LoadingSpinner />}
-        {productsState !== 'loading' && products.length === 0 && <NoListPage />}
         {products.map((product) => (
           <Product key={product._id} product={product} user={user} />
         ))}
+        <div id='more button' ref={moreRef} />
+        {productsState === 'loading' && <LoadingSpinner />}
+        {productsState !== 'loading' && products.length === 0 && <NoListPage />}
       </Products>
-      <div id='more button' ref={moreRef} />
     </Container>
   );
 }

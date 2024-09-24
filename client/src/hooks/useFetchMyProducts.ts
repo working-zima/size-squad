@@ -45,10 +45,9 @@ export default function useFetchMyProducts({
   }, [keyword, categoryId, subCategoryId, sortCode, per, userId, store]);
 
   useEffect(() => {
-    if (isIntersecting && hasNextPage && state !== 'loading' && products.length) {
-      store.fetchMoreMyProducts()
-    }
-  }, [isIntersecting, hasNextPage, state, products, store]);
+    if (products.length === 0 || state === 'loading') return;
+    if (isIntersecting) store.fetchMoreMyProducts();
+  }, [isIntersecting]);
 
   return {
     products,
