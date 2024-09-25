@@ -192,9 +192,11 @@ const userController = {
 
       const userId = tokenData.user;
 
-      productService.deleteMyProduct({ productId, userId });
+      const newProductData = await productService.deleteMyProduct({
+        productId, userId
+      });
 
-      res.status(200).json();
+      res.status(200).json({ products: newProductData });
     } catch (error) {
       next(error);
     }

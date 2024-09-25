@@ -172,6 +172,7 @@ class ProductsStore {
         per: DEFAULT_PER,
         userId,
       });
+
       this.handleProductResponse(products);
       this.handleParameter({ sortOption, per, categoryId, subCategoryId, userId })
       this.setDone();

@@ -17,8 +17,9 @@ import useFetchCategories from '../hooks/useFetchCategories';
 import useFetchMyProducts from '../hooks/useFetchMyProducts';
 import useAuthStore from '../hooks/useAuthStore';
 
-import { SORT_OPTIONS } from '../constants/constants';
+import { FETCH_STATE, SORT_OPTIONS } from '../constants/constants';
 import { accessTokenUtil } from '../auth/accessTokenUtil';
+import { useEffect } from 'react';
 
 const Container = styled.div`
   height: 100%;
@@ -114,8 +115,8 @@ export default function MySizeListPage() {
           <Product key={product._id} product={product} user={user} />
         ))}
         <div id='more button' ref={moreRef} />
-        {productsState === 'loading' && <LoadingSpinner />}
-        {productsState !== 'loading' && products.length === 0 && <NoListPage />}
+        {productsState === FETCH_STATE.LOADING && <LoadingSpinner />}
+        {productsState !== FETCH_STATE.LOADING && products.length === 0 && <NoListPage />}
       </Products>
     </Container>
   );

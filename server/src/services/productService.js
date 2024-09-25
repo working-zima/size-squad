@@ -219,9 +219,9 @@ const productService = {
         throw new CustomError('Access Token mismatch', 403);
       }
 
-      await Product.deleteProductByProductId({ productId })
+      const newProductData = await Product.deleteProductByProductId({ productId })
 
-      return;
+      return newProductData;
     } catch (error) {
       throw error;
     }

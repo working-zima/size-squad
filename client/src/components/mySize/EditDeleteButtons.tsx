@@ -47,10 +47,7 @@ export default function EditDeleteButtons({
       >
         수정
       </Link>
-      <Link
-        to="/mysize"
-        className="delete-link"
-      >
+      <div className="delete-link">
         <ConfirmTrigger
           title={'사이즈 삭제'}
           buttonText={'삭제'}
@@ -59,7 +56,7 @@ export default function EditDeleteButtons({
         >
           <p>정말로 삭제하시겠습니까?</p>
         </ConfirmTrigger>
-      </Link>
+      </div>
     </Container>
   )
 }

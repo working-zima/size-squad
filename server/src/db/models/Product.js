@@ -130,9 +130,11 @@ const Product = {
   /** productId로 제거 */
   deleteProductByProductId: async ({ productId }) => {
     try {
-      await ProductModel.findByIdAndDelete({ _id: productId });
+      const productData = await ProductModel.findByIdAndDelete({
+        _id: productId
+      });
 
-      return;
+      return productData;
     } catch (error) {
       throw error;
     }
