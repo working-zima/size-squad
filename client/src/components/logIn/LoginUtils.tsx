@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import { AlertModal } from '../ui/modal/ModalComponents';
 
 import useModal from '../../hooks/useModal';
-import useLoginFormStore from '../../hooks/useLoginFormStore';
 
 const ButtonWrapper = styled.div`
   display: flex;
@@ -24,10 +23,10 @@ const ButtonWrapper = styled.div`
 type LoginUtils = {
   state: 'loading' | 'fetched' | 'idle' | 'error';
   errorMessage: string;
+  resetForm: () => void;
 }
 
-export function LoginUtils({ state, errorMessage }: LoginUtils) {
-  const [, store] = useLoginFormStore();
+export function LoginUtils({ state, errorMessage, resetForm }: LoginUtils) {
   const { modalRef, openModal, closeModal } = useModal();
 
   useEffect(() => {
@@ -37,7 +36,7 @@ export function LoginUtils({ state, errorMessage }: LoginUtils) {
   const handleConfirm = (event?: React.MouseEvent) => {
     if (event) event.preventDefault();
 
-    store.reset();
+    resetForm();
     closeModal();
   };
 

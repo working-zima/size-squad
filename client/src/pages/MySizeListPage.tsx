@@ -18,8 +18,8 @@ import useFetchMyProducts from '../hooks/useFetchMyProducts';
 import useAuthStore from '../hooks/useAuthStore';
 
 import { FETCH_STATE, SORT_OPTIONS } from '../constants/constants';
+
 import { accessTokenUtil } from '../auth/accessTokenUtil';
-import { useEffect } from 'react';
 
 const Container = styled.div`
   height: 100%;

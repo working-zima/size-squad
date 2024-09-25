@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react';
+import { Dispatch, FormEvent, SetStateAction, useState } from 'react';
 
 import styled from 'styled-components';
 
@@ -8,9 +8,8 @@ import { LoginUtils } from './LoginUtils';
 
 import Divider from '../ui/Divider';
 
-import useLoginFormStore from '../../hooks/useLoginFormStore';
-
 import { accessTokenUtil } from '../../auth/accessTokenUtil';
+import { ApiState } from '../../types';
 
 const Container = styled.div.attrs({ className: 'MemberWrapper' })`
   padding: 20px ${props => props.theme.sizes.contentPadding} 0;
@@ -21,13 +20,22 @@ const Container = styled.div.attrs({ className: 'MemberWrapper' })`
   }
 `;
 
-export default function LoginForm() {
+type LoginFormProps = {
+  email: string;
+  password: string;
+  errorMessage: string;
+  state: ApiState;
+  setEmail: Dispatch<SetStateAction<string>>;
+  setPassword: Dispatch<SetStateAction<string>>;
+  login: () => void;
+  resetForm: () => void;
+}
+
+export default function LoginForm({
+  email, password, errorMessage, state, setEmail, setPassword, login, resetForm
+}: LoginFormProps) {
   const [isShowPw, setIsShowPw] = useState(false);
   const [isAutoLogin, setIsAutoLogin] = useState(accessTokenUtil.getIsAutoLogin());
-
-  const [
-    { email, password, valid, state, errorMessage }, store
-  ] = useLoginFormStore();
 
   const toggleAutoLogin = () => {
     accessTokenUtil.setIsAutoLogin(!isAutoLogin);
@@ -35,19 +43,19 @@ export default function LoginForm() {
   }
 
   const handleChangeEmail = (value: string) => {
-    store.changeEmail(value);
+    setEmail(value);
   };
 
   const handleChangePassword = (value: string) => {
-    store.changePassword(value);
+    setPassword(value);
   };
 
   const handleResetPassword = () => {
-    store.changePassword('');
+    setPassword('');
   }
 
   const handleResetEmail = () => {
-    store.changeEmail('');
+    setEmail('');
   }
 
   const handleShowPassword = () => {
@@ -56,7 +64,7 @@ export default function LoginForm() {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    store.login();
+    login();
     accessTokenUtil.setAccessToken('')
   };
 
@@ -75,14 +83,18 @@ export default function LoginForm() {
           handleResetPassword={handleResetPassword}
         />
         <LoginButton
-          valid={valid}
+          valid={email.includes('@') && !!password}
           isAutoLogin={isAutoLogin}
           toggleAutoLogin={toggleAutoLogin}
         />
         <Divider>
           또는
         </Divider>
-        <LoginUtils state={state} errorMessage={errorMessage} />
+        <LoginUtils
+          state={state}
+          errorMessage={errorMessage}
+          resetForm={resetForm}
+        />
       </form>
     </Container>
   );
