@@ -20,7 +20,17 @@ const app = express();
 
 app.use(helmet());
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    "https://port-0-size-squad-m1jetsxxbf67a0bc.sel4.cloudtype.app/",
+    "프론트주소(ex:https://어쩌구주소.cloudtype.app)",
+    "http://localhost:8000",
+  ],
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+  credentials: true,
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

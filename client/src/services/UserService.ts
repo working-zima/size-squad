@@ -36,7 +36,7 @@ export default class UserService {
   async fetchCurrentUser(): Promise<User> {
     const { data } = await ApiService.get('/users/me');
     const { user } = data;
-
+    console.log(`user: `, user)
     return user;
   }
 
