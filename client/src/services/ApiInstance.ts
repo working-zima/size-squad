@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const MOCK_BASE_URL = 'http://localhost:5000';
+const MOCK_BASE_URL = 'http://localhost:3000';
 
 class ApiInstance {
   public static create() {

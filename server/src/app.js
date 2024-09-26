@@ -1,5 +1,6 @@
 const cors = require("cors");
 const express = require("express");
+const helmet = require('helmet');
 
 const sessionRouter = require("./routers/sessionRouter");
 const adminRouter = require("./routers/adminRouter");
@@ -16,6 +17,8 @@ const { errorMiddleware } = require("./middlewares/errorMiddleware");
 
 /* 앱을 만듦 */
 const app = express();
+
+app.use(helmet());
 
 app.use(cors());
 app.use(express.json());
