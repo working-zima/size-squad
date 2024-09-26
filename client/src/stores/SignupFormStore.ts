@@ -25,6 +25,7 @@ class SignupFormStore {
   errorMessage = '';
 
   state: ApiState = FETCH_STATE.IDLE;
+
   isEmailDuplicated = false;
 
   isEmailValid = false;

@@ -24,7 +24,7 @@ API_BASE_URL = ''
 
 ## server env
 
-### 배포시 'production', 개발시 'dev'
+### 배포시 'production', 개발시 'development'
 
 NODE_ENV=''
 
