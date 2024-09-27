@@ -14,7 +14,7 @@ REACT_APP_TEMPLATE_ID = ""
 
 REACT_APP_PUBLIC_KEY = ""
 
-### 배포시 'production', 개발시 'development'
+### client 배포시 'production', 개발시 'development'
 
 REACT_APP_NODE_ENV = "development"
 
@@ -24,7 +24,7 @@ API_BASE_URL = ''
 
 ## server env
 
-### 배포시 'production', 개발시 'development'
+### server 배포시 'production', 개발시 'development'
 
 NODE_ENV=''
 

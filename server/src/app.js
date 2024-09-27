@@ -15,13 +15,15 @@ const initialDataRouter = require("./routers/initialDataRouter");
 
 const { errorMiddleware } = require("./middlewares/errorMiddleware");
 
+const allowedOrigins = process.env.CORS_ALLOWED_ORIGINS.split(',');
+
 /* 앱을 만듦 */
 const app = express();
 
 app.use(helmet());
 
 app.use(cors({
-  origin: "http://localhost:8000",
+  origin: allowedOrigins,
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   preflightContinue: false,
   optionsSuccessStatus: 204,
