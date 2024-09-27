@@ -34,7 +34,7 @@ class AuthStore {
     try {
       this.startLoading();
       const user = await userService.fetchCurrentUser();
-      console.log(`user: `, user)
+
       this.setUser(user);
       this.setDone();
     } catch (error) {

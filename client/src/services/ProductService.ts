@@ -26,6 +26,7 @@ export default class ProductService {
       },
     });
     const { products } = data;
+
     return products;
   }
 
