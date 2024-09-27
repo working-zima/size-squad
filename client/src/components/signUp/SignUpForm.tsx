@@ -15,10 +15,11 @@ import { Summary } from "../../types";
 
 import useSignupFormStore from "../../hooks/useSignupFormStore";
 
-import { requiredStar } from "../../utils/requiredStar";
+
 import { accessTokenUtil } from "../../auth/accessTokenUtil";
 
 import { GENDER } from "../../constants/apiLocalizationMap";
+import { requiredStar } from "../../utils/requiredStar";
 
 
 const Container = styled.div`
