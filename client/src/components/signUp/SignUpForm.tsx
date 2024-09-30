@@ -78,12 +78,6 @@ type SignUpFormProps = {
 export default function SignUpForm({ genders }: SignUpFormProps) {
   const [{ user, valid, state, accessToken }, store] = useSignupFormStore();
 
-  useEffect(() => {
-    if (accessToken) {
-      accessTokenUtil.setAccessToken(accessToken)
-    }
-  }, [accessToken]);
-
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     store.signup();

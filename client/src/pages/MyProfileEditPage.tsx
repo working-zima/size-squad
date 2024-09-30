@@ -39,21 +39,28 @@ const ButtonWrapper = styled.div`
 
 export default function MyProfileEditPage() {
   const navigate = useNavigate();
-  const [{ user, state }] = useAuthStore();
-  const [, store] = useSignupFormStore();
+  const [{ user, state }, authStore] = useAuthStore();
+  const [, signupFormstore] = useSignupFormStore();
   const [confirmed, setConfirmed] = useState<boolean | null>(false);
 
   useEffect(() => {
-    store.reset()
+    signupFormstore.reset()
   }, [])
 
   useEffect(() => {
-    if (!!confirmed) {
-      userService.deleteUser();
-      accessTokenUtil.setAccessToken('')
-      store.reset();
-      navigate('/');
-    }
+    const deleteUser = async () => {
+      try {
+        await userService.deleteUser();
+        accessTokenUtil.setAccessToken('');
+        signupFormstore.reset();
+        authStore.reset();
+        navigate('/');
+      } catch (error) {
+        alert('회원 탈퇴 실패');
+      }
+    };
+
+    if (!!confirmed) deleteUser();
   }, [confirmed]);
 
   if (!accessTokenUtil.getAccessToken()) {

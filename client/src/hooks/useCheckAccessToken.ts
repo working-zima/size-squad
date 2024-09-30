@@ -1,10 +1,9 @@
 import { useEffect } from 'react';
 
-import { userService } from '../services/UserService';
+import useAuthStore from './useAuthStore';
 
 import { accessTokenUtil } from '../auth/accessTokenUtil';
 import { LOCAL_STORAGE } from '../auth/constants';
-import useAuthStore from './useAuthStore';
 
 export default function useCheckAccessToken(): void {
   const [, store] = useAuthStore();

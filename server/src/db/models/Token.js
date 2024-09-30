@@ -52,10 +52,10 @@ const Token = {
         { accessToken },
         "accessToken refreshToken user"
       )
-      .lean()
+        .lean()
 
       return tokenData;
-    } catch(error) {
+    } catch (error) {
       throw error;
     }
   },
@@ -66,7 +66,7 @@ const Token = {
       const deletedTokenInfo = await TokenModel.deleteOne({ user });
 
       return deletedTokenInfo;
-    } catch(error) {
+    } catch (error) {
       throw error;
     }
   }

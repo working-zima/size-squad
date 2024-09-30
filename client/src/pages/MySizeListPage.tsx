@@ -54,10 +54,8 @@ export default function MySizeListPage() {
   const sortCode = params.get('sortCode') ?? undefined;
 
   const [{ user }] = useAuthStore();
-
   const { categories, allSubCategories, state: categoriesState }
     = useFetchCategories();
-
   const {
     products,
     sortOption,

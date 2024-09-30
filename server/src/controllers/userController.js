@@ -93,6 +93,7 @@ const userController = {
     }
     try {
       const userAccessToken = req.headers["authorization"];
+
       const userData = await userService.getMyInfo(userAccessToken);
       const { role, ...userDataWithoutRole } = userData;
 

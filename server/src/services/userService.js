@@ -131,7 +131,7 @@ const userService = {
     try {
       const userId = getUserIdByAccessToken({ accessToken })
       await User.deleteUser(userId);
-      await Token.deleteToken(userId);
+      await Token.deleteToken({ user: userId });
       await Product.deleteProductByAuthor({ author: userId })
 
       return;
