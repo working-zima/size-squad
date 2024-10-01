@@ -12,6 +12,7 @@ import useSignupFormStore from "../../hooks/useSignupFormStore";
 import useModal from "../../hooks/useModal";
 
 import { GENDER } from "../../constants/apiLocalizationMap";
+import useAuthStore from "../../hooks/useAuthStore";
 
 const ButtonWrapper = styled.div`
   & > button {
@@ -39,11 +40,13 @@ export default function EditGender() {
 
   const { genders } = useFetchInitialData()
   const [{ errorMessage, user }, store] = useSignupFormStore()
+  const [, authStore] = useAuthStore();
   const { modalRef, openModal, closeModal } = useModal()
 
   const handleSubmitEditGender = async () => {
     try {
       await store.updateGender();
+      await authStore.fetchMyUserData();
       navigate(-1);
     } catch (error) {
       openModal();

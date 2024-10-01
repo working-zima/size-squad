@@ -10,6 +10,7 @@ import { AlertModal } from "../ui/modal/ModalComponents";
 import useSignupFormStore from "../../hooks/useSignupFormStore";
 import useModal from "../../hooks/useModal";
 import BodyMetricInput from "../signUp/BodyMetricInput";
+import useAuthStore from "../../hooks/useAuthStore";
 
 const ButtonWrapper = styled.div`
   & > button {
@@ -36,11 +37,13 @@ export default function EditWeight() {
   const navigate = useNavigate();
 
   const [{ errorMessage, user, WeightValid }, store] = useSignupFormStore()
+  const [, authStore] = useAuthStore();
   const { modalRef, openModal, closeModal } = useModal()
 
   const handleSubmitEditWeight = async () => {
     try {
       await store.updateWeight();
+      await authStore.fetchMyUserData();
       navigate(-1);
     } catch (error) {
       openModal();

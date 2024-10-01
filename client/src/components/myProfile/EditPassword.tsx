@@ -10,6 +10,7 @@ import useSignupFormStore from "../../hooks/useSignupFormStore";
 import useModal from "../../hooks/useModal";
 import { ConfirmTrigger } from "../ui/modal/ModalTrigger";
 import { AlertModal } from "../ui/modal/ModalComponents";
+import useAuthStore from "../../hooks/useAuthStore";
 
 const ButtonWrapper = styled.div`
   & > button {
@@ -36,11 +37,13 @@ export default function ChangePasswordForm() {
   const navigate = useNavigate();
 
   const [{ errorMessage, EditPasswordValid }, store] = useSignupFormStore()
+  const [, authStore] = useAuthStore();
   const { modalRef, openModal, closeModal } = useModal();
 
   const handleSubmitEditPassword = async () => {
     try {
       await store.updatePassword();
+      await authStore.fetchMyUserData();
       navigate(-1);
     } catch (error) {
       openModal();

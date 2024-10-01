@@ -10,6 +10,7 @@ import { AlertModal } from "../ui/modal/ModalComponents";
 
 import useSignupFormStore from "../../hooks/useSignupFormStore";
 import useModal from "../../hooks/useModal";
+import useAuthStore from "../../hooks/useAuthStore";
 
 const ButtonWrapper = styled.div`
   & > button {
@@ -36,11 +37,13 @@ export default function EditDescription() {
   const navigate = useNavigate();
 
   const [{ errorMessage, user, DescriptionValid }, store] = useSignupFormStore()
+  const [, authStore] = useAuthStore();
   const { modalRef, openModal, closeModal } = useModal()
 
   const handleSubmitEditDescription = async () => {
     try {
       await store.updateDescription();
+      await authStore.fetchMyUserData();
       navigate(-1);
     } catch (error) {
       openModal();
