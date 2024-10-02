@@ -8,14 +8,15 @@ import { authService } from '../auth/AuthService';
 
 import { FETCH_STATE } from '../constants/constants';
 import { ERROR_MESSAGES } from '../constants/messages';
+import useAuthStore from '../hooks/useAuthStore';
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const [, authStore] = useAuthStore();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [accessToken, setAccessToken]
-    = useState(accessTokenUtil.getAccessToken())
+  const [accessToken, setAccessToken] = useState(accessTokenUtil.getAccessToken());
   const [errorMessage, setErrorMessage] = useState('');
   const [state, setState] = useState(FETCH_STATE.IDLE);
 
@@ -26,6 +27,7 @@ export default function LoginPage() {
   useEffect(() => {
     if (accessToken) {
       resetForm();
+      authStore.fetchMyUserData();
       navigate('/');
     }
   }, [accessToken]);

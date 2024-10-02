@@ -7,6 +7,7 @@ import {
 
 import { accessTokenUtil } from '../../auth/accessTokenUtil';
 import useAuthStore from '../../hooks/useAuthStore';
+import { User } from '../../types';
 
 const Container = styled.div.attrs({ className: 'LayoutMenuBar' })`
   grid-area: menu;
@@ -69,10 +70,14 @@ const MenuLink = styled(Link) <{ $isActive: boolean }>`
   }
 `
 
-export default function LayoutMenuBar() {
+type LayoutMenuBarProps = {
+  user: User;
+}
+
+export default function LayoutMenuBar({ user }: LayoutMenuBarProps) {
   const location = useLocation();
   const accessToken = accessTokenUtil.getAccessToken()
-  const [{ user }] = useAuthStore()
+
   const isActive = (path: string) => (location.pathname === path);
 
   return (

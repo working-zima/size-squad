@@ -9,10 +9,11 @@ import SideButtons from './SideButtons';
 import PortalRoot from './PortalRoot';
 
 import useCheckAccessToken from '../../hooks/useCheckAccessToken';
-import useUserStore from '../../hooks/useUserStore';
 
-import { PAGES } from '../../constants/constants';
+import { FETCH_STATE, PAGES } from '../../constants/constants';
 import { USERFIELDS } from '../../constants/apiLocalizationMap';
+import useAuthStore from '../../hooks/useAuthStore';
+import LoadingSpinner from '../ui/LoadingSpinner';
 
 type ContainerProps = {
   SHOWMENU: boolean;
@@ -48,7 +49,7 @@ export default function Layout() {
   const params = useParams();
   const path = String(params.path);
 
-  const [{ user }] = useUserStore();
+  const [{ user, state }] = useAuthStore();
 
   const isEditSizePage = useMatch('/mysize/:id/edit');
   const isEditProfilePage = useMatch('/mypage/:id/edit');
@@ -86,7 +87,7 @@ export default function Layout() {
         ? <SideButtons />
         : null
       }
-      {page.SHOWMENU && <LayoutMenuBar />}
+      {page.SHOWMENU && <LayoutMenuBar user={user} />}
       <PortalRoot />
     </Container>
   );

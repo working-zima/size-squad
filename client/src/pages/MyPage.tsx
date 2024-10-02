@@ -37,7 +37,7 @@ export default function MyPage() {
   const [querys] = useSearchParams();
   const subCategoryId = querys.get('category2DepthCode') ?? undefined;
   const sortCode = querys.get('sortCode') ?? undefined;
-  const [{ user: LoginUser }] = useAuthStore()
+  const [{ user: loginedUser }, authStore] = useAuthStore()
   const { allSubCategories } = useFetchCategories();
 
   const {
@@ -83,6 +83,7 @@ export default function MyPage() {
     await authService.logout();
     accessTokenUtil.setAccessToken('')
     userStore.reset();
+    authStore.reset();
     navigate('/');
   };
 
@@ -107,7 +108,7 @@ export default function MyPage() {
         handleNavigate={handleNavigate} />
       <Products>
         {products.map((product) => (
-          <Product key={product._id} product={product} user={LoginUser} />
+          <Product key={product._id} product={product} user={loginedUser} />
         ))}
         <div id='more button' ref={moreRef} />
         {productsState === 'loading' && <LoadingSpinner />}
