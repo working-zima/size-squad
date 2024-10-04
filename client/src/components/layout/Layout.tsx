@@ -10,10 +10,9 @@ import PortalRoot from './PortalRoot';
 
 import useCheckAccessToken from '../../hooks/useCheckAccessToken';
 
-import { FETCH_STATE, PAGES } from '../../constants/constants';
+import { PAGES } from '../../constants/constants';
 import { USERFIELDS } from '../../constants/apiLocalizationMap';
 import useAuthStore from '../../hooks/useAuthStore';
-import LoadingSpinner from '../ui/LoadingSpinner';
 
 type ContainerProps = {
   SHOWMENU: boolean;
@@ -49,7 +48,7 @@ export default function Layout() {
   const params = useParams();
   const path = String(params.path);
 
-  const [{ user, state }] = useAuthStore();
+  const [{ user }] = useAuthStore();
 
   const isEditSizePage = useMatch('/mysize/:id/edit');
   const isEditProfilePage = useMatch('/mypage/:id/edit');

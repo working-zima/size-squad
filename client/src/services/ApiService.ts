@@ -4,6 +4,7 @@ import ApiInstance from './ApiInstance';
 
 import { accessTokenUtil } from '../auth/accessTokenUtil';
 import AuthService from '../auth/AuthService';
+
 class ApiService {
   private instance = ApiInstance.create();
 

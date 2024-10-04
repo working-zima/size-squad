@@ -9,6 +9,8 @@ import { userService } from '../services/UserService';
 import { FETCH_STATE } from '../constants/constants';
 import { ERROR_MESSAGES } from '../constants/messages';
 
+import { accessTokenUtil } from '../auth/accessTokenUtil';
+
 @singleton()
 @Store()
 class AuthStore {
@@ -38,6 +40,8 @@ class AuthStore {
       this.setUser(user);
       this.setDone();
     } catch (error) {
+      console.log(error)
+      accessTokenUtil.setAccessToken('')
       const typedError = error as { status?: number; message: string };
       this.errorMessage = typedError.message || ERROR_MESSAGES.UNEXPECTED;
 

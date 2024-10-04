@@ -12,12 +12,7 @@ export default function useCheckAccessToken(): void {
     const fetchCurrentUser = async () => {
       const accessToken = accessTokenUtil.getAccessToken();
       if (!accessToken) return
-
-      try {
-        await store.fetchMyUserData();
-      } catch (error) {
-        accessTokenUtil.setAccessToken('')
-      }
+      await store.fetchMyUserData();
     };
 
     fetchCurrentUser();
