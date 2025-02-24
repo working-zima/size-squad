@@ -130,3 +130,53 @@ Size Squad는 사용자가 자신의 의류 사이즈를 기록하고 언제 어
   프론트엔드는 <http://localhost:8000> 에서 실행됩니다.
 
 <br/>
+
+## 📂 환경 변수 설명
+
+### 🛠️ 기본 환경
+
+- `NODE_ENV`: 애플리케이션 실행 환경 (development, production 등).
+- `PORT`: 서버가 실행될 포트 번호.
+- `REACT_APP_NODE_ENV`: 클라이언트 애플리케이션 실행 환경 (development, production).
+- `REACT_APP_API_BASE_URL`: API 요청의 기본 URL.
+
+### 🔐 토큰 및 보안
+
+- `JWT_SECRET_KEY`: JWT 서명에 사용되는 비밀 키.
+- `ACCESS_EXPIRES_IN`: 엑세스 토큰 유효 기간.
+- `REFRESH_EXPIRES_IN`: 리프레시 토큰 유효 기간.
+- `SALT_ROUND`: bcrypt 해싱 시 라운드 수.
+
+### 📦 데이터베이스
+
+- `MONGODB_URL`: MongoDB 데이터베이스 연결 문자열.
+
+### 🌍 CORS 설정
+
+- `CORS_ALLOWED_ORIGINS`: CORS 정책에 따라 허용할 도메인 목록.
+
+### ✉️ 이메일 서비스 (EmailJS)
+
+- `REACT_APP_SERVICE_ID`: EmailJS 서비스 ID.
+- `REACT_APP_TEMPLATE_ID`: EmailJS 템플릿 ID.
+- `REACT_APP_PUBLIC_KEY`: EmailJS API 호출을 위한 공개 키.
+
+<br/>
+
+## ⚙️ 사용 기술 스택
+
+### 프론트엔드
+
+![Next.js](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![Styled-components](https://img.shields.io/badge/Styled--Components-DB7093?style=flat-square&logo=styledcomponents&logoColor=white)
+![useStore-ts](https://img.shields.io/badge/useStore--ts-52303d?style=flat-square&logo=zustand&logoColor=white)
+
+### 백엔드 및 데이터 처리
+
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white)
+![Node.js](https://img.shields.io/badge/Express-000000?style=flat-square&logo=express&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=flat-square&logo=mongodb&logoColor=white)
+![Mongoose](https://img.shields.io/badge/Mongoose-880000?style=flat-square&logo=mongoose&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-000000?style=flat-square&logo=jsonwebtokens&logoColor=white)
+![Bcrypt](https://img.shields.io/badge/bcrypt-FF6A00?style=flat-square&logo=bcrypt&logoColor=white)
