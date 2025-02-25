@@ -21,6 +21,7 @@
     "@swc/core": "^1.5.3",
     "@swc/jest": "^0.2.36",
     "@swc/plugin-styled-components": "^2.0.2",
+    "@tanstack/eslint-plugin-query": "^5.66.1",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^15.0.6",
     "@types/jest": "^29.5.12",
@@ -44,6 +45,8 @@
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
+    "@tanstack/react-query": "^5.66.9",
+    "@tanstack/react-query-devtools": "^5.66.9",
     "axios": "^1.6.8",
     "dotenv": "^16.4.5",
     "react": "^18.3.1",

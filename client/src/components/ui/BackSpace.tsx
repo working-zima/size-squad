@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Button from './Button';
+import useProductsStore from '../../hooks/useProductsStore';
 
 const Container = styled(Button)`
   position: relative;

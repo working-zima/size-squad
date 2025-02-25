@@ -155,6 +155,7 @@ class ProductsStore {
     if (this.state === FETCH_STATE.LOADING) return;
     this.reset();
     this.startLoading();
+
     try {
       const sortOption = sortCode
         ? SORT_OPTIONS[sortCode]

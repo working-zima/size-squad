@@ -54,6 +54,7 @@ export default function MySizeListPage() {
   const sortCode = params.get('sortCode') ?? undefined;
 
   const [{ user }] = useAuthStore();
+  console.log(`MySizeListPage: `, user)
   const { categories, allSubCategories, state: categoriesState }
     = useFetchCategories();
   const {

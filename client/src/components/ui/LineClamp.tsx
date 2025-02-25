@@ -89,7 +89,9 @@ const LineClampedText = ({ text, lines, hasButton }: LineClampedText) => {
   useEffect(() => {
     if (elemRef.current && cloneRef.current) {
       const cloneHeight = cloneRef.current.offsetHeight;
-      const lineHeight = parseInt(getComputedStyle(elemRef.current).lineHeight);
+      const lineHeight = parseInt(
+        getComputedStyle(elemRef.current).lineHeight
+      );
       setIsClamped(Math.floor(cloneHeight / lineHeight) > (lines || 0));
     }
   }, [lines, text]);

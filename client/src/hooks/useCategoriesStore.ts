@@ -1,7 +1,7 @@
-import { container } from 'tsyringe';
-import { useStore } from 'usestore-ts';
+import { container } from "tsyringe";
+import { useStore } from "usestore-ts";
 
-import CategoriesStore from '../stores/CategoriesStore';
+import CategoriesStore from "../stores/CategoriesStore";
 
 /**
  * `CategoriesStore`을 사용하는 역할

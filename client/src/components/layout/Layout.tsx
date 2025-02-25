@@ -9,10 +9,10 @@ import SideButtons from './SideButtons';
 import PortalRoot from './PortalRoot';
 
 import useCheckAccessToken from '../../hooks/useCheckAccessToken';
+import useAuthStore from '../../hooks/useAuthStore';
 
 import { PAGES } from '../../constants/constants';
 import { USERFIELDS } from '../../constants/apiLocalizationMap';
-import useAuthStore from '../../hooks/useAuthStore';
 
 type ContainerProps = {
   SHOWMENU: boolean;
