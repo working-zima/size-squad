@@ -21,7 +21,7 @@ import { authService } from "../auth/AuthService";
 
 const Container = styled.div`
   height: 100%;
-`
+`;
 
 const Products = styled.section`
   margin: 0 10px;
@@ -35,16 +35,21 @@ export default function MyPage() {
   const navigate = useNavigate();
   const params = useParams();
   const [querys] = useSearchParams();
-  const subCategoryId = querys.get('category2DepthCode') ?? undefined;
-  const sortCode = querys.get('sortCode') ?? undefined;
-  const [{ user: loginedUser }, authStore] = useAuthStore()
-  const { allSubCategories } = useFetchCategories();
+  const subCategoryId = querys.get("category2DepthCode") ?? undefined;
+  const sortCode = querys.get("sortCode") ?? undefined;
+  const [{ user: loginedUser }, authStore] = useAuthStore();
+  const {
+    allSubCategories,
+    isLoading: isLoadingCategories,
+    isError: isErrorCategories,
+    error: errorCategories,
+  } = useFetchCategories();
 
   const {
     user,
     errorMessage: userErrorMessage,
     isOwner,
-    store: userStore
+    store: userStore,
   } = useFetchUser({ id: params.id });
 
   const {
@@ -57,40 +62,55 @@ export default function MyPage() {
   } = useFetchMyProducts({ subCategoryId, sortCode, userId: user._id });
 
   const findCategoryById = (id: string) => {
-    return [{ _id: '', name: 'all' }, ...allSubCategories]
-      .find(subCategory => subCategory._id === id)
+    return [{ _id: "", name: "all" }, ...allSubCategories].find(
+      (subCategory) => subCategory._id === id
+    );
   };
 
+  const isError = isErrorCategories;
+  const errorMessage = errorCategories?.message;
+
   const handleNavigate = ({
-    category2DepthCode, sortCode
-  }: { category2DepthCode?: string, sortCode?: string }) => {
+    category2DepthCode,
+    sortCode,
+  }: {
+    category2DepthCode?: string;
+    sortCode?: string;
+  }) => {
     const queryParams: string[] = [];
 
-    const subCategoryParam = category2DepthCode === ''
-      ? undefined
-      : category2DepthCode || subCategoryId;
-    const sortParam = sortCode || '';
+    const subCategoryParam =
+      category2DepthCode === ""
+        ? undefined
+        : category2DepthCode || subCategoryId;
+    const sortParam = sortCode || "";
 
-    if (subCategoryParam) queryParams.push(`category2DepthCode=${subCategoryParam}`);
+    if (subCategoryParam)
+      queryParams.push(`category2DepthCode=${subCategoryParam}`);
     if (sortParam) queryParams.push(`sortCode=${sortParam}`);
 
-    const queryString = queryParams.join('&');
-    const path = `/mypage/${params.id}/${queryString ? `?${queryString}` : ''}`;
+    const queryString = queryParams.join("&");
+    const path = `/mypage/${params.id}/${queryString ? `?${queryString}` : ""}`;
     navigate(path);
   };
 
   const handleClickLogout = async () => {
     await authService.logout();
-    accessTokenUtil.setAccessToken('')
+    accessTokenUtil.setAccessToken("");
     userStore.reset();
     authStore.reset();
-    navigate('/');
+    navigate("/");
   };
 
-  if (!accessTokenUtil.getAccessToken()) return (<AccessDeniedPage />);
-  if (productsState === 'error') {
-    return (<ErrorPage errorMessage={userErrorMessage} />);
-  }
+  if (!accessTokenUtil.getAccessToken()) return <AccessDeniedPage />;
+  if (isError)
+    return (
+      <ErrorPage
+        errorMessage={
+          errorMessage || "데이터를 불러오는 중 문제가 발생했습니다."
+        }
+      />
+    );
 
   return (
     <Container>
@@ -104,16 +124,18 @@ export default function MyPage() {
         allSubCategories={allSubCategories}
         selectedSubCategoryId={selectedSubCategoryId}
         sortOption={sortOption}
+        isLoadingCategories={isLoadingCategories}
         findCategoryById={findCategoryById}
-        handleNavigate={handleNavigate} />
+        handleNavigate={handleNavigate}
+      />
       <Products>
         {products.map((product) => (
           <Product key={product._id} product={product} user={loginedUser} />
         ))}
-        <div id='more button' ref={moreRef} />
-        {productsState === 'loading' && <LoadingSpinner />}
-        {productsState !== 'loading' && products.length === 0 && <NoListPage />}
+        <div id="more button" ref={moreRef} />
+        {productsState === "loading" && <LoadingSpinner />}
+        {productsState !== "loading" && products.length === 0 && <NoListPage />}
       </Products>
     </Container>
-  )
+  );
 }

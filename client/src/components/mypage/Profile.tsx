@@ -12,23 +12,24 @@ const Container = styled.section`
   top: 0;
   font-size: 1.3rem;
   line-height: ${(props) => props.theme.sizes.lineHeight};
-  padding: ${props => props.theme.sizes.contentPadding};
+  padding: ${(props) => props.theme.sizes.contentPadding};
   padding-bottom: 0;
-  border-bottom: 1px solid ${props => props.theme.colors.dividerColor};
-  background-color: ${props => props.theme.colors.primaryWhite};
-  z-index: 100;
-`
+  border-bottom: 1px solid ${(props) => props.theme.colors.dividerColor};
+  background-color: ${(props) => props.theme.colors.primaryWhite};
+  z-index: 1001;
+`;
 
 type ProfileProps = {
   user: User;
   isOwner: boolean;
   handleClickLogout: () => void;
-}
+};
 
 export default function Profile({
-  user, isOwner, handleClickLogout
+  user,
+  isOwner,
+  handleClickLogout,
 }: ProfileProps) {
-
   return (
     <Container>
       <UserRow user={user} />
@@ -39,5 +40,5 @@ export default function Profile({
         handleClickLogout={handleClickLogout}
       />
     </Container>
-  )
+  );
 }

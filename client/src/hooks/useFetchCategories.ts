@@ -1,24 +1,23 @@
-import { useEffect } from 'react';
+import { useQuery } from "@tanstack/react-query";
+import { productAttributeService } from "../services/ProductAttributeService";
+import { Summary } from "../types";
 
-import useCategoriesStore from './useCategoriesStore';
-import { Category, Summary } from '../types';
+export default function useFetchCategories() {
+  const { data, error, isLoading, isError } = useQuery({
+    queryKey: ["categories"],
+    queryFn: () => productAttributeService.fetchCategories(),
+  });
 
-/**
- * categories를 fetch하는 역할
- * @returns `{categories, subCategories}`
- */
-export default function useFetchCategories(): {
-  categories: Category[],
-  allSubCategories: Summary[],
-  state: 'loading' | 'fetched' | 'idle' | 'error'
-} {
-  const [
-    { categories, allSubCategories, state }, store
-  ] = useCategoriesStore();
+  const categories = data || [];
+  const allSubCategories: Summary[] = categories.flatMap(
+    (category) => category.subCategories
+  );
 
-  useEffect(() => {
-    store.fetchCategories();
-  }, [store]);
-
-  return { categories, allSubCategories, state };
+  return {
+    categories,
+    allSubCategories,
+    isLoading,
+    isError,
+    error,
+  };
 }

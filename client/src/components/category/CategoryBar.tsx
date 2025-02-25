@@ -1,11 +1,11 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-import MainCategoryBar from './MainCategoryBar';
-import SubCategoryBar from './SubCategoryBar';
+import MainCategoryBar from "./MainCategoryBar";
+import SubCategoryBar from "./SubCategoryBar";
 
-import LoadingSpinner from '../ui/LoadingSpinner';
+import LoadingSpinner from "../ui/LoadingSpinner";
 
-import { Category, Summary } from '../../types';
+import { Category, Summary } from "../../types";
 
 const Container = styled.section`
   display: flex;
@@ -22,16 +22,17 @@ const Container = styled.section`
 type CategoryBarProps = {
   categories: Category[];
   subCategories: Summary[];
-  categoriesState: 'loading' | 'fetched' | 'idle' | 'error';
-}
+  isLoadingCategories: boolean;
+};
 
 export default function CategoryBar({
-  categories, subCategories, categoriesState
+  categories,
+  subCategories,
+  isLoadingCategories,
 }: CategoryBarProps) {
-
   return (
     <Container>
-      {categoriesState === 'loading' ? (
+      {isLoadingCategories ? (
         <LoadingSpinner />
       ) : (
         <>
@@ -40,6 +41,5 @@ export default function CategoryBar({
         </>
       )}
     </Container>
-
   );
 }
