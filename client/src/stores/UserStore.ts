@@ -22,7 +22,7 @@ class UserStore {
 
   hasNextPage = true;
 
-  keyword = '';
+  keyword = "";
 
   per = DEFAULT_PER;
 
@@ -30,24 +30,24 @@ class UserStore {
 
   isOwner = false;
 
-  errorMessage = '';
+  errorMessage = "";
 
   state: ApiState = FETCH_STATE.IDLE;
 
   get passwordValid() {
-    return
+    return;
   }
 
   @Action()
   private setUser(user: User) {
     this.user = user;
-    this.errorMessage = '';
+    this.errorMessage = "";
   }
 
   @Action()
   private setUsers(users: User[]) {
     this.users = users;
-    this.errorMessage = '';
+    this.errorMessage = "";
   }
 
   @Action()
@@ -81,8 +81,8 @@ class UserStore {
     this.users = [nullUser];
     this.isOwner = false;
     this.page = 1;
-    this.errorMessage = '';
-    this.state = FETCH_STATE.IDLE;;
+    this.errorMessage = "";
+    this.state = FETCH_STATE.IDLE;
   }
 
   @Action()
@@ -100,7 +100,7 @@ class UserStore {
   async fetchUser({ id }: { id: string }) {
     this.startLoading();
     try {
-      const { user, isOwner } = await userService.fetchUser({ userId: id })
+      const { user, isOwner } = await userService.fetchUser({ userId: id });
 
       this.setUser(user);
       this.setIsOwner(isOwner);
@@ -113,47 +113,47 @@ class UserStore {
     }
   }
 
-  async fetchUsers({
-    keyword,
-    sortCode,
-    per
-  }: {
-    keyword: any;
-    sortCode?: string,
-    per: any;
-  }) {
-    this.startLoading();
-    try {
-      const sortOption = sortCode
-        ? SORT_OPTIONS[sortCode]
-        : SORT_OPTIONS.RECENT;
-      const sortField = Object.keys(sortOption.sort)[0];
-      const sortOrder = Object.values(sortOption.sort)[0];
+  // async fetchUsers({
+  //   keyword,
+  //   sortCode,
+  //   per
+  // }: {
+  //   keyword: any;
+  //   sortCode?: string,
+  //   per: any;
+  // }) {
+  //   this.startLoading();
+  //   try {
+  //     const sortOption = sortCode
+  //       ? SORT_OPTIONS[sortCode]
+  //       : SORT_OPTIONS.RECENT;
+  //     const sortField = Object.keys(sortOption.sort)[0];
+  //     const sortOrder = Object.values(sortOption.sort)[0];
 
-      const users = await userService.fetchUsers({
-        keyword,
-        sortField,
-        sortOrder,
-        page: 1,
-        per: per
-      });
+  //     const users = await userService.fetchUsers({
+  //       keyword,
+  //       sortField,
+  //       sortOrder,
+  //       page: 1,
+  //       per: per
+  //     });
 
-      this.handleUserResponse(users);
-      this.setSortOption(sortOption);
-      this.setPer(per);
-      this.setTotalDocs(users.totalDocs);
-      this.setDone();
-    } catch (error) {
-      const typedError = error as { status?: number; message: string };
-      this.errorMessage = typedError.message || ERROR_MESSAGES.UNEXPECTED;
+  //     this.handleUserResponse(users);
+  //     this.setSortOption(sortOption);
+  //     this.setPer(per);
+  //     this.setTotalDocs(users.totalDocs);
+  //     this.setDone();
+  //   } catch (error) {
+  //     const typedError = error as { status?: number; message: string };
+  //     this.errorMessage = typedError.message || ERROR_MESSAGES.UNEXPECTED;
 
-      this.setError();
-    }
-  }
+  //     this.setError();
+  //   }
+  // }
 
   @Action()
   private startLoading() {
-    this.reset()
+    this.reset();
     this.state = FETCH_STATE.LOADING;
   }
 

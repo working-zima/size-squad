@@ -1,8 +1,8 @@
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
-import styled from 'styled-components';
+import styled from "styled-components";
 
-import Button from '../components/ui/Button';
+import Button from "../components/ui/Button";
 
 const Container = styled.div`
   display: flex;
@@ -17,7 +17,7 @@ const Container = styled.div`
     font-size: 1.6rem;
     font-weight: bold;
     color: white;
-    background-color: ${props => props.theme.colors.primaryBlack};
+    background-color: ${(props) => props.theme.colors.primaryBlack};
     border-radius: 6px;
   }
 `;
@@ -39,19 +39,21 @@ const MessageBox = styled.div`
   }
 `;
 
-export default function NoListPage() {
+type NoListPageProps = {
+  itemName: string;
+  itemLink: string;
+};
 
+export default function NoListPage({ itemName, itemLink }: NoListPageProps) {
   return (
     <Container>
       <MessageBox>
-        <h2>입력된 사이즈가 없습니다</h2>
-        <p>서비스 이용을 위해 사이즈를 입력해 주세요.</p>
+        <h2>{itemName}가 없습니다</h2>
+        <p>{itemName}를 채워 주세요.</p>
       </MessageBox>
-      <Link to='/mysize/new'>
-        <Button>
-          사이즈 입력
-        </Button>
+      <Link to={itemLink}>
+        <Button>{itemName} 채우러 가기</Button>
       </Link>
     </Container>
   );
-};
+}

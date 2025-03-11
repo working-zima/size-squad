@@ -1,6 +1,6 @@
-import { PaginationResponse, Summary, User, UserWithOwnership } from '../types';
+import { PaginationResponse, Summary, User, UserWithOwnership } from "../types";
 
-import ApiService from './ApiService';
+import ApiService from "./ApiService";
 
 export default class UserService {
   async signup({
@@ -10,7 +10,7 @@ export default class UserService {
     gender,
     height,
     weight,
-    description
+    description,
   }: {
     email: string;
     name: string;
@@ -20,8 +20,14 @@ export default class UserService {
     weight?: number;
     description?: string;
   }): Promise<string> {
-    const { data } = await ApiService.post('/users', {
-      email, name, password, gender, height, weight, description
+    const { data } = await ApiService.post("/users", {
+      email,
+      name,
+      password,
+      gender,
+      height,
+      weight,
+      description,
     });
     const { accessToken } = data;
     return accessToken;
@@ -30,11 +36,11 @@ export default class UserService {
   async fetchUser({ userId }: { userId: string }): Promise<UserWithOwnership> {
     const { data } = await ApiService.get(`/users/${userId}`);
 
-    return { user: data.user, isOwner: data.isOwner }
+    return { user: data.user, isOwner: data.isOwner };
   }
 
   async fetchCurrentUser(): Promise<User> {
-    const { data } = await ApiService.get('/users/me');
+    const { data } = await ApiService.get("/users/me");
     const { user } = data;
 
     return user;
@@ -45,37 +51,31 @@ export default class UserService {
     sortField,
     sortOrder,
     page,
-    per
+    per,
   }: {
-    keyword?: string,
-    sortField?: string,
-    sortOrder?: number,
-    page?: number,
-    per?: number
+    keyword?: string;
+    sortField?: string;
+    sortOrder?: number;
+    page?: number;
+    per?: number;
   }): Promise<PaginationResponse<User>> {
-    const { data } = await ApiService.get(
-      '/users/all',
-      { params: { keyword, sortField, sortOrder, page, per } }
-    );
+    const { data } = await ApiService.get("/users/all", {
+      params: { keyword, sortField, sortOrder, page, per },
+    });
     const { users } = data;
 
     return users;
   }
 
-  async checkUserEmail({ email }: {
-    email: string;
-  }): Promise<string> {
-
-    const { data } = await ApiService.get(`/users/email-valid/${email}`)
+  async checkUserEmail({ email }: { email: string }): Promise<string> {
+    const { data } = await ApiService.get(`/users/email-valid/${email}`);
     const { id } = data;
 
     return id;
   }
 
-  async checkUserName({ name }: {
-    name: string;
-  }): Promise<string> {
-    const { data } = await ApiService.get(`/users/name-valid/${name}`)
+  async checkUserName({ name }: { name: string }): Promise<string> {
+    const { data } = await ApiService.get(`/users/name-valid/${name}`);
     const { id } = data;
 
     return id;
@@ -83,43 +83,34 @@ export default class UserService {
 
   async updatePassword({
     oldPassword,
-    newPassword
+    newPassword,
   }: {
     oldPassword: string;
     newPassword: string;
   }) {
     await ApiService.patch(`/users/modify-password`, {
-      oldPassword, newPassword
+      oldPassword,
+      newPassword,
     });
   }
 
-  async updateGender({ gender }: {
-    gender: Summary;
-  }) {
+  async updateGender({ gender }: { gender: Summary }) {
     await ApiService.patch(`/users/modify-gender`, { gender });
   }
 
-  async updateHeight({ height }: {
-    height: number;
-  }) {
+  async updateHeight({ height }: { height: number }) {
     await ApiService.patch(`/users/modify-height`, { height });
   }
 
-  async updateWeight({ weight }: {
-    weight: number;
-  }) {
+  async updateWeight({ weight }: { weight: number }) {
     await ApiService.patch(`/users/modify-weight`, { weight });
   }
 
-  async updateDescription({ description }: {
-    description: string;
-  }) {
+  async updateDescription({ description }: { description: string }) {
     await ApiService.patch(`/users/modify-description`, { description });
   }
 
-  async deleteMyProducts({ productId }: {
-    productId: string
-  }) {
+  async deleteMyProducts({ productId }: { productId: string }) {
     await ApiService.delete(`/users/product/${productId}`);
   }
 
