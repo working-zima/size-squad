@@ -134,7 +134,9 @@ export default function MyPage() {
         ))}
         <div id="more button" ref={moreRef} />
         {productsState === "loading" && <LoadingSpinner />}
-        {productsState !== "loading" && products.length === 0 && <NoListPage />}
+        {productsState !== "loading" && products.length === 0 && (
+          <NoListPage itemName={"사이즈"} itemLink={"/mysize/new"} />
+        )}
       </Products>
     </Container>
   );

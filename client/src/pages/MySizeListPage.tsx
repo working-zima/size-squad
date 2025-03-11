@@ -124,7 +124,7 @@ export default function MySizeListPage() {
         <div id="more button" ref={moreRef} />
         {productsState === FETCH_STATE.LOADING && <LoadingSpinner />}
         {productsState !== FETCH_STATE.LOADING && products.length === 0 && (
-          <NoListPage />
+          <NoListPage itemName={"사이즈"} itemLink={"/mysize/new"} />
         )}
       </Products>
     </Container>
