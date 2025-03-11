@@ -13,22 +13,24 @@ export default function SignupPage() {
   const navigate = useNavigate();
 
   const [{ accessToken }, store] = useSignupFormStore();
-  const { genders, errorMessage, state } = useFetchGender();
+  const { genders, isLoading, isError, error } = useFetchGender();
 
   useEffect(() => {
-    store.reset();
-    store.changeGender(genders[0]);
-  }, [genders]);
+    if (genders.length > 0) {
+      store.reset();
+      store.changeGender(genders[0]);
+    }
+  }, [genders.length]);
 
   useEffect(() => {
     if (accessToken) {
       store.reset();
-      navigate('/signup/complete');
+      navigate("/signup/complete");
     }
   }, [accessToken]);
 
-  if (state === 'error') return (<ErrorPage errorMessage={errorMessage} />);
-  if (state === 'loading') return (<LoadingSpinner />);
+  if (isError) return <ErrorPage errorMessage={error?.message} />;
+  if (isLoading) return <LoadingSpinner />;
 
-  return (<SignUpForm genders={genders} />)
+  return <SignUpForm genders={genders} />;
 }

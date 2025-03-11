@@ -1,13 +1,16 @@
-import { useEffect } from "react";
-
-import useGendersStore from "./useGenderStore"
+import { useQuery } from "@tanstack/react-query";
+import { productAttributeService } from "../services/ProductAttributeService";
 
 export default function useFetchGenders() {
-  const [{ genders, errorMessage, state }, store] = useGendersStore();
+  const {
+    data: genders = [],
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["genders"],
+    queryFn: () => productAttributeService.fetchGenders(),
+  });
 
-  useEffect(() => {
-    store.fetchGenders();
-  }, [store])
-
-  return { genders, errorMessage, state }
+  return { genders, isLoading, isError, error };
 }
