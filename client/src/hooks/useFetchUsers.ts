@@ -1,21 +1,22 @@
-import { useEffect } from "react";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
-import useUserStore from "./useUserStore";
-import { DEFAULT_PER, SORT_OPTIONS } from "../constants/constants";
-import { useQuery } from "@tanstack/react-query";
 import { userService } from "../services/UserService";
+
 import { PaginationResponse, User } from "../types";
+import { DEFAULT_PER, SORT_OPTIONS } from "../constants/constants";
 
 type useFetchUserStoreProps = {
   keyword?: string;
   sortCode?: string;
   per?: number;
+  page: number;
 };
 
 export default function useFetchUsers({
   keyword,
   sortCode,
   per = DEFAULT_PER,
+  page,
 }: useFetchUserStoreProps) {
   const sortOption = sortCode ? SORT_OPTIONS[sortCode] : SORT_OPTIONS.RECENT;
   const sortField = Object.keys(sortOption.sort)[0];
@@ -27,9 +28,16 @@ export default function useFetchUsers({
     isError,
     error,
   } = useQuery<PaginationResponse<User>>({
-    queryKey: ["users", keyword, sortCode, per],
+    queryKey: ["users", keyword, sortCode, per, page],
     queryFn: () =>
-      userService.fetchUsers({ keyword, sortField, sortOrder, page: 1, per }),
+      userService.fetchUsers({
+        keyword,
+        sortField,
+        sortOrder,
+        page,
+        per,
+      }),
+    placeholderData: keepPreviousData,
     staleTime: 1000 * 60 * 5,
   });
 

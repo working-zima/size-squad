@@ -49,7 +49,7 @@ const Cards = styled.div`
 export default function HomePage() {
   const { products, state: productsState, errorMessage } = useFetchProducts({});
   const [{ user }] = useAuthStore();
-  const { users, isLoading, isError, error } = useFetchUsers({});
+  const { users, isLoading, isError, error } = useFetchUsers({ page: 1 });
 
   const userList = users?.docs ?? [];
 

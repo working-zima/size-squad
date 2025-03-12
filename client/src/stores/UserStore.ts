@@ -44,31 +44,31 @@ class UserStore {
     this.errorMessage = "";
   }
 
-  @Action()
-  private setUsers(users: User[]) {
-    this.users = users;
-    this.errorMessage = "";
-  }
+  // @Action()
+  // private setUsers(users: User[]) {
+  //   this.users = users;
+  //   this.errorMessage = "";
+  // }
 
-  @Action()
-  private setSortOption(sortOption: SortOption) {
-    this.sortOption = sortOption;
-  }
+  // @Action()
+  // private setSortOption(sortOption: SortOption) {
+  //   this.sortOption = sortOption;
+  // }
 
-  @Action()
-  private setPage(nextPage: number) {
-    this.page = nextPage;
-  }
+  // @Action()
+  // private setPage(nextPage: number) {
+  //   this.page = nextPage;
+  // }
 
-  @Action()
-  private setTotalDocs(totalDocs: number) {
-    this.totalDocs = totalDocs;
-  }
+  // @Action()
+  // private setTotalDocs(totalDocs: number) {
+  //   this.totalDocs = totalDocs;
+  // }
 
-  @Action()
-  private setPer(per: number) {
-    this.per = per;
-  }
+  // @Action()
+  // private setPer(per: number) {
+  //   this.per = per;
+  // }
 
   @Action()
   private setIsOwner(isOwner: boolean) {
@@ -85,17 +85,17 @@ class UserStore {
     this.state = FETCH_STATE.IDLE;
   }
 
-  @Action()
-  private handleUserResponse(users: PaginationResponse<User>) {
-    if (!users.hasNextPage) this.setHasNextPage();
-    if (users.totalPages >= this.page) this.setUsers(users.docs);
-    if (users.nextPage) this.setPage(users.nextPage);
-  }
+  // @Action()
+  // private handleUserResponse(users: PaginationResponse<User>) {
+  //   if (!users.hasNextPage) this.setHasNextPage();
+  //   if (users.totalPages >= this.page) this.setUsers(users.docs);
+  //   if (users.nextPage) this.setPage(users.nextPage);
+  // }
 
-  @Action()
-  private setHasNextPage() {
-    this.hasNextPage = false;
-  }
+  // @Action()
+  // private setHasNextPage() {
+  //   this.hasNextPage = false;
+  // }
 
   async fetchUser({ id }: { id: string }) {
     this.startLoading();
@@ -116,10 +116,10 @@ class UserStore {
   // async fetchUsers({
   //   keyword,
   //   sortCode,
-  //   per
+  //   per,
   // }: {
   //   keyword: any;
-  //   sortCode?: string,
+  //   sortCode?: string;
   //   per: any;
   // }) {
   //   this.startLoading();
@@ -135,7 +135,7 @@ class UserStore {
   //       sortField,
   //       sortOrder,
   //       page: 1,
-  //       per: per
+  //       per: per,
   //     });
 
   //     this.handleUserResponse(users);
