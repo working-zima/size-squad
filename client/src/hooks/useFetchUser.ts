@@ -1,13 +1,25 @@
-import { useEffect } from 'react'
+import { useQuery } from "@tanstack/react-query";
+import { userService } from "../services/UserService";
 
-import useUserStore from './useUserStore'
+type useFetchUsersProps = {
+  id: string | undefined;
+};
 
-export default function useFetchUser({ id }: { id: string | undefined }) {
-  const [{ user, state, errorMessage, isOwner }, store] = useUserStore();
+export default function useFetchUser({ id }: useFetchUsersProps) {
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["user", id],
+    queryFn: () =>
+      userService.fetchUser({
+        userId: id!,
+      }),
+    enabled: !!id,
+  });
 
-  useEffect(() => {
-    if (id) store.fetchUser({ id });
-  }, [id, store])
-
-  return { user, state, errorMessage, isOwner, store }
+  return {
+    user: data?.user,
+    isOwner: data?.isOwner,
+    isLoading,
+    isError,
+    error,
+  };
 }

@@ -6,7 +6,7 @@
           "@swc/plugin-styled-components",
           {
             "displayName": true,
-            "fileName": false ,
+            "fileName": false,
             "ssr": true
           }
         ]

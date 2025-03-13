@@ -1,6 +1,7 @@
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 import styled from "styled-components";
+import { useQueryClient } from "@tanstack/react-query";
 
 import AccessDeniedPage from "./AccessDeniedPage";
 import ErrorPage from "./ErrorPage";
@@ -32,6 +33,8 @@ const Products = styled.section`
 `;
 
 export default function MyPage() {
+  // 컴포넌트 함수 내부에서
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const params = useParams();
   const [querys] = useSearchParams();
@@ -47,10 +50,13 @@ export default function MyPage() {
 
   const {
     user,
-    errorMessage: userErrorMessage,
     isOwner,
-    store: userStore,
-  } = useFetchUser({ id: params.id });
+    isLoading: isLoadingUser,
+    isError: isErrorUser,
+    error: errorUser,
+  } = useFetchUser({
+    id: params.id,
+  });
 
   const {
     products,
@@ -59,7 +65,7 @@ export default function MyPage() {
     totalDocs,
     state: productsState,
     moreRef,
-  } = useFetchMyProducts({ subCategoryId, sortCode, userId: user._id });
+  } = useFetchMyProducts({ subCategoryId, sortCode, userId: user?._id });
 
   const findCategoryById = (id: string) => {
     return [{ _id: "", name: "all" }, ...allSubCategories].find(
@@ -67,7 +73,7 @@ export default function MyPage() {
     );
   };
 
-  const isError = isErrorCategories;
+  const isError = isErrorCategories || isErrorUser;
   const errorMessage = errorCategories?.message;
 
   const handleNavigate = ({
@@ -97,7 +103,7 @@ export default function MyPage() {
   const handleClickLogout = async () => {
     await authService.logout();
     accessTokenUtil.setAccessToken("");
-    userStore.reset();
+    await queryClient.invalidateQueries({ queryKey: ["user"] });
     authStore.reset();
     navigate("/");
   };
@@ -111,6 +117,9 @@ export default function MyPage() {
         }
       />
     );
+
+  if (!user) return null;
+  if (!user || typeof isOwner === "undefined") return null;
 
   return (
     <Container>
