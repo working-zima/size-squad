@@ -11,6 +11,7 @@ import { Carousel } from "../components/ui/Slide/Carousel";
 import useFetchProducts from "../hooks/useFetchProducts";
 import useFetchUsers from "../hooks/useFetchUsers";
 import useAuthStore from "../hooks/useAuthStore";
+import useFetchInitialData from "../hooks/useFetchInitialData";
 
 const Container = styled.div`
   margin-bottom: 80px;

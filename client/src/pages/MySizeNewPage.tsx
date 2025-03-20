@@ -15,50 +15,56 @@ import { accessTokenUtil } from "../auth/accessTokenUtil";
 
 export default function MySizeNewPage() {
   const navigate = useNavigate();
-  const [{ user, state: userState }] = useAuthStore()
-  const { categories, fits, sizes, state: initialDataState, errorMessage }
-    = useFetchInitialData()
+  const [{ user, state: userState }] = useAuthStore();
+  const {
+    data: initialData,
+    isLoading: initialDataIsLoading,
+    isError: initialDataIsError,
+    error,
+  } = useFetchInitialData();
   const [{ product }, store] = useProductFormStore();
 
-  const loading = userState === 'loading' || initialDataState === 'loading';
+  const loading = userState === "loading" || initialDataIsLoading === true;
 
   useEffect(() => {
     store.reset();
-  }, [])
+  }, []);
 
   useEffect(() => {
-    if (!categories[0]._id || product._id || !user.gender) return;
-    store.reset()
+    if (!initialData || product._id || !user.gender) {
+      return;
+    }
+    store.reset();
 
-    store.changeCategory(categories[0]);
-    store.changeSubCategory(categories[0].subCategories[0]);
+    store.changeCategory(initialData.categories[0]);
+    store.changeSubCategory(initialData.categories[0].subCategories[0]);
     store.changeGender(user.gender);
-    store.changeFit(fits[0]);
+    store.changeFit(initialData.fits[0]);
 
-    const sizeList = sizes.filter(sizeElem => {
-      return sizeElem.gender._id === user.gender._id
+    const sizeList = initialData.sizes.filter((sizeElem: any) => {
+      return sizeElem.gender._id === user.gender._id;
     });
     store.changeSize(sizeList[0]);
 
-    categories[0].measurements.forEach((measurement, idx) => {
-      store.addMeasurement();
-      store.changeMeasurementAndId(idx, measurement._id, measurement.name);
-    });
-
-  }, [categories, user.gender, store])
+    initialData.categories[0].measurements.forEach(
+      (measurement: any, idx: any) => {
+        store.addMeasurement();
+        store.changeMeasurementAndId(idx, measurement._id, measurement.name);
+      }
+    );
+  }, [initialData, user.gender, store]);
 
   const handleComplete = () => {
     store.reset();
-    navigate('/mysize');
+    navigate("/mysize");
   };
 
-  if (loading) return (<LoadingSpinner />);
-  if (!accessTokenUtil.getAccessToken()) return (<AccessDeniedPage />);
-  if (initialDataState === 'error') return (<ErrorPage errorMessage={errorMessage} />);
+  if (loading) return <LoadingSpinner />;
+  if (!accessTokenUtil.getAccessToken()) return <AccessDeniedPage />;
+  if (initialDataIsError === true)
+    return <ErrorPage errorMessage={error?.message} />;
 
   return (
-    <MySizeNewForm
-      onComplete={handleComplete}
-    />
+    <MySizeNewForm initialData={initialData} onComplete={handleComplete} />
   );
 }

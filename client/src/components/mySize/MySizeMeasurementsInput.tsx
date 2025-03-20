@@ -1,24 +1,35 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import { TextInputBox } from '../ui/textbox/TextBoxComponents';
+import { TextInputBox } from "../ui/textbox/TextBoxComponents";
 
-import useProductFormStore from '../../hooks/useProductFormStore';
-import useInitialDataStore from '../../hooks/useInitialDataStore';
+import useProductFormStore from "../../hooks/useProductFormStore";
 
-import { MEASUREMENT } from '../../constants/apiLocalizationMap';
+import { MEASUREMENT } from "../../constants/apiLocalizationMap";
+import { Category } from "../../types";
 
-export default function MySizeMeasurementsInput() {
-  const [{ product: { category, measurements } }, store] = useProductFormStore();
-  const [{ categories }] = useInitialDataStore();
+type MySizeMeasurementsInputProps = {
+  categories: Category[];
+};
+
+export default function MySizeMeasurementsInput({
+  categories,
+}: MySizeMeasurementsInputProps) {
+  const [
+    {
+      product: { category, measurements },
+    },
+    store,
+  ] = useProductFormStore();
+
   const [prevCategoryId, setPrevCategoryId] = useState(category._id);
 
   const handleResetMeasurement = (index: number) => {
-    store.changeMeasurementValue(index, '');
-  }
+    store.changeMeasurementValue(index, "");
+  };
 
-  const selectedMeasurements = categories
-    .find((categoryElem) => categoryElem._id === category._id)?.measurements
-    || [];
+  const selectedMeasurements =
+    categories.find((categoryElem) => categoryElem._id === category._id)
+      ?.measurements || [];
 
   useEffect(() => {
     if (category._id !== prevCategoryId) {
@@ -36,8 +47,8 @@ export default function MySizeMeasurementsInput() {
 
   return (
     <>
-      {measurements && measurements
-        .map((measurement, index) => (
+      {measurements &&
+        measurements.map((measurement, index) => (
           <TextInputBox
             key={measurement._id}
             label={MEASUREMENT[measurement.name]}
@@ -46,11 +57,12 @@ export default function MySizeMeasurementsInput() {
             maxLength={5}
             value={measurement.value}
             onChange={(value) => store.changeMeasurementValue(index, value)}
-            unitType='cm'
-            onReset={() => { handleResetMeasurement(index) }}
+            unitType="cm"
+            onReset={() => {
+              handleResetMeasurement(index);
+            }}
           />
-        ))
-      }
+        ))}
     </>
-  )
+  );
 }

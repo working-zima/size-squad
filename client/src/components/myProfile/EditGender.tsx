@@ -19,29 +19,29 @@ const ButtonWrapper = styled.div`
     width: 100%;
     height: 48px;
     margin-top: 4rem;
-    border: 1px solid ${props => props.theme.colors.primaryBlack};
-    border-radius: ${props => props.theme.sizes.borderRadius};
-    background-color: ${props => props.theme.colors.primaryBlack};
-    color: ${props => props.theme.colors.primaryWhite};
+    border: 1px solid ${(props) => props.theme.colors.primaryBlack};
+    border-radius: ${(props) => props.theme.sizes.borderRadius};
+    background-color: ${(props) => props.theme.colors.primaryBlack};
+    color: ${(props) => props.theme.colors.primaryWhite};
     font-size: 1.6rem;
     font-weight: 600;
   }
 
   & > button:disabled {
-    background-color: ${props => props.theme.colors.unSelectedText};
+    background-color: ${(props) => props.theme.colors.unSelectedText};
     opacity: 0.6;
     cursor: not-allowed;
   }
-`
+`;
 
 export default function EditGender() {
   const [confirmed, setConfirmed] = useState<boolean | null>(false);
   const navigate = useNavigate();
 
-  const { genders } = useFetchInitialData()
-  const [{ errorMessage, user }, store] = useSignupFormStore()
+  const { data: initialData } = useFetchInitialData();
+  const [{ errorMessage, user }, store] = useSignupFormStore();
   const [, authStore] = useAuthStore();
-  const { modalRef, openModal, closeModal } = useModal()
+  const { modalRef, openModal, closeModal } = useModal();
 
   const handleSubmitEditGender = async () => {
     try {
@@ -62,13 +62,12 @@ export default function EditGender() {
     }
   }, [confirmed]);
 
-
   return (
     <>
       <ComboBox
-        label={''}
+        label={""}
         selectedItem={user.gender}
-        items={genders}
+        items={initialData.genders}
         itemToId={(item) => item?._id}
         itemToText={(item) => GENDER[item?.name]}
         onChange={(value) => value && store.changeGender(value)}
@@ -82,13 +81,10 @@ export default function EditGender() {
           <p>성별을 변경하시겠습니까?</p>
         </ConfirmTrigger>
       </ButtonWrapper>
-      <AlertModal
-        modalRef={modalRef}
-        hide={closeModal}
-      >
+      <AlertModal modalRef={modalRef} hide={closeModal}>
         <p>성별 변경 실패</p>
         <p>{errorMessage}</p>
       </AlertModal>
     </>
-  )
+  );
 }

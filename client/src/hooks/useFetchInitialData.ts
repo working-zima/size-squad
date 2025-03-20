@@ -1,16 +1,11 @@
-import { useEffect } from "react";
-
-import useInitialDataStore from "./useInitialDataStore";
+import { useQuery } from "@tanstack/react-query";
+import { productAttributeService } from "../services/ProductAttributeService";
 
 export default function useFetchInitialData() {
-  const [
-    { categories, genders, fits, sizes, state, errorMessage },
-    store
-  ] = useInitialDataStore();
+  const { data, error, isLoading, isError } = useQuery({
+    queryKey: ["initial"],
+    queryFn: () => productAttributeService.fetchInitialData(),
+  });
 
-  useEffect(() => {
-    store.fetchInitialData();
-  }, [store])
-
-  return { categories, genders, fits, sizes, state, store, errorMessage }
+  return { data, error, isLoading, isError };
 }

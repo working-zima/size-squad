@@ -1,22 +1,23 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-import MySizeBrandInput from './MySizeBrandInput';
-import MySizeNameInput from './MySizeNameInput';
-import MySizeCategoryBox from './MySizeCategoryBox';
-import MySizeGenderBox from './MySizeGenderBox';
-import MySizeSizeBox from './MySizeSizeBox';
-import MySizeFitBox from './MySizeFitBox';
-import MySizeMeasurementsInput from './MySizeMeasurementsInput';
-import MySizeDescriptionInput from './MySizeDescriptionInput';
+import MySizeBrandInput from "./MySizeBrandInput";
+import MySizeNameInput from "./MySizeNameInput";
+import MySizeCategoryBox from "./MySizeCategoryBox";
+import MySizeGenderBox from "./MySizeGenderBox";
+import MySizeSizeBox from "./MySizeSizeBox";
+import MySizeFitBox from "./MySizeFitBox";
+import MySizeMeasurementsInput from "./MySizeMeasurementsInput";
+import MySizeDescriptionInput from "./MySizeDescriptionInput";
 
-import useProductFormStore from '../../hooks/useProductFormStore';
+import useProductFormStore from "../../hooks/useProductFormStore";
 
-import Button from '../ui/Button';
-import useModal from '../../hooks/useModal';
-import { AlertModal } from '../ui/modal/ModalComponents';
+import Button from "../ui/Button";
+import useModal from "../../hooks/useModal";
+import { AlertModal } from "../ui/modal/ModalComponents";
+import { InitialData } from "../../types";
 
 const Container = styled.div`
-  padding: 20px ${props => props.theme.sizes.contentPadding} 0;
+  padding: 20px ${(props) => props.theme.sizes.contentPadding} 0;
   user-select: none;
 
   h2 {
@@ -36,33 +37,42 @@ const Form = styled.form`
       margin-top: 0;
     }
   }
-`
+`;
 
 const ButtonWrapper = styled.div`
   button {
     margin: 40px 0 20px 0;
     width: 100%;
     height: 48px;
-    background-color: ${props => props.theme.colors.primaryBlack};
-    color: ${props => props.theme.colors.primaryWhite};
+    background-color: ${(props) => props.theme.colors.primaryBlack};
+    color: ${(props) => props.theme.colors.primaryWhite};
     font-size: 1.6rem;
     font-weight: 600;
-    border-color: ${props => props.theme.colors.primaryBlack};
+    border-color: ${(props) => props.theme.colors.primaryBlack};
     border-radius: 6px;
 
     &:disabled {
-      background-color: ${props => props.theme.colors.unSelectedText};
+      background-color: ${(props) => props.theme.colors.unSelectedText};
     }
   }
-`
+`;
 
 type MySizeNewFormProps = {
+  initialData: InitialData;
   onComplete: () => void;
-}
+};
 
-export default function MySizeNewForm({ onComplete }: MySizeNewFormProps) {
+export default function MySizeNewForm({
+  initialData,
+  onComplete,
+}: MySizeNewFormProps) {
   const [
-    { product: { gender }, errorMessage, valid }, store
+    {
+      product: { gender },
+      errorMessage,
+      valid,
+    },
+    store,
   ] = useProductFormStore();
   const { modalRef, openModal, closeModal } = useModal();
 
@@ -89,14 +99,15 @@ export default function MySizeNewForm({ onComplete }: MySizeNewFormProps) {
       <Form onSubmit={handleSubmit}>
         <MySizeBrandInput maxLength={29} />
         <MySizeNameInput maxLength={29} />
-        <MySizeCategoryBox />
+        <MySizeCategoryBox categories={initialData.categories} />
         <MySizeGenderBox
           gender={gender}
+          genders={initialData.genders}
           changeGender={(value) => store.changeGender(value)}
         />
-        <MySizeSizeBox />
-        <MySizeMeasurementsInput />
-        <MySizeFitBox />
+        <MySizeSizeBox sizes={initialData.sizes} />
+        <MySizeMeasurementsInput categories={initialData.categories} />
+        <MySizeFitBox fits={initialData.fits} />
         <MySizeDescriptionInput />
         <ButtonWrapper>
           <Button type="submit" disabled={!valid}>
@@ -109,5 +120,5 @@ export default function MySizeNewForm({ onComplete }: MySizeNewFormProps) {
         <p>{errorMessage}</p>
       </AlertModal>
     </Container>
-  )
+  );
 }
