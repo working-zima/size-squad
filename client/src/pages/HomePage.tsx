@@ -8,10 +8,9 @@ import UserCard from "../components/UserCard";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 import { Carousel } from "../components/ui/Slide/Carousel";
 
-import useFetchProducts from "../hooks/useFetchProducts";
-import useUsers from "../hooks/useUsers";
 import useAuthStore from "../hooks/useAuthStore";
-import useInitialData from "../hooks/useInitialData";
+import useUsers from "../hooks/useUsers";
+import { useProducts } from "../hooks/useProducts";
 
 const Container = styled.div`
   margin-bottom: 80px;
@@ -48,9 +47,20 @@ const Cards = styled.div`
 `;
 
 export default function HomePage() {
-  const { products, state: productsState, errorMessage } = useFetchProducts({});
+  const {
+    data,
+    isLoading: isProductsLoading,
+    isError: isProductsError,
+    error: productsError,
+  } = useProducts({});
+  const allProducts = data?.pages.flatMap((page) => page.docs) ?? [];
   const [{ user }] = useAuthStore();
-  const { users, isLoading, isError, error } = useUsers({ page: 1 });
+  const {
+    users,
+    isLoading: isUsersLoading,
+    isError: isUsersError,
+    error: usersError,
+  } = useUsers({ page: 1 });
 
   const userList = users?.docs ?? [];
 
@@ -64,19 +74,25 @@ export default function HomePage() {
         </p>
       </Title>
       <Cards>
-        {productsState === "error" && <ErrorPage errorMessage={errorMessage} />}
-        {productsState === "loading" && <LoadingSpinner />}
-        {productsState !== "loading" &&
-          productsState !== "error" &&
-          products.length === 0 && (
-            <NoListPage itemName={"사이즈"} itemLink={"/mysize/new"} />
-          )}
-        <Carousel
-          items={products}
-          renderItem={(item) => (
-            <Product key={item._id} product={item} user={user} />
-          )}
-        />
+        {isProductsLoading && <LoadingSpinner />}
+        {isProductsError && (
+          <ErrorPage
+            errorMessage={
+              productsError?.message ?? "상품을 불러올 수 없습니다."
+            }
+          />
+        )}
+        {!isProductsLoading && !isProductsError && allProducts.length === 0 && (
+          <NoListPage itemName="사이즈" itemLink="/mysize/new" />
+        )}
+        {!isProductsLoading && !isProductsError && allProducts.length > 0 && (
+          <Carousel
+            items={allProducts}
+            renderItem={(item) => (
+              <Product key={item._id} product={item} user={user} />
+            )}
+          />
+        )}
       </Cards>
       <Title>
         <h2>새로운 얼굴들</h2>
@@ -86,13 +102,23 @@ export default function HomePage() {
         </p>
       </Title>
       <Cards>
-        {!isLoading && !isError && userList.length === 0 && (
-          <NoListPage itemName={"멤버"} itemLink={"/signup"} />
+        {isUsersLoading && <LoadingSpinner />}
+        {isUsersError && (
+          <ErrorPage
+            errorMessage={
+              usersError?.message ?? "유저 목록을 불러올 수 없습니다."
+            }
+          />
         )}
-        <Carousel
-          items={userList}
-          renderItem={(item) => <UserCard key={item._id} user={item} />}
-        />
+        {!isUsersLoading && !isUsersError && userList.length === 0 && (
+          <NoListPage itemName="멤버" itemLink="/signup" />
+        )}
+        {!isUsersLoading && !isUsersError && userList.length > 0 && (
+          <Carousel
+            items={userList}
+            renderItem={(item) => <UserCard key={item._id} user={item} />}
+          />
+        )}
       </Cards>
     </Container>
   );

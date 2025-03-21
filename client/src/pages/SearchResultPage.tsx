@@ -22,6 +22,7 @@ import { SORT_OPTIONS } from "../constants/constants";
 
 import { accessTokenUtil } from "../auth/accessTokenUtil";
 import useAuthStore from "../hooks/useAuthStore";
+import { useProducts } from "../hooks/useProducts";
 
 const Container = styled.div`
   height: 100%;
@@ -62,20 +63,19 @@ export default function SearchResultPage() {
     closeModal: hideBody,
   } = usePortal();
 
-  const {
-    products,
-    errorMessage,
-    moreRef,
-    state: productsState,
-    sortOption,
-    totalDocs,
-  } = useFetchProducts({ keyword: query, sortCode });
+  const { data, isLoading, isFetching, isError, error, moreRef, sortOption } =
+    useProducts({
+      keyword: query,
+      sortCode,
+    });
   const [{ user }] = useAuthStore();
+
+  const products = data?.pages.flatMap((p) => p.docs) ?? [];
+  const totalDocs = data?.pages[0]?.totalDocs ?? 0;
 
   useEffect(() => {
     hideBody();
     openHeader();
-    store.changeKeyword(query);
   }, [query]);
 
   const handleNavigate = (sortOption: SortOption) => {
@@ -84,8 +84,8 @@ export default function SearchResultPage() {
   };
 
   if (!accessTokenUtil.getAccessToken()) return <AccessDeniedPage />;
-  if (productsState === "error") {
-    return <ErrorPage errorMessage={errorMessage} />;
+  if (isError) {
+    return <ErrorPage errorMessage={error?.message ?? "에러 발생"} />;
   }
 
   return (
@@ -108,14 +108,18 @@ export default function SearchResultPage() {
         />
       </SortWrapper>
       <Products>
-        {productsState === "loading" && <LoadingSpinner />}
-        {productsState !== "loading" && products.length === 0 && (
-          <NoListPage itemName={"사이즈"} itemLink={"/mysize/new"} />
-        )}
-        {productsState !== "loading" &&
+        {/* 첫 로딩 (데이터가 전혀 없을 때) */}
+        {isLoading && <LoadingSpinner />}
+        {/* 데이터는 있고, 추가 로딩 중 (무한스크롤 시) */}
+        {!isLoading &&
           products.map((product) => (
             <Product key={product._id} product={product} user={user} />
           ))}
+        {!isLoading && products.length === 0 && (
+          <NoListPage itemName="사이즈" itemLink="/mysize/new" />
+        )}
+        {/* 추가 로딩 중일 때 아래에만 Spinner 표시 */}
+        {isFetching && !isLoading && <LoadingSpinner />}
       </Products>
       <div id="more button" ref={moreRef} />
     </Container>

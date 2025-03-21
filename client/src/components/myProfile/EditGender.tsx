@@ -7,12 +7,12 @@ import { ConfirmTrigger } from "../ui/modal/ModalTrigger";
 import { AlertModal } from "../ui/modal/ModalComponents";
 import ComboBox from "../ui/selectbox/ComboBox";
 
-import useInitialData from "../../hooks/useInitialData";
 import useSignupFormStore from "../../hooks/useSignupFormStore";
 import useModal from "../../hooks/useModal";
 
 import { GENDER } from "../../constants/apiLocalizationMap";
 import useAuthStore from "../../hooks/useAuthStore";
+import useInitialData from "../../hooks/usehInitialData";
 
 const ButtonWrapper = styled.div`
   & > button {
