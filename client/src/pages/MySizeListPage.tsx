@@ -13,7 +13,7 @@ import BorderlessComboBox from "../components/ui/selectbox/BorderlessComboBox";
 
 import { SortOption } from "../types";
 
-import useFetchCategories from "../hooks/useFetchCategories";
+import useCategories from "../hooks/useCategories";
 import useFetchMyProducts from "../hooks/useFetchMyProducts";
 import useAuthStore from "../hooks/useAuthStore";
 
@@ -61,7 +61,7 @@ export default function MySizeListPage() {
     isLoading: isLoadingCategories,
     isError: isErrorCategories,
     error: errorCategories,
-  } = useFetchCategories();
+  } = useCategories();
   const {
     products,
     sortOption,

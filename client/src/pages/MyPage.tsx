@@ -12,9 +12,9 @@ import Sort from "../components/mypage/Sort";
 import Product from "../components/mySize/Product";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 
-import useFetchUser from "../hooks/useFetchUser";
+import useUser from "../hooks/useUser";
 import useFetchMyProducts from "../hooks/useFetchMyProducts";
-import useFetchCategories from "../hooks/useFetchCategories";
+import useCategories from "../hooks/useCategories";
 import useAuthStore from "../hooks/useAuthStore";
 
 import { accessTokenUtil } from "../auth/accessTokenUtil";
@@ -46,7 +46,7 @@ export default function MyPage() {
     isLoading: isLoadingCategories,
     isError: isErrorCategories,
     error: errorCategories,
-  } = useFetchCategories();
+  } = useCategories();
 
   const {
     user,
@@ -54,7 +54,7 @@ export default function MyPage() {
     isLoading: isLoadingUser,
     isError: isErrorUser,
     error: errorUser,
-  } = useFetchUser({
+  } = useUser({
     id: params.id,
   });
 

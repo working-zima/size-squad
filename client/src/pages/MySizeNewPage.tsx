@@ -7,7 +7,7 @@ import ErrorPage from "./ErrorPage";
 import MySizeNewForm from "../components/mySize/MySizeNewForm";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 
-import useFetchInitialData from "../hooks/useFetchInitialData";
+import useInitialData from "../hooks/useInitialData";
 import useProductFormStore from "../hooks/useProductFormStore";
 import useAuthStore from "../hooks/useAuthStore";
 
@@ -21,7 +21,7 @@ export default function MySizeNewPage() {
     isLoading: initialDataIsLoading,
     isError: initialDataIsError,
     error,
-  } = useFetchInitialData();
+  } = useInitialData();
   const [{ product }, store] = useProductFormStore();
 
   const loading = userState === "loading" || initialDataIsLoading === true;

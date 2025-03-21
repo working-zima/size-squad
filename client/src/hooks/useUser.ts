@@ -5,7 +5,7 @@ type useFetchUsersProps = {
   id: string | undefined;
 };
 
-export default function useFetchUser({ id }: useFetchUsersProps) {
+export default function useUser({ id }: useFetchUsersProps) {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["user", id],
     queryFn: () =>

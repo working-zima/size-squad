@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import MySizeEditForm from "../components/mySize/MySizeEditForm";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 
-import useFetchInitialData from "../hooks/useFetchInitialData";
+import useInitialData from "../hooks/useInitialData";
 import useFetchProductForm from "../hooks/useFetchProductForm";
 
 export default function MySizeEditPage() {
@@ -17,7 +17,7 @@ export default function MySizeEditPage() {
     isLoading: initialDataIsLoading,
     isError: initialDataIsError,
     error,
-  } = useFetchInitialData();
+  } = useInitialData();
 
   const loading =
     productFormState === "loading" || initialDataIsLoading === true;

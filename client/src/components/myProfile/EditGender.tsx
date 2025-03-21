@@ -7,7 +7,7 @@ import { ConfirmTrigger } from "../ui/modal/ModalTrigger";
 import { AlertModal } from "../ui/modal/ModalComponents";
 import ComboBox from "../ui/selectbox/ComboBox";
 
-import useFetchInitialData from "../../hooks/useFetchInitialData";
+import useInitialData from "../../hooks/useInitialData";
 import useSignupFormStore from "../../hooks/useSignupFormStore";
 import useModal from "../../hooks/useModal";
 
@@ -38,7 +38,7 @@ export default function EditGender() {
   const [confirmed, setConfirmed] = useState<boolean | null>(false);
   const navigate = useNavigate();
 
-  const { data: initialData } = useFetchInitialData();
+  const { data: initialData } = useInitialData();
   const [{ errorMessage, user }, store] = useSignupFormStore();
   const [, authStore] = useAuthStore();
   const { modalRef, openModal, closeModal } = useModal();

@@ -12,7 +12,7 @@ type useFetchUserStoreProps = {
   page: number;
 };
 
-export default function useFetchUsers({
+export default function useUsers({
   keyword,
   sortCode,
   per = DEFAULT_PER,

@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { productAttributeService } from "../services/ProductAttributeService";
 import { Summary } from "../types";
 
-export default function useFetchCategories() {
+export default function useCategories() {
   const { data, error, isLoading, isError } = useQuery({
     queryKey: ["categories"],
     queryFn: () => productAttributeService.fetchCategories(),

@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { productAttributeService } from "../services/ProductAttributeService";
 
-export default function useFetchGenders() {
+export default function useGenders() {
   const {
     data: genders = [],
     isLoading,

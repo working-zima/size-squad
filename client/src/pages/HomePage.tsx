@@ -9,9 +9,9 @@ import LoadingSpinner from "../components/ui/LoadingSpinner";
 import { Carousel } from "../components/ui/Slide/Carousel";
 
 import useFetchProducts from "../hooks/useFetchProducts";
-import useFetchUsers from "../hooks/useFetchUsers";
+import useUsers from "../hooks/useUsers";
 import useAuthStore from "../hooks/useAuthStore";
-import useFetchInitialData from "../hooks/useFetchInitialData";
+import useInitialData from "../hooks/useInitialData";
 
 const Container = styled.div`
   margin-bottom: 80px;
@@ -50,7 +50,7 @@ const Cards = styled.div`
 export default function HomePage() {
   const { products, state: productsState, errorMessage } = useFetchProducts({});
   const [{ user }] = useAuthStore();
-  const { users, isLoading, isError, error } = useFetchUsers({ page: 1 });
+  const { users, isLoading, isError, error } = useUsers({ page: 1 });
 
   const userList = users?.docs ?? [];
 
