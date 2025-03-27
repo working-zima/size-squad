@@ -13,12 +13,13 @@ import Product from "../components/mySize/Product";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 
 import useUser from "../hooks/useUser";
-import useFetchMyProducts from "../hooks/useFetchMyProducts";
+
 import useCategories from "../hooks/useCategories";
 import useAuthStore from "../hooks/useAuthStore";
 
 import { accessTokenUtil } from "../auth/accessTokenUtil";
 import { authService } from "../auth/AuthService";
+import { useUserProducts } from "../hooks/useUserProducts";
 
 const Container = styled.div`
   height: 100%;
@@ -59,13 +60,19 @@ export default function MyPage() {
   });
 
   const {
-    products,
-    subCategoryId: selectedSubCategoryId,
+    data,
     sortOption,
-    totalDocs,
-    state: productsState,
+    isLoading: isProductsLoading,
+    isFetching: isProductsFetching,
+    isError: isProductsError,
+    error,
     moreRef,
-  } = useFetchMyProducts({ subCategoryId, sortCode, userId: user?._id });
+  } = useUserProducts({
+    subCategoryId,
+    sortCode,
+    userId: user?._id,
+  });
+  const allProducts = data?.pages.flatMap((page) => page?.docs ?? []) ?? [];
 
   const findCategoryById = (id: string) => {
     return [{ _id: "", name: "all" }, ...allSubCategories].find(
@@ -129,21 +136,21 @@ export default function MyPage() {
         handleClickLogout={handleClickLogout}
       />
       <Sort
-        totalDocs={totalDocs}
+        totalDocs={Number(data?.pages[0].totalDocs)}
         allSubCategories={allSubCategories}
-        selectedSubCategoryId={selectedSubCategoryId}
+        selectedSubCategoryId={subCategoryId}
         sortOption={sortOption}
         isLoadingCategories={isLoadingCategories}
         findCategoryById={findCategoryById}
         handleNavigate={handleNavigate}
       />
       <Products>
-        {products.map((product) => (
+        {allProducts.map((product) => (
           <Product key={product._id} product={product} user={loginedUser} />
         ))}
         <div id="more button" ref={moreRef} />
-        {productsState === "loading" && <LoadingSpinner />}
-        {productsState !== "loading" && products.length === 0 && (
+        {isProductsFetching && <LoadingSpinner />}
+        {!isProductsLoading && !isProductsError && allProducts.length === 0 && (
           <NoListPage itemName={"사이즈"} itemLink={"/mysize/new"} />
         )}
       </Products>

@@ -11,15 +11,14 @@ import Product from "../components/mySize/Product";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 import BorderlessComboBox from "../components/ui/selectbox/BorderlessComboBox";
 
-import { SortOption } from "../types";
+import { accessTokenUtil } from "../auth/accessTokenUtil";
 
 import useCategories from "../hooks/useCategories";
-import useFetchMyProducts from "../hooks/useFetchMyProducts";
 import useAuthStore from "../hooks/useAuthStore";
+import { useUserProducts } from "../hooks/useUserProducts";
 
-import { FETCH_STATE, SORT_OPTIONS } from "../constants/constants";
-
-import { accessTokenUtil } from "../auth/accessTokenUtil";
+import { SortOption } from "../types";
+import { DEFAULT_PER, SORT_OPTIONS } from "../constants/constants";
 
 const Container = styled.div`
   height: 100%;
@@ -62,19 +61,19 @@ export default function MySizeListPage() {
     isError: isErrorCategories,
     error: errorCategories,
   } = useCategories();
-  const {
-    products,
-    sortOption,
-    totalDocs,
-    errorMessage,
-    state: productsState,
-    moreRef,
-  } = useFetchMyProducts({
+
+  const userProductsParams = {
+    keyword: "",
     categoryId,
     subCategoryId,
     sortCode,
+    per: DEFAULT_PER,
     userId: user?._id,
-  });
+  };
+
+  const { data, sortOption, isLoading, isFetching, isError, error, moreRef } =
+    useUserProducts(userProductsParams);
+  const allProducts = data?.pages.flatMap((page) => page?.docs ?? []) ?? [];
 
   const subCategories = categoryId
     ? categories.find((category) => category._id === categoryId)
@@ -96,8 +95,9 @@ export default function MySizeListPage() {
   };
 
   if (!accessTokenUtil.getAccessToken()) return <AccessDeniedPage />;
-  if (productsState === "error") {
-    return <ErrorPage errorMessage={errorMessage} />;
+  if (isLoading) return <LoadingSpinner />;
+  if (isError) {
+    return <ErrorPage errorMessage={error?.message} />;
   }
 
   return (
@@ -108,7 +108,7 @@ export default function MySizeListPage() {
         isLoadingCategories={isLoadingCategories}
       />
       <section>
-        <p>Total {totalDocs.toLocaleString()}</p>
+        <p>Total {data?.pages[0].totalDocs.toLocaleString() ?? 0}</p>
         <BorderlessComboBox
           selectedItem={sortOption}
           items={Object.values(SORT_OPTIONS)}
@@ -118,12 +118,17 @@ export default function MySizeListPage() {
         />
       </section>
       <Products>
-        {products.map((product) => (
-          <Product key={product._id} product={product} user={user} />
+        {allProducts.map((product) => (
+          <Product
+            key={product._id}
+            product={product}
+            user={user}
+            userProductsParams={userProductsParams}
+          />
         ))}
         <div id="more button" ref={moreRef} />
-        {productsState === FETCH_STATE.LOADING && <LoadingSpinner />}
-        {productsState !== FETCH_STATE.LOADING && products.length === 0 && (
+        {isFetching && <LoadingSpinner />}
+        {!isLoading && !isError && allProducts.length === 0 && (
           <NoListPage itemName={"사이즈"} itemLink={"/mysize/new"} />
         )}
       </Products>

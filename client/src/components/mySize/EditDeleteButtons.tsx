@@ -1,11 +1,11 @@
-import { Dispatch, SetStateAction } from 'react'
-import { Link } from 'react-router-dom';
+import { Dispatch, SetStateAction } from "react";
+import { Link } from "react-router-dom";
 
-import styled from 'styled-components';
+import styled from "styled-components";
 
-import { ConfirmTrigger } from '../ui/modal/ModalTrigger';
+import { ConfirmTrigger } from "../ui/modal/ModalTrigger";
 
-import { ProductResponse } from '../../types';
+import { ProductResponse } from "../../types";
 
 const Container = styled.div`
   display: flex;
@@ -32,25 +32,24 @@ const Container = styled.div`
 
 type EditDeleteButtonsProps = {
   product: ProductResponse;
-  confirmed: boolean | null
+  confirmed: boolean | null;
   setConfirmed: Dispatch<SetStateAction<boolean | null>>;
-}
+};
 
 export default function EditDeleteButtons({
-  product, confirmed, setConfirmed
+  product,
+  confirmed,
+  setConfirmed,
 }: EditDeleteButtonsProps) {
   return (
     <Container>
-      <Link
-        to={`/mysize/${product._id}/edit`}
-        className="edit-link"
-      >
+      <Link to={`/mysize/${product._id}/edit`} className="edit-link">
         수정
       </Link>
       <div className="delete-link">
         <ConfirmTrigger
-          title={'사이즈 삭제'}
-          buttonText={'삭제'}
+          title={"사이즈 삭제"}
+          buttonText={"삭제"}
           confirmed={confirmed}
           setConfirmed={setConfirmed}
         >
@@ -58,5 +57,5 @@ export default function EditDeleteButtons({
         </ConfirmTrigger>
       </div>
     </Container>
-  )
+  );
 }

@@ -1,17 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
-import styled from 'styled-components';
+import styled from "styled-components";
 
-import SizeCard from './SizeCard';
-import InfoCard from './InfoCard';
-import EditDeleteButtons from './EditDeleteButtons';
+import SizeCard from "./SizeCard";
+import InfoCard from "./InfoCard";
+import EditDeleteButtons from "./EditDeleteButtons";
 
-import { ProductResponse, User } from '../../types';
+import { ProductResponse, User } from "../../types";
 
-import useViewModeStore from '../../hooks/useViewModeStore';
-import useProductsStore from '../../hooks/useProductsStore';
-import { Link } from 'react-router-dom';
-
+import useViewModeStore from "../../hooks/useViewModeStore";
+import useProductsStore from "../../hooks/useProductsStore";
+import useDeleteUserProduct from "../../hooks/useDeleteUserProduct";
 
 const Container = styled.div`
   padding: 1rem 0.2rem;
@@ -19,7 +19,7 @@ const Container = styled.div`
   line-height: 1.67;
   height: 130px;
   width: 100%;
-  border-top: 1px solid ${props => props.theme.colors.dividerColor};
+  border-top: 1px solid ${(props) => props.theme.colors.dividerColor};
 `;
 
 const InfoRow = styled.div`
@@ -41,7 +41,7 @@ const Brand = styled.div`
   h3 {
     font-weight: 500;
     margin-right: 1rem;
-    color: ${(props) => props.theme.colors.PrimaryBlue}
+    color: ${(props) => props.theme.colors.PrimaryBlue};
   }
 `;
 
@@ -56,30 +56,35 @@ const Name = styled.p`
 
   strong {
     font-weight: 500;
-    color: ${(props) => props.theme.colors.primaryBlack}
+    color: ${(props) => props.theme.colors.primaryBlack};
   }
 `;
 
 const Author = styled.p`
   font-weight: 500;
-`
+`;
 
 type ProductProps = {
   product: ProductResponse;
   user?: User;
-}
+  userProductsParams: {};
+};
 
 export default function Product({
-  product, user
+  product,
+  user,
+  userProductsParams,
 }: ProductProps) {
-  const [confirmed, setConfirmed] = useState<boolean | null>(null)
+  const [confirmed, setConfirmed] = useState<boolean | null>(null);
   const [{ isDescriptionView }] = useViewModeStore();
   const [, store] = useProductsStore();
-  const isMyCard = product.author?._id === user?._id
+  const isMyCard = product.author?._id === user?._id;
+
+  const useDeleteUserProductMutation = useDeleteUserProduct(userProductsParams);
 
   useEffect(() => {
-    if (!!confirmed) {
-      store.deleteAndFetchMyProducts(product._id);
+    if (confirmed === true) {
+      useDeleteUserProductMutation.mutate(product._id);
       setConfirmed(null);
     }
   }, [confirmed]);
@@ -87,30 +92,31 @@ export default function Product({
   return (
     <Container>
       <InfoRow>
-        <Brand><h3>{product.brand}</h3></Brand>
-        <Name><strong>{product.name}</strong></Name>
-        {isMyCard
-          ? (
-            <EditDeleteButtons
-              product={product}
-              confirmed={confirmed}
-              setConfirmed={setConfirmed}
-            />
-          )
-          : (
-            <Author>
-              <Link to={`/mypage/${product.author?._id}`}>
-                {product.author?.name}
-              </Link>
-            </Author>
-          )
-        }
+        <Brand>
+          <h3>{product.brand}</h3>
+        </Brand>
+        <Name>
+          <strong>{product.name}</strong>
+        </Name>
+        {isMyCard ? (
+          <EditDeleteButtons
+            product={product}
+            confirmed={confirmed}
+            setConfirmed={setConfirmed}
+          />
+        ) : (
+          <Author>
+            <Link to={`/mypage/${product.author?._id}`}>
+              {product.author?.name}
+            </Link>
+          </Author>
+        )}
       </InfoRow>
-      {
-        isDescriptionView
-          ? (<SizeCard product={product} />)
-          : (<InfoCard product={product} />)
-      }
-    </Container >
+      {isDescriptionView ? (
+        <SizeCard product={product} />
+      ) : (
+        <InfoCard product={product} />
+      )}
+    </Container>
   );
 }
