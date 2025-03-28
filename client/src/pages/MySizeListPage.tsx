@@ -71,8 +71,15 @@ export default function MySizeListPage() {
     userId: user?._id,
   };
 
-  const { data, sortOption, isLoading, isFetching, isError, error, moreRef } =
-    useUserProducts(userProductsParams);
+  const {
+    data,
+    sortOption,
+    isLoading,
+    isFetching: isUserProductsFetching,
+    isError,
+    error,
+    moreRef,
+  } = useUserProducts(userProductsParams);
   const allProducts = data?.pages.flatMap((page) => page?.docs ?? []) ?? [];
 
   const subCategories = categoryId
@@ -126,8 +133,8 @@ export default function MySizeListPage() {
             userProductsParams={userProductsParams}
           />
         ))}
-        <div id="more button" ref={moreRef} />
-        {isFetching && <LoadingSpinner />}
+        {!isUserProductsFetching && <div id="more button" ref={moreRef} />}
+        {isUserProductsFetching && <LoadingSpinner />}
         {!isLoading && !isError && allProducts.length === 0 && (
           <NoListPage itemName={"사이즈"} itemLink={"/mysize/new"} />
         )}

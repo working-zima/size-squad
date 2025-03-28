@@ -4,7 +4,8 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 
 import useIntersectionObserver from "./useIntersectionObserver";
 import { productService } from "../services/ProductService";
-import { DEFAULT_PRODUCT_FILTER, SORT_OPTIONS } from "../constants/constants";
+
+import { SORT_OPTIONS } from "../constants/constants";
 import { queryKeys } from "../constants/queryKeys";
 
 const ioOptions = { threshold: 1 };

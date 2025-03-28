@@ -59,6 +59,7 @@
     "styled-reset": "^4.5.2",
     "tsyringe": "^4.8.0",
     "usehooks-ts": "^3.1.0",
-    "usestore-ts": "^0.0.3"
+    "usestore-ts": "^0.0.3",
+    "zustand": "^5.0.3"
   }
 }
