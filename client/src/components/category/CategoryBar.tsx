@@ -5,7 +5,7 @@ import SubCategoryBar from "./SubCategoryBar";
 
 import LoadingSpinner from "../ui/LoadingSpinner";
 
-import { Category, Summary } from "../../types";
+import useCategories from "../../hooks/useCategories";
 
 const Container = styled.section`
   display: flex;
@@ -20,19 +20,21 @@ const Container = styled.section`
 `;
 
 type CategoryBarProps = {
-  categories: Category[];
-  subCategories: Summary[];
-  isLoadingCategories: boolean;
+  categoryId: string | undefined;
 };
 
-export default function CategoryBar({
-  categories,
-  subCategories,
-  isLoadingCategories,
-}: CategoryBarProps) {
+export default function CategoryBar({ categoryId }: CategoryBarProps) {
+  const { categories, allSubCategories, isLoading, isError, error } =
+    useCategories();
+
+  const subCategories = categoryId
+    ? categories.find((category) => category._id === categoryId)
+        ?.subCategories || []
+    : allSubCategories;
+
   return (
     <Container>
-      {isLoadingCategories ? (
+      {isLoading ? (
         <LoadingSpinner />
       ) : (
         <>

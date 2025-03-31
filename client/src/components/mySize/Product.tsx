@@ -67,20 +67,15 @@ const Author = styled.p`
 type ProductProps = {
   product: ProductResponse;
   user?: User;
-  userProductsParams: {};
 };
 
-export default function Product({
-  product,
-  user,
-  userProductsParams,
-}: ProductProps) {
+export default function Product({ product, user }: ProductProps) {
   const [confirmed, setConfirmed] = useState<boolean | null>(null);
   const [{ isDescriptionView }] = useViewModeStore();
   const [, store] = useProductsStore();
   const isMyCard = product.author?._id === user?._id;
 
-  const useDeleteUserProductMutation = useDeleteUserProduct(userProductsParams);
+  const useDeleteUserProductMutation = useDeleteUserProduct();
 
   useEffect(() => {
     if (confirmed === true) {

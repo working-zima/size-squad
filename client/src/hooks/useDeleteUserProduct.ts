@@ -3,34 +3,13 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { userService } from "../services/UserService";
 import { queryKeys } from "../constants/queryKeys";
 import { ProductResponse } from "../types";
+import { productParamsStore } from "../stores/productParamsStore";
 
-type useDeleteUserProductProps = {
-  keyword?: string;
-  categoryId?: string;
-  subCategoryId?: string;
-  sortCode?: string;
-  per?: number;
-  userId?: string;
-};
-
-export default function useDeleteUserProduct({
-  keyword,
-  categoryId,
-  subCategoryId,
-  sortCode,
-  per,
-  userId,
-}: useDeleteUserProductProps = {}) {
+export default function useDeleteUserProduct() {
   const queryClient = useQueryClient();
 
-  const queryKey = queryKeys.userProducts({
-    keyword,
-    categoryId,
-    subCategoryId,
-    sortCode,
-    per,
-    userId,
-  });
+  const params = productParamsStore.getState();
+  const queryKey = queryKeys.userProducts(params);
 
   const useDeleteUserProductMutation = useMutation({
     mutationFn: (productId: string) =>

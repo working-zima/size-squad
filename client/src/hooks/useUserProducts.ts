@@ -7,6 +7,7 @@ import { productService } from "../services/ProductService";
 
 import { SORT_OPTIONS } from "../constants/constants";
 import { queryKeys } from "../constants/queryKeys";
+import { productParamsStore } from "../stores/productParamsStore";
 
 const ioOptions = { threshold: 1 };
 
@@ -19,14 +20,10 @@ type useUserProductsProps = {
   userId?: string;
 };
 
-export function useUserProducts({
-  keyword,
-  categoryId,
-  subCategoryId,
-  sortCode,
-  per,
-  userId,
-}: useUserProductsProps) {
+export function useUserProducts() {
+  const { keyword, categoryId, subCategoryId, sortCode, per, userId } =
+    productParamsStore((state) => state);
+
   const queryKey = queryKeys.userProducts({
     keyword,
     categoryId,

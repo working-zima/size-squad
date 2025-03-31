@@ -10,14 +10,16 @@ type ProductParamsState = {
   userId?: string;
 };
 
-type ProductParamsActions = {
-  actions: {
-    setParams: (params: Partial<ProductParamsState>) => void;
-    resetParams: () => void;
-  };
+type ProductParamsStore = {
+  keyword?: string;
+  categoryId?: string;
+  subCategoryId?: string;
+  sortCode?: string;
+  per?: number;
+  userId?: string;
+  setParams: (params: Partial<ProductParamsState>) => void;
+  resetParams: () => void;
 };
-
-type ProductParamsStore = ProductParamsState & ProductParamsActions;
 
 export const productParamsStore = create(
   persist<ProductParamsStore>(
@@ -29,23 +31,22 @@ export const productParamsStore = create(
       per: 20,
       userId: undefined,
 
-      actions: {
-        setParams: (params) =>
-          set((state) => ({
-            ...state,
-            ...params,
-          })),
-        resetParams: () =>
-          set((state) => ({
-            ...state,
-            keyword: "",
-            categoryId: undefined,
-            subCategoryId: undefined,
-            sortCode: "RECENT",
-            per: 20,
-            userId: undefined,
-          })),
-      },
+      setParams: (params) =>
+        set((state) => ({
+          ...state,
+          ...params,
+        })),
+
+      resetParams: () =>
+        set((state) => ({
+          ...state,
+          keyword: "",
+          categoryId: undefined,
+          subCategoryId: undefined,
+          sortCode: "RECENT",
+          per: 20,
+          userId: undefined,
+        })),
     }),
     {
       name: "product-params",
