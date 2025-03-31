@@ -11,15 +11,6 @@ import { productParamsStore } from "../stores/productParamsStore";
 
 const ioOptions = { threshold: 1 };
 
-type useUserProductsProps = {
-  keyword?: string;
-  categoryId?: string;
-  subCategoryId?: string;
-  sortCode?: string;
-  per?: number;
-  userId?: string;
-};
-
 export function useUserProducts() {
   const { keyword, categoryId, subCategoryId, sortCode, per, userId } =
     productParamsStore((state) => state);

@@ -77,32 +77,26 @@ export default function ProductListSection({
 
   return (
     <>
-      {isLoading ? (
-        <LoadingSpinner />
-      ) : (
-        <>
-          <Section>
-            <p>Total {data?.pages[0].totalDocs.toLocaleString() ?? 0}</p>
-            <BorderlessComboBox
-              selectedItem={sortOption}
-              items={Object.values(SORT_OPTIONS)}
-              itemToId={(item) => item?._id || ""}
-              itemToText={(item) => item?.name || ""}
-              onChange={(value) => value && handleNavigate(value)}
-            />
-          </Section>
-          <Products>
-            {allProducts.map((product) => (
-              <Product key={product._id} product={product} user={user} />
-            ))}
-            {!isFetching && <div id="more button" ref={moreRef} />}
-            {isFetching && <LoadingSpinner />}
-            {!isLoading && !isError && allProducts.length === 0 && (
-              <NoListPage itemName={"사이즈"} itemLink={"/mysize/new"} />
-            )}
-          </Products>
-        </>
-      )}
+      <Section>
+        <p>Total {data?.pages[0].totalDocs.toLocaleString() ?? 0}</p>
+        <BorderlessComboBox
+          selectedItem={sortOption}
+          items={Object.values(SORT_OPTIONS)}
+          itemToId={(item) => item?._id || ""}
+          itemToText={(item) => item?.name || ""}
+          onChange={(value) => value && handleNavigate(value)}
+        />
+      </Section>
+      <Products>
+        {allProducts.map((product) => (
+          <Product key={product._id} product={product} user={user} />
+        ))}
+        {!isFetching && <div id="more button" ref={moreRef} />}
+        {isFetching && <LoadingSpinner />}
+        {!isLoading && !isError && allProducts.length === 0 && (
+          <NoListPage itemName={"사이즈"} itemLink={"/mysize/new"} />
+        )}
+      </Products>
     </>
   );
 }

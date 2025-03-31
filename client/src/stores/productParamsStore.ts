@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { DEFAULT_PER } from "../constants/constants";
 
 type ProductParamsState = {
   keyword?: string;
@@ -25,11 +26,11 @@ export const productParamsStore = create(
   persist<ProductParamsStore>(
     (set) => ({
       keyword: "",
-      categoryId: undefined,
-      subCategoryId: undefined,
+      categoryId: "",
+      subCategoryId: "",
       sortCode: "RECENT",
-      per: 20,
-      userId: undefined,
+      per: DEFAULT_PER,
+      userId: "",
 
       setParams: (params) =>
         set((state) => ({
@@ -41,11 +42,11 @@ export const productParamsStore = create(
         set((state) => ({
           ...state,
           keyword: "",
-          categoryId: undefined,
-          subCategoryId: undefined,
+          categoryId: "",
+          subCategoryId: "",
           sortCode: "RECENT",
-          per: 20,
-          userId: undefined,
+          per: DEFAULT_PER,
+          userId: "",
         })),
     }),
     {
