@@ -1,32 +1,36 @@
-import { TextInputBox } from '../ui/textbox/TextBoxComponents';
+import { Controller, useFormContext } from "react-hook-form";
 
-import useProductFormStore from '../../hooks/useProductFormStore';
+import { TextInputBox } from "../ui/textbox/TextBoxComponents";
 
 type MySizeNameInput = {
   maxLength: number;
-}
+};
 
 export default function MySizeNameInput({ maxLength }: MySizeNameInput) {
-  const [{ product: { name } }, store] = useProductFormStore();
-
-  const handleChangeName = (value: string) => {
-    store.changeName(value);
-    store.validateName(value);
-  }
-
-  const handleResetName = () => {
-    store.changeName('');
-  }
+  const { control } = useFormContext();
 
   return (
-    <TextInputBox
-      label="상품명"
-      placeholder="품번 또는 상품명을 입력해주세요."
-      type="text"
-      maxLength={maxLength}
-      value={name}
-      onChange={(value) => handleChangeName(value)}
-      onReset={handleResetName}
+    <Controller
+      name="name"
+      control={control}
+      rules={{
+        required: "상품의 이름을 입력해주세요.",
+        maxLength: {
+          value: maxLength,
+          message: `${maxLength}자 이하로 입력해주세요.`,
+        },
+      }}
+      render={({ field }) => (
+        <TextInputBox
+          label="상품명"
+          placeholder="품번 또는 상품명을 입력해주세요."
+          type="text"
+          maxLength={maxLength}
+          value={field.value}
+          onChange={field.onChange}
+          onReset={() => field.onChange("")}
+        />
+      )}
     />
-  )
+  );
 }

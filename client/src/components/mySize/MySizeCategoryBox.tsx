@@ -8,6 +8,7 @@ import { CATEGORY, SUBCATEGORY } from "../../constants/apiLocalizationMap";
 
 import { useEffect } from "react";
 import { Category } from "../../types";
+import { Controller, useFormContext } from "react-hook-form";
 
 type MySizeCategoryBoxProps = {
   categories: Category[];
@@ -16,54 +17,65 @@ type MySizeCategoryBoxProps = {
 export default function MySizeCategoryBox({
   categories,
 }: MySizeCategoryBoxProps) {
-  const [
-    {
-      product: { category, subCategory },
-    },
-    store,
-  ] = useProductFormStore();
+  const { control, setValue, watch } = useFormContext();
+
+  const category = watch("category");
+  const subCategory = watch("subCategory");
 
   let subCategories = categories.find(
-    (cat) => cat._id === category._id
+    (cat) => cat._id === category?._id
   )?.subCategories;
 
   if (!subCategories?.length) subCategories = [nullSummary];
 
   useEffect(() => {
-    if (!category || !categories) return;
+    const selectedCategory = categories.find(
+      (cat) => cat._id === category?._id
+    );
 
-    const isAvailableSubs = categories
-      .find((cat) => cat._id === category._id)
-      ?.subCategories.some((subCat) => subCat._id === subCategory?._id);
+    const isAvailable = selectedCategory?.subCategories.some(
+      (sub) => sub._id === subCategory?._id
+    );
 
-    if (isAvailableSubs) return;
-
-    const selectedCategory =
-      categories.find((cat) => cat._id === category._id) || nullCategory;
-
-    store.changeSubCategory(selectedCategory?.subCategories[0]);
-    store.changeType(selectedCategory?.type);
-  }, [category, categories, subCategory, store]);
+    if (!isAvailable) {
+      setValue(
+        "subCategory",
+        selectedCategory?.subCategories[0] || nullSummary
+      );
+    }
+  }, [category, subCategory, categories, setValue]);
 
   return (
     <>
-      <ComboBox
-        label="카테고리"
-        selectedItem={category}
-        items={categories}
-        itemToId={(item) => item?._id || ""}
-        itemToText={(item) => CATEGORY[item?.name] || ""}
-        onChange={(value) =>
-          value && store.changeCategory({ _id: value._id, name: value.name })
-        }
+      <Controller
+        name="category"
+        control={control}
+        rules={{ required: "카테고리를 선택해주세요." }}
+        render={({ field }) => (
+          <ComboBox
+            label="카테고리"
+            selectedItem={field.value}
+            items={categories}
+            itemToId={(item) => item?._id || ""}
+            itemToText={(item) => CATEGORY[item?.name] || ""}
+            onChange={(value) => field.onChange(value)}
+          />
+        )}
       />
-      <ComboBox
-        label="세부 카테고리"
-        selectedItem={subCategory}
-        items={subCategories}
-        itemToId={(item) => item?._id || ""}
-        itemToText={(item) => SUBCATEGORY[item?.name] || ""}
-        onChange={(value) => value && store.changeSubCategory(value)}
+      <Controller
+        name="subCategory"
+        control={control}
+        rules={{ required: "세부 카테고리를 선택해주세요." }}
+        render={({ field }) => (
+          <ComboBox
+            label="세부 카테고리"
+            selectedItem={field.value}
+            items={subCategories}
+            itemToId={(item) => item?._id || ""}
+            itemToText={(item) => SUBCATEGORY[item?.name] || ""}
+            onChange={(value) => field.onChange(value)}
+          />
+        )}
       />
     </>
   );

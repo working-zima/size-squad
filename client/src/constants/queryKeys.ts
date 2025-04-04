@@ -20,4 +20,6 @@ export const queryKeys = {
 
     return ["userProducts", JSON.stringify(defaultParams)];
   },
+
+  product: (productId: string) => ["product", productId],
 };

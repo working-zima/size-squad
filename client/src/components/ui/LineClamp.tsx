@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 
-import styled, { css } from 'styled-components';
+import styled, { css } from "styled-components";
 
 type ContentProps = {
   isCollapsed: boolean;
   lines: number;
-}
+};
 
 const Content = styled.div<ContentProps>`
   position: relative;
@@ -15,19 +15,21 @@ const Content = styled.div<ContentProps>`
 
   .text {
     white-space: pre-line;
-    ${(props) => props.isCollapsed && css`
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: ${props.lines};
-      -webkit-box-orient: vertical;
-    `}
+    ${(props) =>
+      props.isCollapsed &&
+      css`
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: ${props.lines};
+        -webkit-box-orient: vertical;
+      `}
   }
 `;
 
 const Text = styled.div`
   padding: 0 15px 0 0;
-`
+`;
 
 const TextClone = styled.div`
   position: absolute;
@@ -43,12 +45,12 @@ const TextClone = styled.div`
 
 type MoreButtonProps = {
   isCollapsed: boolean;
-}
+};
 
 const MoreButton = styled.button<MoreButtonProps>`
   position: absolute;
   right: 10px;
-  bottom: ${props => props.isCollapsed ? `15px` : `10px`};
+  bottom: ${(props) => (props.isCollapsed ? `15px` : `10px`)};
   border: 0;
   background-color: transparent;
   width: 5px;
@@ -59,17 +61,15 @@ const MoreButton = styled.button<MoreButtonProps>`
 
   /* 밑 화살표 */
   &::before {
-    content: '';
+    content: "";
     display: inline-block;
     width: 7px;
     height: 7px;
     border-width: 1.2px;
     border-style: solid;
     border-color: transparent #333 #333 transparent;
-    transform: ${props => props.isCollapsed
-    ? `rotate(45deg)`
-    : `rotate(225deg);`
-  };
+    transform: ${(props) =>
+      props.isCollapsed ? `rotate(45deg)` : `rotate(225deg);`};
     vertical-align: middle;
   }
 `;
@@ -77,8 +77,8 @@ const MoreButton = styled.button<MoreButtonProps>`
 type LineClampedText = {
   text: string[];
   lines: number;
-  hasButton: boolean;
-}
+  hasButton?: boolean;
+};
 
 const LineClampedText = ({ text, lines, hasButton }: LineClampedText) => {
   const cloneRef = useRef<HTMLInputElement>(null);
@@ -89,30 +89,23 @@ const LineClampedText = ({ text, lines, hasButton }: LineClampedText) => {
   useEffect(() => {
     if (elemRef.current && cloneRef.current) {
       const cloneHeight = cloneRef.current.offsetHeight;
-      const lineHeight = parseInt(
-        getComputedStyle(elemRef.current).lineHeight
-      );
+      const lineHeight = parseInt(getComputedStyle(elemRef.current).lineHeight);
       setIsClamped(Math.floor(cloneHeight / lineHeight) > (lines || 0));
     }
   }, [lines, text]);
 
   return (
-    <Content
-      isCollapsed={isCollapsed}
-      lines={lines}
-    >
-      <TextClone ref={cloneRef}>
-        {text}
-      </TextClone>
-      <Text ref={elemRef} className='text'>
+    <Content isCollapsed={isCollapsed} lines={lines}>
+      <TextClone ref={cloneRef}>{text}</TextClone>
+      <Text ref={elemRef} className="text">
         {text}
       </Text>
-      {(isClamped && hasButton)
-        && <MoreButton
+      {isClamped && hasButton && (
+        <MoreButton
           isCollapsed={isCollapsed}
-          onClick={() => setIsCollapsed(prev => !prev)}
+          onClick={() => setIsCollapsed((prev) => !prev)}
         />
-      }
+      )}
     </Content>
   );
 };

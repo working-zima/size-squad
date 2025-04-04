@@ -4,6 +4,7 @@ import { productService } from "../services/ProductService";
 
 import { queryKeys } from "../constants/queryKeys";
 import { productParamsStore } from "../stores/productParamsStore";
+import { ProductRequest } from "../types";
 
 // TODO: 훅 아직 미완성
 export default function useUpdateProduct() {
@@ -25,7 +26,7 @@ export default function useUpdateProduct() {
       fit,
       measurements,
       description,
-    }) =>
+    }: ProductRequest) =>
       productService.updateProduct({
         _id,
         author,
@@ -40,9 +41,8 @@ export default function useUpdateProduct() {
         description,
       }),
 
-    onMutate: async (updateId: string) => {
+    onMutate: async () => {
       await queryClient.cancelQueries({ queryKey });
-
       const previousData = queryClient.getQueryData(queryKey);
 
       return { previousData };

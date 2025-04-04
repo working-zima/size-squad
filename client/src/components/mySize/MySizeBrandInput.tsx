@@ -1,34 +1,36 @@
-import { TextInputBox } from '../ui/textbox/TextBoxComponents';
+import { Controller, useFormContext } from "react-hook-form";
 
-import useProductFormStore from '../../hooks/useProductFormStore';
+import { TextInputBox } from "../ui/textbox/TextBoxComponents";
 
 type MySizeBrandInput = {
   maxLength: number;
-}
+};
 
-export default function MySizeBrandInput({
-  maxLength
-}: MySizeBrandInput) {
-  const [{ product: { brand } }, store] = useProductFormStore();
-
-  const handleChangeBrand = (value: string) => {
-    store.changeBrand(value);
-    store.validateBrand(value);
-  }
-
-  const handleResetBrand = () => {
-    store.changeBrand('');
-  }
+export default function MySizeBrandInput({ maxLength }: MySizeBrandInput) {
+  const { control } = useFormContext();
 
   return (
-    <TextInputBox
-      label="브랜드"
-      placeholder="상품의 브랜드를 입력해주세요."
-      type="text"
-      maxLength={maxLength}
-      value={brand}
-      onChange={(value) => handleChangeBrand(value)}
-      onReset={handleResetBrand}
+    <Controller
+      name="brand"
+      control={control}
+      rules={{
+        required: "브랜드를 입력해주세요.",
+        maxLength: {
+          value: maxLength,
+          message: `${maxLength}자 이하로 입력해주세요.`,
+        },
+      }}
+      render={({ field }) => (
+        <TextInputBox
+          label="브랜드"
+          placeholder="상품의 브랜드를 입력해주세요."
+          type="text"
+          value={field.value}
+          maxLength={maxLength}
+          onChange={field.onChange}
+          onReset={() => field.onChange("")}
+        />
+      )}
     />
-  )
+  );
 }

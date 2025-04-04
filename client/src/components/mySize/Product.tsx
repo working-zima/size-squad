@@ -71,13 +71,13 @@ type ProductProps = {
 export default function Product({ product, user }: ProductProps) {
   const [confirmed, setConfirmed] = useState<boolean | null>(null);
   const [{ isDescriptionView }] = useViewModeStore();
-  const useDeleteUserProductMutation = useDeleteUserProduct();
+  const deleteUserProductMutation = useDeleteUserProduct();
 
   const isMyCard = product.author?._id === user?._id;
 
   useEffect(() => {
     if (confirmed === true) {
-      useDeleteUserProductMutation.mutate(product._id);
+      deleteUserProductMutation.mutate(product._id);
       setConfirmed(null);
     }
   }, [confirmed]);

@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+
+import { useFieldArray, useFormContext } from "react-hook-form";
 
 import { TextInputBox } from "../ui/textbox/TextBoxComponents";
-
-import useProductFormStore from "../../hooks/useProductFormStore";
-
 import { MEASUREMENT } from "../../constants/apiLocalizationMap";
-import { Category } from "../../types";
+
+import { Category, ProductInputForm } from "../../types";
 
 type MySizeMeasurementsInputProps = {
   categories: Category[];
@@ -14,55 +14,47 @@ type MySizeMeasurementsInputProps = {
 export default function MySizeMeasurementsInput({
   categories,
 }: MySizeMeasurementsInputProps) {
-  const [
-    {
-      product: { category, measurements },
-    },
-    store,
-  ] = useProductFormStore();
+  const { control, watch } = useFormContext<ProductInputForm>();
+  const { fields, update, replace } = useFieldArray<ProductInputForm>({
+    control,
+    name: "measurements",
+  });
 
-  const [prevCategoryId, setPrevCategoryId] = useState(category._id);
-
-  const handleResetMeasurement = (index: number) => {
-    store.changeMeasurementValue(index, "");
-  };
+  const category = watch("category");
 
   const selectedMeasurements =
-    categories.find((categoryElem) => categoryElem._id === category._id)
-      ?.measurements || [];
+    categories.find((cat) => cat._id === category?._id)?.measurements ?? [];
 
   useEffect(() => {
-    if (category._id !== prevCategoryId) {
-      store.resetMeasurements();
+    if (!selectedMeasurements.length) return;
 
-      selectedMeasurements.forEach((measurement, idx) => {
-        store.addMeasurement();
-        store.changeMeasurementAndId(idx, measurement._id, measurement.name);
-      });
+    const newMeasurements = selectedMeasurements.map((measurement) => {
+      const existing = fields.find((field) => field._id === measurement._id);
+      return {
+        _id: measurement._id,
+        name: measurement.name,
+        value: existing?.value ?? "",
+      };
+    });
 
-      setPrevCategoryId(category._id);
-      store.validateMeasurement();
-    }
+    replace(newMeasurements);
   }, [category._id]);
 
   return (
     <>
-      {measurements &&
-        measurements.map((measurement, index) => (
-          <TextInputBox
-            key={measurement._id}
-            label={MEASUREMENT[measurement.name]}
-            placeholder={`${MEASUREMENT[measurement.name]}을 입력해주세요.`}
-            type="text"
-            maxLength={5}
-            value={measurement.value}
-            onChange={(value) => store.changeMeasurementValue(index, value)}
-            unitType="cm"
-            onReset={() => {
-              handleResetMeasurement(index);
-            }}
-          />
-        ))}
+      {fields.map((field, idx) => (
+        <TextInputBox
+          key={field._id}
+          label={MEASUREMENT[field.name]}
+          placeholder={`${MEASUREMENT[field.name]}을 입력해주세요.`}
+          type="text"
+          maxLength={5}
+          value={field.value}
+          unitType="cm"
+          onChange={(value) => update(idx, { ...field, value })}
+          onReset={() => update(idx, { ...field, value: "" })}
+        />
+      ))}
     </>
   );
 }
