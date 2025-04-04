@@ -17,6 +17,7 @@ export default function useDeleteUserProduct() {
 
     onMutate: async (deletedId: string) => {
       await queryClient.cancelQueries({ queryKey });
+
       const previousData = queryClient.getQueryData(queryKey);
       queryClient.setQueryData(queryKey, (oldData: any) => {
         if (!oldData) return oldData;
@@ -32,10 +33,6 @@ export default function useDeleteUserProduct() {
       });
 
       return { previousData };
-    },
-
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey });
     },
 
     onError: (error, productId, context: any) => {

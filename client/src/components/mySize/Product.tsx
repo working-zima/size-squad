@@ -10,7 +10,6 @@ import EditDeleteButtons from "./EditDeleteButtons";
 import { ProductResponse, User } from "../../types";
 
 import useViewModeStore from "../../hooks/useViewModeStore";
-import useProductsStore from "../../hooks/useProductsStore";
 import useDeleteUserProduct from "../../hooks/useDeleteUserProduct";
 
 const Container = styled.div`
@@ -72,10 +71,9 @@ type ProductProps = {
 export default function Product({ product, user }: ProductProps) {
   const [confirmed, setConfirmed] = useState<boolean | null>(null);
   const [{ isDescriptionView }] = useViewModeStore();
-  const [, store] = useProductsStore();
-  const isMyCard = product.author?._id === user?._id;
-
   const useDeleteUserProductMutation = useDeleteUserProduct();
+
+  const isMyCard = product.author?._id === user?._id;
 
   useEffect(() => {
     if (confirmed === true) {
