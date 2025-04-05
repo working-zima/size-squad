@@ -74,9 +74,12 @@ export default function MySizeEditForm({
   onComplete,
 }: MySizeEditFormProps) {
   const updateProductMutation = useUpdateProduct();
+
   const [{ product, valid, errorMessage }, store] = useProductFormStore();
+
   const { modalRef, openModal, closeModal } = useModal();
   const methods = useForm<ProductInputForm>({
+    mode: "onChange",
     defaultValues: {
       brand: productData.brand,
       name: productData.name,
@@ -88,6 +91,7 @@ export default function MySizeEditForm({
       description: productData.description,
     },
   });
+  const { isValid } = methods.formState;
 
   const onSubmit = async (formData: ProductInputForm) => {
     try {
@@ -126,7 +130,7 @@ export default function MySizeEditForm({
     <Container>
       <h2>Edit Size</h2>
       <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)}>
+        <Form onSubmit={methods.handleSubmit(onSubmit)}>
           <MySizeBrandInput maxLength={29} />
           <MySizeNameInput maxLength={29} />
           <MySizeCategoryBox categories={initialData.categories} />
@@ -136,11 +140,11 @@ export default function MySizeEditForm({
           <MySizeFitBox fits={initialData.fits} />
           <MySizeDescriptionInput />
           <ButtonWrapper>
-            <Button type="submit" disabled={!valid}>
+            <Button type="submit" disabled={!isValid}>
               등록
             </Button>
           </ButtonWrapper>
-        </form>
+        </Form>
       </FormProvider>
       <AlertModal modalRef={modalRef} hide={handleConfirm}>
         <p>수정 실패</p>

@@ -1,4 +1,4 @@
-import useProductFormStore from "../../hooks/useProductFormStore";
+import { Controller, useFormContext } from "react-hook-form";
 
 import { FIT } from "../../constants/apiLocalizationMap";
 
@@ -10,21 +10,22 @@ type MySizeFitBoxPorps = {
 };
 
 export default function MySizeFitBox({ fits }: MySizeFitBoxPorps) {
-  const [
-    {
-      product: { fit },
-    },
-    store,
-  ] = useProductFormStore();
+  const { control } = useFormContext();
 
   return (
-    <ComboBox
-      label="의도한 핏"
-      selectedItem={fit}
-      items={fits}
-      itemToId={(item) => item?._id || ""}
-      itemToText={(item) => FIT[item?.name] || ""}
-      onChange={(value) => value && store.changeFit(value)}
+    <Controller
+      name="fit"
+      control={control}
+      render={({ field }) => (
+        <ComboBox
+          label="의도한 핏"
+          selectedItem={field.value}
+          items={fits}
+          itemToId={(item) => item?._id || ""}
+          itemToText={(item) => FIT[item?.name] || ""}
+          onChange={(value) => field.onChange(value)}
+        />
+      )}
     />
   );
 }
