@@ -78,6 +78,7 @@ export default function MySizeEditForm({
   const [{ product, valid, errorMessage }, store] = useProductFormStore();
 
   const { modalRef, openModal, closeModal } = useModal();
+
   const methods = useForm<ProductInputForm>({
     mode: "onChange",
     defaultValues: {
@@ -88,6 +89,7 @@ export default function MySizeEditForm({
       gender: productData.gender,
       size: productData.size,
       measurements: productData.measurements,
+      fit: productData.fit,
       description: productData.description,
     },
   });

@@ -54,7 +54,11 @@ export default function MySizeMeasurementsInput({
           maxLength={5}
           value={field.value}
           unitType="cm"
-          onChange={(value) => update(idx, { ...field, value })}
+          onChange={(value) => {
+            if (/^\d*\.?\d*$/.test(value)) {
+              update(idx, { ...field, value });
+            }
+          }}
           onReset={() => update(idx, { ...field, value: "" })}
         />
       ))}

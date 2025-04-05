@@ -16,6 +16,7 @@ import useInitialData from "../hooks/usehInitialData";
 export default function MySizeNewPage() {
   const navigate = useNavigate();
   const [{ user, state: userState }] = useAuthStore();
+
   const {
     data: initialData,
     isLoading: initialDataIsLoading,
@@ -65,6 +66,10 @@ export default function MySizeNewPage() {
     return <ErrorPage errorMessage={error?.message} />;
 
   return (
-    <MySizeNewForm initialData={initialData} onComplete={handleComplete} />
+    <MySizeNewForm
+      initialData={initialData}
+      userGender={user.gender}
+      onComplete={handleComplete}
+    />
   );
 }
