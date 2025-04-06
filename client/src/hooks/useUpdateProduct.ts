@@ -3,14 +3,14 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { productService } from "../services/ProductService";
 
 import { queryKeys } from "../constants/queryKeys";
-import { productParamsStore } from "../stores/productParamsStore";
+import { ProductParamsStore } from "../stores/ProductParamsStore";
 import { ProductRequest } from "../types";
 
 // TODO: 훅 아직 미완성
 export default function useUpdateProduct() {
   const queryClient = useQueryClient();
 
-  const params = productParamsStore.getState();
+  const params = ProductParamsStore.getState();
   const queryKey = queryKeys.userProducts(params);
 
   const useUpdateProductMutation = useMutation({

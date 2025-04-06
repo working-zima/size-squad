@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { FormProvider, useForm } from "react-hook-form";
 
 import MySizeBrandInput from "./MySizeBrandInput";
 import MySizeNameInput from "./MySizeNameInput";
@@ -10,12 +11,12 @@ import MySizeMeasurementsInput from "./MySizeMeasurementsInput";
 import MySizeDescriptionInput from "./MySizeDescriptionInput";
 
 import useProductFormStore from "../../hooks/useProductFormStore";
+import useCreateUserProduct from "../../hooks/useCreateUserProduct";
 
 import Button from "../ui/Button";
 import useModal from "../../hooks/useModal";
 import { AlertModal } from "../ui/modal/ModalComponents";
-import { InitialData, Summary } from "../../types";
-import { FormProvider, useForm } from "react-hook-form";
+import { InitialData, ProductInputForm, Summary, User } from "../../types";
 
 const Container = styled.div`
   padding: 20px ${(props) => props.theme.sizes.contentPadding} 0;
@@ -60,13 +61,13 @@ const ButtonWrapper = styled.div`
 
 type MySizeNewFormProps = {
   initialData: InitialData;
-  userGender: Summary;
+  user: User;
   onComplete: () => void;
 };
 
 export default function MySizeNewForm({
   initialData,
-  userGender,
+  user,
   onComplete,
 }: MySizeNewFormProps) {
   const [
@@ -77,6 +78,7 @@ export default function MySizeNewForm({
     },
     store,
   ] = useProductFormStore();
+
   const { modalRef, openModal, closeModal } = useModal();
 
   const methods = useForm({
@@ -86,18 +88,43 @@ export default function MySizeNewForm({
       name: "",
       category: initialData.categories[0],
       subCategory: initialData.categories[0].subCategories[0],
-      gender: userGender,
-      size: initialData.sizes.find((s) => s.gender._id === userGender?._id)!,
+      gender: user.gender,
+      size: initialData.sizes.find((s) => s.gender._id === user.gender?._id)!,
       fit: initialData.fits[0],
-      measurements: initialData.categories[0].measurements,
+      measurements: initialData.categories[0].measurements.map(
+        (measurement) => ({
+          _id: measurement._id,
+          name: measurement.name,
+          value: "",
+        })
+      ),
       description: "",
     },
   });
+  const { isValid } = methods.formState;
+  const { mutateAsync } = useCreateUserProduct();
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const onSubmit = async (formData: ProductInputForm) => {
     try {
-      await store.create();
+      if (!user._id) return;
+
+      const requestData = {
+        author: user._id,
+        brand: formData.brand,
+        name: formData.name,
+        category: formData.category._id,
+        subCategory: formData.subCategory._id,
+        gender: formData.gender._id,
+        size: formData.size._id,
+        fit: formData.fit._id,
+        measurements: formData.measurements.map((m) => ({
+          _id: m._id,
+          name: m.name,
+          value: Number(m.value),
+        })),
+        description: formData.description,
+      };
+      await mutateAsync(requestData);
       store.reset();
       onComplete();
     } catch (error) {
@@ -115,7 +142,7 @@ export default function MySizeNewForm({
     <Container>
       <h2>New Product</h2>
       <FormProvider {...methods}>
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={methods.handleSubmit(onSubmit)}>
           <MySizeBrandInput maxLength={29} />
           <MySizeNameInput maxLength={29} />
           <MySizeCategoryBox categories={initialData.categories} />
@@ -125,7 +152,7 @@ export default function MySizeNewForm({
           <MySizeFitBox fits={initialData.fits} />
           <MySizeDescriptionInput />
           <ButtonWrapper>
-            <Button type="submit" disabled={!valid}>
+            <Button type="submit" disabled={!isValid}>
               등록
             </Button>
           </ButtonWrapper>

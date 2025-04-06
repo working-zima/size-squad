@@ -7,13 +7,13 @@ import { productService } from "../services/ProductService";
 
 import { SORT_OPTIONS } from "../constants/constants";
 import { queryKeys } from "../constants/queryKeys";
-import { productParamsStore } from "../stores/productParamsStore";
+import { ProductParamsStore } from "../stores/ProductParamsStore";
 
 const ioOptions = { threshold: 1 };
 
 export function useUserProducts() {
   const { keyword, categoryId, subCategoryId, sortCode, per, userId } =
-    productParamsStore((state) => state);
+    ProductParamsStore((state) => state);
 
   const queryKey = queryKeys.userProducts({
     keyword,

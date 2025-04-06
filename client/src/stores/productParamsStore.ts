@@ -22,7 +22,7 @@ type ProductParamsStore = {
   resetParams: () => void;
 };
 
-export const productParamsStore = create(
+export const ProductParamsStore = create(
   persist<ProductParamsStore>(
     (set) => ({
       keyword: "",

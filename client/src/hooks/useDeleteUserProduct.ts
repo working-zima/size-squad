@@ -3,12 +3,12 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { userService } from "../services/UserService";
 import { queryKeys } from "../constants/queryKeys";
 import { ProductResponse } from "../types";
-import { productParamsStore } from "../stores/productParamsStore";
+import { ProductParamsStore } from "../stores/ProductParamsStore";
 
 export default function useDeleteUserProduct() {
   const queryClient = useQueryClient();
 
-  const params = productParamsStore.getState();
+  const params = ProductParamsStore.getState();
   const queryKey = queryKeys.userProducts(params);
 
   const useDeleteUserProductMutation = useMutation({
@@ -19,6 +19,7 @@ export default function useDeleteUserProduct() {
       await queryClient.cancelQueries({ queryKey });
 
       const previousData = queryClient.getQueryData(queryKey);
+
       queryClient.setQueryData(queryKey, (oldData: any) => {
         if (!oldData) return oldData;
         return {
@@ -32,6 +33,10 @@ export default function useDeleteUserProduct() {
         };
       });
 
+      queryClient.removeQueries({
+        queryKey: queryKeys.product(deletedId),
+      });
+
       return { previousData };
     },
 
@@ -42,7 +47,7 @@ export default function useDeleteUserProduct() {
     },
 
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey });
+      queryClient.invalidateQueries({ queryKey: ["userProducts"] });
     },
   });
 

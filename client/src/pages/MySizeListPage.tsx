@@ -9,7 +9,7 @@ import CategoryBar from "../components/category/CategoryBar";
 import ProductListSection from "../components/mySize/ProductListSection";
 
 import { accessTokenUtil } from "../auth/accessTokenUtil";
-import { productParamsStore } from "../stores/productParamsStore";
+import { ProductParamsStore } from "../stores/ProductParamsStore";
 
 import useAuthStore from "../hooks/useAuthStore";
 
@@ -40,7 +40,7 @@ export default function MySizeListPage() {
 
   useEffect(() => {
     if (user?._id) {
-      productParamsStore.getState().setParams({
+      ProductParamsStore.getState().setParams({
         keyword: "",
         categoryId,
         subCategoryId,
