@@ -11,7 +11,7 @@ import LoadingSpinner from "../components/ui/LoadingSpinner";
 import useAuthStore from "../hooks/useAuthStore";
 
 import { accessTokenUtil } from "../auth/accessTokenUtil";
-import useInitialData from "../hooks/usehInitialData";
+import useInitialData from "../hooks/useInitialData";
 
 export default function MySizeNewPage() {
   const navigate = useNavigate();

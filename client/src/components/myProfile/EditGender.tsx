@@ -12,7 +12,7 @@ import useModal from "../../hooks/useModal";
 
 import { GENDER } from "../../constants/apiLocalizationMap";
 import useAuthStore from "../../hooks/useAuthStore";
-import useInitialData from "../../hooks/usehInitialData";
+import useInitialData from "../../hooks/useInitialData";
 
 const ButtonWrapper = styled.div`
   & > button {

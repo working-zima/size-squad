@@ -1,14 +1,8 @@
+import { UserProductQueryParams } from "../types";
 import { DEFAULT_PER } from "./constants";
 
 export const queryKeys = {
-  userProducts: (params: {
-    keyword?: string;
-    categoryId?: string;
-    subCategoryId?: string;
-    sortCode?: string;
-    per?: number;
-    userId?: string;
-  }) => {
+  userProducts: (params: UserProductQueryParams) => {
     const defaultParams = {
       keyword: params.keyword ?? "",
       categoryId: params.categoryId ?? "",
@@ -18,7 +12,7 @@ export const queryKeys = {
       userId: params.userId ?? "",
     };
 
-    return ["userProducts", JSON.stringify(defaultParams)];
+    return ["userProducts", defaultParams];
   },
 
   product: (productId: string) => ["product", productId],

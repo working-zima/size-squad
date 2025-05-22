@@ -6,7 +6,7 @@ import ErrorPage from "./ErrorPage";
 import MySizeEditForm from "../components/mySize/MySizeEditForm";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 
-import useInitialData from "../hooks/usehInitialData";
+import useInitialData from "../hooks/useInitialData";
 
 import { accessTokenUtil } from "../auth/accessTokenUtil";
 import useProduct from "../hooks/useProduct";

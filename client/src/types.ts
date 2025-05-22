@@ -145,3 +145,12 @@ export type SortOption = {
   sort: { [key: string]: -1 | 1 };
   urlParam: string;
 };
+
+export type UserProductQueryParams = {
+  keyword?: string;
+  categoryId?: string;
+  subCategoryId?: string;
+  sortCode?: string;
+  per?: number;
+  userId?: string;
+};
