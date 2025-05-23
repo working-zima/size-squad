@@ -1,6 +1,6 @@
-import { Controller, useFormContext } from "react-hook-form";
+import { Controller, useFormContext } from 'react-hook-form';
 
-import { TextInputBox } from "../ui/textbox/TextBoxComponents";
+import { TextInputBox } from '../ui/textbox/TextBoxComponents';
 
 type MySizeBrandInput = {
   maxLength: number;
@@ -14,7 +14,7 @@ export default function MySizeBrandInput({ maxLength }: MySizeBrandInput) {
       name="brand"
       control={control}
       rules={{
-        required: "브랜드를 입력해주세요.",
+        required: '브랜드를 입력해주세요.',
         maxLength: {
           value: maxLength,
           message: `${maxLength}자 이하로 입력해주세요.`,
@@ -28,7 +28,7 @@ export default function MySizeBrandInput({ maxLength }: MySizeBrandInput) {
           value={field.value}
           maxLength={maxLength}
           onChange={field.onChange}
-          onReset={() => field.onChange("")}
+          onReset={() => field.onChange('')}
         />
       )}
     />

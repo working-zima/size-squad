@@ -1,13 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-
 import styled, { css } from 'styled-components';
 
-import Button from '../ui/Button';
-
-import { Summary } from '../../types';
-
 import { SUBCATEGORY } from '../../constants/apiLocalizationMap';
+import { Summary } from '../../types';
+import Button from '../ui/Button';
 
 const Container = styled.div`
   display: flex;
@@ -25,7 +22,7 @@ const Container = styled.div`
   }
 `;
 
-const SubCategoryButton = styled(Button) <{ active: boolean }>`
+const SubCategoryButton = styled(Button)<{ active: boolean }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -38,12 +35,14 @@ const SubCategoryButton = styled(Button) <{ active: boolean }>`
   line-height: 2.1rem;
   user-select: none;
 
-  ${(props) => props.active && css`
-    border: ${props => props.theme.colors.primaryBlack};
-    background-color: ${props => props.theme.colors.primaryBlack};
-    font-weight: 700;
-    color: ${props => props.theme.colors.primaryWhite};
-  `}
+  ${(props) =>
+    props.active &&
+    css`
+      border: ${(props) => props.theme.colors.primaryBlack};
+      background-color: ${(props) => props.theme.colors.primaryBlack};
+      font-weight: 700;
+      color: ${(props) => props.theme.colors.primaryWhite};
+    `}
 
   &:last-child {
     margin-right: 0;
@@ -52,11 +51,9 @@ const SubCategoryButton = styled(Button) <{ active: boolean }>`
 
 type SubCategoryBarProps = {
   subCategories: Summary[];
-}
+};
 
-export default function SubCategoryBar(
-  { subCategories }: SubCategoryBarProps,
-) {
+export default function SubCategoryBar({ subCategories }: SubCategoryBarProps) {
   const [activeBtn, setActiveBtn] = useState('all');
   const navigate = useNavigate();
 
@@ -65,14 +62,14 @@ export default function SubCategoryBar(
   const subCategoryId = params.get('category2DepthCode');
 
   useEffect(() => {
-    if (subCategoryId) setActiveBtn(subCategoryId)
-    else setActiveBtn('all')
+    if (subCategoryId) setActiveBtn(subCategoryId);
+    else setActiveBtn('all');
   }, [subCategoryId]);
 
   const handleNavigate = (btnId: string) => {
     let path = '/mysize';
 
-    if (!!categoryId) path = `${path}?category1DepthCode=${categoryId}`
+    if (categoryId) path = `${path}?category1DepthCode=${categoryId}`;
     if (btnId !== 'all') {
       path = `${path}${categoryId ? '&' : '?'}category2DepthCode=${btnId}`;
     }
@@ -89,8 +86,8 @@ export default function SubCategoryBar(
       >
         전체
       </SubCategoryButton>
-      {!!subCategories.length && (
-        subCategories.map(subCategory => (
+      {!!subCategories.length &&
+        subCategories.map((subCategory) => (
           <SubCategoryButton
             key={subCategory._id}
             active={activeBtn === subCategory._id}
@@ -98,8 +95,7 @@ export default function SubCategoryBar(
           >
             {SUBCATEGORY[subCategory.name]}
           </SubCategoryButton>
-        ))
-      )}
+        ))}
     </Container>
   );
 }

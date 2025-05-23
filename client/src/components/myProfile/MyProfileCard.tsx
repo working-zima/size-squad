@@ -1,6 +1,5 @@
-import { Link } from "react-router-dom";
-
-import styled from "styled-components";
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 const Container = styled.div`
   position: relative;
@@ -8,16 +7,16 @@ const Container = styled.div`
   width: 100%;
   padding: 20px 0;
   font-size: 1.6rem;
-  border-bottom: 1px solid ${props => props.theme.colors.dividerColor};
+  border-bottom: 1px solid ${(props) => props.theme.colors.dividerColor};
 
   strong {
-    color: ${props => props.theme.colors.secondaryTextColor};
+    color: ${(props) => props.theme.colors.secondaryTextColor};
   }
 
   span {
     font-size: 1.5rem;
   }
-`
+`;
 
 const Arrow = styled.div`
   position: absolute;
@@ -49,17 +48,17 @@ type MyProfileCardProps = {
   value: string | undefined;
   path: string;
   isEditable: boolean;
-}
+};
 
 type ProfileWrapperProps = {
   isEditable: boolean;
-}
+};
 
 const ProfileWrapper = styled.div<ProfileWrapperProps>`
   display: flex;
   justify-content: space-between;
-  margin: ${props => props.isEditable ? '0 30px 0 0' : '0'};
-`
+  margin: ${(props) => (props.isEditable ? '0 30px 0 0' : '0')};
+`;
 
 const EditLinkWrapper = styled.div`
   a {
@@ -71,13 +70,13 @@ const EditLinkWrapper = styled.div`
   span {
     visibility: hidden;
   }
-`
+`;
 
 export default function MyProfileCard({
   label,
   value,
   path,
-  isEditable
+  isEditable,
 }: MyProfileCardProps) {
   return (
     <Container>
@@ -96,5 +95,5 @@ export default function MyProfileCard({
         </>
       )}
     </Container>
-  )
-};
+  );
+}

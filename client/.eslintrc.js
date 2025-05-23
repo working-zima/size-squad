@@ -1,71 +1,46 @@
 module.exports = {
-    env: {
-      browser: true,
-      es2021: true,
-      jest: true,
+  root: true,
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    ecmaFeatures: {
+      jsx: true,
     },
-    extends: [
-      'airbnb',
-      'plugin:@typescript-eslint/recommended',
-      'plugin:react/recommended',
-      'plugin:react/jsx-runtime',
-      "plugin:@tanstack/eslint-plugin-query/recommended",
-    ],
-    parser: '@typescript-eslint/parser',
-    parserOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'module',
+  },
+  env: {
+    browser: true,
+    es2021: true,
+    node: true,
+    jest: true,
+  },
+  plugins: [
+    'react',
+    'react-hooks',
+    '@typescript-eslint',
+    'import',
+    'prettier',
+    'simple-import-sort',
+  ],
+  extends: [
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:react-hooks/recommended',
+    'plugin:prettier/recommended',
+  ],
+  rules: {
+    'react/react-in-jsx-scope': 'off',
+    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+    'react/jsx-filename-extension': ['warn', { extensions: ['.tsx', '.jsx'] }],
+    'prettier/prettier': 'warn',
+    'no-undef': 'off',
+    'simple-import-sort/imports': 'warn',
+    'simple-import-sort/exports': 'warn',
+  },
+  settings: {
+    react: {
+      version: 'detect',
     },
-    plugins: [
-      'react',
-      'react-hooks',
-      '@typescript-eslint',
-    ],
-    settings: {
-      'import/resolver': {
-        node: {
-          extensions: ['.js', '.jsx', '.ts', '.tsx'],
-        },
-      },
-    },
-    rules: {
-      indent: ['error', 2],
-      'no-trailing-spaces': 'error',
-      curly: 'error',
-      'brace-style': 'error',
-      'no-multi-spaces': 'error',
-      'space-infix-ops': 'error',
-      'space-unary-ops': 'error',
-      'no-whitespace-before-property': 'error',
-      'func-call-spacing': 'error',
-      'space-before-blocks': 'error',
-      'keyword-spacing': ['error', { before: true, after: true }],
-      'comma-spacing': ['error', { before: false, after: true }],
-      'comma-style': ['error', 'last'],
-      'comma-dangle': ['error', 'always-multiline'],
-      'space-in-parens': ['error', 'never'],
-      'block-spacing': 'error',
-      'array-bracket-spacing': ['error', 'never'],
-      'object-curly-spacing': ['error', 'always'],
-      'key-spacing': ['error', { mode: 'strict' }],
-      'arrow-spacing': ['error', { before: true, after: true }],
-      'import/no-extraneous-dependencies': ['error', {
-        devDependencies: [
-          '**/*.test.js',
-          '**/*.test.jsx',
-          '**/*.test.ts',
-          '**/*.test.tsx',
-        ],
-      }],
-      'import/extensions': ['error', 'ignorePackages', {
-        js: 'never',
-        jsx: 'never',
-        ts: 'never',
-        tsx: 'never',
-      }],
-      'react/jsx-filename-extension': [2, {
-        extensions: ['.js', '.jsx', '.ts', '.tsx'],
-      }],
-      'jsx-a11y/label-has-associated-control': ['error', { assert: 'either' }],
-    },
-  };
+  },
+};

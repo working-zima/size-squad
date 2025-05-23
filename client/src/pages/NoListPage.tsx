@@ -1,8 +1,7 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
-import styled from "styled-components";
-
-import Button from "../components/ui/Button";
+import Button from '../components/ui/Button';
 
 const Container = styled.div`
   display: flex;

@@ -1,29 +1,19 @@
-import { useEffect } from "react";
+import styled from 'styled-components';
 
-import styled from "styled-components";
-
-import SignUpEmailInput from "./SignUpEmailInput";
-import SignUpNameInput from "./SignUpNameInput";
-import PasswordInputs from "./PasswordInputs";
-import BodyMetricInput from "./BodyMetricInput";
-import SignUpDescriptionInput from "./SignUpDescriptionInput";
-
-import Button from "../ui/Button";
-import ComboBox from "../ui/selectbox/ComboBox";
-
-import { Summary } from "../../types";
-
-import useSignupFormStore from "../../hooks/useSignupFormStore";
-
-
-import { accessTokenUtil } from "../../auth/accessTokenUtil";
-
-import { GENDER } from "../../constants/apiLocalizationMap";
-import { requiredStar } from "../../utils/requiredStar";
-
+import { GENDER } from '../../constants/apiLocalizationMap';
+import useSignupFormStore from '../../hooks/useSignupFormStore';
+import { Summary } from '../../types';
+import { requiredStar } from '../../utils/requiredStar';
+import Button from '../ui/Button';
+import ComboBox from '../ui/selectbox/ComboBox';
+import BodyMetricInput from './BodyMetricInput';
+import PasswordInputs from './PasswordInputs';
+import SignUpDescriptionInput from './SignUpDescriptionInput';
+import SignUpEmailInput from './SignUpEmailInput';
+import SignUpNameInput from './SignUpNameInput';
 
 const Container = styled.div`
-  padding: 20px ${props => props.theme.sizes.contentPadding} 0;
+  padding: 20px ${(props) => props.theme.sizes.contentPadding} 0;
   user-select: none;
 
   h2 {
@@ -34,7 +24,7 @@ const Container = styled.div`
     display: flex;
     flex-direction: row-reverse;
     font-size: 1.4rem;
-    color: ${props => props.theme.colors.unSelectedText};
+    color: ${(props) => props.theme.colors.unSelectedText};
     ${requiredStar('after')}
   }
 `;
@@ -51,32 +41,32 @@ const Form = styled.form`
       margin-top: 0;
     }
   }
-`
+`;
 
 const ButtonWrapper = styled.div`
   button {
     margin: 40px 0 20px 0;
     width: 100%;
     height: 48px;
-    background-color: ${props => props.theme.colors.primaryBlack};
-    color: ${props => props.theme.colors.primaryWhite};
+    background-color: ${(props) => props.theme.colors.primaryBlack};
+    color: ${(props) => props.theme.colors.primaryWhite};
     font-size: 1.6rem;
     font-weight: 600;
-    border-color: ${props => props.theme.colors.primaryBlack};
+    border-color: ${(props) => props.theme.colors.primaryBlack};
     border-radius: 6px;
 
     &:disabled {
-      background-color: ${props => props.theme.colors.unSelectedText};
+      background-color: ${(props) => props.theme.colors.unSelectedText};
     }
   }
-`
+`;
 
 type SignUpFormProps = {
   genders: Summary[];
-}
+};
 
 export default function SignUpForm({ genders }: SignUpFormProps) {
-  const [{ user, valid, state, accessToken }, store] = useSignupFormStore();
+  const [{ user, valid, state }, store] = useSignupFormStore();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -88,10 +78,7 @@ export default function SignUpForm({ genders }: SignUpFormProps) {
       <h2>회원가입</h2>
       <div>필수항목</div>
       <Form onSubmit={handleSubmit}>
-        <SignUpEmailInput
-          label="이메일"
-          placeholder="이메일을 입력해주세요."
-        />
+        <SignUpEmailInput label="이메일" placeholder="이메일을 입력해주세요." />
         <SignUpNameInput
           label="코드네임"
           placeholder="닉네임 2 ~ 10자리 이내로 입력해주세요."
@@ -113,14 +100,14 @@ export default function SignUpForm({ genders }: SignUpFormProps) {
           label="키"
           placeholder="키를 입력해주세요."
           value={user.height}
-          unitType='cm'
+          unitType="cm"
           onChange={(value) => store.changeHeight(value)}
         />
         <BodyMetricInput
           label="몸무게"
           placeholder="몸무게를 입력해주세요."
           value={user.weight}
-          unitType='kg'
+          unitType="kg"
           onChange={(value) => store.changeWeight(value)}
         />
         <SignUpDescriptionInput
@@ -134,10 +121,8 @@ export default function SignUpForm({ genders }: SignUpFormProps) {
             회원 가입
           </Button>
         </ButtonWrapper>
-        {state === 'error' && (
-          <p>회원 가입 실패</p>
-        )}
+        {state === 'error' && <p>회원 가입 실패</p>}
       </Form>
     </Container>
-  )
+  );
 }

@@ -1,9 +1,8 @@
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
-import { userService } from "../services/UserService";
-
-import { PaginationResponse, User } from "../types";
-import { DEFAULT_PER, SORT_OPTIONS } from "../constants/constants";
+import { DEFAULT_PER, SORT_OPTIONS } from '../constants/constants';
+import { userService } from '../services/UserService';
+import { PaginationResponse, User } from '../types';
 
 type useFetchUserStoreProps = {
   keyword?: string;
@@ -28,7 +27,7 @@ export default function useUsers({
     isError,
     error,
   } = useQuery<PaginationResponse<User>>({
-    queryKey: ["users", keyword, sortCode, per, page],
+    queryKey: ['users', keyword, sortCode, per, page],
     queryFn: () =>
       userService.fetchUsers({
         keyword,

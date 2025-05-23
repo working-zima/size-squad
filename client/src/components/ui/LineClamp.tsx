@@ -1,6 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-
-import styled, { css } from "styled-components";
+import { useEffect, useRef, useState } from 'react';
+import styled, { css } from 'styled-components';
 
 type ContentProps = {
   isCollapsed: boolean;
@@ -61,7 +60,7 @@ const MoreButton = styled.button<MoreButtonProps>`
 
   /* 밑 화살표 */
   &::before {
-    content: "";
+    content: '';
     display: inline-block;
     width: 7px;
     height: 7px;

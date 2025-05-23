@@ -3,12 +3,12 @@ import {
   QueryCache,
   QueryClient,
   QueryClientConfig,
-} from "@tanstack/react-query";
+} from '@tanstack/react-query';
 
-function createTitle(errorMsg: string, actionType: "query" | "mutation") {
-  const action = actionType === "query" ? "fetch" : "update";
+function createTitle(errorMsg: string, actionType: 'query' | 'mutation') {
+  const action = actionType === 'query' ? 'fetch' : 'update';
   return `could not ${action} data: ${
-    errorMsg ?? "error connecting to server"
+    errorMsg ?? 'error connecting to server'
   }`;
 }
 
@@ -22,13 +22,13 @@ export const queryClientOptions: QueryClientConfig = {
   },
   queryCache: new QueryCache({
     onError: (error) => {
-      const title = createTitle(error.message, "query");
+      const title = createTitle(error.message, 'query');
       console.error(title);
     },
   }),
   mutationCache: new MutationCache({
     onError: (error) => {
-      const title = createTitle(error.message, "mutation");
+      const title = createTitle(error.message, 'mutation');
       console.error(title);
     },
   }),

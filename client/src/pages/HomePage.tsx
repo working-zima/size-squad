@@ -1,16 +1,14 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import NoListPage from "./NoListPage";
-import ErrorPage from "./ErrorPage";
-
-import Product from "../components/mySize/Product";
-import UserCard from "../components/UserCard";
-import LoadingSpinner from "../components/ui/LoadingSpinner";
-import { Carousel } from "../components/ui/Slide/Carousel";
-
-import useAuthStore from "../hooks/useAuthStore";
-import useUsers from "../hooks/useUsers";
-import { useProducts } from "../hooks/useProducts";
+import Product from '../components/mySize/Product';
+import LoadingSpinner from '../components/ui/LoadingSpinner';
+import { Carousel } from '../components/ui/Slide/Carousel';
+import UserCard from '../components/UserCard';
+import useAuthStore from '../hooks/useAuthStore';
+import { useProducts } from '../hooks/useProducts';
+import useUsers from '../hooks/useUsers';
+import ErrorPage from './ErrorPage';
+import NoListPage from './NoListPage';
 
 const Container = styled.div`
   margin-bottom: 80px;
@@ -78,7 +76,7 @@ export default function HomePage() {
         {isProductsError && (
           <ErrorPage
             errorMessage={
-              productsError?.message ?? "상품을 불러올 수 없습니다."
+              productsError?.message ?? '상품을 불러올 수 없습니다.'
             }
           />
         )}
@@ -106,7 +104,7 @@ export default function HomePage() {
         {isUsersError && (
           <ErrorPage
             errorMessage={
-              usersError?.message ?? "유저 목록을 불러올 수 없습니다."
+              usersError?.message ?? '유저 목록을 불러올 수 없습니다.'
             }
           />
         )}

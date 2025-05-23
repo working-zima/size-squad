@@ -1,10 +1,9 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import UserRow from "./UserRow";
-import DescriptionRow from "./DescriptionRow";
-import ButtonsRow from "./ButtonsRow";
-
-import { User } from "../../types";
+import { User } from '../../types';
+import ButtonsRow from './ButtonsRow';
+import DescriptionRow from './DescriptionRow';
+import UserRow from './UserRow';
 
 const Container = styled.section`
   position: sticky;

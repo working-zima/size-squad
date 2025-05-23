@@ -1,15 +1,11 @@
-import { singleton } from "tsyringe";
+import { singleton } from 'tsyringe';
+import { Action, Store } from 'usestore-ts';
 
-import { Action, Store } from "usestore-ts";
-
-import { ApiState, Summary, User } from "../types";
-
-import { userService } from "../services/UserService";
-
-import { nullUser } from "../nullObject";
-
-import { FETCH_STATE } from "../constants/constants";
-import { ERROR_MESSAGES } from "../constants/messages";
+import { FETCH_STATE } from '../constants/constants';
+import { ERROR_MESSAGES } from '../constants/messages';
+import { nullUser } from '../nullObject';
+import { userService } from '../services/UserService';
+import { ApiState, Summary, User } from '../types';
 
 @singleton()
 @Store()
@@ -42,36 +38,40 @@ class SignupFormStore {
 
   // 유효성 검사
   get valid() {
-    return this.isEmailValid
-      && !this.isEmailDuplicated
-      && this.isNameValid
-      && !this.isNameDuplicated
-      && this.isPasswordValid
-      && this.isPasswordConfirmationValid
+    return (
+      this.isEmailValid &&
+      !this.isEmailDuplicated &&
+      this.isNameValid &&
+      !this.isNameDuplicated &&
+      this.isPasswordValid &&
+      this.isPasswordConfirmationValid
+    );
   }
 
   get EditPasswordValid() {
-    return this.isOldPasswordValid
-      && this.isPasswordValid
-      && this.isPasswordConfirmationValid
+    return (
+      this.isOldPasswordValid &&
+      this.isPasswordValid &&
+      this.isPasswordConfirmationValid
+    );
   }
 
   get HeightValid() {
-    return !(this.user.height === 0)
+    return !(this.user.height === 0);
   }
 
   get WeightValid() {
-    return !(this.user.weight === 0)
+    return !(this.user.weight === 0);
   }
 
   get DescriptionValid() {
-    return !(this.user.description.trim() === '')
+    return !(this.user.description.trim() === '');
   }
 
   private emailValidation = (email: string) => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return emailRegex.test(email);
-  }
+  };
 
   @Action()
   validateEmail(email: string) {
@@ -88,7 +88,7 @@ class SignupFormStore {
         const typedError = error as { message: string };
         this.errorMessage = typedError.message || ERROR_MESSAGES.UNEXPECTED;
 
-        this.setError()
+        this.setError();
       }
     } else {
       this.changeIsEmailDuplicated(false);
@@ -97,8 +97,8 @@ class SignupFormStore {
 
   private nameValidation = (name: string) => {
     const nameRegex = /^[가-힣a-zA-Z0-9]{2,10}$/;
-    return nameRegex.test(name)
-  }
+    return nameRegex.test(name);
+  };
 
   @Action()
   validateName(name: string) {
@@ -115,7 +115,7 @@ class SignupFormStore {
         const typedError = error as { message: string };
         this.errorMessage = typedError.message || ERROR_MESSAGES.UNEXPECTED;
 
-        this.setError()
+        this.setError();
       }
     } else {
       this.changeIsNameDuplicated(false);
@@ -123,9 +123,9 @@ class SignupFormStore {
   }
 
   private passwordValidation = (password: string) => {
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,16}$/
-    return passwordRegex.test(password)
-  }
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,16}$/;
+    return passwordRegex.test(password);
+  };
 
   @Action()
   validatePassword(password: string) {
@@ -223,7 +223,7 @@ class SignupFormStore {
   }
 
   async signup() {
-    this.startLoading()
+    this.startLoading();
     try {
       const accessToken = await userService.signup({
         ...this.user,
@@ -231,95 +231,96 @@ class SignupFormStore {
       });
       this.setAccessToken(accessToken);
 
-      this.setDone()
+      this.setDone();
     } catch (error) {
       const typedError = error as { message: string };
       this.errorMessage = typedError.message || ERROR_MESSAGES.UNEXPECTED;
 
-      this.setError()
+      this.setError();
     }
   }
 
   async updatePassword() {
-    this.startLoading()
+    this.startLoading();
     try {
       await userService.updatePassword({
         oldPassword: this.oldPassword,
-        newPassword: this.user.password
-      })
+        newPassword: this.user.password,
+      });
 
       this.reset();
     } catch (error) {
       const typedError = error as { status?: number; message: string };
-      if (typedError.status === 400) this.errorMessage = '현재 비밀번호가 맞지 않습니다.'
+      if (typedError.status === 400)
+        this.errorMessage = '현재 비밀번호가 맞지 않습니다.';
       else this.errorMessage = typedError.message || ERROR_MESSAGES.UNEXPECTED;
 
-      this.setError()
-      throw error
+      this.setError();
+      throw error;
     }
   }
 
   async updateGender() {
-    this.startLoading()
+    this.startLoading();
     try {
       await userService.updateGender({
-        gender: this.user.gender
-      })
+        gender: this.user.gender,
+      });
 
       this.reset();
     } catch (error) {
       const typedError = error as { message: string };
       this.errorMessage = typedError.message || ERROR_MESSAGES.UNEXPECTED;
 
-      this.setError()
+      this.setError();
     }
   }
 
   async updateHeight() {
-    this.startLoading()
+    this.startLoading();
     try {
       await userService.updateHeight({
-        height: this.user.height
-      })
+        height: this.user.height,
+      });
 
       this.reset();
     } catch (error) {
       const typedError = error as { message: string };
       this.errorMessage = typedError.message || ERROR_MESSAGES.UNEXPECTED;
 
-      this.setError()
+      this.setError();
     }
   }
 
   async updateWeight() {
-    this.startLoading()
+    this.startLoading();
     try {
       await userService.updateWeight({
-        weight: this.user.weight
-      })
+        weight: this.user.weight,
+      });
 
       this.reset();
     } catch (error) {
       const typedError = error as { message: string };
       this.errorMessage = typedError.message || ERROR_MESSAGES.UNEXPECTED;
 
-      this.setError()
+      this.setError();
     }
   }
 
   async updateDescription() {
-    this.startLoading()
+    this.startLoading();
     try {
       await userService.updateDescription({
-        description: this.user.description
-      })
+        description: this.user.description,
+      });
 
       this.reset();
     } catch (error) {
       const typedError = error as { message: string };
       this.errorMessage = typedError.message || ERROR_MESSAGES.UNEXPECTED;
 
-      this.setError()
+      this.setError();
     }
   }
 

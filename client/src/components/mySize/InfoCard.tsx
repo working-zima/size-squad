@@ -13,16 +13,16 @@ const Container = styled.div`
 
 type InfoCardProps = {
   product: ProductResponse;
-}
+};
 
 export default function InfoCard({ product }: InfoCardProps) {
-
   return (
     <Container>
       <LineClampedText
-        text={[product.description
-          ? product.description
-          : '기억해둘 메모를 적어보세요'
+        text={[
+          product.description
+            ? product.description
+            : '기억해둘 메모를 적어보세요',
         ]}
         lines={3}
       />

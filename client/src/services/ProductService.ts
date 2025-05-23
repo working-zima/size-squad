@@ -1,5 +1,5 @@
-import { PaginationResponse, ProductRequest, ProductResponse } from "../types";
-import ApiService from "./ApiService";
+import { PaginationResponse, ProductRequest, ProductResponse } from '../types';
+import ApiService from './ApiService';
 
 export default class ProductService {
   async fetchProducts({
@@ -19,7 +19,7 @@ export default class ProductService {
     page?: number;
     per?: number;
   } = {}): Promise<PaginationResponse<ProductResponse>> {
-    const { data } = await ApiService.get("/products", {
+    const { data } = await ApiService.get('/products', {
       params: {
         keyword,
         categoryId,
@@ -82,8 +82,8 @@ export default class ProductService {
 
   async createProduct(newProduct: ProductRequest): Promise<ProductResponse> {
     const { data } = await ApiService.post<ProductResponse>(
-      "/products",
-      newProduct
+      '/products',
+      newProduct,
     );
 
     return data;

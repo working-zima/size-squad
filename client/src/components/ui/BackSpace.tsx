@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Button from './Button';
-import useProductsStore from '../../hooks/useProductsStore';
 
 const Container = styled(Button)`
   position: relative;
@@ -14,8 +13,8 @@ const Container = styled(Button)`
 `;
 
 type BackSpaceProps = {
-  children: JSX.Element
-}
+  children: JSX.Element;
+};
 
 export default function BackSpace({ children }: BackSpaceProps) {
   const navigate = useNavigate();
@@ -23,9 +22,5 @@ export default function BackSpace({ children }: BackSpaceProps) {
     navigate(-1);
   };
 
-  return (
-    <Container onClick={onClickBtn}>
-      {children}
-    </Container>
-  );
+  return <Container onClick={onClickBtn}>{children}</Container>;
 }

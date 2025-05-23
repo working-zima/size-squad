@@ -1,34 +1,34 @@
-import { useEffect, useState } from 'react'
-
-import styled from "styled-components";
-
-import useSignupFormStore from '../../hooks/useSignupFormStore';
-import useDebounce from '../../hooks/useDebounce';
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
 
 import { ERROR_MESSAGES } from '../../constants/messages';
+import useDebounce from '../../hooks/useDebounce';
+import useSignupFormStore from '../../hooks/useSignupFormStore';
 import { TextInputBox } from '../ui/textbox/TextBoxComponents';
 
 const Container = styled.div`
   height: 11rem;
-`
+`;
 
 const ValidTextWrapper = styled.p`
   margin-top: 4px;
   font-size: 1.2rem;
   line-height: 16px;
-  color: ${props => props.theme.colors.primaryRed};
-`
+  color: ${(props) => props.theme.colors.primaryRed};
+`;
 
 type ErrorMessageProps = {
   name: string;
   isNameDuplicated: boolean;
   isNameValid: boolean;
-}
+};
 
 const ErrorMessage = ({
-  name, isNameDuplicated, isNameValid
+  name,
+  isNameDuplicated,
+  isNameValid,
 }: ErrorMessageProps) => {
-  if (name === "") return ERROR_MESSAGES.NAME_EMPTY;
+  if (name === '') return ERROR_MESSAGES.NAME_EMPTY;
   if (isNameDuplicated) return ERROR_MESSAGES.NAME_DUPLICATED;
   if (!isNameValid) return ERROR_MESSAGES.NAME_INVALID;
   return null;
@@ -37,14 +37,19 @@ const ErrorMessage = ({
 type SignUpNameInputProps = {
   label?: string;
   placeholder?: string;
-}
+};
 
 export default function SignUpNameInput({
-  label = "",
-  placeholder = ""
+  label = '',
+  placeholder = '',
 }: SignUpNameInputProps) {
   const [
-    { user: { name }, isNameDuplicated, isNameValid }, store
+    {
+      user: { name },
+      isNameDuplicated,
+      isNameValid,
+    },
+    store,
   ] = useSignupFormStore();
   const [isTouched, setIsTouched] = useState(false);
 
@@ -52,6 +57,7 @@ export default function SignUpNameInput({
 
   useEffect(() => {
     store.validateAndCheckName(debouncedNameInput);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedNameInput]);
 
   const handleChangeName = (value: string) => {
@@ -61,10 +67,11 @@ export default function SignUpNameInput({
 
   const handleResetName = () => {
     store.changeName('');
-  }
+  };
 
   const errorMessage = isTouched
-    ? ErrorMessage({ name, isNameDuplicated, isNameValid }) : null;
+    ? ErrorMessage({ name, isNameDuplicated, isNameValid })
+    : null;
 
   return (
     <Container>
@@ -80,11 +87,7 @@ export default function SignUpNameInput({
         onChange={handleChangeName}
         onReset={handleResetName}
       />
-      {errorMessage && (
-        <ValidTextWrapper>
-          {errorMessage}
-        </ValidTextWrapper>
-      )}
+      {errorMessage && <ValidTextWrapper>{errorMessage}</ValidTextWrapper>}
     </Container>
-  )
+  );
 }

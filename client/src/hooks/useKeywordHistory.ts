@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-import { uniqueArray } from '../utils/uniqueArray';
 import { remove } from '../utils';
+import { uniqueArray } from '../utils/uniqueArray';
 
 export function useKeywordHistory() {
   const [keywordHistory, setKeywordHistory] = useState<string[]>([]);
@@ -10,21 +10,21 @@ export function useKeywordHistory() {
   useEffect(() => {
     setKeywordHistory(loadHistory());
     setIsAutoSave(loadAutoSaveSetting());
-  }, [])
+  }, []);
 
   /**
    * 로컬 스토리지에서 히스토리를 가져오기
    */
   const loadHistory = () => {
-    const storedHistory = localStorage.getItem("keywordHistory");
-    return storedHistory ? storedHistory.split(",") : [];
+    const storedHistory = localStorage.getItem('keywordHistory');
+    return storedHistory ? storedHistory.split(',') : [];
   };
 
   /**
    * 로컬 스토리지에서 isAutoSave 설정을 가져오기
    */
   const loadAutoSaveSetting = () => {
-    const storedAutoSave = localStorage.getItem("isAutoSave");
+    const storedAutoSave = localStorage.getItem('isAutoSave');
     return storedAutoSave ? storedAutoSave === 'true' : true;
   };
 
@@ -43,7 +43,7 @@ export function useKeywordHistory() {
    */
   const saveHistory = (newHistory: string[]) => {
     const keywordHistory = uniqueArray(newHistory).slice(0, 10);
-    localStorage.setItem("keywordHistory", keywordHistory.join(","));
+    localStorage.setItem('keywordHistory', keywordHistory.join(','));
     setKeywordHistory(keywordHistory);
   };
 
@@ -60,7 +60,7 @@ export function useKeywordHistory() {
    * 히스토리 전체 삭제
    */
   const clearHistory = () => {
-    localStorage.removeItem("keywordHistory");
+    localStorage.removeItem('keywordHistory');
     setKeywordHistory([]);
   };
 
@@ -71,11 +71,10 @@ export function useKeywordHistory() {
   const toggleAutoSave = () => {
     setIsAutoSave((prev) => {
       const newValue = !prev;
-      localStorage.setItem("isAutoSave", newValue.toString());
+      localStorage.setItem('isAutoSave', newValue.toString());
       return newValue;
     });
   };
-
 
   return {
     keywordHistory,
@@ -83,6 +82,6 @@ export function useKeywordHistory() {
     addKeywordHistory,
     removeKeywordHistory,
     clearHistory,
-    toggleAutoSave
+    toggleAutoSave,
   };
 }

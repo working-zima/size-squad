@@ -4,9 +4,8 @@ import {
   ForwardedRef,
   forwardRef,
   RefObject,
-  SetStateAction
+  SetStateAction,
 } from 'react';
-
 import styled from 'styled-components';
 
 const Input = styled.input`
@@ -16,10 +15,10 @@ const Input = styled.input`
   font-size: 1.6rem;
   line-height: 22px;
   height: 100%;
-  color: ${props => props.theme.colors.primaryBlack};
+  color: ${(props) => props.theme.colors.primaryBlack};
 
   &::placeholder {
-    color: ${props => props.theme.colors.borderColor};
+    color: ${(props) => props.theme.colors.borderColor};
     font-weight: 500;
   }
 
@@ -39,15 +38,18 @@ type TextInputProps = {
 };
 
 const TextSimpleInput = forwardRef<HTMLInputElement, TextInputProps>(
-  ({
-    idRef,
-    placeholder = undefined,
-    value,
-    type,
-    maxLength,
-    setIsFocused,
-    onChange = undefined,
-  }: TextInputProps, ref: ForwardedRef<HTMLInputElement>) => {
+  (
+    {
+      idRef,
+      placeholder = undefined,
+      value,
+      type,
+      maxLength,
+      setIsFocused,
+      onChange = undefined,
+    }: TextInputProps,
+    ref: ForwardedRef<HTMLInputElement>,
+  ) => {
     const handleFocus = () => setIsFocused(true);
     const handleBlur = () => setIsFocused(false);
 
@@ -69,7 +71,9 @@ const TextSimpleInput = forwardRef<HTMLInputElement, TextInputProps>(
         onChange={handleChange}
       />
     );
-  }
+  },
 );
+
+TextSimpleInput.displayName = 'TextSimpleInput';
 
 export default TextSimpleInput;

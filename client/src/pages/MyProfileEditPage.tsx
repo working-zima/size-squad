@@ -1,27 +1,22 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import styled from 'styled-components';
 
-import AccessDeniedPage from './AccessDeniedPage';
-
-import MyProfileEditForm from '../components/myProfile/MyProfileEditForm';
-import { ConfirmTrigger } from '../components/ui/modal/ModalTrigger';
-import LoadingSpinner from '../components/ui/LoadingSpinner';
-
-import useSignupFormStore from '../hooks/useSignupFormStore';
-import useAuthStore from '../hooks/useAuthStore';
-
-import { userService } from '../services/UserService';
-
 import { accessTokenUtil } from '../auth/accessTokenUtil';
+import MyProfileEditForm from '../components/myProfile/MyProfileEditForm';
+import LoadingSpinner from '../components/ui/LoadingSpinner';
+import { ConfirmTrigger } from '../components/ui/modal/ModalTrigger';
+import useAuthStore from '../hooks/useAuthStore';
+import useSignupFormStore from '../hooks/useSignupFormStore';
+import { userService } from '../services/UserService';
+import AccessDeniedPage from './AccessDeniedPage';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   height: calc(100vh - 50px);
-  padding: ${props => props.theme.sizes.contentPadding};
-`
+  padding: ${(props) => props.theme.sizes.contentPadding};
+`;
 
 const ButtonWrapper = styled.div`
   margin-top: 40px;
@@ -31,11 +26,11 @@ const ButtonWrapper = styled.div`
   & > button {
     line-height: 1.67;
     padding: 0;
-    color: ${props => props.theme.colors.unSelectedText};
+    color: ${(props) => props.theme.colors.unSelectedText};
     text-decoration-line: underline;
     user-select: none;
   }
-`
+`;
 
 export default function MyProfileEditPage() {
   const navigate = useNavigate();
@@ -44,8 +39,9 @@ export default function MyProfileEditPage() {
   const [confirmed, setConfirmed] = useState<boolean | null>(false);
 
   useEffect(() => {
-    signupFormstore.reset()
-  }, [])
+    signupFormstore.reset();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     const deleteUser = async () => {
@@ -60,7 +56,8 @@ export default function MyProfileEditPage() {
       }
     };
 
-    if (!!confirmed) deleteUser();
+    if (confirmed) deleteUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [confirmed]);
 
   if (!accessTokenUtil.getAccessToken()) {
@@ -76,7 +73,7 @@ export default function MyProfileEditPage() {
       <MyProfileEditForm user={user} />
       <ButtonWrapper>
         <ConfirmTrigger
-          title='정말 탈퇴하시겠어요?'
+          title="정말 탈퇴하시겠어요?"
           buttonText="회원 탈퇴"
           confirmed={confirmed}
           setConfirmed={setConfirmed}
@@ -86,5 +83,5 @@ export default function MyProfileEditPage() {
         </ConfirmTrigger>
       </ButtonWrapper>
     </Container>
-  )
+  );
 }

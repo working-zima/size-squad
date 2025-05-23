@@ -1,11 +1,9 @@
-import { Dispatch, SetStateAction } from "react";
-import { Link } from "react-router-dom";
+import { Dispatch, SetStateAction } from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
-import styled from "styled-components";
-
-import { ConfirmTrigger } from "../ui/modal/ModalTrigger";
-
-import { ProductResponse } from "../../types";
+import { ProductResponse } from '../../types';
+import { ConfirmTrigger } from '../ui/modal/ModalTrigger';
 
 const Container = styled.div`
   display: flex;
@@ -48,8 +46,8 @@ export default function EditDeleteButtons({
       </Link>
       <div className="delete-link">
         <ConfirmTrigger
-          title={"사이즈 삭제"}
-          buttonText={"삭제"}
+          title={'사이즈 삭제'}
+          buttonText={'삭제'}
           confirmed={confirmed}
           setConfirmed={setConfirmed}
         >

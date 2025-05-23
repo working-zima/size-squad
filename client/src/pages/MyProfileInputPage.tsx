@@ -1,47 +1,44 @@
-import { useEffect } from "react";
-import { useParams } from "react-router-dom"
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import styled from 'styled-components';
 
-import styled from "styled-components"
-
-import AccessDeniedPage from "./AccessDeniedPage";
-
-import EditPassword from "../components/myProfile/EditPassword"
-import EditGender from "../components/myProfile/EditGender";
-import EditHeight from "../components/myProfile/EditHeight";
-import EditWeight from "../components/myProfile/EditWeight";
-import EditDescription from "../components/myProfile/EditDescription";
-import LoadingSpinner from "../components/ui/LoadingSpinner";
-
-import useSignupFormStore from "../hooks/useSignupFormStore";
-import useAuthStore from "../hooks/useAuthStore";
-
-import { accessTokenUtil } from "../auth/accessTokenUtil";
+import { accessTokenUtil } from '../auth/accessTokenUtil';
+import EditDescription from '../components/myProfile/EditDescription';
+import EditGender from '../components/myProfile/EditGender';
+import EditHeight from '../components/myProfile/EditHeight';
+import EditPassword from '../components/myProfile/EditPassword';
+import EditWeight from '../components/myProfile/EditWeight';
+import LoadingSpinner from '../components/ui/LoadingSpinner';
+import useAuthStore from '../hooks/useAuthStore';
+import useSignupFormStore from '../hooks/useSignupFormStore';
+import AccessDeniedPage from './AccessDeniedPage';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding: ${props => props.theme.sizes.contentPadding};
-`
+  padding: ${(props) => props.theme.sizes.contentPadding};
+`;
 
 export default function MyProfileInputPage() {
-  const [{ user, state }] = useAuthStore()
-  const params = useParams()
-  const path = String(params.path)
-  const [, store] = useSignupFormStore()
+  const [{ user, state }] = useAuthStore();
+  const params = useParams();
+  const path = String(params.path);
+  const [, store] = useSignupFormStore();
 
   useEffect(() => {
-    store.changeGender(user.gender)
-    store.changeHeight(user.height)
-    store.changeWeight(user.weight)
-    store.changeDescription(user.description)
-  }, [])
+    store.changeGender(user.gender);
+    store.changeHeight(user.height);
+    store.changeWeight(user.weight);
+    store.changeDescription(user.description);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (state === 'loading') {
     return <LoadingSpinner />;
   }
 
   if (!accessTokenUtil.getAccessToken()) {
-    return <AccessDeniedPage />
+    return <AccessDeniedPage />;
   }
 
   if (path === 'password') {
@@ -49,7 +46,7 @@ export default function MyProfileInputPage() {
       <Container>
         <EditPassword />
       </Container>
-    )
+    );
   }
 
   if (path === 'gender') {
@@ -57,7 +54,7 @@ export default function MyProfileInputPage() {
       <Container>
         <EditGender />
       </Container>
-    )
+    );
   }
 
   if (path === 'height') {
@@ -65,7 +62,7 @@ export default function MyProfileInputPage() {
       <Container>
         <EditHeight />
       </Container>
-    )
+    );
   }
 
   if (path === 'weight') {
@@ -73,7 +70,7 @@ export default function MyProfileInputPage() {
       <Container>
         <EditWeight />
       </Container>
-    )
+    );
   }
 
   if (path === 'description') {
@@ -81,6 +78,6 @@ export default function MyProfileInputPage() {
       <Container>
         <EditDescription />
       </Container>
-    )
+    );
   }
 }

@@ -1,17 +1,17 @@
-import { TextareaBox } from "../ui/textbox/TextBoxComponents";
+import { TextareaBox } from '../ui/textbox/TextBoxComponents';
 
 type SignUpDescriptionInputProps = {
-  label?: string
-  placeholder?: string
-  description: string
-  changeDescription: (value: string) => void
-}
+  label?: string;
+  placeholder?: string;
+  description: string;
+  changeDescription: (value: string) => void;
+};
 
 export default function SignUpDescriptionInput({
-  label = "",
-  placeholder = "",
+  label = '',
+  placeholder = '',
   description,
-  changeDescription
+  changeDescription,
 }: SignUpDescriptionInputProps) {
   const handleChangeDescription = (value: string) => {
     changeDescription(value);
@@ -25,5 +25,5 @@ export default function SignUpDescriptionInput({
       maxLength={100}
       onChange={handleChangeDescription}
     />
-  )
+  );
 }

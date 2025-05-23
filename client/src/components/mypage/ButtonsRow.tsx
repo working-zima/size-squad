@@ -1,8 +1,7 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
-import styled from "styled-components";
-
-import Button from "../ui/Button";
+import Button from '../ui/Button';
 
 const Container = styled.div`
   display: flex;
@@ -15,17 +14,17 @@ const Container = styled.div`
     height: 34px;
     padding: 0;
     margin-left: 4px;
-    background-color: ${props => props.theme.colors.primaryWhite};
-    color: ${props => props.theme.colors.primaryBlack};
+    background-color: ${(props) => props.theme.colors.primaryWhite};
+    color: ${(props) => props.theme.colors.primaryBlack};
     border: 1px solid ${(props) => props.theme.colors.buttonBorderColor};
     border-radius: 4px;
     -webkit-tap-highlight-color: transparent;
   }
 
   & > button:first-of-type {
-      margin-left: 0px;
+    margin-left: 0px;
   }
-`
+`;
 
 const LinkButton = styled.div`
   width: 100%;
@@ -34,8 +33,8 @@ const LinkButton = styled.div`
   padding: 0;
   margin-right: 4px;
   font-size: 1.4rem;
-  background-color: ${props => props.theme.colors.primaryWhite};
-  color: ${props => props.theme.colors.primaryBlack};
+  background-color: ${(props) => props.theme.colors.primaryWhite};
+  color: ${(props) => props.theme.colors.primaryBlack};
   border: 1px solid ${(props) => props.theme.colors.buttonBorderColor};
   border-radius: 4px;
 
@@ -46,31 +45,29 @@ const LinkButton = styled.div`
     width: 100%;
     height: 100%;
   }
-`
+`;
 
 type ButtonsRowProps = {
   userId: string | undefined;
   isOwner: boolean;
   handleClickLogout: () => void;
-}
+};
 
 export default function ButtonsRow({
-  isOwner, userId, handleClickLogout
+  isOwner,
+  userId,
+  handleClickLogout,
 }: ButtonsRowProps) {
   return (
     <Container>
-      {isOwner &&
+      {isOwner && (
         <>
           <LinkButton>
-            <Link to={`/mypage/${userId}/edit`}>
-              회원정보 변경
-            </Link>
+            <Link to={`/mypage/${userId}/edit`}>회원정보 변경</Link>
           </LinkButton>
-          <Button onClick={handleClickLogout}>
-            로그아웃
-          </Button>
+          <Button onClick={handleClickLogout}>로그아웃</Button>
         </>
-      }
+      )}
     </Container>
-  )
+  );
 }

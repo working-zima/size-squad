@@ -1,6 +1,5 @@
-import { PaginationResponse, Summary, User, UserWithOwnership } from "../types";
-
-import ApiService from "./ApiService";
+import { PaginationResponse, Summary, User, UserWithOwnership } from '../types';
+import ApiService from './ApiService';
 
 export default class UserService {
   async signup({
@@ -20,7 +19,7 @@ export default class UserService {
     weight?: number;
     description?: string;
   }): Promise<string> {
-    const { data } = await ApiService.post("/users", {
+    const { data } = await ApiService.post('/users', {
       email,
       name,
       password,
@@ -40,7 +39,7 @@ export default class UserService {
   }
 
   async fetchCurrentUser(): Promise<User> {
-    const { data } = await ApiService.get("/users/me");
+    const { data } = await ApiService.get('/users/me');
     const { user } = data;
 
     return user;
@@ -59,7 +58,7 @@ export default class UserService {
     page?: number;
     per?: number;
   }): Promise<PaginationResponse<User>> {
-    const { data } = await ApiService.get("/users/all", {
+    const { data } = await ApiService.get('/users/all', {
       params: { keyword, sortField, sortOrder, page, per },
     });
     const { users } = data;

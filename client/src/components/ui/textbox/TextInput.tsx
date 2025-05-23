@@ -1,5 +1,4 @@
-import { ChangeEvent, Dispatch, RefObject, SetStateAction } from 'react'
-
+import { ChangeEvent, Dispatch, RefObject, SetStateAction } from 'react';
 import styled from 'styled-components';
 
 const Input = styled.input`
@@ -8,15 +7,15 @@ const Input = styled.input`
   padding: 0 8px;
   border: 0px;
   border-radius: 6px;
-  background-color: ${props => props.theme.colors.primaryWhite};
+  background-color: ${(props) => props.theme.colors.primaryWhite};
   font-size: 1.6rem;
   line-height: 22px;
-  color: ${props => props.theme.colors.primaryBlack};
+  color: ${(props) => props.theme.colors.primaryBlack};
 
   &:focus {
     outline: none;
   }
-`
+`;
 
 type TextInputProps = {
   idRef?: RefObject<string>;
@@ -29,11 +28,11 @@ type TextInputProps = {
   setIsTouched: Dispatch<SetStateAction<boolean>>;
   setIsFocused: Dispatch<SetStateAction<boolean>>;
   onChange?: (value: string) => void;
-}
+};
 
 export default function TextInput({
   idRef,
-  name = "",
+  name = '',
   placeholder = undefined,
   value,
   type,
@@ -66,5 +65,5 @@ export default function TextInput({
       onBlur={handleBlur}
       onChange={handleChange}
     />
-  )
+  );
 }

@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import LoginForm from '../components/logIn/LoginForm';
-
 import { accessTokenUtil } from '../auth/accessTokenUtil';
 import { authService } from '../auth/AuthService';
-
+import LoginForm from '../components/logIn/LoginForm';
 import { FETCH_STATE } from '../constants/constants';
 import { ERROR_MESSAGES } from '../constants/messages';
 import useAuthStore from '../hooks/useAuthStore';
@@ -16,12 +14,14 @@ export default function LoginPage() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [accessToken, setAccessToken] = useState(accessTokenUtil.getAccessToken());
+  const [accessToken, setAccessToken] = useState(
+    accessTokenUtil.getAccessToken(),
+  );
   const [errorMessage, setErrorMessage] = useState('');
   const [state, setState] = useState(FETCH_STATE.IDLE);
 
   useEffect(() => {
-    resetForm()
+    resetForm();
   }, []);
 
   useEffect(() => {
@@ -30,6 +30,7 @@ export default function LoginPage() {
       authStore.fetchMyUserData();
       navigate('/');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessToken]);
 
   const resetForm = () => {
@@ -54,7 +55,7 @@ export default function LoginPage() {
       }
       setState(FETCH_STATE.ERROR);
     }
-  }
+  };
 
   return (
     <LoginForm

@@ -1,17 +1,15 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import './styles/fonts/font.css';
 
-import { ThemeProvider } from "styled-components";
-import { Reset } from "styled-reset";
-import { QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
+import { Reset } from 'styled-reset';
 
-import routes from "./routes";
-import { queryClient } from "./config/queryClient";
-
-import GlobalStyle from "./styles/GlobalStyle";
-import DefaultTheme from "./styles/defaultTheme";
-
-import "./styles/fonts/font.css";
+import { queryClient } from './config/queryClient';
+import routes from './routes';
+import DefaultTheme from './styles/defaultTheme';
+import GlobalStyle from './styles/GlobalStyle';
 
 const router = createBrowserRouter(routes);
 

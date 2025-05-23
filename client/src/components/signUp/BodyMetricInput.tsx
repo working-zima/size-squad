@@ -1,4 +1,4 @@
-import { TextInputBox } from "../ui/textbox/TextBoxComponents";
+import { TextInputBox } from '../ui/textbox/TextBoxComponents';
 
 type BodyMetricInputProps = {
   label?: string;
@@ -6,14 +6,14 @@ type BodyMetricInputProps = {
   value: number;
   unitType: 'cm' | 'kg';
   onChange: (value: number) => void;
-}
+};
 
 export default function BodyMetricInput({
-  label = "",
-  placeholder = "",
+  label = '',
+  placeholder = '',
   value,
   unitType,
-  onChange
+  onChange,
 }: BodyMetricInputProps) {
   const handleChange = (inputValue: string) => {
     let sanitizedValue = inputValue.replace(/[^0-9]/g, '');
@@ -27,7 +27,7 @@ export default function BodyMetricInput({
 
   const handleReset = () => {
     onChange(0);
-  }
+  };
 
   return (
     <TextInputBox

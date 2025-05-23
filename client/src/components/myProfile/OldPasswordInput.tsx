@@ -1,24 +1,21 @@
-import { useState } from "react";
+import { useState } from 'react';
+import styled from 'styled-components';
 
-import styled from "styled-components";
-
-import useSignupFormStore from "../../hooks/useSignupFormStore";
-
-import { TextInputBox } from "../ui/textbox/TextBoxComponents";
-
-import { ERROR_MESSAGES } from "../../constants/messages";
+import { ERROR_MESSAGES } from '../../constants/messages';
+import useSignupFormStore from '../../hooks/useSignupFormStore';
+import { TextInputBox } from '../ui/textbox/TextBoxComponents';
 
 const PasswordWrapper = styled.div`
   max-height: 105px;
   min-height: 80px;
-`
+`;
 
 const ValidTextWrapper = styled.p`
   margin-top: 4px;
   font-size: 1.2rem;
   line-height: 16px;
-  color: ${props => props.theme.colors.primaryRed};
-`
+  color: ${(props) => props.theme.colors.primaryRed};
+`;
 
 type OldPasswordErrorMessageProps = {
   oldPassword: string;
@@ -26,9 +23,10 @@ type OldPasswordErrorMessageProps = {
 };
 
 const PasswordErrorMessage = ({
-  oldPassword, isOldPasswordValid
+  oldPassword,
+  isOldPasswordValid,
 }: OldPasswordErrorMessageProps) => {
-  if (oldPassword === "") return ERROR_MESSAGES.PASSWORD_EMPTY;
+  if (oldPassword === '') return ERROR_MESSAGES.PASSWORD_EMPTY;
   if (!isOldPasswordValid) return ERROR_MESSAGES.PASSWORD_INVALID;
   return null;
 };
@@ -40,7 +38,9 @@ type OldPasswordInputProps = {
 };
 
 export default function OldPasswordInput({
-  label, placeholder, autocomplete = ''
+  label,
+  placeholder,
+  autocomplete = '',
 }: OldPasswordInputProps) {
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [isTouched, setIsTouched] = useState(false);
@@ -53,7 +53,9 @@ export default function OldPasswordInput({
     store.validateOldPassword(value);
   };
 
-  const handleResetPassword = () => { store.changeOldPassword('') };
+  const handleResetPassword = () => {
+    store.changeOldPassword('');
+  };
 
   const handleShowOldPassword = () => {
     setShowOldPassword((prev) => !prev);
@@ -69,7 +71,7 @@ export default function OldPasswordInput({
         label={label}
         placeholder={placeholder}
         value={oldPassword}
-        type={showOldPassword ? "text" : "password"}
+        type={showOldPassword ? 'text' : 'password'}
         maxLength={16}
         isShowPw={showOldPassword}
         isValid={isOldPasswordValid}
@@ -80,9 +82,9 @@ export default function OldPasswordInput({
         onReset={handleResetPassword}
         required
       />
-      {!!passwordErrorMessage
-        && <ValidTextWrapper>{passwordErrorMessage}</ValidTextWrapper>
-      }
+      {!!passwordErrorMessage && (
+        <ValidTextWrapper>{passwordErrorMessage}</ValidTextWrapper>
+      )}
     </PasswordWrapper>
-  )
+  );
 }

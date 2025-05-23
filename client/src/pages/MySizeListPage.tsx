@@ -1,19 +1,14 @@
-import { useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import styled from 'styled-components';
 
-import styled from "styled-components";
-
-import AccessDeniedPage from "./AccessDeniedPage";
-
-import CategoryBar from "../components/category/CategoryBar";
-import ProductListSection from "../components/mySize/ProductListSection";
-
-import { accessTokenUtil } from "../auth/accessTokenUtil";
-import { ProductParamsStore } from "../stores/ProductParamsStore";
-
-import useAuthStore from "../hooks/useAuthStore";
-
-import { DEFAULT_PER } from "../constants/constants";
+import { accessTokenUtil } from '../auth/accessTokenUtil';
+import CategoryBar from '../components/category/CategoryBar';
+import ProductListSection from '../components/mySize/ProductListSection';
+import { DEFAULT_PER } from '../constants/constants';
+import useAuthStore from '../hooks/useAuthStore';
+import { ProductParamsStore } from '../stores/ProductParamsStore';
+import AccessDeniedPage from './AccessDeniedPage';
 
 const Container = styled.div`
   height: 100%;
@@ -32,16 +27,16 @@ const Container = styled.div`
 
 export default function MySizeListPage() {
   const [params] = useSearchParams();
-  const categoryId = params.get("category1DepthCode") ?? undefined;
-  const subCategoryId = params.get("category2DepthCode") ?? undefined;
-  const sortCode = params.get("sortCode") ?? undefined;
+  const categoryId = params.get('category1DepthCode') ?? undefined;
+  const subCategoryId = params.get('category2DepthCode') ?? undefined;
+  const sortCode = params.get('sortCode') ?? undefined;
 
   const [{ user }] = useAuthStore();
 
   useEffect(() => {
     if (user?._id) {
       ProductParamsStore.getState().setParams({
-        keyword: "",
+        keyword: '',
         categoryId,
         subCategoryId,
         sortCode,

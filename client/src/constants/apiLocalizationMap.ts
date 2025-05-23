@@ -56,5 +56,5 @@ export const USERFIELDS: Record<string, string> = {
   height: '키',
   weight: '몸무게',
   description: '체형',
-  physical: '피지컬'
+  physical: '피지컬',
 };

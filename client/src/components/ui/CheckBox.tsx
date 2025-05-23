@@ -1,9 +1,8 @@
 import React, { useRef } from 'react';
-
 import styled from 'styled-components';
 
 const Container = styled.div`
-  margin-block: .5rem;
+  margin-block: 0.5rem;
 
   label,
   input {
@@ -18,7 +17,7 @@ const Container = styled.div`
 
   label {
     width: ${(props) => props.theme.sizes.labelWidth};
-    padding-left: .5rem;
+    padding-left: 0.5rem;
     text-align: right;
     font-size: 1.4rem;
   }
@@ -28,11 +27,9 @@ type CheckBox = {
   label: string;
   checked: boolean;
   onChange: (checked: boolean) => void;
-}
+};
 
-export default function CheckBox({
-  label, checked, onChange,
-}: CheckBox) {
+export default function CheckBox({ label, checked, onChange }: CheckBox) {
   const id = useRef(`checkbox-${Math.random().toString().slice(2)}`);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,9 +44,7 @@ export default function CheckBox({
         checked={checked}
         onChange={handleChange}
       />
-      <label htmlFor={id.current}>
-        {label}
-      </label>
+      <label htmlFor={id.current}>{label}</label>
     </Container>
   );
 }

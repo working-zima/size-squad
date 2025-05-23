@@ -1,4 +1,4 @@
-import { TextInputBox } from "../ui/textbox/TextBoxComponents";
+import { TextInputBox } from '../ui/textbox/TextBoxComponents';
 
 type LoginInputProps = {
   email: string;
@@ -9,7 +9,7 @@ type LoginInputProps = {
   handleResetEmail: () => void;
   handleShowPassword: () => void;
   handleResetPassword: () => void;
-}
+};
 
 export function LoginInput({
   email,
@@ -19,9 +19,8 @@ export function LoginInput({
   handleChangePassword,
   handleResetEmail,
   handleShowPassword,
-  handleResetPassword
+  handleResetPassword,
 }: LoginInputProps) {
-
   return (
     <>
       <TextInputBox
@@ -32,7 +31,7 @@ export function LoginInput({
       />
       <TextInputBox
         placeholder="비밀번호"
-        type={isShowPw ? "text" : "password"}
+        type={isShowPw ? 'text' : 'password'}
         value={password}
         maxLength={16}
         isShowPw={isShowPw}
@@ -41,5 +40,5 @@ export function LoginInput({
         handleShowPassword={handleShowPassword}
       />
     </>
-  )
+  );
 }

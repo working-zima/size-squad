@@ -1,17 +1,14 @@
 // import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
-import AccessDeniedPage from "./AccessDeniedPage";
-import ErrorPage from "./ErrorPage";
-
-import MySizeNewForm from "../components/mySize/MySizeNewForm";
-import LoadingSpinner from "../components/ui/LoadingSpinner";
-
+import { accessTokenUtil } from '../auth/accessTokenUtil';
+import MySizeNewForm from '../components/mySize/MySizeNewForm';
+import LoadingSpinner from '../components/ui/LoadingSpinner';
 // import useProductFormStore from "../hooks/useProductFormStore";
-import useAuthStore from "../hooks/useAuthStore";
-
-import { accessTokenUtil } from "../auth/accessTokenUtil";
-import useInitialData from "../hooks/useInitialData";
+import useAuthStore from '../hooks/useAuthStore';
+import useInitialData from '../hooks/useInitialData';
+import AccessDeniedPage from './AccessDeniedPage';
+import ErrorPage from './ErrorPage';
 
 export default function MySizeNewPage() {
   const navigate = useNavigate();
@@ -25,7 +22,7 @@ export default function MySizeNewPage() {
   } = useInitialData();
   // const [{ product }, store] = useProductFormStore();
 
-  const loading = userState === "loading" || initialDataIsLoading === true;
+  const loading = userState === 'loading' || initialDataIsLoading === true;
 
   // useEffect(() => {
   //   store.reset();
@@ -57,7 +54,7 @@ export default function MySizeNewPage() {
 
   const handleComplete = () => {
     // store.reset();
-    navigate("/mysize");
+    navigate('/mysize');
   };
 
   if (loading) return <LoadingSpinner />;

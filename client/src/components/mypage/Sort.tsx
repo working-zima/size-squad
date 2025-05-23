@@ -1,11 +1,10 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import BorderlessComboBox from "../ui/selectbox/BorderlessComboBox";
-import LoadingSpinner from "../ui/LoadingSpinner";
-
-import { SortOption, Summary } from "../../types";
-import { SORT_OPTIONS } from "../../constants/constants";
-import { SUBCATEGORY } from "../../constants/apiLocalizationMap";
+import { SUBCATEGORY } from '../../constants/apiLocalizationMap';
+import { SORT_OPTIONS } from '../../constants/constants';
+import { SortOption, Summary } from '../../types';
+import LoadingSpinner from '../ui/LoadingSpinner';
+import BorderlessComboBox from '../ui/selectbox/BorderlessComboBox';
 
 const Container = styled.section`
   display: flex;
@@ -54,10 +53,10 @@ export default function Sort({
           <p>Total {totalDocs.toLocaleString()}</p>
           <ComboBoxWrapper>
             <BorderlessComboBox
-              selectedItem={findCategoryById(selectedSubCategoryId || "")}
-              items={[{ _id: "", name: "all" }, ...allSubCategories]}
-              itemToId={(item) => item?._id || ""}
-              itemToText={(item) => SUBCATEGORY[item?.name || ""]}
+              selectedItem={findCategoryById(selectedSubCategoryId || '')}
+              items={[{ _id: '', name: 'all' }, ...allSubCategories]}
+              itemToId={(item) => item?._id || ''}
+              itemToText={(item) => SUBCATEGORY[item?.name || '']}
               onChange={(value) => {
                 return (
                   value && handleNavigate({ category2DepthCode: value._id })
@@ -67,8 +66,8 @@ export default function Sort({
             <BorderlessComboBox
               selectedItem={sortOption}
               items={Object.values(SORT_OPTIONS)}
-              itemToId={(item) => item?._id || ""}
-              itemToText={(item) => item?.name || ""}
+              itemToId={(item) => item?._id || ''}
+              itemToText={(item) => item?.name || ''}
               onChange={(value) => {
                 return value && handleNavigate({ sortCode: value.urlParam });
               }}

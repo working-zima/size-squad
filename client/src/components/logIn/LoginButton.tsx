@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 import Button from '../ui/Button';
 import CheckBox from '../ui/CheckBox';
@@ -9,31 +9,33 @@ const ButtonWrapper = styled.div`
   button {
     width: 100%;
     height: 48px;
-    background-color: ${props => props.theme.colors.primaryBlack};
-    color: ${props => props.theme.colors.primaryWhite};
+    background-color: ${(props) => props.theme.colors.primaryBlack};
+    color: ${(props) => props.theme.colors.primaryWhite};
     font-size: 1.6rem;
     font-weight: 600;
-    border-color: ${props => props.theme.colors.primaryBlack};
+    border-color: ${(props) => props.theme.colors.primaryBlack};
     border-radius: 6px;
 
     &:disabled {
-      background-color: ${props => props.theme.colors.unSelectedText};
+      background-color: ${(props) => props.theme.colors.unSelectedText};
     }
   }
-`
+`;
 
 const CheckBoxWrapper = styled.div`
   margin-top: 1.2rem;
-`
+`;
 
 type LoginButtonProps = {
   valid: boolean;
   isAutoLogin: boolean;
   toggleAutoLogin: () => void;
-}
+};
 
 export function LoginButton({
-  valid, isAutoLogin, toggleAutoLogin
+  valid,
+  isAutoLogin,
+  toggleAutoLogin,
 }: LoginButtonProps) {
   return (
     <>
@@ -44,11 +46,11 @@ export function LoginButton({
       </ButtonWrapper>
       <CheckBoxWrapper>
         <CheckBox
-          label='자동 로그인'
+          label="자동 로그인"
           checked={isAutoLogin}
           onChange={toggleAutoLogin}
         />
       </CheckBoxWrapper>
     </>
-  )
+  );
 }

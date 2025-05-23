@@ -1,11 +1,9 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import MainCategoryBar from "./MainCategoryBar";
-import SubCategoryBar from "./SubCategoryBar";
-
-import LoadingSpinner from "../ui/LoadingSpinner";
-
-import useCategories from "../../hooks/useCategories";
+import useCategories from '../../hooks/useCategories';
+import LoadingSpinner from '../ui/LoadingSpinner';
+import MainCategoryBar from './MainCategoryBar';
+import SubCategoryBar from './SubCategoryBar';
 
 const Container = styled.section`
   display: flex;
@@ -24,8 +22,7 @@ type CategoryBarProps = {
 };
 
 export default function CategoryBar({ categoryId }: CategoryBarProps) {
-  const { categories, allSubCategories, isLoading, isError, error } =
-    useCategories();
+  const { categories, allSubCategories, isLoading } = useCategories();
 
   const subCategories = categoryId
     ? categories.find((category) => category._id === categoryId)

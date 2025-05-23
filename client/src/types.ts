@@ -1,4 +1,4 @@
-export type ApiState = "loading" | "fetched" | "idle" | "error";
+export type ApiState = 'loading' | 'fetched' | 'idle' | 'error';
 
 export type Summary = {
   _id: string;
@@ -24,8 +24,8 @@ export type User = {
   height: number;
   weight: number;
   description: string;
-  followers?: Pick<User, "_id" | "name">[];
-  following?: Pick<User, "_id" | "name">[];
+  followers?: Pick<User, '_id' | 'name'>[];
+  following?: Pick<User, '_id' | 'name'>[];
 };
 
 export type Category = {
@@ -132,8 +132,8 @@ export type InitialData = {
 
 export type PageConfig = {
   PAGETITLE: string;
-  LEFTBUTTON: "backspace" | "";
-  RIGHTBUTTON: "search" | "home" | "";
+  LEFTBUTTON: 'backspace' | '';
+  RIGHTBUTTON: 'search' | 'home' | '';
   FOOTER: boolean;
   SWITCHER: boolean;
   SHOWMENU: boolean;

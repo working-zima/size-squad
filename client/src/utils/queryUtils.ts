@@ -1,12 +1,11 @@
-import { InfiniteData, QueryClient } from "@tanstack/react-query";
+import { InfiniteData, QueryClient } from '@tanstack/react-query';
 
+import { QUERY_KEYS } from '../constants/constants';
 import {
   PaginationResponse,
   ProductResponse,
-  Summary,
   UserProductQueryParams,
-} from "../types";
-import { QUERY_KEYS } from "../constants/constants";
+} from '../types';
 
 /**
  * "userProducts" 키를 가진 캐시에서 product._id 가 deletedId 에 해당하는 객체 찾기
@@ -16,7 +15,7 @@ import { QUERY_KEYS } from "../constants/constants";
  */
 export const findProductFromUserProductsByProductId = (
   queryClient: QueryClient,
-  productId: string
+  productId: string,
 ) => {
   const queryCache = queryClient.getQueryCache();
   const userProductsQueryCache = queryCache.findAll({
@@ -53,7 +52,7 @@ export type RelatedProductParams = {
  */
 export const getRelatedUserProductQueryKeys = (
   queryClient: QueryClient,
-  { authorId, categoryId, subCategoryId }: RelatedProductParams
+  { authorId, categoryId, subCategoryId }: RelatedProductParams,
 ) => {
   const queryCache = queryClient.getQueryCache();
   const userProductsQueryCache = queryCache.findAll({
@@ -67,10 +66,10 @@ export const getRelatedUserProductQueryKeys = (
       const sameUser = defaultParams.userId === authorId;
       const sameCategory =
         defaultParams.categoryId === categoryId ||
-        defaultParams.categoryId === "";
+        defaultParams.categoryId === '';
       const sameSubCategory =
         defaultParams.subCategoryId === subCategoryId ||
-        defaultParams.subCategoryId === "";
+        defaultParams.subCategoryId === '';
 
       return sameUser && sameCategory && sameSubCategory;
     })

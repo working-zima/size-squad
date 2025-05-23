@@ -2,16 +2,16 @@ import {
   InfiniteData,
   useMutation,
   useQueryClient,
-} from "@tanstack/react-query";
+} from '@tanstack/react-query';
 
-import { userService } from "../services/UserService";
-import { queryKeys } from "../constants/queryKeys";
-import { PaginationResponse, ProductResponse } from "../types";
-import { ProductParamsStore } from "../stores/ProductParamsStore";
+import { queryKeys } from '../constants/queryKeys';
+import { userService } from '../services/UserService';
+import { ProductParamsStore } from '../stores/ProductParamsStore';
+import { PaginationResponse, ProductResponse } from '../types';
 import {
   findProductFromUserProductsByProductId,
   getRelatedUserProductQueryKeys,
-} from "../utils/queryUtils";
+} from '../utils/queryUtils';
 
 /**
  * 사용자 사이즈를 삭제하는 React Query용 커스텀 훅
@@ -41,7 +41,7 @@ export default function useDeleteUserProduct() {
       // 삭제 대상 데이터를 캐시에서 탐색
       const deletedProduct = findProductFromUserProductsByProductId(
         queryClient,
-        deletedId
+        deletedId,
       );
 
       if (!deletedProduct) return { previousData: null };
@@ -58,7 +58,7 @@ export default function useDeleteUserProduct() {
 
       // 이전 상태 저장 (실패 시 롤백용)
       const previousStates = new Map(
-        relatedKeys.map((key) => [key, queryClient.getQueryData(key)])
+        relatedKeys.map((key) => [key, queryClient.getQueryData(key)]),
       );
 
       // 해당 캐시들에 대해 낙관적 삭제 처리
@@ -95,7 +95,7 @@ export default function useDeleteUserProduct() {
     onSettled: (data, error, deletedId) => {
       const deletedProduct = findProductFromUserProductsByProductId(
         queryClient,
-        deletedId
+        deletedId,
       );
 
       if (!deletedProduct) return;

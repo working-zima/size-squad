@@ -1,34 +1,31 @@
-import { Link } from "react-router-dom"
+import { RiHome5Line, RiSearchLine } from 'react-icons/ri';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
-import styled from "styled-components"
-import { RiHome5Line, RiSearchLine } from "react-icons/ri";
-
-import SearchInput from "../searchInput/SearchInput";
-import Button from "../ui/Button";
-
-import { PageConfig } from "../../types"
-
-import usePortal from "../../hooks/usePortal";
+import usePortal from '../../hooks/usePortal';
+import { PageConfig } from '../../types';
+import SearchInput from '../searchInput/SearchInput';
+import Button from '../ui/Button';
 
 const HomeWrapper = styled.div`
   display: flex;
   width: 40px;
-`
+`;
 
 const Blank = styled.div`
   flex-basis: 40px;
-`
+`;
 
 const SearchTrigger = () => {
   const {
     opened: headerOpened,
     openModal: openHeader,
-    closeModal: hideHeader
+    closeModal: hideHeader,
   } = usePortal();
   const {
     opened: bodyOpened,
     openModal: openBody,
-    closeModal: hideBody
+    closeModal: hideBody,
   } = usePortal();
 
   const openBoth = () => {
@@ -51,11 +48,10 @@ const SearchTrigger = () => {
         isInitialOpen={true}
       />
     </>
-  )
-}
+  );
+};
 
 export default function RightButton({ page }: { page: PageConfig }) {
-
   if (page.RIGHTBUTTON === 'home') {
     return (
       <Link to="/">
@@ -63,16 +59,12 @@ export default function RightButton({ page }: { page: PageConfig }) {
           <RiHome5Line size="24" />
         </HomeWrapper>
       </Link>
-    )
+    );
   }
 
   if (page.RIGHTBUTTON === 'search') {
-    return (
-      <SearchTrigger />
-    )
+    return <SearchTrigger />;
   }
 
-  return (
-    <Blank />
-  )
+  return <Blank />;
 }

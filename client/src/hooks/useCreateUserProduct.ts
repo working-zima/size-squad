@@ -1,8 +1,8 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { productService } from "../services/ProductService";
-import { ProductRequest, ProductResponse } from "../types";
-import { getRelatedUserProductQueryKeys } from "../utils/queryUtils";
+import { productService } from '../services/ProductService';
+import { ProductRequest, ProductResponse } from '../types';
+import { getRelatedUserProductQueryKeys } from '../utils/queryUtils';
 
 export default function useCreateUserProduct() {
   const queryClient = useQueryClient();

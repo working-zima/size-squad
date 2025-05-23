@@ -1,10 +1,11 @@
-import styled from "styled-components"
-import { requiredStar } from "../../../utils/requiredStar"
-import { RefObject } from "react";
+import { RefObject } from 'react';
+import styled from 'styled-components';
+
+import { requiredStar } from '../../../utils/requiredStar';
 
 type ContainerProps = {
   required: boolean;
-}
+};
 
 const Container = styled.label<ContainerProps>`
   display: inline-block;
@@ -12,25 +13,22 @@ const Container = styled.label<ContainerProps>`
   font-size: 1.4rem;
   width: 100%;
   ${(props) => props.required && requiredStar('after')}
-`
+`;
 
 type LabelProps = {
   idRef?: RefObject<string>;
   label?: string;
   required?: boolean;
-}
+};
 
 export default function Label({
   idRef,
   label = '',
-  required = false
+  required = false,
 }: LabelProps) {
   return (
-    <Container
-      htmlFor={idRef?.current || ''}
-      required={required}
-    >
+    <Container htmlFor={idRef?.current || ''} required={required}>
       {label}
     </Container>
-  )
+  );
 }

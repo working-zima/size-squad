@@ -1,22 +1,20 @@
-import styled from "styled-components";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm } from 'react-hook-form';
+import styled from 'styled-components';
 
-import MySizeBrandInput from "./MySizeBrandInput";
-import MySizeNameInput from "./MySizeNameInput";
-import MySizeCategoryBox from "./MySizeCategoryBox";
-import MySizeGenderBox from "./MySizeGenderBox";
-import MySizeSizeBox from "./MySizeSizeBox";
-import MySizeFitBox from "./MySizeFitBox";
-import MySizeMeasurementsInput from "./MySizeMeasurementsInput";
-import MySizeDescriptionInput from "./MySizeDescriptionInput";
-
-import useProductFormStore from "../../hooks/useProductFormStore";
-import useCreateUserProduct from "../../hooks/useCreateUserProduct";
-
-import Button from "../ui/Button";
-import useModal from "../../hooks/useModal";
-import { AlertModal } from "../ui/modal/ModalComponents";
-import { InitialData, ProductInputForm, User } from "../../types";
+import useCreateUserProduct from '../../hooks/useCreateUserProduct';
+import useModal from '../../hooks/useModal';
+import useProductFormStore from '../../hooks/useProductFormStore';
+import { InitialData, ProductInputForm, User } from '../../types';
+import Button from '../ui/Button';
+import { AlertModal } from '../ui/modal/ModalComponents';
+import MySizeBrandInput from './MySizeBrandInput';
+import MySizeCategoryBox from './MySizeCategoryBox';
+import MySizeDescriptionInput from './MySizeDescriptionInput';
+import MySizeFitBox from './MySizeFitBox';
+import MySizeGenderBox from './MySizeGenderBox';
+import MySizeMeasurementsInput from './MySizeMeasurementsInput';
+import MySizeNameInput from './MySizeNameInput';
+import MySizeSizeBox from './MySizeSizeBox';
 
 const Container = styled.div`
   padding: 20px ${(props) => props.theme.sizes.contentPadding} 0;
@@ -70,22 +68,15 @@ export default function MySizeNewForm({
   user,
   onComplete,
 }: MySizeNewFormProps) {
-  const [
-    {
-      product: { gender },
-      errorMessage,
-      valid,
-    },
-    store,
-  ] = useProductFormStore();
+  const [{ errorMessage }, store] = useProductFormStore();
 
   const { modalRef, openModal, closeModal } = useModal();
 
   const methods = useForm({
-    mode: "onChange",
+    mode: 'onChange',
     defaultValues: {
-      brand: "",
-      name: "",
+      brand: '',
+      name: '',
       category: initialData.categories[0],
       subCategory: initialData.categories[0].subCategories[0],
       gender: user.gender,
@@ -95,10 +86,10 @@ export default function MySizeNewForm({
         (measurement) => ({
           _id: measurement._id,
           name: measurement.name,
-          value: "",
-        })
+          value: '',
+        }),
       ),
-      description: "",
+      description: '',
     },
   });
 

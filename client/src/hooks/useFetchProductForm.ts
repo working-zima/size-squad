@@ -2,8 +2,11 @@ import { useEffect } from 'react';
 
 import useProductFormStore from './useProductFormStore';
 
-export default function useFetchProductForm({ productId }
-  : { productId: string }) {
+export default function useFetchProductForm({
+  productId,
+}: {
+  productId: string;
+}) {
   const [{ product, state }, store] = useProductFormStore();
 
   useEffect(() => {

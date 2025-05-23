@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-
 import styled, { css } from 'styled-components';
 
 type TextBoxWrapperProps = {
@@ -16,61 +15,56 @@ const TextBoxWrapper = styled.div<TextBoxWrapperProps>`
   height: auto;
   align-items: center;
   width: 100%;
-  border: 1px solid ${props => props.theme.colors.borderColor};
+  border: 1px solid ${(props) => props.theme.colors.borderColor};
   border-radius: 6px;
-  margin-top: .8rem;
-  border-color: ${props => props.theme.colors.borderColor};
+  margin-top: 0.8rem;
+  border-color: ${(props) => props.theme.colors.borderColor};
 
   // 입력 값이 중복되지 않았으며, 유효성 검사를 통과한 상태에서 focus될 경우
   ${(props) =>
-    props.useBorderColor
-    && props.isFocused
-    && props.isValid
-    && !props.isDuplicated
-    && css`
-        border-color: green;
-      `
-  }
+    props.useBorderColor &&
+    props.isFocused &&
+    props.isValid &&
+    !props.isDuplicated &&
+    css`
+      border-color: green;
+    `}
 
   // 한번 focus된 적이 있고, 입력 값이 중복되었거나 유효성 검사를 통과하지 못한 상태일 경우
   ${(props) =>
-    props.useBorderColor
-    && props.isTouched
-    && (!props.isValid || props.isDuplicated)
-    && css`
-        border-color: red;
-      `
-  }
+    props.useBorderColor &&
+    props.isTouched &&
+    (!props.isValid || props.isDuplicated) &&
+    css`
+      border-color: red;
+    `}
 
   // useBorderColor가 true일 때, isTouched가 false일 때 focus될 경우
   ${(props) =>
-    props.useBorderColor
-    && !props.isTouched
-    && props.isFocused
-    && css`
-        border-color: ${props => props.theme.colors.primaryBlack};
-      `
-  }
+    props.useBorderColor &&
+    !props.isTouched &&
+    props.isFocused &&
+    css`
+      border-color: ${(props) => props.theme.colors.primaryBlack};
+    `}
 
   // 입력 값이 중복되지 않았으며, 유효성 검사를 통과한 상태에서 focus되지 않은 경우
   ${(props) =>
-    !props.isFocused
-    && props.isValid
-    && !props.isDuplicated
-    && css`
-        border-color: ${props => props.theme.colors.borderColor};
-      `
-  }
+    !props.isFocused &&
+    props.isValid &&
+    !props.isDuplicated &&
+    css`
+      border-color: ${(props) => props.theme.colors.borderColor};
+    `}
 
   // 색이 있는 테두리를 사용하지 않을 때 focus된 경우
   ${(props) =>
-    !props.useBorderColor
-    && props.isFocused
-    && css`
-        border-color: ${props => props.theme.colors.primaryBlack};
-      `
-  }
-`
+    !props.useBorderColor &&
+    props.isFocused &&
+    css`
+      border-color: ${(props) => props.theme.colors.primaryBlack};
+    `}
+`;
 
 type TextBoxProps = {
   children: ReactNode;
@@ -79,7 +73,7 @@ type TextBoxProps = {
   isValid?: boolean;
   isDuplicated?: boolean;
   useBorderColor?: boolean;
-}
+};
 
 export default function TextBox({
   children,
@@ -89,7 +83,6 @@ export default function TextBox({
   isDuplicated = false,
   useBorderColor = false,
 }: TextBoxProps) {
-
   return (
     <TextBoxWrapper
       isFocused={isFocused}

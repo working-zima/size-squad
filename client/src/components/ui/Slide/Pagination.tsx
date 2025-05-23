@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -9,7 +8,7 @@ const Container = styled.div`
   width: 100%;
   z-index: 100;
   padding-bottom: 100px;
-  background-color: ${(props) => (props.theme.colors.primaryWhite)};
+  background-color: ${(props) => props.theme.colors.primaryWhite};
 `;
 
 const PageList = styled.ul`
@@ -29,7 +28,7 @@ const PageItem = styled.li<{ isCurrent: boolean }>`
     border: 0;
     padding: 25px 10px 10px;
     background: none;
-    color: ${props => props.theme.colors.secondaryTextColor};
+    color: ${(props) => props.theme.colors.secondaryTextColor};
     text-align: center;
     cursor: pointer;
 
@@ -39,12 +38,13 @@ const PageItem = styled.li<{ isCurrent: boolean }>`
       display: block;
       width: 7px;
       height: 7px;
-      border: 1px solid ${props => props.theme.colors.secondaryTextColor};
+      border: 1px solid ${(props) => props.theme.colors.secondaryTextColor};
       border-radius: 50%;
       top: 10px;
       left: 50%;
       transform: translateX(-50%);
-      background-color: ${({ isCurrent, theme }) => (isCurrent ? theme.colors.secondaryTextColor : 'transparent')};
+      background-color: ${({ isCurrent, theme }) =>
+        isCurrent ? theme.colors.secondaryTextColor : 'transparent'};
     }
   }
 
@@ -65,13 +65,15 @@ const Pagination = ({
   handleMove: (index: number) => void;
 }) => {
   const indexes = useMemo(
-    () => Array.from({ length: totalPages }, (_, i) => i), [totalPages]
+    () => Array.from({ length: totalPages }, (_, i) => i),
+    [totalPages],
   );
 
   const viewCount = Math.min(visibleCount || totalPages, totalPages);
   const halfCount = Math.floor(viewCount / 2);
   const visibleMin = Math.min(
-    Math.max(0, currentIndex - halfCount), totalPages - viewCount
+    Math.max(0, currentIndex - halfCount),
+    totalPages - viewCount,
   );
 
   const visiblePages = indexes.slice(visibleMin, visibleMin + viewCount);
@@ -80,10 +82,7 @@ const Pagination = ({
     <Container>
       <PageList>
         {visiblePages.map((pageIndex) => (
-          <PageItem
-            key={pageIndex}
-            isCurrent={currentIndex === pageIndex}
-          >
+          <PageItem key={pageIndex} isCurrent={currentIndex === pageIndex}>
             <button onClick={() => handleMove(pageIndex)} />
           </PageItem>
         ))}

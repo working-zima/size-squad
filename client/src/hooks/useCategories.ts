@@ -1,16 +1,17 @@
-import { useQuery } from "@tanstack/react-query";
-import { productAttributeService } from "../services/ProductAttributeService";
-import { Summary } from "../types";
+import { useQuery } from '@tanstack/react-query';
+
+import { productAttributeService } from '../services/ProductAttributeService';
+import { Summary } from '../types';
 
 export default function useCategories() {
   const { data, error, isLoading, isError } = useQuery({
-    queryKey: ["categories"],
+    queryKey: ['categories'],
     queryFn: () => productAttributeService.fetchCategories(),
   });
 
   const categories = data || [];
   const allSubCategories: Summary[] = categories.flatMap(
-    (category) => category.subCategories
+    (category) => category.subCategories,
   );
 
   return {

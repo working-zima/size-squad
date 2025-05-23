@@ -1,5 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
-import { userService } from "../services/UserService";
+import { useQuery } from '@tanstack/react-query';
+
+import { userService } from '../services/UserService';
 
 type useFetchUsersProps = {
   id: string | undefined;
@@ -7,7 +8,7 @@ type useFetchUsersProps = {
 
 export default function useUser({ id }: useFetchUsersProps) {
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["user", id],
+    queryKey: ['user', id],
     queryFn: () =>
       userService.fetchUser({
         userId: id!,

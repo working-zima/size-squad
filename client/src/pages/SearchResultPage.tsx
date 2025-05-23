@@ -1,28 +1,20 @@
-import { useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import styled from 'styled-components';
 
-import styled from "styled-components";
-
-import NoListPage from "./NoListPage";
-import ErrorPage from "./ErrorPage";
-import AccessDeniedPage from "./AccessDeniedPage";
-
-import SearchInput from "../components/searchInput/SearchInput";
-import Product from "../components/mySize/Product";
-import BorderlessComboBox from "../components/ui/selectbox/BorderlessComboBox";
-import LoadingSpinner from "../components/ui/LoadingSpinner";
-
-import { SortOption } from "../types";
-
-import usePortal from "../hooks/usePortal";
-import useProductsStore from "../hooks/useProductsStore";
-import useFetchProducts from "../hooks/useFetchProducts";
-
-import { SORT_OPTIONS } from "../constants/constants";
-
-import { accessTokenUtil } from "../auth/accessTokenUtil";
-import useAuthStore from "../hooks/useAuthStore";
-import { useProducts } from "../hooks/useProducts";
+import { accessTokenUtil } from '../auth/accessTokenUtil';
+import Product from '../components/mySize/Product';
+import SearchInput from '../components/searchInput/SearchInput';
+import LoadingSpinner from '../components/ui/LoadingSpinner';
+import BorderlessComboBox from '../components/ui/selectbox/BorderlessComboBox';
+import { SORT_OPTIONS } from '../constants/constants';
+import useAuthStore from '../hooks/useAuthStore';
+import usePortal from '../hooks/usePortal';
+import { useProducts } from '../hooks/useProducts';
+import { SortOption } from '../types';
+import AccessDeniedPage from './AccessDeniedPage';
+import ErrorPage from './ErrorPage';
+import NoListPage from './NoListPage';
 
 const Container = styled.div`
   height: 100%;
@@ -44,12 +36,11 @@ const Products = styled.div`
 `;
 
 export default function SearchResultPage() {
-  let [params] = useSearchParams();
+  const [params] = useSearchParams();
 
-  const [, store] = useProductsStore();
   const navigate = useNavigate();
-  const query = params.get("query") || "";
-  const sortCode = params.get("sortCode") ?? undefined;
+  const query = params.get('query') || '';
+  const sortCode = params.get('sortCode') ?? undefined;
 
   const {
     opened: headerOpened,
@@ -76,6 +67,7 @@ export default function SearchResultPage() {
   useEffect(() => {
     hideBody();
     openHeader();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
 
   const handleNavigate = (sortOption: SortOption) => {
@@ -85,7 +77,7 @@ export default function SearchResultPage() {
 
   if (!accessTokenUtil.getAccessToken()) return <AccessDeniedPage />;
   if (isError) {
-    return <ErrorPage errorMessage={error?.message ?? "에러 발생"} />;
+    return <ErrorPage errorMessage={error?.message ?? '에러 발생'} />;
   }
 
   return (
@@ -102,8 +94,8 @@ export default function SearchResultPage() {
         <BorderlessComboBox
           selectedItem={sortOption}
           items={Object.values(SORT_OPTIONS)}
-          itemToId={(item) => item?._id || ""}
-          itemToText={(item) => item?.name || ""}
+          itemToId={(item) => item?._id || ''}
+          itemToText={(item) => item?.name || ''}
           onChange={(value) => value && handleNavigate(value)}
         />
       </SortWrapper>

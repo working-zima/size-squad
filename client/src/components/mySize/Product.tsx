@@ -1,16 +1,13 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
-import styled from "styled-components";
-
-import SizeCard from "./SizeCard";
-import InfoCard from "./InfoCard";
-import EditDeleteButtons from "./EditDeleteButtons";
-
-import { ProductResponse, User } from "../../types";
-
-import useViewModeStore from "../../hooks/useViewModeStore";
-import useDeleteUserProduct from "../../hooks/useDeleteUserProduct";
+import useDeleteUserProduct from '../../hooks/useDeleteUserProduct';
+import useViewModeStore from '../../hooks/useViewModeStore';
+import { ProductResponse, User } from '../../types';
+import EditDeleteButtons from './EditDeleteButtons';
+import InfoCard from './InfoCard';
+import SizeCard from './SizeCard';
 
 const Container = styled.div`
   padding: 1rem 0.2rem;
@@ -80,6 +77,7 @@ export default function Product({ product, user }: ProductProps) {
       deleteUserProductMutation.mutate(product._id);
       setConfirmed(null);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [confirmed]);
 
   return (

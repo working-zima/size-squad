@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import styled from 'styled-components'
+import styled from 'styled-components';
+
 import Button from '../components/ui/Button';
 
 const Container = styled.div`
@@ -17,9 +18,10 @@ const Container = styled.div`
     font-size: 1.6rem;
     font-weight: bold;
     color: white;
-    background-color: ${props => props.theme.colors.primaryBlack};
+    background-color: ${(props) => props.theme.colors.primaryBlack};
     border-radius: 6px;
-  }`
+  }
+`;
 
 const MessageBox = styled.div`
   text-align: center;
@@ -39,21 +41,16 @@ const MessageBox = styled.div`
   }
 `;
 
-export default function ErrorPage({
-  errorMessage
-}: { errorMessage?: string }) {
-
+export default function ErrorPage({ errorMessage }: { errorMessage?: string }) {
   return (
     <Container>
       <MessageBox>
         <h2>{errorMessage}</h2>
         <p>새로고침 하거나 잠시 후에 다시 시도해 주세요.</p>
       </MessageBox>
-      <Link to='/'>
-        <Button>
-          홈으로
-        </Button>
+      <Link to="/">
+        <Button>홈으로</Button>
       </Link>
     </Container>
-  )
+  );
 }

@@ -1,5 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
-import { productAttributeService } from "../services/ProductAttributeService";
+import { useQuery } from '@tanstack/react-query';
+
+import { productAttributeService } from '../services/ProductAttributeService';
 
 export default function useGenders() {
   const {
@@ -8,7 +9,7 @@ export default function useGenders() {
     isError,
     error,
   } = useQuery({
-    queryKey: ["genders"],
+    queryKey: ['genders'],
     queryFn: () => productAttributeService.fetchGenders(),
   });
 

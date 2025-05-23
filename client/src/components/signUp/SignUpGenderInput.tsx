@@ -1,21 +1,19 @@
-import ComboBox from "../ui/selectbox/ComboBox";
-
-import { Summary } from "../../types";
-
-import { GENDER } from "../../constants/apiLocalizationMap";
+import { GENDER } from '../../constants/apiLocalizationMap';
+import { Summary } from '../../types';
+import ComboBox from '../ui/selectbox/ComboBox';
 
 type SignUpGenderInputProps = {
-  label?: string
-  genders: Summary[]
-  gender: Summary
+  label?: string;
+  genders: Summary[];
+  gender: Summary;
   changeGender: (value: Summary) => void;
-}
+};
 
 export default function SignUpGenderInput({
-  label = "",
+  label = '',
   genders,
   gender,
-  changeGender
+  changeGender,
 }: SignUpGenderInputProps) {
   return (
     <ComboBox
@@ -26,5 +24,5 @@ export default function SignUpGenderInput({
       itemToText={(item) => GENDER[item?.name]}
       onChange={(value) => value && changeGender(value)}
     />
-  )
+  );
 }

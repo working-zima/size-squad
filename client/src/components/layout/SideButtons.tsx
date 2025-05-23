@@ -1,10 +1,8 @@
 import styled from 'styled-components';
 
-import Button from '../ui/Button';
-
-import useViewModeStore from '../../hooks/useViewModeStore';
-
 import { accessTokenUtil } from '../../auth/accessTokenUtil';
+import useViewModeStore from '../../hooks/useViewModeStore';
+import Button from '../ui/Button';
 
 const Container = styled.aside`
   display: flex;
@@ -26,7 +24,8 @@ const SizeInfoSwitch = styled(Button)`
   border-radius: 100%;
   color: ${(props) => props.theme.colors.primaryWhite};
   line-height: 20px;
-  background-color: ${(props) => props.theme.colors.primaryBlack}; opacity : 0.6;
+  background-color: ${(props) => props.theme.colors.primaryBlack};
+  opacity: 0.6;
   user-select: none;
 `;
 
@@ -39,29 +38,25 @@ const ScrollToTopButton = styled(SizeInfoSwitch)`
     height: 14px;
     border-width: 1.5px;
     border-style: solid;
-    border-color:
-      transparent
-      ${props => props.theme.colors.primaryWhite}
-      ${props => props.theme.colors.primaryWhite}
-      transparent;
+    border-color: transparent ${(props) => props.theme.colors.primaryWhite}
+      ${(props) => props.theme.colors.primaryWhite} transparent;
     transform: rotate(225deg);
     vertical-align: bottom;
   }
-`
+`;
 
 export default function SideButtons() {
-  const accessToken = accessTokenUtil.getAccessToken()
+  const accessToken = accessTokenUtil.getAccessToken();
   const [{ isDescriptionView }, store] = useViewModeStore();
 
-  if (!accessToken) return null
-
+  if (!accessToken) return null;
 
   const scrollToTop = () => {
     window.scroll({
       top: 0,
-      behavior: 'smooth'
-    })
-  }
+      behavior: 'smooth',
+    });
+  };
 
   return (
     <Container>

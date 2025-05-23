@@ -1,44 +1,42 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
-import styled from "styled-components";
-
-import SignUpDescriptionInput from "../signUp/SignUpDescriptionInput";
-
-import { ConfirmTrigger } from "../ui/modal/ModalTrigger";
-import { AlertModal } from "../ui/modal/ModalComponents";
-
-import useSignupFormStore from "../../hooks/useSignupFormStore";
-import useModal from "../../hooks/useModal";
-import useAuthStore from "../../hooks/useAuthStore";
+import useAuthStore from '../../hooks/useAuthStore';
+import useModal from '../../hooks/useModal';
+import useSignupFormStore from '../../hooks/useSignupFormStore';
+import SignUpDescriptionInput from '../signUp/SignUpDescriptionInput';
+import { AlertModal } from '../ui/modal/ModalComponents';
+import { ConfirmTrigger } from '../ui/modal/ModalTrigger';
 
 const ButtonWrapper = styled.div`
   & > button {
     width: 100%;
     height: 48px;
     margin-top: 4rem;
-    border: 1px solid ${props => props.theme.colors.primaryBlack};
-    border-radius: ${props => props.theme.sizes.borderRadius};
-    background-color: ${props => props.theme.colors.primaryBlack};
-    color: ${props => props.theme.colors.primaryWhite};
+    border: 1px solid ${(props) => props.theme.colors.primaryBlack};
+    border-radius: ${(props) => props.theme.sizes.borderRadius};
+    background-color: ${(props) => props.theme.colors.primaryBlack};
+    color: ${(props) => props.theme.colors.primaryWhite};
     font-size: 1.6rem;
     font-weight: 600;
   }
 
   & > button:disabled {
-    background-color: ${props => props.theme.colors.unSelectedText};
+    background-color: ${(props) => props.theme.colors.unSelectedText};
     opacity: 0.6;
     cursor: not-allowed;
   }
-`
+`;
 
 export default function EditDescription() {
   const [confirmed, setConfirmed] = useState<boolean | null>(false);
   const navigate = useNavigate();
 
-  const [{ errorMessage, user, DescriptionValid }, store] = useSignupFormStore()
+  const [{ errorMessage, user, DescriptionValid }, store] =
+    useSignupFormStore();
   const [, authStore] = useAuthStore();
-  const { modalRef, openModal, closeModal } = useModal()
+  const { modalRef, openModal, closeModal } = useModal();
 
   const handleSubmitEditDescription = async () => {
     try {
@@ -57,6 +55,7 @@ export default function EditDescription() {
     if (confirmed) {
       handleSubmitEditDescription();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [confirmed]);
 
   return (
@@ -77,13 +76,10 @@ export default function EditDescription() {
           <p>체형을 변경하시겠습니까?</p>
         </ConfirmTrigger>
       </ButtonWrapper>
-      <AlertModal
-        modalRef={modalRef}
-        hide={closeModal}
-      >
+      <AlertModal modalRef={modalRef} hide={closeModal}>
         <p>체형 변경 실패</p>
         <p>{errorMessage}</p>
       </AlertModal>
     </>
-  )
+  );
 }

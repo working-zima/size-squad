@@ -10,4 +10,4 @@ export const ERROR_MESSAGES: Record<string, string> = {
   CONFIRM_INCORRECT: '비밀번호와 일치하지 않습니다.',
   UNEXPECTED: '예기치 못한 오류가 발생했습니다.',
   INVALID_LOGIN: '아이디 또는 비밀번호가 맞지 않습니다.',
-}
+};

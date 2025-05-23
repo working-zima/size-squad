@@ -1,12 +1,14 @@
-import { Link, useLocation } from 'react-router-dom';
-
-import styled from 'styled-components';
 import {
-  RiHome5Line, RiEditLine, RiLoginBoxLine, RiListView, RiUserLine
-} from "react-icons/ri";
+  RiEditLine,
+  RiHome5Line,
+  RiListView,
+  RiLoginBoxLine,
+  RiUserLine,
+} from 'react-icons/ri';
+import { Link, useLocation } from 'react-router-dom';
+import styled from 'styled-components';
 
 import { accessTokenUtil } from '../../auth/accessTokenUtil';
-import useAuthStore from '../../hooks/useAuthStore';
 import { User } from '../../types';
 
 const Container = styled.div.attrs({ className: 'LayoutMenuBar' })`
@@ -37,7 +39,7 @@ const Menu = styled.nav`
   right: 0px;
   bottom: 0px;
   height: 50px;
-  background-color: ${props => props.theme.colors.primaryWhite};
+  background-color: ${(props) => props.theme.colors.primaryWhite};
 `;
 
 const ContentWrapper = styled.div`
@@ -50,7 +52,7 @@ const ContentWrapper = styled.div`
   -webkit-tap-highlight-color: transparent;
 `;
 
-const MenuLink = styled(Link) <{ $isActive: boolean }>`
+const MenuLink = styled(Link)<{ $isActive: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -58,27 +60,27 @@ const MenuLink = styled(Link) <{ $isActive: boolean }>`
   position: relative;
   flex: 1 1 0%;
   height: 100%;
-  color: ${props => props.$isActive
-    ? props.theme.colors.primaryBlack
-    : props.theme.colors.unSelectedText
-  };
+  color: ${(props) =>
+    props.$isActive
+      ? props.theme.colors.primaryBlack
+      : props.theme.colors.unSelectedText};
 
   span {
     line-height: 1.5rem;
     font-size: 1.1rem;
     user-select: none;
   }
-`
+`;
 
 type LayoutMenuBarProps = {
   user: User;
-}
+};
 
 export default function LayoutMenuBar({ user }: LayoutMenuBarProps) {
   const location = useLocation();
-  const accessToken = accessTokenUtil.getAccessToken()
+  const accessToken = accessTokenUtil.getAccessToken();
 
-  const isActive = (path: string) => (location.pathname === path);
+  const isActive = (path: string) => location.pathname === path;
 
   return (
     <Container>
@@ -86,43 +88,44 @@ export default function LayoutMenuBar({ user }: LayoutMenuBarProps) {
         <h2>Navigation Menu</h2>
         <Menu>
           <ContentWrapper>
-            <MenuLink
-              to="/"
-              $isActive={isActive('/')}
-            >
-              <div><RiHome5Line size="24" /></div>
+            <MenuLink to="/" $isActive={isActive('/')}>
+              <div>
+                <RiHome5Line size="24" />
+              </div>
               <span>홈</span>
             </MenuLink>
             {!!accessToken && (
               <>
-                <MenuLink
-                  to="/mysize"
-                  $isActive={isActive('/mysize')}
-                >
-                  <div><RiListView size="24" /></div>
+                <MenuLink to="/mysize" $isActive={isActive('/mysize')}>
+                  <div>
+                    <RiListView size="24" />
+                  </div>
                   <span>목록</span>
                 </MenuLink>
-                <MenuLink
-                  to="/mysize/new"
-                  $isActive={isActive('/mysize/new')}
-                >
-                  <div><RiEditLine size="24" /></div>
+                <MenuLink to="/mysize/new" $isActive={isActive('/mysize/new')}>
+                  <div>
+                    <RiEditLine size="24" />
+                  </div>
                   <span>작성</span>
                 </MenuLink>
               </>
             )}
             <MenuLink
-              to={!!accessToken ? `/mypage/${user._id}` : "/login"}
+              to={accessToken ? `/mypage/${user._id}` : '/login'}
               $isActive={isActive('/mypage') || isActive('/login')}
             >
-              {!!accessToken ? (
+              {accessToken ? (
                 <>
-                  <div><RiUserLine size="24" /></div>
+                  <div>
+                    <RiUserLine size="24" />
+                  </div>
                   <span>마이</span>
                 </>
               ) : (
                 <>
-                  <div><RiLoginBoxLine size="24" /></div>
+                  <div>
+                    <RiLoginBoxLine size="24" />
+                  </div>
                   <span>로그인</span>
                 </>
               )}

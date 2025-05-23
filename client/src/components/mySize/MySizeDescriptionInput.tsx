@@ -1,6 +1,6 @@
-import { Controller, useFormContext } from "react-hook-form";
+import { Controller, useFormContext } from 'react-hook-form';
 
-import { TextareaBox } from "../ui/textbox/TextBoxComponents";
+import { TextareaBox } from '../ui/textbox/TextBoxComponents';
 
 export default function MySizeNewDescription() {
   const { control } = useFormContext();
@@ -12,7 +12,7 @@ export default function MySizeNewDescription() {
       rules={{
         maxLength: {
           value: 100,
-          message: "100자 이하로 입력해주세요.",
+          message: '100자 이하로 입력해주세요.',
         },
       }}
       render={({ field }) => (

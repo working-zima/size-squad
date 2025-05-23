@@ -1,6 +1,7 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
-import { DEFAULT_PER } from "../constants/constants";
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+
+import { DEFAULT_PER } from '../constants/constants';
 
 type ProductParamsState = {
   keyword?: string;
@@ -25,12 +26,12 @@ type ProductParamsStore = {
 export const ProductParamsStore = create(
   persist<ProductParamsStore>(
     (set) => ({
-      keyword: "",
-      categoryId: "",
-      subCategoryId: "",
-      sortCode: "RECENT",
+      keyword: '',
+      categoryId: '',
+      subCategoryId: '',
+      sortCode: 'RECENT',
       per: DEFAULT_PER,
-      userId: "",
+      userId: '',
 
       setParams: (params) =>
         set((state) => ({
@@ -41,16 +42,16 @@ export const ProductParamsStore = create(
       resetParams: () =>
         set((state) => ({
           ...state,
-          keyword: "",
-          categoryId: "",
-          subCategoryId: "",
-          sortCode: "RECENT",
+          keyword: '',
+          categoryId: '',
+          subCategoryId: '',
+          sortCode: 'RECENT',
           per: DEFAULT_PER,
-          userId: "",
+          userId: '',
         })),
     }),
     {
-      name: "product-params",
-    }
-  )
+      name: 'product-params',
+    },
+  ),
 );

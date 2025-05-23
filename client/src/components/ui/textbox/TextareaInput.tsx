@@ -1,5 +1,4 @@
 import { Dispatch, RefObject, SetStateAction, useEffect, useRef } from 'react';
-
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -7,8 +6,8 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   background-color: white;
-  border-radius:6px;
-`
+  border-radius: 6px;
+`;
 
 const Textarea = styled.textarea`
   line-height: 1.67;
@@ -45,7 +44,7 @@ type TextareaInputProps = {
   setIsTouched: Dispatch<SetStateAction<boolean>>;
   setIsFocused: Dispatch<SetStateAction<boolean>>;
   onChange?: (value: string) => void;
-}
+};
 
 export default function TextareaInput({
   idRef,
@@ -75,8 +74,10 @@ export default function TextareaInput({
       cloneElem.value = val;
       elem.rows = Math.min(
         Math.max(
-          Math.ceil(cloneElem.scrollHeight / cloneElem.clientHeight), lines
-        ), 15
+          Math.ceil(cloneElem.scrollHeight / cloneElem.clientHeight),
+          lines,
+        ),
+        15,
       );
 
       if (onChange) onChange(val);
@@ -93,15 +94,12 @@ export default function TextareaInput({
     return () => {
       if (elem) elem.removeEventListener('input', handleInput);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <Container>
-      <CloneTextarea
-        ref={cloneRef}
-        rows={1}
-        readOnly
-      />
+      <CloneTextarea ref={cloneRef} rows={1} readOnly />
       <Textarea
         id={idRef?.current || ''}
         ref={textareaRef}
@@ -114,4 +112,4 @@ export default function TextareaInput({
       />
     </Container>
   );
-};
+}

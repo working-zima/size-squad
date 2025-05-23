@@ -1,10 +1,9 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
-
-import styled, { keyframes } from 'styled-components'
+import { useCallback, useEffect, useRef, useState } from 'react';
+import styled, { keyframes } from 'styled-components';
 
 import Pagination from './Pagination';
 
-type Direction = 'left' | 'right'
+type Direction = 'left' | 'right';
 
 const leftCurrent = keyframes`
   0% {
@@ -114,58 +113,60 @@ type CarouselProps<T> = {
   items: T[];
   initialIndex?: number;
   renderItem: (data: T) => JSX.Element;
-}
+};
 
 export const Carousel = <T,>({
   items,
   initialIndex = 0,
-  renderItem
-}: CarouselProps<T>
-) => {
-  const [currentIndex, setCurrentIndex] = useState(initialIndex)
-  const itemsRef = useRef<(HTMLLIElement | null)[]>([])
+  renderItem,
+}: CarouselProps<T>) => {
+  const [currentIndex, setCurrentIndex] = useState(initialIndex);
+  const itemsRef = useRef<(HTMLLIElement | null)[]>([]);
 
-  const moveTo = useCallback((
-    nextIndex: number, direction?: 'left' | 'right'
-  ) => {
-    const $current = itemsRef.current[currentIndex] as HTMLLIElement
-    const $next = itemsRef.current[nextIndex] as HTMLLIElement
-    // 같은 Pagination 버튼을 클릭할 때는 animation이 없도록(nextIndex가 버튼 누른 인덱스)
-    if (nextIndex === currentIndex) return
-    // Pagination은 direction이 없음
-    const dir = direction || (nextIndex > currentIndex ? 'right' : 'left')
-    // 애니메이션이 끝나면 클래스 바꿔주기
-    const handleAnimationEnd = () => {
-      $current.className = 'item'
-      $next.className = 'item current'
-      $current.removeEventListener('animationend', handleAnimationEnd)
-      setCurrentIndex(nextIndex)
-    }
-    // animate 효과가 완료된 후 이벤트 발생
-    $current.addEventListener('animationend', handleAnimationEnd)
+  const moveTo = useCallback(
+    (nextIndex: number, direction?: 'left' | 'right') => {
+      const $current = itemsRef.current[currentIndex] as HTMLLIElement;
+      const $next = itemsRef.current[nextIndex] as HTMLLIElement;
+      // 같은 Pagination 버튼을 클릭할 때는 animation이 없도록(nextIndex가 버튼 누른 인덱스)
+      if (nextIndex === currentIndex) return;
+      // Pagination은 direction이 없음
+      const dir = direction || (nextIndex > currentIndex ? 'right' : 'left');
+      // 애니메이션이 끝나면 클래스 바꿔주기
+      const handleAnimationEnd = () => {
+        $current.className = 'item';
+        $next.className = 'item current';
+        $current.removeEventListener('animationend', handleAnimationEnd);
+        setCurrentIndex(nextIndex);
+      };
+      // animate 효과가 완료된 후 이벤트 발생
+      $current.addEventListener('animationend', handleAnimationEnd);
 
-    $current.classList.add(`${dir}_current`)
-    $next.classList.add(`${dir}_next`)
-  }, [currentIndex])
+      $current.classList.add(`${dir}_current`);
+      $next.classList.add(`${dir}_next`);
+    },
+    [currentIndex],
+  );
 
   // 방향 버튼 클릭시 호출
-  const move = useCallback((direction: Direction) => {
-    const nextIndex = ((
-      direction === 'right'
-        ? currentIndex + 1
-        : currentIndex - 1
-    ) + items.length) % items.length
-    moveTo(nextIndex, direction)
-  },
+  const move = useCallback(
+    (direction: Direction) => {
+      const nextIndex =
+        ((direction === 'right' ? currentIndex + 1 : currentIndex - 1) +
+          items.length) %
+        items.length;
+      moveTo(nextIndex, direction);
+    },
     [items, currentIndex, moveTo],
-  )
+  );
 
   useEffect(() => {
-    setCurrentIndex(initialIndex)
-  }, [items, initialIndex])
+    setCurrentIndex(initialIndex);
+  }, [items, initialIndex]);
 
   useEffect(() => {
-    const timer = setInterval(() => { move('right') }, 5000);
+    const timer = setInterval(() => {
+      move('right');
+    }, 5000);
     return () => clearInterval(timer);
   }, [move]);
 
@@ -176,7 +177,9 @@ export const Carousel = <T,>({
           <li
             key={index}
             className={`item ${index === currentIndex ? 'current' : ''}`}
-            ref={li => { itemsRef.current[index] = li }}
+            ref={(li) => {
+              itemsRef.current[index] = li;
+            }}
           >
             {renderItem(item)}
           </li>
@@ -189,5 +192,5 @@ export const Carousel = <T,>({
         handleMove={moveTo}
       />
     </CarouselWrapper>
-  )
-}
+  );
+};

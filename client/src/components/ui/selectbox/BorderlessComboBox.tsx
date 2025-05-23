@@ -1,5 +1,4 @@
 import React, { useRef } from 'react';
-
 import styled from 'styled-components';
 
 const SelectWrapper = styled.div`
@@ -16,7 +15,7 @@ const SelectWrapper = styled.div`
     background-color: transparent;
     border: 0;
     line-height: 20px;
-    color: ${props => props.theme.colors.unSelectedText};
+    color: ${(props) => props.theme.colors.unSelectedText};
     font-size: 1.3rem;
     text-align: right;
     direction: rtl;
@@ -37,14 +36,11 @@ const SelectWrapper = styled.div`
     height: 9px;
     border-width: 1.2px;
     border-style: solid;
-    border-color:
-      transparent
-      ${props => props.theme.colors.unSelectedText}
-      ${props => props.theme.colors.unSelectedText}
-      transparent;
+    border-color: transparent ${(props) => props.theme.colors.unSelectedText}
+      ${(props) => props.theme.colors.unSelectedText} transparent;
     transform: rotate(45deg);
-  };
-`
+  }
+`;
 
 type ComboBoxProps<T> = {
   selectedItem: T;
@@ -52,7 +48,7 @@ type ComboBoxProps<T> = {
   itemToId: (item: T) => string;
   itemToText: (item: T) => string;
   onChange: (item: T | null) => void;
-}
+};
 
 /**
  * @param { object } props

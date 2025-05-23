@@ -1,15 +1,12 @@
 import { singleton } from 'tsyringe';
-import { Store, Action } from 'usestore-ts';
-
-import { ApiState, User } from '../types';
-import { nullUser } from '../nullObject';
-
-import { userService } from '../services/UserService';
-
-import { FETCH_STATE } from '../constants/constants';
-import { ERROR_MESSAGES } from '../constants/messages';
+import { Action, Store } from 'usestore-ts';
 
 import { accessTokenUtil } from '../auth/accessTokenUtil';
+import { FETCH_STATE } from '../constants/constants';
+import { ERROR_MESSAGES } from '../constants/messages';
+import { nullUser } from '../nullObject';
+import { userService } from '../services/UserService';
+import { ApiState, User } from '../types';
 
 @singleton()
 @Store()
@@ -40,8 +37,8 @@ class AuthStore {
       this.setUser(user);
       this.setDone();
     } catch (error) {
-      console.log(error)
-      accessTokenUtil.setAccessToken('')
+      console.log(error);
+      accessTokenUtil.setAccessToken('');
       const typedError = error as { status?: number; message: string };
       this.errorMessage = typedError.message || ERROR_MESSAGES.UNEXPECTED;
 
@@ -51,7 +48,7 @@ class AuthStore {
 
   @Action()
   private startLoading() {
-    this.reset()
+    this.reset();
     this.state = FETCH_STATE.LOADING;
   }
 

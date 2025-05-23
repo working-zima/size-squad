@@ -1,15 +1,13 @@
 import { useMatch } from 'react-router-dom';
-
 import styled from 'styled-components';
 
+import { PageConfig } from '../../types';
 import LeftButton from './LeftButton';
 import RightButton from './RightButton';
 
-import { PageConfig } from '../../types';
-
 type ContainerProps = {
   isHeaderless: boolean;
-}
+};
 
 const Container = styled.header<ContainerProps>`
   grid-area: header;
@@ -17,10 +15,8 @@ const Container = styled.header<ContainerProps>`
   flex-basis: 40px;
   justify-content: center;
   align-items: center;
-  background-color: ${(props) => props.isHeaderless
-    ? 'white'
-    : props.theme.colors.backgroundColor
-  };
+  background-color: ${(props) =>
+    props.isHeaderless ? 'white' : props.theme.colors.backgroundColor};
   user-select: none;
 
   h1 {
@@ -34,7 +30,7 @@ const Container = styled.header<ContainerProps>`
   }
 
   h2 {
-  font-size: 2.5rem;
+    font-size: 2.5rem;
 
     p {
       color: black;
@@ -62,9 +58,7 @@ const ContentWrapper = styled.div`
   padding: 0 1rem;
 `;
 
-export default function LayoutHeader({
-  page
-}: { page: PageConfig }) {
+export default function LayoutHeader({ page }: { page: PageConfig }) {
   const isSignupCompletePage = useMatch('/signup/complete');
   const isSearchPage = useMatch('/search');
 
@@ -75,11 +69,13 @@ export default function LayoutHeader({
       <h1>사이즈 스쿼드</h1>
       <ContentWrapper>
         <LeftButton page={page} />
-        {
-          page.PAGETITLE === 'Size Squad'
-            ? (<img src='/images/size-squad-logo.png' alt='Logo' />)
-            : (<h2><p>{page.PAGETITLE}</p></h2>)
-        }
+        {page.PAGETITLE === 'Size Squad' ? (
+          <img src="/images/size-squad-logo.png" alt="Logo" />
+        ) : (
+          <h2>
+            <p>{page.PAGETITLE}</p>
+          </h2>
+        )}
         <RightButton page={page} />
       </ContentWrapper>
     </Container>

@@ -1,9 +1,8 @@
 import { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
-import ApiInstance from './ApiInstance';
-
 import { accessTokenUtil } from '../auth/accessTokenUtil';
 import AuthService from '../auth/AuthService';
+import ApiInstance from './ApiInstance';
 
 class ApiService {
   private instance = ApiInstance.create();
@@ -17,16 +16,15 @@ class ApiService {
   }
 
   private initializeInterceptors() {
-    this.instance.interceptors.request.use(
-      this.onRequest, this.onErrorRequest
-    );
+    this.instance.interceptors.request.use(this.onRequest, this.onErrorRequest);
     this.instance.interceptors.response.use(
-      this.onResponse, this.onErrorResponse
+      this.onResponse,
+      this.onErrorResponse,
     );
   }
 
   private logOnDev = (message: string) => {
-    if (process.env.REACT_APP_NODE_ENV === "development") console.log(message);
+    if (process.env.REACT_APP_NODE_ENV === 'development') console.log(message);
   };
 
   private onError = (status: number | undefined, message: string) => {
@@ -42,7 +40,7 @@ class ApiService {
 
   private onErrorRequest = (error: AxiosError | Error) => {
     return Promise.reject(error);
-  }
+  };
 
   private onResponse = (response: AxiosResponse): AxiosResponse => {
     const { method, url } = response.config;
@@ -62,7 +60,7 @@ class ApiService {
         accessTokenUtil.setAccessToken(accessToken);
 
         // 보관된 실패 요청들에 새 accessToken 부여
-        this.failedQueue.forEach(callback => callback(accessToken));
+        this.failedQueue.forEach((callback) => callback(accessToken));
         this.failedQueue = [];
 
         config.headers.Authorization = `Bearer ${accessToken}`;
@@ -70,7 +68,7 @@ class ApiService {
         // 토큰 갱신 성공. API 재요청
         return this.instance(config);
       } catch (error) {
-        this.onError(401, "인증 실패입니다.");
+        this.onError(401, '인증 실패입니다.');
         return Promise.reject(error);
       } finally {
         this.isRefreshing = false;
@@ -80,11 +78,11 @@ class ApiService {
       return new Promise((resolve) => {
         this.failedQueue.push((token: string) => {
           config.headers.Authorization = `Bearer ${token}`;
-          resolve(this.instance(config));  // 새로 발급받은 토큰을 받으면 재요청
+          resolve(this.instance(config)); // 새로 발급받은 토큰을 받으면 재요청
         });
       });
     }
-  }
+  };
 
   private onErrorResponse = async (error: AxiosError | Error) => {
     if (error instanceof AxiosError) {
@@ -92,50 +90,50 @@ class ApiService {
       const { method, url } = config || {};
 
       if (!config) {
-        this.onError(0, "요청 설정을 찾을 수 없습니다.");
+        this.onError(0, '요청 설정을 찾을 수 없습니다.');
         return Promise.reject(error);
       }
 
       // 네트워크 오류 처리
       if (!response) {
         this.logOnDev(
-          `[API] ${method?.toUpperCase()} ${url} | Network Error: ${message}`
+          `[API] ${method?.toUpperCase()} ${url} | Network Error: ${message}`,
         );
-        this.onError(undefined, "네트워크 오류가 발생했습니다.");
+        this.onError(undefined, '네트워크 오류가 발생했습니다.');
         return Promise.reject(error);
       }
 
       const { status, statusText } = response;
 
       // 만료 토큰을 가져서 반환된 요청 처리
-      if (status === 401 && response.data.message === "TokenExpired") {
+      if (status === 401 && response.data.message === 'TokenExpired') {
         return await this.handleTokenRefresh(config);
       }
 
       this.logOnDev(
         `[API] ${method?.toUpperCase()} ${url}
         | Error ${status} ${statusText}
-        | ${message}`
+        | ${message}`,
       );
 
       switch (status) {
         case 400:
-          this.onError(status, "잘못된 요청입니다.");
+          this.onError(status, '잘못된 요청입니다.');
           break;
         case 401: {
-          this.onError(status, "인증 실패입니다.");
+          this.onError(status, '인증 실패입니다.');
           break;
         }
         case 403: {
-          this.onError(status, "권한이 없습니다.");
+          this.onError(status, '권한이 없습니다.');
           break;
         }
         case 404: {
-          this.onError(status, "찾을 수 없는 페이지입니다.");
+          this.onError(status, '찾을 수 없는 페이지입니다.');
           break;
         }
         case 500: {
-          this.onError(status, "서버 오류입니다.");
+          this.onError(status, '서버 오류입니다.');
           break;
         }
         default: {
@@ -153,4 +151,3 @@ class ApiService {
 }
 
 export default new ApiService().getInstance();
-

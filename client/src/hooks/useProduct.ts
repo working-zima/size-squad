@@ -1,6 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
-import { productService } from "../services/ProductService";
-import { queryKeys } from "../constants/queryKeys";
+import { useQuery } from '@tanstack/react-query';
+
+import { queryKeys } from '../constants/queryKeys';
+import { productService } from '../services/ProductService';
 
 export default function useProduct(productId: string) {
   const { data, isLoading, isError, error } = useQuery({

@@ -1,13 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import styled, { css } from 'styled-components';
 
-import Button from '../ui/Button';
-
-import { Category } from '../../types';
-
 import { CATEGORY } from '../../constants/apiLocalizationMap';
+import { Category } from '../../types';
+import Button from '../ui/Button';
 
 const Container = styled.div`
   display: flex;
@@ -26,7 +23,7 @@ const Container = styled.div`
   }
 `;
 
-const CategoryButton = styled(Button) <{ active: boolean }>`
+const CategoryButton = styled(Button)<{ active: boolean }>`
   display: flex;
   align-items: center;
   position: relative;
@@ -37,18 +34,20 @@ const CategoryButton = styled(Button) <{ active: boolean }>`
 
   p {
     font-size: 1.5rem;
-    color: ${props => props.theme.colors.unSelectedText};
+    color: ${(props) => props.theme.colors.unSelectedText};
     line-height: 2.3;
     user-select: none;
 
-    ${(props) => props.active && css`
-      font-weight: 500;
-      color: ${props => props.theme.colors.primaryBlack};
-  `}
+    ${(props) =>
+      props.active &&
+      css`
+        font-weight: 500;
+        color: ${(props) => props.theme.colors.primaryBlack};
+      `}
   }
 `;
 
-const ActiveBar = styled.div<{ left: number, width: number }>`
+const ActiveBar = styled.div<{ left: number; width: number }>`
   position: absolute;
   bottom: 0px;
   z-index: 2;
@@ -59,12 +58,10 @@ const ActiveBar = styled.div<{ left: number, width: number }>`
 `;
 
 type MainCategoryProps = {
-  categories: Category[]
-}
+  categories: Category[];
+};
 
-export default function MainCategoryBar({
-  categories,
-}: MainCategoryProps) {
+export default function MainCategoryBar({ categories }: MainCategoryProps) {
   const navigate = useNavigate();
 
   const [activeBtn, setActiveBtn] = useState('all');
@@ -81,6 +78,7 @@ export default function MainCategoryBar({
     } else {
       setActiveBtn('all');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search]);
 
   useEffect(() => {
@@ -111,7 +109,7 @@ export default function MainCategoryBar({
       >
         <p>전체</p>
       </CategoryButton>
-      {!!categories.length && (
+      {!!categories.length &&
         categories.map((category, idx) => (
           <CategoryButton
             key={category._id}
@@ -120,8 +118,8 @@ export default function MainCategoryBar({
             }}
             data-id={category._id}
             active={activeBtn === category._id}
-            onClick={
-              () => handleNavigate(
+            onClick={() =>
+              handleNavigate(
                 `/mysize?category1DepthCode=${category._id}`,
                 category._id,
               )
@@ -129,12 +127,8 @@ export default function MainCategoryBar({
           >
             <p>{CATEGORY[category.name]}</p>
           </CategoryButton>
-        ))
-      )}
-      <ActiveBar
-        left={activeBarStyle.left}
-        width={activeBarStyle.width}
-      />
+        ))}
+      <ActiveBar left={activeBarStyle.left} width={activeBarStyle.width} />
     </Container>
   );
 }

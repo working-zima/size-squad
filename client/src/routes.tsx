@@ -1,17 +1,16 @@
 import Layout from './components/layout/Layout';
-
+import ErrorPage from './pages/ErrorPage';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
-import SignupPage from './pages/SignupPage';
-import SignupCompletePage from './pages/SignupCompletePage';
-import MySizeListPage from './pages/MySizeListPage';
-import MySizeEditPage from './pages/MySizeEditPage';
 import MyPage from './pages/MyPage';
-import MySizeNewPage from './pages/MySizeNewPage';
 import MyProfileEditPage from './pages/MyProfileEditPage';
 import MyProfileInputPage from './pages/MyProfileInputPage';
-import ErrorPage from './pages/ErrorPage';
+import MySizeEditPage from './pages/MySizeEditPage';
+import MySizeListPage from './pages/MySizeListPage';
+import MySizeNewPage from './pages/MySizeNewPage';
 import SearchResultPage from './pages/SearchResultPage';
+import SignupCompletePage from './pages/SignupCompletePage';
+import SignupPage from './pages/SignupPage';
 
 const routes = [
   {

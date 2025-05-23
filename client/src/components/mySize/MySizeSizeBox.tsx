@@ -1,11 +1,9 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
+import { Controller, useFormContext } from 'react-hook-form';
 
-import { Controller, useFormContext } from "react-hook-form";
-
-import { nullSize } from "../../nullObject";
-import { Size } from "../../types";
-
-import ComboBox from "../ui/selectbox/ComboBox";
+import { nullSize } from '../../nullObject';
+import { Size } from '../../types';
+import ComboBox from '../ui/selectbox/ComboBox';
 
 type MySizeSizeBoxProps = {
   sizes: Size[];
@@ -13,8 +11,8 @@ type MySizeSizeBoxProps = {
 
 export default function MySizeSizeBox({ sizes }: MySizeSizeBoxProps) {
   const { control, watch, setValue } = useFormContext();
-  const gender = watch("gender");
-  const selectedSize = watch("size");
+  const gender = watch('gender');
+  const selectedSize = watch('size');
 
   let sizeList = sizes.filter((size) => {
     return size.gender._id === gender._id;
@@ -24,7 +22,7 @@ export default function MySizeSizeBox({ sizes }: MySizeSizeBoxProps) {
 
   useEffect(() => {
     if (!sizeList.some((s) => s._id === selectedSize?._id)) {
-      setValue("size", sizeList[0]);
+      setValue('size', sizeList[0]);
     }
   }, [gender, sizeList, selectedSize, setValue]);
 
@@ -37,8 +35,8 @@ export default function MySizeSizeBox({ sizes }: MySizeSizeBoxProps) {
           label="사이즈"
           selectedItem={field.value}
           items={sizeList}
-          itemToId={(item) => item?._id || ""}
-          itemToText={(item) => item?.name || ""}
+          itemToId={(item) => item?._id || ''}
+          itemToText={(item) => item?.name || ''}
           onChange={(value) => field.onChange(value)}
         />
       )}

@@ -1,11 +1,9 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 
-import { useFieldArray, useFormContext } from "react-hook-form";
-
-import { TextInputBox } from "../ui/textbox/TextBoxComponents";
-import { MEASUREMENT } from "../../constants/apiLocalizationMap";
-
-import { Category, ProductInputForm } from "../../types";
+import { MEASUREMENT } from '../../constants/apiLocalizationMap';
+import { Category, ProductInputForm } from '../../types';
+import { TextInputBox } from '../ui/textbox/TextBoxComponents';
 
 type MySizeMeasurementsInputProps = {
   categories: Category[];
@@ -17,10 +15,10 @@ export default function MySizeMeasurementsInput({
   const { control, watch } = useFormContext<ProductInputForm>();
   const { fields, update, replace } = useFieldArray<ProductInputForm>({
     control,
-    name: "measurements",
+    name: 'measurements',
   });
 
-  const selectedCategory = watch("category");
+  const selectedCategory = watch('category');
 
   const selectedMeasurements =
     categories.find((category) => category._id === selectedCategory?._id)
@@ -36,11 +34,12 @@ export default function MySizeMeasurementsInput({
       return {
         _id: measurement._id,
         name: measurement.name,
-        value: existing?.value ?? "",
+        value: existing?.value ?? '',
       };
     });
 
     replace(newMeasurements);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCategory._id]);
 
   return (
@@ -59,7 +58,7 @@ export default function MySizeMeasurementsInput({
               update(idx, { ...field, value });
             }
           }}
-          onReset={() => update(idx, { ...field, value: "" })}
+          onReset={() => update(idx, { ...field, value: '' })}
         />
       ))}
     </>

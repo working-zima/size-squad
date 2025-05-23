@@ -1,13 +1,11 @@
-import { Dispatch, FormEvent, MouseEvent, SetStateAction, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { Dispatch, FormEvent, MouseEvent, SetStateAction, useRef } from 'react';
+import { LiaAngleLeftSolid } from 'react-icons/lia';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
-import styled from "styled-components";
-import { LiaAngleLeftSolid } from "react-icons/lia";
-
-import Button from "../ui/Button";
-import { SearchTextInputBox } from "../ui/textbox/TextBoxComponents";
-
-import useProductsStore from "../../hooks/useProductsStore";
+import useProductsStore from '../../hooks/useProductsStore';
+import Button from '../ui/Button';
+import { SearchTextInputBox } from '../ui/textbox/TextBoxComponents';
 
 const Container = styled.header`
   display: flex;
@@ -57,7 +55,7 @@ export default function SearchInputHeader({
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (keyword === "") return;
+    if (keyword === '') return;
     if (inputRef.current) inputRef.current.blur();
     if (isAutoSave) addKeywordHistory(keyword);
     setIsFocused(false);
@@ -66,7 +64,7 @@ export default function SearchInputHeader({
   };
 
   const handleClick = () => {
-    navigate("/mysize");
+    navigate('/mysize');
     hideHeader();
     hideBody();
     // TODO: 기능상 문제 없으면 지우기

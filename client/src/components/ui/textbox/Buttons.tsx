@@ -1,7 +1,7 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
-import RemoveButton from './RemoveButton'
-import ShowButton from './ShowButton'
+import RemoveButton from './RemoveButton';
+import ShowButton from './ShowButton';
 
 const Container = styled.div`
   display: flex;
@@ -13,13 +13,13 @@ const Container = styled.div`
     padding: 0;
     margin: 6px;
   }
-`
+`;
 
 const Metrics = styled.div`
   margin: 0 6px 0 6px;
   padding: 0;
-  color: ${props => props.theme.colors.unSelectedText};
-`
+  color: ${(props) => props.theme.colors.unSelectedText};
+`;
 
 type ButtonsProps = {
   value: string;
@@ -28,7 +28,7 @@ type ButtonsProps = {
   isShowPw?: boolean;
   onReset?: () => void;
   handleShowPassword?: () => void;
-}
+};
 
 export default function Buttons({
   value,
@@ -36,9 +36,8 @@ export default function Buttons({
   unitType = 'none',
   isShowPw,
   onReset,
-  handleShowPassword = undefined
+  handleShowPassword = undefined,
 }: ButtonsProps) {
-
   return (
     <Container>
       {unitType !== 'none' && (
@@ -46,15 +45,13 @@ export default function Buttons({
           <span>{unitType}</span>
         </Metrics>
       )}
-      {onReset && value && (
-        <RemoveButton onReset={onReset} />
-      )}
-      {(type === "password" || isShowPw) && (
+      {onReset && value && <RemoveButton onReset={onReset} />}
+      {(type === 'password' || isShowPw) && (
         <ShowButton
           isShowPw={isShowPw}
           handleShowPassword={handleShowPassword!}
         />
       )}
     </Container>
-  )
+  );
 }

@@ -1,10 +1,9 @@
-import { useEffect, useRef } from "react";
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { useEffect, useRef } from 'react';
 
-import { useInfiniteQuery } from "@tanstack/react-query";
-
-import useIntersectionObserver from "./useIntersectionObserver";
-import { productService } from "../services/ProductService";
-import { DEFAULT_PER, SORT_OPTIONS } from "../constants/constants";
+import { DEFAULT_PER, SORT_OPTIONS } from '../constants/constants';
+import { productService } from '../services/ProductService';
+import useIntersectionObserver from './useIntersectionObserver';
 
 const ioOptions = { threshold: 1 };
 
@@ -18,8 +17,8 @@ type useProducts = {
 
 export function useProducts({
   keyword,
-  categoryId = "",
-  subCategoryId = "",
+  categoryId = '',
+  subCategoryId = '',
   sortCode,
   per = DEFAULT_PER,
 }: useProducts) {
@@ -42,7 +41,7 @@ export function useProducts({
     isError,
     error,
   } = useInfiniteQuery({
-    queryKey: ["products", keyword, categoryId, subCategoryId, sortCode, per],
+    queryKey: ['products', keyword, categoryId, subCategoryId, sortCode, per],
     queryFn: ({ pageParam = 1 }) =>
       productService.fetchProducts({
         keyword,

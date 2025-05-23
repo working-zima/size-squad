@@ -1,6 +1,5 @@
-import { ReactNode } from "react"
-
-import styled from "styled-components"
+import { ReactNode } from 'react';
+import styled from 'styled-components';
 
 const Container = styled.div`
   position: relative;
@@ -8,7 +7,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   height: 48px;
-  padding: ${props => props.theme.sizes.contentPadding};
+  padding: ${(props) => props.theme.sizes.contentPadding};
 
   p {
     margin: 0;
@@ -48,26 +47,22 @@ const Container = styled.div`
       transform: rotate(45deg);
     }
   }
-`
+`;
 
 type ModalHeaderProps = {
-  title?: string
-  children?: ReactNode
-  hide?: () => void
-}
+  title?: string;
+  children?: ReactNode;
+  hide?: () => void;
+};
 
-const ModalHeader = ({
-  title,
-  children,
-  hide,
-}: ModalHeaderProps) => {
+const ModalHeader = ({ title, children, hide }: ModalHeaderProps) => {
   return (
     <Container>
       <p>{title}</p>
       {children}
       <button onClick={hide} />
     </Container>
-  )
-}
+  );
+};
 
 export default ModalHeader;

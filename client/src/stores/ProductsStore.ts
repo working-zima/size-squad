@@ -1,14 +1,16 @@
 import { singleton } from 'tsyringe';
 import { Action, Store } from 'usestore-ts';
 
-import { ApiState, PaginationResponse, ProductResponse, SortOption } from '../types';
-
-import { userService } from '../services/UserService';
-import { productService } from '../services/ProductService';
-
-import { FETCH_STATE, DEFAULT_PER, SORT_OPTIONS } from '../constants/constants';
-
+import { DEFAULT_PER, FETCH_STATE, SORT_OPTIONS } from '../constants/constants';
 import { ERROR_MESSAGES } from '../constants/messages';
+import { productService } from '../services/ProductService';
+import { userService } from '../services/UserService';
+import {
+  ApiState,
+  PaginationResponse,
+  ProductResponse,
+  SortOption,
+} from '../types';
 
 type handleParameterProps = {
   sortOption: SortOption;
@@ -16,7 +18,7 @@ type handleParameterProps = {
   categoryId: string;
   subCategoryId: string;
   userId?: string;
-}
+};
 
 @singleton()
 @Store()
@@ -55,7 +57,7 @@ class ProductsStore {
     this.per = DEFAULT_PER;
     this.hasNextPage = true;
     this.totalDocs = 0;
-    this.state = FETCH_STATE.IDLE;;
+    this.state = FETCH_STATE.IDLE;
   }
 
   @Action()
@@ -104,7 +106,6 @@ class ProductsStore {
     this.userId = userId;
   }
 
-
   @Action()
   changeKeyword(keyword: string) {
     this.keyword = keyword;
@@ -125,13 +126,17 @@ class ProductsStore {
 
   @Action()
   private handleParameter({
-    sortOption, per, categoryId, subCategoryId, userId = ''
+    sortOption,
+    per,
+    categoryId,
+    subCategoryId,
+    userId = '',
   }: handleParameterProps) {
     this.setSortOption(sortOption);
     this.setPer(per);
-    this.setCategoryId(categoryId)
-    this.setSubCategoryId(subCategoryId)
-    this.setUserId(userId)
+    this.setCategoryId(categoryId);
+    this.setSubCategoryId(subCategoryId);
+    this.setUserId(userId);
   }
 
   /**
@@ -143,7 +148,7 @@ class ProductsStore {
     subCategoryId = '',
     sortCode,
     per = DEFAULT_PER,
-    userId = ''
+    userId = '',
   }: {
     keyword?: string;
     categoryId?: string;
@@ -175,11 +180,17 @@ class ProductsStore {
       });
 
       this.handleProductResponse(products);
-      this.handleParameter({ sortOption, per, categoryId, subCategoryId, userId })
+      this.handleParameter({
+        sortOption,
+        per,
+        categoryId,
+        subCategoryId,
+        userId,
+      });
       this.setDone();
     } catch (error) {
       const typedError = error as { message: string };
-      this.errorMessage = typedError.message || ERROR_MESSAGES.UNEXPECTED;;
+      this.errorMessage = typedError.message || ERROR_MESSAGES.UNEXPECTED;
       this.setError();
     }
   }
@@ -199,13 +210,13 @@ class ProductsStore {
         sortOrder,
         page: this.page,
         per: this.per,
-        userId: this.userId
+        userId: this.userId,
       });
       this.handleProductResponse(products);
       this.setDone();
     } catch (error) {
       const typedError = error as { message: string };
-      this.errorMessage = typedError.message || ERROR_MESSAGES.UNEXPECTED;;
+      this.errorMessage = typedError.message || ERROR_MESSAGES.UNEXPECTED;
       this.setError();
     }
   }
@@ -220,11 +231,11 @@ class ProductsStore {
     sortCode,
     per = DEFAULT_PER,
   }: {
-    keyword?: string,
-    categoryId?: string,
-    subCategoryId?: string,
-    sortCode?: string,
-    per?: number
+    keyword?: string;
+    categoryId?: string;
+    subCategoryId?: string;
+    sortCode?: string;
+    per?: number;
   }) {
     if (this.state === FETCH_STATE.LOADING) return;
     this.reset();
@@ -244,11 +255,11 @@ class ProductsStore {
         sortField,
         sortOrder,
         page: 1,
-        per: per
+        per: per,
       });
 
       this.handleProductResponse(products);
-      this.handleParameter({ sortOption, per, categoryId, subCategoryId })
+      this.handleParameter({ sortOption, per, categoryId, subCategoryId });
       this.setDone();
     } catch (error) {
       const typedError = error as { message: string };
@@ -271,7 +282,7 @@ class ProductsStore {
         sortField,
         sortOrder,
         page: this.page,
-        per: this.per
+        per: this.per,
       });
 
       this.handleProductResponse(products);
@@ -284,8 +295,8 @@ class ProductsStore {
   }
 
   /**
-  * 사이즈 정보 삭제
-  */
+   * 사이즈 정보 삭제
+   */
   async deleteAndFetchMyProducts(productId: string) {
     try {
       this.startLoading();

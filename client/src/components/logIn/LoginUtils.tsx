@@ -1,11 +1,9 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
 import styled from 'styled-components';
 
-import { AlertModal } from '../ui/modal/ModalComponents';
-
 import useModal from '../../hooks/useModal';
+import { AlertModal } from '../ui/modal/ModalComponents';
 
 const ButtonWrapper = styled.div`
   display: flex;
@@ -14,23 +12,24 @@ const ButtonWrapper = styled.div`
   width: 100%;
 
   a {
-    color: ${props => props.theme.colors.unSelectedText};
+    color: ${(props) => props.theme.colors.unSelectedText};
     text-decoration-line: underline;
     text-underline-offset: 1.5px;
   }
-`
+`;
 
 type LoginUtils = {
   state: 'loading' | 'fetched' | 'idle' | 'error';
   errorMessage: string;
   resetForm: () => void;
-}
+};
 
 export function LoginUtils({ state, errorMessage, resetForm }: LoginUtils) {
   const { modalRef, openModal, closeModal } = useModal();
 
   useEffect(() => {
     if (state === 'error') openModal();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
   const handleConfirm = (event?: React.MouseEvent) => {
@@ -48,11 +47,9 @@ export function LoginUtils({ state, errorMessage, resetForm }: LoginUtils) {
       </AlertModal>
       <ButtonWrapper>
         <p>
-          <Link to="/signup">
-            스쿼드 합류
-          </Link>
+          <Link to="/signup">스쿼드 합류</Link>
         </p>
       </ButtonWrapper>
     </>
-  )
+  );
 }

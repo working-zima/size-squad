@@ -5,19 +5,18 @@ import {
   RefObject,
   SetStateAction,
   useRef,
-  useState
-} from "react";
+  useState,
+} from 'react';
+import { RiSearchLine } from 'react-icons/ri';
 
-import { RiSearchLine } from "react-icons/ri";
-
-import Label from "./Label";
-import TextBox from "./TextBox";
-import TextareaInput from "./TextareaInput";
-import TextInput from "./TextInput";
+import Button from '../Button';
+import Buttons from './Buttons';
+import Label from './Label';
+import TextareaInput from './TextareaInput';
+import TextBox from './TextBox';
+import TextInput from './TextInput';
+import TextSimpleBox from './TextSimpleBox';
 import TextSimpleInput from './TextSimpleInput';
-import TextSimpleBox from "./TextSimpleBox";
-import Buttons from "./Buttons";
-import Button from "../Button";
 
 type TextareaTextBoxProps = {
   label?: string;
@@ -27,7 +26,7 @@ type TextareaTextBoxProps = {
   maxLength?: number;
   onChange?: (value: string) => void;
   required?: boolean;
-}
+};
 
 export const TextareaBox = ({
   label = '',
@@ -45,17 +44,8 @@ export const TextareaBox = ({
 
   return (
     <>
-      {label && (
-        <Label
-          idRef={id}
-          label={label}
-          required={required}
-        />
-      )}
-      <TextBox
-        isTouched={isTouched}
-        isFocused={isFocused}
-      >
+      {label && <Label idRef={id} label={label} required={required} />}
+      <TextBox isTouched={isTouched} isFocused={isFocused}>
         <TextareaInput
           idRef={id}
           name={name}
@@ -68,27 +58,27 @@ export const TextareaBox = ({
         />
       </TextBox>
     </>
-  )
-}
+  );
+};
 
 type TextInputProps = {
   value: string;
-  name?: string
+  name?: string;
   placeholder: string;
   label?: string;
   type?: 'text' | 'number' | 'password' | 'tel';
   maxLength?: number;
   autocomplete?: string;
-  unitType?: 'kg' | 'cm' | 'none'
-  isShowPw?: boolean
-  isValid?: boolean,
-  isDuplicated?: boolean,
+  unitType?: 'kg' | 'cm' | 'none';
+  isShowPw?: boolean;
+  isValid?: boolean;
+  isDuplicated?: boolean;
   useBorderColor?: boolean;
   onChange?: (value: string) => void;
   onReset?: () => void;
   handleShowPassword?: () => void;
   required?: boolean;
-}
+};
 
 export const TextInputBox = ({
   value,
@@ -115,13 +105,7 @@ export const TextInputBox = ({
 
   return (
     <>
-      {label && (
-        <Label
-          idRef={id}
-          label={label}
-          required={required}
-        />
-      )}
+      {label && <Label idRef={id} label={label} required={required} />}
       <TextBox
         isTouched={isTouched}
         isFocused={isFocused}
@@ -153,48 +137,47 @@ export const TextInputBox = ({
         </>
       </TextBox>
     </>
-  )
-}
+  );
+};
 
 type TextSimpleInputBoxProps = {
-  ref: RefObject<HTMLInputElement>
+  ref: RefObject<HTMLInputElement>;
   value: string;
   placeholder: string;
   label?: string;
   type?: 'text' | 'number' | 'password' | 'tel';
   maxLength?: number;
-  isShowPw?: boolean
+  isShowPw?: boolean;
   setIsFocused: Dispatch<SetStateAction<boolean>>;
   onChange?: (value: string) => void;
   onReset?: () => void;
   required?: boolean;
-}
+};
 
-
-export const SearchTextInputBox = forwardRef<HTMLInputElement, TextSimpleInputBoxProps>(
-  ({
-    value,
-    placeholder,
-    label,
-    type = 'text',
-    maxLength,
-    isShowPw,
-    setIsFocused,
-    onChange = undefined,
-    onReset = undefined,
-    required = false,
-  }: TextSimpleInputBoxProps, ref: ForwardedRef<HTMLInputElement>) => {
+export const SearchTextInputBox = forwardRef<
+  HTMLInputElement,
+  TextSimpleInputBoxProps
+>(
+  (
+    {
+      value,
+      placeholder,
+      label,
+      type = 'text',
+      maxLength,
+      isShowPw,
+      setIsFocused,
+      onChange = undefined,
+      onReset = undefined,
+      required = false,
+    }: TextSimpleInputBoxProps,
+    ref: ForwardedRef<HTMLInputElement>,
+  ) => {
     const id = useRef(`textbox-${Math.random().toString().slice(2)}`);
 
     return (
       <>
-        {label && (
-          <Label
-            idRef={id}
-            label={label}
-            required={required}
-          />
-        )}
+        {label && <Label idRef={id} label={label} required={required} />}
         <TextSimpleBox>
           <TextSimpleInput
             ref={ref} // forwardRef로 전달
@@ -218,5 +201,7 @@ export const SearchTextInputBox = forwardRef<HTMLInputElement, TextSimpleInputBo
         </TextSimpleBox>
       </>
     );
-  }
+  },
 );
+
+SearchTextInputBox.displayName = 'SearchTextInputBox';

@@ -1,18 +1,18 @@
-import ApiService from "../services/ApiService";
+import ApiService from '../services/ApiService';
 
 export default class AuthService {
   static async reissueToken() {
-    try {
-      const tokenRefreshResult = await ApiService.get('/session');
-      return tokenRefreshResult;
-    } catch (error) {
-      throw error;
-    }
+    const tokenRefreshResult = await ApiService.get('/session');
+    return tokenRefreshResult;
   }
 
   async login({
-    email, password
-  }: { email: string; password: string }): Promise<string> {
+    email,
+    password,
+  }: {
+    email: string;
+    password: string;
+  }): Promise<string> {
     const { data } = await ApiService.post('/session', { email, password });
     return data.accessToken;
   }

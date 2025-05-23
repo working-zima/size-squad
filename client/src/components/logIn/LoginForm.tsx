@@ -1,18 +1,15 @@
 import { Dispatch, FormEvent, SetStateAction, useState } from 'react';
-
 import styled from 'styled-components';
-
-import { LoginInput } from './LoginInput';
-import { LoginButton } from './LoginButton';
-import { LoginUtils } from './LoginUtils';
-
-import Divider from '../ui/Divider';
 
 import { accessTokenUtil } from '../../auth/accessTokenUtil';
 import { ApiState } from '../../types';
+import Divider from '../ui/Divider';
+import { LoginButton } from './LoginButton';
+import { LoginInput } from './LoginInput';
+import { LoginUtils } from './LoginUtils';
 
 const Container = styled.div.attrs({ className: 'MemberWrapper' })`
-  padding: 20px ${props => props.theme.sizes.contentPadding} 0;
+  padding: 20px ${(props) => props.theme.sizes.contentPadding} 0;
   user-select: none;
 
   h2 {
@@ -29,18 +26,27 @@ type LoginFormProps = {
   setPassword: Dispatch<SetStateAction<string>>;
   login: () => void;
   resetForm: () => void;
-}
+};
 
 export default function LoginForm({
-  email, password, errorMessage, state, setEmail, setPassword, login, resetForm
+  email,
+  password,
+  errorMessage,
+  state,
+  setEmail,
+  setPassword,
+  login,
+  resetForm,
 }: LoginFormProps) {
   const [isShowPw, setIsShowPw] = useState(false);
-  const [isAutoLogin, setIsAutoLogin] = useState(accessTokenUtil.getIsAutoLogin());
+  const [isAutoLogin, setIsAutoLogin] = useState(
+    accessTokenUtil.getIsAutoLogin(),
+  );
 
   const toggleAutoLogin = () => {
     accessTokenUtil.setIsAutoLogin(!isAutoLogin);
-    setIsAutoLogin(prev => !prev);
-  }
+    setIsAutoLogin((prev) => !prev);
+  };
 
   const handleChangeEmail = (value: string) => {
     setEmail(value);
@@ -52,20 +58,20 @@ export default function LoginForm({
 
   const handleResetPassword = () => {
     setPassword('');
-  }
+  };
 
   const handleResetEmail = () => {
     setEmail('');
-  }
+  };
 
   const handleShowPassword = () => {
-    setIsShowPw(prev => !prev);
-  }
+    setIsShowPw((prev) => !prev);
+  };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     login();
-    accessTokenUtil.setAccessToken('')
+    accessTokenUtil.setAccessToken('');
   };
 
   return (
@@ -87,9 +93,7 @@ export default function LoginForm({
           isAutoLogin={isAutoLogin}
           toggleAutoLogin={toggleAutoLogin}
         />
-        <Divider>
-          또는
-        </Divider>
+        <Divider>또는</Divider>
         <LoginUtils
           state={state}
           errorMessage={errorMessage}

@@ -1,25 +1,20 @@
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useQueryClient } from '@tanstack/react-query';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import styled from 'styled-components';
 
-import styled from "styled-components";
-import { useQueryClient } from "@tanstack/react-query";
-
-import AccessDeniedPage from "./AccessDeniedPage";
-import ErrorPage from "./ErrorPage";
-import NoListPage from "./NoListPage";
-
-import Profile from "../components/mypage/Profile";
-import Sort from "../components/mypage/Sort";
-import Product from "../components/mySize/Product";
-import LoadingSpinner from "../components/ui/LoadingSpinner";
-
-import useUser from "../hooks/useUser";
-
-import useCategories from "../hooks/useCategories";
-import useAuthStore from "../hooks/useAuthStore";
-
-import { accessTokenUtil } from "../auth/accessTokenUtil";
-import { authService } from "../auth/AuthService";
-import { useUserProducts } from "../hooks/useUserProducts";
+import { accessTokenUtil } from '../auth/accessTokenUtil';
+import { authService } from '../auth/AuthService';
+import Profile from '../components/mypage/Profile';
+import Sort from '../components/mypage/Sort';
+import Product from '../components/mySize/Product';
+import LoadingSpinner from '../components/ui/LoadingSpinner';
+import useAuthStore from '../hooks/useAuthStore';
+import useCategories from '../hooks/useCategories';
+import useUser from '../hooks/useUser';
+import { useUserProducts } from '../hooks/useUserProducts';
+import AccessDeniedPage from './AccessDeniedPage';
+import ErrorPage from './ErrorPage';
+import NoListPage from './NoListPage';
 
 const Container = styled.div`
   height: 100%;
@@ -39,8 +34,7 @@ export default function MyPage() {
   const navigate = useNavigate();
   const params = useParams();
   const [querys] = useSearchParams();
-  const subCategoryId = querys.get("category2DepthCode") ?? undefined;
-  const sortCode = querys.get("sortCode") ?? undefined;
+  const subCategoryId = querys.get('category2DepthCode') ?? undefined;
   const [{ user: loginedUser }, authStore] = useAuthStore();
   const {
     allSubCategories,
@@ -52,9 +46,7 @@ export default function MyPage() {
   const {
     user,
     isOwner,
-    isLoading: isLoadingUser,
     isError: isErrorUser,
-    error: errorUser,
   } = useUser({
     id: params.id,
   });
@@ -65,18 +57,13 @@ export default function MyPage() {
     isLoading: isProductsLoading,
     isFetching: isProductsFetching,
     isError: isProductsError,
-    error,
     moreRef,
-  } = useUserProducts({
-    subCategoryId,
-    sortCode,
-    userId: user?._id,
-  });
+  } = useUserProducts();
   const allProducts = data?.pages.flatMap((page) => page?.docs ?? []) ?? [];
 
   const findCategoryById = (id: string) => {
-    return [{ _id: "", name: "all" }, ...allSubCategories].find(
-      (subCategory) => subCategory._id === id
+    return [{ _id: '', name: 'all' }, ...allSubCategories].find(
+      (subCategory) => subCategory._id === id,
     );
   };
 
@@ -93,26 +80,26 @@ export default function MyPage() {
     const queryParams: string[] = [];
 
     const subCategoryParam =
-      category2DepthCode === ""
+      category2DepthCode === ''
         ? undefined
         : category2DepthCode || subCategoryId;
-    const sortParam = sortCode || "";
+    const sortParam = sortCode || '';
 
     if (subCategoryParam)
       queryParams.push(`category2DepthCode=${subCategoryParam}`);
     if (sortParam) queryParams.push(`sortCode=${sortParam}`);
 
-    const queryString = queryParams.join("&");
-    const path = `/mypage/${params.id}/${queryString ? `?${queryString}` : ""}`;
+    const queryString = queryParams.join('&');
+    const path = `/mypage/${params.id}/${queryString ? `?${queryString}` : ''}`;
     navigate(path);
   };
 
   const handleClickLogout = async () => {
     await authService.logout();
-    accessTokenUtil.setAccessToken("");
-    await queryClient.invalidateQueries({ queryKey: ["user"] });
+    accessTokenUtil.setAccessToken('');
+    await queryClient.invalidateQueries({ queryKey: ['user'] });
     authStore.reset();
-    navigate("/");
+    navigate('/');
   };
 
   if (!accessTokenUtil.getAccessToken()) return <AccessDeniedPage />;
@@ -120,13 +107,13 @@ export default function MyPage() {
     return (
       <ErrorPage
         errorMessage={
-          errorMessage || "데이터를 불러오는 중 문제가 발생했습니다."
+          errorMessage || '데이터를 불러오는 중 문제가 발생했습니다.'
         }
       />
     );
 
   if (!user) return null;
-  if (!user || typeof isOwner === "undefined") return null;
+  if (!user || typeof isOwner === 'undefined') return null;
 
   return (
     <Container>
@@ -151,7 +138,7 @@ export default function MyPage() {
         <div id="more button" ref={moreRef} />
         {isProductsFetching && <LoadingSpinner />}
         {!isProductsLoading && !isProductsError && allProducts.length === 0 && (
-          <NoListPage itemName={"사이즈"} itemLink={"/mysize/new"} />
+          <NoListPage itemName={'사이즈'} itemLink={'/mysize/new'} />
         )}
       </Products>
     </Container>

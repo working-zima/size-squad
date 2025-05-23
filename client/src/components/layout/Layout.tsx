@@ -1,23 +1,20 @@
 import { Outlet, useLocation, useMatch, useParams } from 'react-router-dom';
-
 import styled from 'styled-components';
 
+import { USERFIELDS } from '../../constants/apiLocalizationMap';
+import { PAGES } from '../../constants/constants';
+import useAuthStore from '../../hooks/useAuthStore';
+import useCheckAccessToken from '../../hooks/useCheckAccessToken';
+import LayoutFooter from './LayoutFooter';
 import LayoutHeader from './LayoutHeader';
 import LayoutMenuBar from './LayoutMenuBar';
-import LayoutFooter from './LayoutFooter';
-import SideButtons from './SideButtons';
 import PortalRoot from './PortalRoot';
-
-import useCheckAccessToken from '../../hooks/useCheckAccessToken';
-import useAuthStore from '../../hooks/useAuthStore';
-
-import { PAGES } from '../../constants/constants';
-import { USERFIELDS } from '../../constants/apiLocalizationMap';
+import SideButtons from './SideButtons';
 
 type ContainerProps = {
   SHOWMENU: boolean;
   FOOTER: boolean;
-}
+};
 
 const Container = styled.div<ContainerProps>`
   display: grid;
@@ -27,7 +24,7 @@ const Container = styled.div<ContainerProps>`
     'header'
     'main'
     ${({ FOOTER }) => (FOOTER ? "'footer'" : '')};
-    ${({ SHOWMENU }) => (SHOWMENU ? "'menu'" : '')};
+  ${({ SHOWMENU }) => (SHOWMENU ? "'menu'" : '')};
   margin: 0 auto;
   width: 100vw;
   height: 100vh;
@@ -52,11 +49,10 @@ export default function Layout() {
 
   const isEditSizePage = useMatch('/mysize/:id/edit');
   const isEditProfilePage = useMatch('/mypage/:id/edit');
-  const isEditProfile = useMatch('/mypage/:id/edit/:editField')
+  const isEditProfile = useMatch('/mypage/:id/edit/:editField');
   const isMyPage = useMatch('/mypage/:id');
 
-  let page = PAGES[location.pathname]
-    || {
+  let page = PAGES[location.pathname] || {
     PAGETITLE: '',
     homeButton: false,
     backSpace: false,
@@ -68,11 +64,11 @@ export default function Layout() {
   if (isEditProfilePage) page = PAGES['/mypage/:id/edit'];
   if (isMyPage && user) {
     page = PAGES['/mypage/:id'];
-    page.PAGETITLE = `${user.name}의 옷장`
+    page.PAGETITLE = `${user.name}의 옷장`;
   }
   if (isEditProfile && user) {
     page = PAGES['/mypage/:id/edit/:editField'];
-    page.PAGETITLE = USERFIELDS[path] ? `${USERFIELDS[path]} 변경` : ''
+    page.PAGETITLE = USERFIELDS[path] ? `${USERFIELDS[path]} 변경` : '';
   }
 
   return (
@@ -82,10 +78,7 @@ export default function Layout() {
         <Outlet />
       </Main>
       {page.FOOTER && <LayoutFooter />}
-      {page.SWITCHER
-        ? <SideButtons />
-        : null
-      }
+      {page.SWITCHER ? <SideButtons /> : null}
       {page.SHOWMENU && <LayoutMenuBar user={user} />}
       <PortalRoot />
     </Container>

@@ -1,26 +1,23 @@
-import { Link } from "react-router-dom"
+import { RiSearchLine } from 'react-icons/ri';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
-import styled from "styled-components"
-import { RiSearchLine } from "react-icons/ri";
-
-import SearchInputListOff from "./SearchInputListOff"
-
-import Button from "../ui/Button"
-
-import { key } from "../../utils"
+import { key } from '../../utils';
+import Button from '../ui/Button';
+import SearchInputListOff from './SearchInputListOff';
 
 const Container = styled.ul`
   flex: 1 1;
   overflow-y: auto;
   padding-top: 3px;
-`
+`;
 
 const SearchInputItem = styled.li`
   display: flex;
   justify-content: space-between;
   height: 42px;
   position: relative;
-`
+`;
 
 const StyledLink = styled(Link)`
   display: flex;
@@ -28,7 +25,7 @@ const StyledLink = styled(Link)`
   height: 100%;
   width: 100%;
   overflow: hidden;
-`
+`;
 
 const SearchInputKeyword = styled.span`
   flex: 1;
@@ -39,7 +36,7 @@ const SearchInputKeyword = styled.span`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-`
+`;
 
 const SearchInputRemoveButton = styled(Button)`
   display: flex;
@@ -53,7 +50,7 @@ const SearchInputRemoveButton = styled(Button)`
     right: 10px;
     height: 14px;
     width: 2px;
-    background-color: ${props => props.theme.colors.unSelectedText};
+    background-color: ${(props) => props.theme.colors.unSelectedText};
     transform: rotate(45deg);
   }
 
@@ -63,47 +60,45 @@ const SearchInputRemoveButton = styled(Button)`
     right: 10px;
     height: 14px;
     width: 2px;
-    background-color: ${props => props.theme.colors.unSelectedText};
+    background-color: ${(props) => props.theme.colors.unSelectedText};
     transform: rotate(-45deg);
   }
-`
+`;
 
 type SearchInputListProps = {
   isAutoSave: boolean;
   keywordHistory: string[];
   toggleAutoSave: () => void;
   removeKeywordHistory: (index: number) => void;
-}
+};
 
 export default function SearchInputList({
-  isAutoSave, keywordHistory, toggleAutoSave, removeKeywordHistory
+  isAutoSave,
+  keywordHistory,
+  toggleAutoSave,
+  removeKeywordHistory,
 }: SearchInputListProps) {
   const handleClickDeleteKeyword = (index: number) => {
     removeKeywordHistory(index);
-  }
+  };
 
   return (
     <Container>
-      {isAutoSave
-        ? (keywordHistory.map((keyword, index) => (
+      {isAutoSave ? (
+        keywordHistory.map((keyword, index) => (
           <SearchInputItem key={key(keyword, index)}>
             <StyledLink to={`/search?query=${keyword}`}>
               <RiSearchLine size="15" color="#666" />
-              <SearchInputKeyword>
-                {keyword}
-              </SearchInputKeyword>
+              <SearchInputKeyword>{keyword}</SearchInputKeyword>
             </StyledLink>
             <SearchInputRemoveButton
               onClick={() => handleClickDeleteKeyword(index)}
             />
           </SearchInputItem>
-        )))
-        : (
-          <SearchInputListOff
-            toggleAutoSave={toggleAutoSave}
-          />
-        )
-      }
+        ))
+      ) : (
+        <SearchInputListOff toggleAutoSave={toggleAutoSave} />
+      )}
     </Container>
-  )
+  );
 }

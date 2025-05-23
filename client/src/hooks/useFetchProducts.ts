@@ -1,51 +1,60 @@
 import { useEffect, useRef } from 'react';
 
-import useProductsStore from './useProductsStore';
-import useIntersectionObserver from './useIntersectionObserver';
-
 import { DEFAULT_PER } from '../constants/constants';
+import useIntersectionObserver from './useIntersectionObserver';
+import useProductsStore from './useProductsStore';
 
-const ioOptions = { threshold: 1 }
+const ioOptions = { threshold: 1 };
 
 type useInfiniteScrollProps = {
-  keyword?: string,
-  categoryId?: string,
-  subCategoryId?: string,
-  sortCode?: string,
-  per?: number
-}
+  keyword?: string;
+  categoryId?: string;
+  subCategoryId?: string;
+  sortCode?: string;
+  per?: number;
+};
 
 export default function useFetchProducts({
   keyword,
   categoryId,
   subCategoryId,
   sortCode,
-  per = DEFAULT_PER
+  per = DEFAULT_PER,
 }: useInfiniteScrollProps) {
-  const [{
-    products = [],
-    errorMessage,
-    subCategoryId: selectedSubCategoryId,
-    state,
-    sortOption,
-    totalDocs,
-    hasNextPage
-  }, store] = useProductsStore();
-  const moreRef = useRef<HTMLDivElement>(null)
+  const [
+    {
+      products = [],
+      errorMessage,
+      subCategoryId: selectedSubCategoryId,
+      state,
+      sortOption,
+      totalDocs,
+      hasNextPage,
+    },
+    store,
+  ] = useProductsStore();
+  const moreRef = useRef<HTMLDivElement>(null);
 
-  const { entries: [entry] } = useIntersectionObserver(moreRef, ioOptions)
-  const isIntersecting = entry?.isIntersecting
+  const {
+    entries: [entry],
+  } = useIntersectionObserver(moreRef, ioOptions);
+  const isIntersecting = entry?.isIntersecting;
 
   useEffect(() => {
     store.fetchInitialProducts({
-      keyword, categoryId, subCategoryId, sortCode, per
+      keyword,
+      categoryId,
+      subCategoryId,
+      sortCode,
+      per,
     });
   }, [keyword, categoryId, subCategoryId, sortCode, per, store]);
 
   useEffect(() => {
     if (isIntersecting && hasNextPage) {
-      store.fetchMoreProducts({ keyword })
+      store.fetchMoreProducts({ keyword });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isIntersecting, store]);
 
   return {
@@ -56,6 +65,6 @@ export default function useFetchProducts({
     errorMessage,
     state,
     moreRef,
-    store
+    store,
   };
 }

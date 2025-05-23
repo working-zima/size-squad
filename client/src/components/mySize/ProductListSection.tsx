@@ -1,17 +1,13 @@
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import styled from 'styled-components';
 
-import styled from "styled-components";
-
-import NoListPage from "../../pages/NoListPage";
-
-import Product from "./Product";
-import { useUserProducts } from "../../hooks/useUserProducts";
-
-import LoadingSpinner from "../ui/LoadingSpinner";
-import BorderlessComboBox from "../ui/selectbox/BorderlessComboBox";
-
-import { SortOption, User } from "../../types";
-import { SORT_OPTIONS } from "../../constants/constants";
+import { SORT_OPTIONS } from '../../constants/constants';
+import { useUserProducts } from '../../hooks/useUserProducts';
+import NoListPage from '../../pages/NoListPage';
+import { SortOption, User } from '../../types';
+import LoadingSpinner from '../ui/LoadingSpinner';
+import BorderlessComboBox from '../ui/selectbox/BorderlessComboBox';
+import Product from './Product';
 
 const Section = styled.section`
   display: flex;
@@ -54,9 +50,9 @@ export default function ProductListSection({
   const allProducts = data?.pages.flatMap((page) => page?.docs ?? []) ?? [];
 
   const handleNavigate = (sortOption: SortOption) => {
-    const currentSortCode = params.get("sortCode") ?? undefined;
-    const currentCategoryId = params.get("category1DepthCode") ?? undefined;
-    const currentSubCategoryId = params.get("category2DepthCode") ?? undefined;
+    const currentSortCode = params.get('sortCode') ?? undefined;
+    const currentCategoryId = params.get('category1DepthCode') ?? undefined;
+    const currentSubCategoryId = params.get('category2DepthCode') ?? undefined;
     const isSame =
       currentSortCode === sortOption.urlParam &&
       currentCategoryId === categoryId &&
@@ -67,8 +63,8 @@ export default function ProductListSection({
     if (categoryId) queryParams.push(`category1DepthCode=${categoryId}`);
     if (subCategoryId) queryParams.push(`category2DepthCode=${subCategoryId}`);
     queryParams.push(`sortCode=${sortOption.urlParam}`);
-    const queryString = queryParams.join("&");
-    const path = `/mysize${queryString ? `?${queryString}` : ""}`;
+    const queryString = queryParams.join('&');
+    const path = `/mysize${queryString ? `?${queryString}` : ''}`;
     navigate(path);
   };
 
@@ -82,8 +78,8 @@ export default function ProductListSection({
         <BorderlessComboBox
           selectedItem={sortOption}
           items={Object.values(SORT_OPTIONS)}
-          itemToId={(item) => item?._id || ""}
-          itemToText={(item) => item?.name || ""}
+          itemToId={(item) => item?._id || ''}
+          itemToText={(item) => item?.name || ''}
           onChange={(value) => value && handleNavigate(value)}
         />
       </Section>
@@ -94,7 +90,7 @@ export default function ProductListSection({
         {!isFetching && <div id="more button" ref={moreRef} />}
         {isFetching && <LoadingSpinner />}
         {!isLoading && !isError && allProducts.length === 0 && (
-          <NoListPage itemName={"사이즈"} itemLink={"/mysize/new"} />
+          <NoListPage itemName={'사이즈'} itemLink={'/mysize/new'} />
         )}
       </Products>
     </>

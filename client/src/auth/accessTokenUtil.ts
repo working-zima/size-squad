@@ -1,8 +1,9 @@
-import { LOCAL_STORAGE } from "./constants";
+import { LOCAL_STORAGE } from './constants';
 
 export const accessTokenUtil = {
   getAccessToken: () => {
-    const isAutoLogin = localStorage.getItem(LOCAL_STORAGE.AUTO_LOGIN) === 'true';
+    const isAutoLogin =
+      localStorage.getItem(LOCAL_STORAGE.AUTO_LOGIN) === 'true';
     const token = isAutoLogin
       ? localStorage.getItem(LOCAL_STORAGE.ACCESS_TOKEN) || ''
       : sessionStorage.getItem(LOCAL_STORAGE.ACCESS_TOKEN) || '';
@@ -10,7 +11,8 @@ export const accessTokenUtil = {
   },
 
   setAccessToken: (token: string) => {
-    const isAutoLogin = localStorage.getItem(LOCAL_STORAGE.AUTO_LOGIN) === 'true';
+    const isAutoLogin =
+      localStorage.getItem(LOCAL_STORAGE.AUTO_LOGIN) === 'true';
     if (isAutoLogin) {
       localStorage.setItem(LOCAL_STORAGE.ACCESS_TOKEN, token);
     } else {
@@ -24,5 +26,5 @@ export const accessTokenUtil = {
 
   setIsAutoLogin: (value: boolean) => {
     localStorage.setItem(LOCAL_STORAGE.AUTO_LOGIN, value.toString());
-  }
+  },
 };

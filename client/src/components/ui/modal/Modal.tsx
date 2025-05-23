@@ -1,6 +1,5 @@
-import { ReactNode, RefObject, SyntheticEvent, useCallback } from "react"
-
-import styled from "styled-components";
+import { ReactNode, RefObject, SyntheticEvent, useCallback } from 'react';
+import styled from 'styled-components';
 
 const Dialog = styled.dialog`
   justify-content: center;
@@ -28,16 +27,16 @@ const Dialog = styled.dialog`
   &:not([open]) {
     display: none;
   }
-`
+`;
 
 type ModalProps = {
-  modalRef: RefObject<HTMLDialogElement>
-  hideOnClickOutside?: boolean
-  children: ReactNode
-  hide: () => void
-  onClose?: (...arg: any[]) => void
-  className?: string
-}
+  modalRef: RefObject<HTMLDialogElement>;
+  hideOnClickOutside?: boolean;
+  children: ReactNode;
+  hide: () => void;
+  onClose?: (...arg: any[]) => void;
+  className?: string;
+};
 
 const Modal = ({
   modalRef,
@@ -47,28 +46,26 @@ const Modal = ({
   onClose,
 }: ModalProps) => {
   const handleClose = () => {
-    hide()
-    onClose?.()
-  }
+    hide();
+    onClose?.();
+  };
 
   const handleClick = useCallback(
     (e: SyntheticEvent) => {
       // dialog를 클릭했을 때만 닫힘(dialog의 내부 요소를 클릭한다고 해서 닫히지 않도록)
       if (hideOnClickOutside && modalRef.current === e.target) {
-        handleClose()
+        handleClose();
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [hideOnClickOutside],
-  )
+  );
 
   return (
-    <Dialog
-      ref={modalRef}
-      onClick={handleClick}
-    >
+    <Dialog ref={modalRef} onClick={handleClick}>
       {children}
     </Dialog>
-  )
-}
+  );
+};
 
 export default Modal;

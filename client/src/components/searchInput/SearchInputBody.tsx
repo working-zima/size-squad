@@ -1,8 +1,7 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import SearchInputList from "./SearchInputList";
-
-import Button from "../ui/Button";
+import Button from '../ui/Button';
+import SearchInputList from './SearchInputList';
 
 const Container = styled.div`
   display: flex;
@@ -13,7 +12,7 @@ const Container = styled.div`
   height: calc(100vh - 50px);
   overflow: hidden;
   padding-top: 0.4rem;
-`
+`;
 
 const SearchInputBox = styled.div`
   display: flex;
@@ -23,12 +22,13 @@ const SearchInputBox = styled.div`
   height: 35px;
   padding-top: 0.4rem;
 
-  button, p {
+  button,
+  p {
     padding: 0;
     font-size: 1.3rem;
     color: ${(props) => props.theme.colors.unSelectedText};
   }
-`
+`;
 
 type SearchInputBodyProps = {
   keywordHistory: string[];
@@ -37,7 +37,7 @@ type SearchInputBodyProps = {
   removeKeywordHistory: (index: number) => void;
   handleClickDeleteAllHistory: () => void;
   hideBody: () => void;
-}
+};
 
 export default function SearchInputBody({
   keywordHistory,
@@ -45,17 +45,13 @@ export default function SearchInputBody({
   toggleAutoSave,
   removeKeywordHistory,
   handleClickDeleteAllHistory,
-  hideBody
+  hideBody,
 }: SearchInputBodyProps) {
   return (
     <Container>
       <SearchInputBox>
         <p>최근 검색어</p>
-        <Button
-          onClick={handleClickDeleteAllHistory}
-        >
-          전체 삭제
-        </Button>
+        <Button onClick={handleClickDeleteAllHistory}>전체 삭제</Button>
       </SearchInputBox>
       <SearchInputList
         isAutoSave={isAutoSave}
@@ -64,13 +60,9 @@ export default function SearchInputBody({
         removeKeywordHistory={removeKeywordHistory}
       />
       <SearchInputBox>
-        <Button onClick={toggleAutoSave}>
-          자동저장 끄기
-        </Button>
-        <Button onClick={hideBody}>
-          닫기
-        </Button>
+        <Button onClick={toggleAutoSave}>자동저장 끄기</Button>
+        <Button onClick={hideBody}>닫기</Button>
       </SearchInputBox>
     </Container>
-  )
+  );
 }

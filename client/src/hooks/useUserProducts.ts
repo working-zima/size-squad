@@ -1,13 +1,11 @@
-import { useEffect, useRef } from "react";
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { useEffect, useRef } from 'react';
 
-import { useInfiniteQuery } from "@tanstack/react-query";
-
-import useIntersectionObserver from "./useIntersectionObserver";
-import { productService } from "../services/ProductService";
-
-import { SORT_OPTIONS } from "../constants/constants";
-import { queryKeys } from "../constants/queryKeys";
-import { ProductParamsStore } from "../stores/ProductParamsStore";
+import { SORT_OPTIONS } from '../constants/constants';
+import { queryKeys } from '../constants/queryKeys';
+import { productService } from '../services/ProductService';
+import { ProductParamsStore } from '../stores/ProductParamsStore';
+import useIntersectionObserver from './useIntersectionObserver';
 
 const ioOptions = { threshold: 1 };
 
@@ -64,6 +62,7 @@ export function useUserProducts() {
     if (isIntersecting && hasNextPage && !isFetching) {
       fetchNextPage();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isIntersecting, hasNextPage, isFetching]);
 
   return {

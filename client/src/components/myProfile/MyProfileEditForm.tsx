@@ -1,67 +1,63 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import MyProfileCard from "./MyProfileCard";
-
-import { User } from "../../types";
-
-import { key } from "../../utils";
-import { GENDER } from "../../constants/apiLocalizationMap";
+import { GENDER } from '../../constants/apiLocalizationMap';
+import { User } from '../../types';
+import { key } from '../../utils';
+import MyProfileCard from './MyProfileCard';
 
 const Container = styled.div`
   margin-bottom: auto;
   display: flex;
   flex-direction: column;
-`
+`;
 
 type MyProfileEditFormProps = {
   user: User;
-}
+};
 
-export default function MyProfileEditForm({
-  user
-}: MyProfileEditFormProps) {
+export default function MyProfileEditForm({ user }: MyProfileEditFormProps) {
   const profileFields = [
     {
-      label: "Email",
+      label: 'Email',
       value: user?.email,
       isEditable: false,
-      path: "email"
+      path: 'email',
     },
     {
-      label: "Name",
+      label: 'Name',
       value: user?.name,
       isEditable: false,
-      path: "name"
+      path: 'name',
     },
     {
-      label: "Password",
+      label: 'Password',
       value: user?.password,
       isEditable: true,
-      path: "password"
+      path: 'password',
     },
     {
-      label: "Gender",
+      label: 'Gender',
       value: GENDER[user?.gender?.name],
       isEditable: true,
-      path: "gender"
+      path: 'gender',
     },
     {
-      label: "Height",
+      label: 'Height',
       value: `${user?.height}cm`,
       isEditable: true,
-      path: "height"
+      path: 'height',
     },
     {
-      label: "Weight",
+      label: 'Weight',
       value: `${user?.weight}kg`,
       isEditable: true,
-      path: "weight"
+      path: 'weight',
     },
     {
-      label: "Physical Description",
+      label: 'Physical Description',
       value: '',
       isEditable: true,
-      path: "description"
+      path: 'description',
     },
   ];
 
@@ -77,5 +73,5 @@ export default function MyProfileEditForm({
         />
       ))}
     </Container>
-  )
+  );
 }

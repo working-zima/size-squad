@@ -1,18 +1,15 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
-import styled from "styled-components";
-
-import { ConfirmTrigger } from "../ui/modal/ModalTrigger";
-import { AlertModal } from "../ui/modal/ModalComponents";
-import ComboBox from "../ui/selectbox/ComboBox";
-
-import useSignupFormStore from "../../hooks/useSignupFormStore";
-import useModal from "../../hooks/useModal";
-
-import { GENDER } from "../../constants/apiLocalizationMap";
-import useAuthStore from "../../hooks/useAuthStore";
-import useInitialData from "../../hooks/useInitialData";
+import { GENDER } from '../../constants/apiLocalizationMap';
+import useAuthStore from '../../hooks/useAuthStore';
+import useInitialData from '../../hooks/useInitialData';
+import useModal from '../../hooks/useModal';
+import useSignupFormStore from '../../hooks/useSignupFormStore';
+import { AlertModal } from '../ui/modal/ModalComponents';
+import { ConfirmTrigger } from '../ui/modal/ModalTrigger';
+import ComboBox from '../ui/selectbox/ComboBox';
 
 const ButtonWrapper = styled.div`
   & > button {
@@ -60,12 +57,13 @@ export default function EditGender() {
     if (confirmed) {
       handleSubmitEditGender();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [confirmed]);
 
   return (
     <>
       <ComboBox
-        label={""}
+        label={''}
         selectedItem={user.gender}
         items={initialData.genders}
         itemToId={(item) => item?._id}

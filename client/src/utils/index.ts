@@ -9,10 +9,7 @@ export function append<T>(items: T[], item: T) {
  * @returns
  */
 export function remove<T>(items: T[], index: number) {
-  return [
-    ...items.slice(0, index),
-    ...items.slice(index + 1),
-  ];
+  return [...items.slice(0, index), ...items.slice(index + 1)];
 }
 
 /**
@@ -43,7 +40,9 @@ export function key(value: string, index: number) {
  * @returns `fn()`
  */
 export function debounceCallback<T extends (...args: unknown[]) => void>(
-  callback: T, delay = 300) {
+  callback: T,
+  delay = 300,
+) {
   let timerId: ReturnType<typeof setTimeout> | null = null;
 
   return (...args: Parameters<T>): void => {
@@ -67,16 +66,16 @@ export function sanitizeMeasurementInput(value: string) {
 
   // .이 한 개 이상일 경우 처리
   if (parts.length > 2) {
-    `${sanitizedValue = parts[0]}.${parts.slice(1).join('').slice(0, 1)}`;
+    `${(sanitizedValue = parts[0])}.${parts.slice(1).join('').slice(0, 1)}`;
   }
 
   // 정수 부분 3자리 제한
   if (parts[0].length > 3 && parts[1]) {
-    sanitizedValue = [parts[0].slice(0, 3), parts[1]].join('.')
-  };
+    sanitizedValue = [parts[0].slice(0, 3), parts[1]].join('.');
+  }
 
   if (parts[0].length > 3 && !parts[1]) {
-    sanitizedValue = sanitizedValue.slice(0, 3)
+    sanitizedValue = sanitizedValue.slice(0, 3);
   }
 
   // 소수 부분이 1자리 제한
