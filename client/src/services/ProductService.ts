@@ -1,6 +1,5 @@
-
-import { PaginationResponse, ProductRequest, ProductResponse } from '../types';
-import ApiService from './ApiService';
+import { PaginationResponse, ProductRequest, ProductResponse } from "../types";
+import ApiService from "./ApiService";
 
 export default class ProductService {
   async fetchProducts({
@@ -10,7 +9,7 @@ export default class ProductService {
     sortField,
     sortOrder,
     page,
-    per
+    per,
   }: {
     keyword?: string;
     categoryId?: string;
@@ -20,9 +19,15 @@ export default class ProductService {
     page?: number;
     per?: number;
   } = {}): Promise<PaginationResponse<ProductResponse>> {
-    const { data } = await ApiService.get('/products', {
+    const { data } = await ApiService.get("/products", {
       params: {
-        keyword, categoryId, subCategoryId, sortField, sortOrder, page, per
+        keyword,
+        categoryId,
+        subCategoryId,
+        sortField,
+        sortOrder,
+        page,
+        per,
       },
     });
     const { products } = data;
@@ -30,8 +35,11 @@ export default class ProductService {
     return products;
   }
 
-  async fetchProduct({ productId }: { productId: string })
-    : Promise<ProductResponse> {
+  async fetchProduct({
+    productId,
+  }: {
+    productId: string;
+  }): Promise<ProductResponse> {
     const { data } = await ApiService.get(`/products/${productId}`);
     const { product } = data;
     return product;
@@ -45,7 +53,7 @@ export default class ProductService {
     sortOrder,
     page,
     per,
-    userId
+    userId,
   }: {
     keyword?: string;
     categoryId?: string;
@@ -59,15 +67,26 @@ export default class ProductService {
     const url = userId ? `/products/user/${userId}` : `/products/user/`;
     const { data } = await ApiService.get(url, {
       params: {
-        keyword, categoryId, subCategoryId, sortField, sortOrder, page, per
+        keyword,
+        categoryId,
+        subCategoryId,
+        sortField,
+        sortOrder,
+        page,
+        per,
       },
     });
     const { products } = data;
     return products;
   }
 
-  async createProduct(newProduct: ProductRequest): Promise<void> {
-    await ApiService.post('/products', newProduct);
+  async createProduct(newProduct: ProductRequest): Promise<ProductResponse> {
+    const { data } = await ApiService.post<ProductResponse>(
+      "/products",
+      newProduct
+    );
+
+    return data;
   }
 
   async updateProduct({
@@ -81,13 +100,21 @@ export default class ProductService {
     size,
     fit,
     measurements,
-    description
+    description,
   }: ProductRequest): Promise<void> {
-    const productId = _id
+    const productId = _id;
     const product = {
-      author, name, brand, category, subCategory, gender, size, fit,
-      measurements, description
-    }
+      author,
+      name,
+      brand,
+      category,
+      subCategory,
+      gender,
+      size,
+      fit,
+      measurements,
+      description,
+    };
     await ApiService.patch(`/products/${productId}`, product);
   }
 }

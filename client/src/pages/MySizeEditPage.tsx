@@ -21,7 +21,7 @@ export default function MySizeEditPage() {
     isError: isProductError,
     error: productError,
   } = useProduct(productId);
-  console.log(`productData: `, productData);
+
   const {
     data: initialData,
     isLoading: initialDataIsLoading,

@@ -4,9 +4,7 @@ const Product = {
   /** 서브 카테고리 생성 */
   create: async ({ newProduct }) => {
     try {
-      await ProductModel.create(newProduct)
-
-      return;
+      return await ProductModel.create(newProduct);
     } catch (error) {
       throw error;
     }
@@ -28,15 +26,18 @@ const Product = {
 
   findByProductId: async ({ productId }) => {
     try {
-      const productData = await ProductModel.find({ _id: productId },
+      const productData = await ProductModel.find(
+        { _id: productId },
         "_id author name brand category subCategory gender size fit measurements description"
-      ).populate({ path: "category", select: ["_id", "name"] })
+      )
+        .populate({ path: "category", select: ["_id", "name"] })
         .populate({ path: "subCategory", select: ["_id", "name"] })
         .populate({ path: "author", select: ["_id", "name"] })
         .populate({ path: "gender", select: ["_id", "name"] })
         .populate({ path: "fit", select: ["_id", "name"] })
         .populate({ path: "size", select: ["_id", "name"] })
         .lean();
+
       return productData;
     } catch (error) {
       throw error;
@@ -46,10 +47,7 @@ const Product = {
   /** userId로 product list 가져오기 */
   findByUserId: async ({ queryCriteria, options }) => {
     try {
-      const productData = await ProductModel.paginate(
-        queryCriteria,
-        options
-      );
+      const productData = await ProductModel.paginate(queryCriteria, options);
 
       return productData;
     } catch (error) {
@@ -88,10 +86,7 @@ const Product = {
   /** 모든 product 조회 */
   findAll: async ({ queryCriteria, options }) => {
     try {
-      const productData = await ProductModel.paginate(
-        queryCriteria,
-        options
-      )
+      const productData = await ProductModel.paginate(queryCriteria, options);
 
       return productData;
     } catch (error) {
@@ -102,10 +97,7 @@ const Product = {
   /** categoryId로 product list 가져오기 */
   findByCategoryId: async ({ category, options }) => {
     try {
-      const productData = await ProductModel.paginate(
-        { category },
-        options
-      );
+      const productData = await ProductModel.paginate({ category }, options);
 
       return productData;
     } catch (error) {
@@ -116,10 +108,7 @@ const Product = {
   /** subCategoryId로 product list 가져오기 */
   findBySubCategoryId: async ({ subCategory, options }) => {
     try {
-      const productData = await ProductModel.paginate(
-        { subCategory },
-        options
-      )
+      const productData = await ProductModel.paginate({ subCategory }, options);
 
       return productData;
     } catch (error) {
@@ -131,7 +120,7 @@ const Product = {
   deleteProductByProductId: async ({ productId }) => {
     try {
       const productData = await ProductModel.findByIdAndDelete({
-        _id: productId
+        _id: productId,
       });
 
       return productData;
@@ -150,6 +139,6 @@ const Product = {
       throw error;
     }
   },
-}
+};
 
 exports.Product = Product;

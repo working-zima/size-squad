@@ -95,8 +95,6 @@ export default function MySizeEditForm({
   });
   const { isValid } = methods.formState;
 
-  console.log(`productData.measurements: `, productData.measurements);
-
   const onSubmit = async (formData: ProductInputForm) => {
     try {
       await updateProductMutation.mutateAsync({

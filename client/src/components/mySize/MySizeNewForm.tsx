@@ -16,7 +16,7 @@ import useCreateUserProduct from "../../hooks/useCreateUserProduct";
 import Button from "../ui/Button";
 import useModal from "../../hooks/useModal";
 import { AlertModal } from "../ui/modal/ModalComponents";
-import { InitialData, ProductInputForm, Summary, User } from "../../types";
+import { InitialData, ProductInputForm, User } from "../../types";
 
 const Container = styled.div`
   padding: 20px ${(props) => props.theme.sizes.contentPadding} 0;
@@ -101,6 +101,7 @@ export default function MySizeNewForm({
       description: "",
     },
   });
+
   const { isValid } = methods.formState;
   const { mutateAsync } = useCreateUserProduct();
 
@@ -124,10 +125,12 @@ export default function MySizeNewForm({
         })),
         description: formData.description,
       };
+
       await mutateAsync(requestData);
-      store.reset();
+      // store.reset();
       onComplete();
     } catch (error) {
+      console.log(`error: `, error);
       openModal();
     }
   };

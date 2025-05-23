@@ -1,22 +1,27 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { productService } from "../services/ProductService";
-import { ProductRequest } from "../types";
-import { ProductParamsStore } from "../stores/ProductParamsStore";
-import { queryKeys } from "../constants/queryKeys";
+import { ProductRequest, ProductResponse } from "../types";
+import { getRelatedUserProductQueryKeys } from "../utils/queryUtils";
 
 export default function useCreateUserProduct() {
   const queryClient = useQueryClient();
-
-  const params = ProductParamsStore.getState();
-  const queryKey = queryKeys.userProducts(params);
 
   const useCreateUserProductMutation = useMutation({
     mutationFn: (newProduct: ProductRequest) =>
       productService.createProduct(newProduct),
 
-    onMutate: async (newProduct) => {
-      await queryClient.cancelQueries({ queryKey });
+    onSuccess: (createdProduct: ProductResponse) => {
+      console.log(`createdProduct: `, createdProduct);
+      const relatedKeys = getRelatedUserProductQueryKeys(queryClient, {
+        authorId: createdProduct.author._id,
+        categoryId: createdProduct.category._id,
+        subCategoryId: createdProduct.subCategory._id,
+      });
+
+      relatedKeys.forEach((key) => {
+        queryClient.invalidateQueries({ queryKey: key });
+      });
     },
   });
 

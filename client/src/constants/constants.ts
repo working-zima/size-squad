@@ -137,3 +137,8 @@ export const DEFAULT_PRODUCT_FILTER = {
   sortCode: "RECENT",
   per: DEFAULT_PER,
 };
+
+export const QUERY_KEYS = {
+  USER_PRODUCTS: "userProducts",
+  PRODUCT: "product",
+};

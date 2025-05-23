@@ -3,8 +3,10 @@ import { InfiniteData, QueryClient } from "@tanstack/react-query";
 import {
   PaginationResponse,
   ProductResponse,
+  Summary,
   UserProductQueryParams,
 } from "../types";
+import { QUERY_KEYS } from "../constants/constants";
 
 /**
  * "userProducts" 키를 가진 캐시에서 product._id 가 deletedId 에 해당하는 객체 찾기
@@ -18,7 +20,7 @@ export const findProductFromUserProductsByProductId = (
 ) => {
   const queryCache = queryClient.getQueryCache();
   const userProductsQueryCache = queryCache.findAll({
-    queryKey: ["userProducts"],
+    queryKey: [QUERY_KEYS.USER_PRODUCTS],
   });
 
   for (const { queryKey } of userProductsQueryCache) {
@@ -37,6 +39,12 @@ export const findProductFromUserProductsByProductId = (
   return undefined;
 };
 
+export type RelatedProductParams = {
+  authorId: string;
+  categoryId: string;
+  subCategoryId: string;
+};
+
 /**
  * 삭제 대상과 관련 있는 필터(카테고리/서브카테고리/작성자 등)를 가진 쿼리만 추려내기
  * @param queryClient
@@ -45,24 +53,24 @@ export const findProductFromUserProductsByProductId = (
  */
 export const getRelatedUserProductQueryKeys = (
   queryClient: QueryClient,
-  product: ProductResponse
+  { authorId, categoryId, subCategoryId }: RelatedProductParams
 ) => {
   const queryCache = queryClient.getQueryCache();
   const userProductsQueryCache = queryCache.findAll({
-    queryKey: ["userProducts"],
+    queryKey: [QUERY_KEYS.USER_PRODUCTS],
   });
 
   const relatedQueryKeys = userProductsQueryCache
     .filter(({ queryKey }) => {
       const [, defaultParams] = queryKey as [string, UserProductQueryParams];
 
-      const sameUser = defaultParams?.userId === product.author._id;
+      const sameUser = defaultParams.userId === authorId;
       const sameCategory =
-        defaultParams?.categoryId === product.category._id ||
-        defaultParams?.categoryId === "";
+        defaultParams.categoryId === categoryId ||
+        defaultParams.categoryId === "";
       const sameSubCategory =
-        defaultParams?.subCategoryId === product.subCategory._id ||
-        defaultParams?.subCategoryId === "";
+        defaultParams.subCategoryId === subCategoryId ||
+        defaultParams.subCategoryId === "";
 
       return sameUser && sameCategory && sameSubCategory;
     })

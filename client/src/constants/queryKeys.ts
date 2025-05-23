@@ -1,5 +1,5 @@
 import { UserProductQueryParams } from "../types";
-import { DEFAULT_PER } from "./constants";
+import { DEFAULT_PER, QUERY_KEYS } from "./constants";
 
 export const queryKeys = {
   userProducts: (params: UserProductQueryParams) => {
@@ -12,8 +12,8 @@ export const queryKeys = {
       userId: params.userId ?? "",
     };
 
-    return ["userProducts", defaultParams];
+    return [QUERY_KEYS.USER_PRODUCTS, defaultParams];
   },
 
-  product: (productId: string) => ["product", productId],
+  product: (productId: string) => [QUERY_KEYS.PRODUCT, productId],
 };

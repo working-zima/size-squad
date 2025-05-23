@@ -47,10 +47,11 @@ export default function useDeleteUserProduct() {
       if (!deletedProduct) return { previousData: null };
 
       // 관련된 userProducts 쿼리 캐시 key를 식별
-      const relatedKeys = getRelatedUserProductQueryKeys(
-        queryClient,
-        deletedProduct
-      );
+      const relatedKeys = getRelatedUserProductQueryKeys(queryClient, {
+        authorId: deletedProduct.author._id,
+        categoryId: deletedProduct.category._id,
+        subCategoryId: deletedProduct.subCategory._id,
+      });
 
       // 병렬로 동일 조회 쿼리가 실행되고 있다면 멈춰서 캐시 충돌 방지
       await queryClient.cancelQueries({ queryKey });
@@ -90,7 +91,7 @@ export default function useDeleteUserProduct() {
       });
     },
 
-    /** finally */
+    /** 쿼리를 stale 상태로 강제 전환 */
     onSettled: (data, error, deletedId) => {
       const deletedProduct = findProductFromUserProductsByProductId(
         queryClient,
@@ -99,10 +100,11 @@ export default function useDeleteUserProduct() {
 
       if (!deletedProduct) return;
 
-      const relatedKeys = getRelatedUserProductQueryKeys(
-        queryClient,
-        deletedProduct
-      );
+      const relatedKeys = getRelatedUserProductQueryKeys(queryClient, {
+        authorId: deletedProduct.author._id,
+        categoryId: deletedProduct.category._id,
+        subCategoryId: deletedProduct.subCategory._id,
+      });
 
       relatedKeys.forEach((key) => {
         queryClient.invalidateQueries({ queryKey: key });
