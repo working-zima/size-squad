@@ -16,16 +16,11 @@ import {
 /**
  * 사용자 사이즈를 삭제하는 React Query용 커스텀 훅
  *
- * @returns useMutation() : 결과 객체
- *
- * @example
- * const deleteMutation = useDeleteUserProduct();
- * deleteMutation.mutate(productId);
+ * @returns useDeleteUserProductMutation : 결과 객체
  */
 export default function useDeleteUserProduct() {
   const queryClient = useQueryClient();
 
-  // TODO: onMutate, onSettled 모두에서 데이터 변경 중, 최적화를 위해 onMutate는 보이는 데이터만 바꾸고 onSettled에서 보이지 않지만 관련 데이터 수정을 고려해 보는 중
   const useDeleteUserProductMutation = useMutation({
     /** 서버에 데이터 삭제 요청 */
     mutationFn: async (productId: string) => {
@@ -34,14 +29,14 @@ export default function useDeleteUserProduct() {
     },
 
     /** mutationFn 실행 전 */
-    onMutate: async (deletedId: string) => {
+    onMutate: async (productId: string) => {
       const params = ProductParamsStore.getState();
       const queryKey = queryKeys.userProducts(params);
 
       // 삭제 대상 데이터를 캐시에서 탐색
       const deletedProduct = findProductFromUserProductsByProductId(
         queryClient,
-        deletedId,
+        productId,
       );
 
       if (!deletedProduct) return { previousData: null };
@@ -71,42 +66,31 @@ export default function useDeleteUserProduct() {
             ...oldData,
             pages: oldData.pages.map((page) => ({
               ...page,
-              docs: page.docs.filter((product) => product._id !== deletedId),
+              docs: page.docs.filter((product) => product._id !== productId),
             })),
           };
         });
       });
 
       queryClient.removeQueries({
-        queryKey: queryKeys.product(deletedId),
+        queryKey: queryKeys.product(productId),
       });
 
-      return { previousStates };
+      return { previousStates, relatedKeys };
     },
 
     /** mutationFn 실패 시 이전 캐시 상태로 롤백 */
-    onError: (error, deletedId, context) => {
+    onError: (_error, _productId, context) => {
       context?.previousStates?.forEach((data, key) => {
         queryClient.setQueryData(key, data);
       });
     },
 
     /** 쿼리를 stale 상태로 강제 전환 */
-    onSettled: (data, error, deletedId) => {
-      const deletedProduct = findProductFromUserProductsByProductId(
-        queryClient,
-        deletedId,
-      );
+    onSettled: (_data, _error, productId, context) => {
+      if (!context?.relatedKeys) return;
 
-      if (!deletedProduct) return;
-
-      const relatedKeys = getRelatedUserProductQueryKeys(queryClient, {
-        authorId: deletedProduct.author._id,
-        categoryId: deletedProduct.category._id,
-        subCategoryId: deletedProduct.subCategory._id,
-      });
-
-      relatedKeys.forEach((key) => {
+      context.relatedKeys.forEach((key) => {
         queryClient.invalidateQueries({ queryKey: key });
       });
     },

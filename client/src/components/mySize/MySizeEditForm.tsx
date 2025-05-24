@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import useModal from '../../hooks/useModal';
 import useProductFormStore from '../../hooks/useProductFormStore';
-import useUpdateProduct from '../../hooks/useUpdateProduct';
+import useUpdateUserProduct from '../../hooks/useUpdateUserProduct';
 import { InitialData, Product, ProductInputForm } from '../../types';
 import MySizeBrandInput from '../mySize/MySizeBrandInput';
 import Button from '../ui/Button';
@@ -69,10 +69,8 @@ export default function MySizeEditForm({
   productData,
   onComplete,
 }: MySizeEditFormProps) {
-  const updateProductMutation = useUpdateProduct();
-
+  const updateProductMutation = useUpdateUserProduct();
   const [{ errorMessage }, store] = useProductFormStore();
-
   const { modalRef, openModal, closeModal } = useModal();
 
   const methods = useForm<ProductInputForm>({

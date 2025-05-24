@@ -34,14 +34,14 @@ type ModalProps = {
   hideOnClickOutside?: boolean;
   children: ReactNode;
   hide: () => void;
-  onClose?: (...arg: any[]) => void;
+  onClose?: (...arg: unknown[]) => void;
   className?: string;
 };
 
 const Modal = ({
+  children,
   modalRef,
   hideOnClickOutside = false,
-  children,
   hide,
   onClose,
 }: ModalProps) => {

@@ -1,10 +1,8 @@
-// import { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 
 import { accessTokenUtil } from '../auth/accessTokenUtil';
 import MySizeNewForm from '../components/mySize/MySizeNewForm';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
-// import useProductFormStore from "../hooks/useProductFormStore";
 import useAuthStore from '../hooks/useAuthStore';
 import useInitialData from '../hooks/useInitialData';
 import AccessDeniedPage from './AccessDeniedPage';
@@ -18,50 +16,23 @@ export default function MySizeNewPage() {
     data: initialData,
     isLoading: initialDataIsLoading,
     isError: initialDataIsError,
-    error,
+    error: initialDataError,
   } = useInitialData();
-  // const [{ product }, store] = useProductFormStore();
 
+  const error = initialDataIsError === true;
   const loading = userState === 'loading' || initialDataIsLoading === true;
 
-  // useEffect(() => {
-  //   store.reset();
-  // }, []);
-
-  // useEffect(() => {
-  //   if (!initialData || product._id || !user.gender) {
-  //     return;
-  //   }
-  //   store.reset();
-
-  //   store.changeCategory(initialData.categories[0]);
-  //   store.changeSubCategory(initialData.categories[0].subCategories[0]);
-  //   store.changeGender(user.gender);
-  //   store.changeFit(initialData.fits[0]);
-
-  //   const sizeList = initialData.sizes.filter((sizeElem: any) => {
-  //     return sizeElem.gender._id === user.gender._id;
-  //   });
-  //   store.changeSize(sizeList[0]);
-
-  //   initialData.categories[0].measurements.forEach(
-  //     (measurement: any, idx: any) => {
-  //       store.addMeasurement();
-  //       store.changeMeasurementAndId(idx, measurement._id, measurement.name);
-  //     }
-  //   );
-  // }, [initialData, user.gender, store]);
-
   const handleComplete = () => {
-    // store.reset();
     navigate('/mysize');
   };
 
   if (loading) return <LoadingSpinner />;
-  if (!accessTokenUtil.getAccessToken() || !user._id)
+  if (!accessTokenUtil.getAccessToken() || !user._id) {
     return <AccessDeniedPage />;
-  if (initialDataIsError === true)
-    return <ErrorPage errorMessage={error?.message} />;
+  }
+  if (error) {
+    return <ErrorPage errorMessage={initialDataError?.message} />;
+  }
 
   return (
     <MySizeNewForm

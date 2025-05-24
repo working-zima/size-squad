@@ -19,7 +19,6 @@ export default function MySizeMeasurementsInput({
   });
 
   const selectedCategory = watch('category');
-
   const selectedMeasurements =
     categories.find((category) => category._id === selectedCategory?._id)
       ?.measurements ?? [];
@@ -27,17 +26,14 @@ export default function MySizeMeasurementsInput({
   // 카테고리 변경으로 새로운 측정 인풋일 경우 값 초기화
   useEffect(() => {
     if (!selectedMeasurements.length) return;
-
     const newMeasurements = selectedMeasurements.map((measurement) => {
       const existing = fields.find((field) => field._id === measurement._id);
-
       return {
         _id: measurement._id,
         name: measurement.name,
         value: existing?.value ?? '',
       };
     });
-
     replace(newMeasurements);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCategory._id]);

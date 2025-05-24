@@ -52,8 +52,8 @@ type ConfirmModalProps = {
  * @param hide
  */
 export const ConfirmModal = ({
-  modalRef,
   children,
+  modalRef,
   title,
   onConfirm,
   onCancel,

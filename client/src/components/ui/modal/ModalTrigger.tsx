@@ -25,7 +25,7 @@ export const AlertTrigger = ({ children, buttonText }: AlertTriggerProps) => {
 
 type ConfirmTriggerProps = {
   title?: string;
-  buttonType?: string;
+  buttonType?: 'button' | 'submit' | 'reset';
   buttonText: string;
   disabled?: boolean | null;
   confirmed: boolean | null;
@@ -34,11 +34,11 @@ type ConfirmTriggerProps = {
 };
 
 export const ConfirmTrigger = ({
+  children,
   title,
   buttonType,
   buttonText,
   disabled = true,
-  children,
   confirmed,
   setConfirmed,
 }: ConfirmTriggerProps) => {
@@ -48,7 +48,7 @@ export const ConfirmTrigger = ({
     <>
       <Button
         onClick={openModal}
-        type={(buttonType = 'button')}
+        type={buttonType ?? 'button'}
         disabled={!disabled}
       >
         {buttonText}

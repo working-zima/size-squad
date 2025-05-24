@@ -8,11 +8,11 @@ export default function useCreateUserProduct() {
   const queryClient = useQueryClient();
 
   const useCreateUserProductMutation = useMutation({
-    mutationFn: (newProduct: ProductRequest) =>
-      productService.createProduct(newProduct),
+    mutationFn: (newProduct: ProductRequest) => {
+      return productService.createProduct(newProduct);
+    },
 
     onSuccess: (createdProduct: ProductResponse) => {
-      console.log(`createdProduct: `, createdProduct);
       const relatedKeys = getRelatedUserProductQueryKeys(queryClient, {
         authorId: createdProduct.author._id,
         categoryId: createdProduct.category._id,

@@ -154,3 +154,8 @@ export type UserProductQueryParams = {
   per?: number;
   userId?: string;
 };
+
+export type ApiError = {
+  status?: number;
+  message: string;
+};

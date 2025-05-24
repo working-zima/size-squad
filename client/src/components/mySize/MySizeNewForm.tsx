@@ -1,10 +1,10 @@
+import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
 import useCreateUserProduct from '../../hooks/useCreateUserProduct';
 import useModal from '../../hooks/useModal';
-import useProductFormStore from '../../hooks/useProductFormStore';
-import { InitialData, ProductInputForm, User } from '../../types';
+import { ApiError, InitialData, ProductInputForm, User } from '../../types';
 import Button from '../ui/Button';
 import { AlertModal } from '../ui/modal/ModalComponents';
 import MySizeBrandInput from './MySizeBrandInput';
@@ -68,10 +68,9 @@ export default function MySizeNewForm({
   user,
   onComplete,
 }: MySizeNewFormProps) {
-  const [{ errorMessage }, store] = useProductFormStore();
-
+  const { mutateAsync } = useCreateUserProduct();
   const { modalRef, openModal, closeModal } = useModal();
-
+  const [modalMessage, setModalMessage] = useState<string>();
   const methods = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -92,9 +91,7 @@ export default function MySizeNewForm({
       description: '',
     },
   });
-
   const { isValid } = methods.formState;
-  const { mutateAsync } = useCreateUserProduct();
 
   const onSubmit = async (formData: ProductInputForm) => {
     try {
@@ -118,17 +115,16 @@ export default function MySizeNewForm({
       };
 
       await mutateAsync(requestData);
-      // store.reset();
       onComplete();
     } catch (error) {
-      console.log(`error: `, error);
+      const apiError = error as ApiError;
+      setModalMessage(apiError.message ?? '알 수 없는 오류가 발생했습니다.');
       openModal();
     }
   };
 
   const handleConfirm = (event?: React.MouseEvent) => {
     if (event) event.preventDefault();
-    store.reset();
     closeModal();
   };
 
@@ -145,6 +141,7 @@ export default function MySizeNewForm({
           <MySizeMeasurementsInput categories={initialData.categories} />
           <MySizeFitBox fits={initialData.fits} />
           <MySizeDescriptionInput />
+          {/* 등록 버튼 */}
           <ButtonWrapper>
             <Button type="submit" disabled={!isValid}>
               등록
@@ -152,10 +149,10 @@ export default function MySizeNewForm({
           </ButtonWrapper>
         </Form>
       </FormProvider>
-
+      {/* 에러 안내 모달 */}
       <AlertModal modalRef={modalRef} hide={handleConfirm}>
         <p>수정 실패</p>
-        <p>{errorMessage}</p>
+        <p>{modalMessage}</p>
       </AlertModal>
     </Container>
   );
