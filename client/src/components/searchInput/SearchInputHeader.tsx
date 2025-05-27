@@ -1,10 +1,16 @@
-import { Dispatch, FormEvent, MouseEvent, SetStateAction, useRef } from 'react';
+import {
+  Dispatch,
+  FormEvent,
+  MouseEvent,
+  SetStateAction,
+  useRef,
+  useState,
+} from 'react';
 import { LiaAngleLeftSolid } from 'react-icons/lia';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { ROUTES } from '../../constants/pageRoutes';
-import useProductsStore from '../../hooks/useProductsStore';
 import Button from '../ui/Button';
 import { SearchTextInputBox } from '../ui/textbox/TextBoxComponents';
 
@@ -36,7 +42,7 @@ type SearchInputProps = {
   hideHeader: () => void;
   hideBody: () => void;
   setIsFocused: Dispatch<SetStateAction<boolean>>;
-  addKeywordHistory: (value: string) => void;
+  addKeyword: (value: string) => void;
 };
 
 export default function SearchInputHeader({
@@ -44,11 +50,12 @@ export default function SearchInputHeader({
   hideHeader,
   hideBody,
   setIsFocused,
-  addKeywordHistory,
+  addKeyword,
 }: SearchInputProps) {
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
-  const [{ keyword }, store] = useProductsStore();
+
+  const [keyword, setKeyword] = useState('');
 
   const stopPropagation = (event: MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
@@ -58,7 +65,7 @@ export default function SearchInputHeader({
     event.preventDefault();
     if (keyword === '') return;
     if (inputRef.current) inputRef.current.blur();
-    if (isAutoSave) addKeywordHistory(keyword);
+    if (isAutoSave) addKeyword(keyword);
     setIsFocused(false);
     hideBody();
     navigate(`/search?query=${encodeURIComponent(keyword)}`);
@@ -68,9 +75,6 @@ export default function SearchInputHeader({
     navigate(ROUTES.PRODUCT_LIST);
     hideHeader();
     hideBody();
-    // TODO: 기능상 문제 없으면 지우기
-    // store.resetKeyword();
-    // store.fetchInitialProducts({});
   };
 
   return (
@@ -85,8 +89,8 @@ export default function SearchInputHeader({
           placeholder="브랜드, 제품명으로 검색하세요"
           maxLength={100}
           setIsFocused={setIsFocused}
-          onChange={(value) => store.changeKeyword(value)}
-          onReset={() => store.resetKeyword()}
+          onChange={setKeyword}
+          onReset={() => setKeyword('')}
         />
       </form>
     </Container>

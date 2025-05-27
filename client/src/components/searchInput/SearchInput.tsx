@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import { useKeywordHistory } from '../../hooks/useKeywordHistory';
+import { SearchStore } from '../../stores/SearchStore';
 import SearchInputBody from './SearchInputBody';
 import SearchInputHeader from './SearchInputHeader';
 
@@ -29,11 +29,11 @@ export default function SearchInput({
   const {
     keywordHistory,
     isAutoSave,
-    addKeywordHistory,
-    removeKeywordHistory,
+    addKeyword,
+    removeKeyword,
     clearHistory,
     toggleAutoSave,
-  } = useKeywordHistory();
+  } = SearchStore();
 
   useEffect(() => {
     if (headerOpened && (isFocused || isInitialOpen)) {
@@ -54,7 +54,7 @@ export default function SearchInput({
             hideHeader={hideHeader}
             hideBody={hideBody}
             setIsFocused={setIsFocused}
-            addKeywordHistory={addKeywordHistory}
+            addKeyword={addKeyword}
           />,
           portalRoot,
         )}
@@ -64,7 +64,7 @@ export default function SearchInput({
             keywordHistory={keywordHistory}
             isAutoSave={isAutoSave}
             toggleAutoSave={toggleAutoSave}
-            removeKeywordHistory={removeKeywordHistory}
+            removeKeyword={removeKeyword}
             handleClickDeleteAllHistory={handleClickDeleteAllHistory}
             hideBody={hideBody}
           />,

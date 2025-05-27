@@ -69,17 +69,17 @@ type SearchInputListProps = {
   isAutoSave: boolean;
   keywordHistory: string[];
   toggleAutoSave: () => void;
-  removeKeywordHistory: (index: number) => void;
+  removeKeyword: (index: number) => void;
 };
 
 export default function SearchInputList({
   isAutoSave,
   keywordHistory,
   toggleAutoSave,
-  removeKeywordHistory,
+  removeKeyword,
 }: SearchInputListProps) {
   const handleClickDeleteKeyword = (index: number) => {
-    removeKeywordHistory(index);
+    removeKeyword(index);
   };
 
   return (

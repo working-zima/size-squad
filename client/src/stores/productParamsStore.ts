@@ -36,8 +36,8 @@ type ProductParamsStore = {
  * zustand의 persist 미들웨어를 통해 localStorage에 상태를 저장하며,
  * 다음 방문 시에도 동일한 파라미터 상태를 유지할 수 있습니다.
  */
-export const ProductParamsStore = create(
-  persist<ProductParamsStore>(
+export const ProductParamsStore = create<ProductParamsStore>()(
+  persist(
     (set) => ({
       keyword: '',
       categoryId: '',
@@ -65,6 +65,14 @@ export const ProductParamsStore = create(
     }),
     {
       name: 'product-params',
+      partialize: (state) => ({
+        keyword: state.keyword,
+        categoryId: state.categoryId,
+        subCategoryId: state.subCategoryId,
+        sortCode: state.sortCode,
+        per: state.per,
+        userId: state.userId,
+      }),
     },
   ),
 );

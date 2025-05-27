@@ -34,7 +34,7 @@ type SearchInputBodyProps = {
   keywordHistory: string[];
   isAutoSave: boolean;
   toggleAutoSave: () => void;
-  removeKeywordHistory: (index: number) => void;
+  removeKeyword: (index: number) => void;
   handleClickDeleteAllHistory: () => void;
   hideBody: () => void;
 };
@@ -43,7 +43,7 @@ export default function SearchInputBody({
   keywordHistory,
   isAutoSave,
   toggleAutoSave,
-  removeKeywordHistory,
+  removeKeyword,
   handleClickDeleteAllHistory,
   hideBody,
 }: SearchInputBodyProps) {
@@ -57,7 +57,7 @@ export default function SearchInputBody({
         isAutoSave={isAutoSave}
         keywordHistory={keywordHistory}
         toggleAutoSave={toggleAutoSave}
-        removeKeywordHistory={removeKeywordHistory}
+        removeKeyword={removeKeyword}
       />
       <SearchInputBox>
         <Button onClick={toggleAutoSave}>자동저장 끄기</Button>
