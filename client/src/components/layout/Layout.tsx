@@ -55,10 +55,11 @@ export default function Layout() {
 
   let page = PAGES[location.pathname] || {
     PAGETITLE: '',
-    homeButton: false,
-    backSpace: false,
-    showMenu: false,
-    Switcher: false,
+    LEFTBUTTON: '',
+    RIGHTBUTTON: '',
+    FOOTER: false,
+    SWITCHER: false,
+    SHOWMENU: false,
   };
 
   if (isEditSizePage) page = PAGES[ROUTES.PRODUCT_EDIT_PATTERN];

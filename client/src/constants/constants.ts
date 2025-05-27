@@ -67,7 +67,7 @@ export const PAGES: Record<string, PageConfig> = {
     SWITCHER: true,
     SHOWMENU: false,
   },
-  [ROUTES.PRODUCT_EDIT_PATTERN]: {
+  [ROUTES.MYPAGE_EDIT_PATTERN]: {
     PAGETITLE: '회원 정보 변경',
     LEFTBUTTON: 'backspace',
     RIGHTBUTTON: 'home',

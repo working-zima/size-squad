@@ -1,6 +1,5 @@
 import axiosInstance from '../api/axiosInstance';
 import { PaginationResponse, ProductRequest, ProductResponse } from '../types';
-// import ApiService from './ApiService';
 
 export default class ProductService {
   async fetchProducts({
@@ -86,8 +85,7 @@ export default class ProductService {
       '/products',
       newProduct,
     );
-    console.log(`newProduct: `, newProduct);
-    console.log(`data: `, data);
+
     return data;
   }
 
