@@ -2,7 +2,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 
 import { TextareaBox } from '../ui/textbox/TextBoxComponents';
 
-export default function MySizeNewDescription() {
+export default function ProductDescriptionInput() {
   const { control } = useFormContext();
 
   return (

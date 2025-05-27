@@ -2,9 +2,9 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
 
 import { SORT_OPTIONS } from '../constants/constants';
-import { queryKeys } from '../constants/queryKeys';
 import { productService } from '../services/ProductService';
 import { ProductParamsStore } from '../stores/ProductParamsStore';
+import { queryKeys } from '../utils/queryKeys';
 import useIntersectionObserver from './useIntersectionObserver';
 
 const ioOptions = { threshold: 1 };

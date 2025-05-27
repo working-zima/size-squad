@@ -1,4 +1,5 @@
 import { ApiState, PageConfig, SortOption } from '../types';
+import { ROUTES } from './pageRoutes';
 
 export const DEFAULT_PER = 8;
 
@@ -10,7 +11,7 @@ export const FETCH_STATE: Record<string, ApiState> = {
 };
 
 export const PAGES: Record<string, PageConfig> = {
-  '/': {
+  [ROUTES.HOME]: {
     PAGETITLE: 'Size Squad',
     LEFTBUTTON: '',
     RIGHTBUTTON: 'search',
@@ -18,7 +19,7 @@ export const PAGES: Record<string, PageConfig> = {
     SWITCHER: true,
     SHOWMENU: true,
   },
-  '/mysize': {
+  [ROUTES.PRODUCT_LIST]: {
     PAGETITLE: 'Size Squad',
     LEFTBUTTON: '',
     RIGHTBUTTON: 'search',
@@ -26,7 +27,7 @@ export const PAGES: Record<string, PageConfig> = {
     SWITCHER: true,
     SHOWMENU: true,
   },
-  '/login': {
+  [ROUTES.LOGIN]: {
     PAGETITLE: '로그인',
     LEFTBUTTON: 'backspace',
     RIGHTBUTTON: '',
@@ -34,7 +35,7 @@ export const PAGES: Record<string, PageConfig> = {
     SWITCHER: false,
     SHOWMENU: false,
   },
-  '/signup': {
+  [ROUTES.SIGNUP]: {
     PAGETITLE: '회원가입',
     LEFTBUTTON: 'backspace',
     RIGHTBUTTON: '',
@@ -42,7 +43,7 @@ export const PAGES: Record<string, PageConfig> = {
     SWITCHER: false,
     SHOWMENU: false,
   },
-  '/mysize/:id/edit': {
+  [ROUTES.PRODUCT_EDIT_PATTERN]: {
     PAGETITLE: '사이즈 정보 변경',
     LEFTBUTTON: 'backspace',
     RIGHTBUTTON: 'home',
@@ -50,7 +51,7 @@ export const PAGES: Record<string, PageConfig> = {
     SWITCHER: false,
     SHOWMENU: false,
   },
-  '/mysize/new': {
+  [ROUTES.PRODUCT_NEW]: {
     PAGETITLE: '사이즈 등록',
     LEFTBUTTON: 'backspace',
     RIGHTBUTTON: '',
@@ -58,7 +59,7 @@ export const PAGES: Record<string, PageConfig> = {
     SWITCHER: false,
     SHOWMENU: false,
   },
-  '/mypage/:id': {
+  [ROUTES.MYPAGE_PATTERN]: {
     PAGETITLE: '내 페이지',
     LEFTBUTTON: 'backspace',
     RIGHTBUTTON: 'home',
@@ -66,7 +67,7 @@ export const PAGES: Record<string, PageConfig> = {
     SWITCHER: true,
     SHOWMENU: false,
   },
-  '/mypage/:id/edit': {
+  [ROUTES.PRODUCT_EDIT_PATTERN]: {
     PAGETITLE: '회원 정보 변경',
     LEFTBUTTON: 'backspace',
     RIGHTBUTTON: 'home',
@@ -74,7 +75,7 @@ export const PAGES: Record<string, PageConfig> = {
     SWITCHER: false,
     SHOWMENU: false,
   },
-  '/mypage/:id/edit/:editField': {
+  [ROUTES.MYPAGE_INPUT_PATTERN]: {
     PAGETITLE: '특정 회원 정보 변경',
     LEFTBUTTON: 'backspace',
     RIGHTBUTTON: '',
@@ -82,7 +83,7 @@ export const PAGES: Record<string, PageConfig> = {
     SWITCHER: false,
     SHOWMENU: false,
   },
-  '/search': {
+  [ROUTES.SEARCH]: {
     PAGETITLE: '',
     LEFTBUTTON: '',
     RIGHTBUTTON: '',

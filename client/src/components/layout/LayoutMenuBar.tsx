@@ -9,6 +9,7 @@ import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { accessTokenUtil } from '../../auth/accessTokenUtil';
+import { ROUTES } from '../../constants/pageRoutes';
 import { User } from '../../types';
 
 const Container = styled.div.attrs({ className: 'LayoutMenuBar' })`
@@ -88,7 +89,7 @@ export default function LayoutMenuBar({ user }: LayoutMenuBarProps) {
         <h2>Navigation Menu</h2>
         <Menu>
           <ContentWrapper>
-            <MenuLink to="/" $isActive={isActive('/')}>
+            <MenuLink to="/" $isActive={isActive(ROUTES.HOME)}>
               <div>
                 <RiHome5Line size="24" />
               </div>
@@ -96,13 +97,19 @@ export default function LayoutMenuBar({ user }: LayoutMenuBarProps) {
             </MenuLink>
             {!!accessToken && (
               <>
-                <MenuLink to="/mysize" $isActive={isActive('/mysize')}>
+                <MenuLink
+                  to={ROUTES.PRODUCT_LIST}
+                  $isActive={isActive(ROUTES.PRODUCT_LIST)}
+                >
                   <div>
                     <RiListView size="24" />
                   </div>
                   <span>목록</span>
                 </MenuLink>
-                <MenuLink to="/mysize/new" $isActive={isActive('/mysize/new')}>
+                <MenuLink
+                  to={ROUTES.PRODUCT_NEW}
+                  $isActive={isActive(ROUTES.PRODUCT_NEW)}
+                >
                   <div>
                     <RiEditLine size="24" />
                   </div>
@@ -111,8 +118,8 @@ export default function LayoutMenuBar({ user }: LayoutMenuBarProps) {
               </>
             )}
             <MenuLink
-              to={accessToken ? `/mypage/${user._id}` : '/login'}
-              $isActive={isActive('/mypage') || isActive('/login')}
+              to={accessToken ? ROUTES.mypage(user._id) : ROUTES.LOGIN}
+              $isActive={isActive(ROUTES.MYPAGE) || isActive(ROUTES.LOGIN)}
             >
               {accessToken ? (
                 <>

@@ -9,7 +9,7 @@ type MySizeSizeBoxProps = {
   sizes: Size[];
 };
 
-export default function MySizeSizeBox({ sizes }: MySizeSizeBoxProps) {
+export default function ProductSizeBox({ sizes }: MySizeSizeBoxProps) {
   const { control, watch, setValue } = useFormContext();
   const gender = watch('gender');
   const selectedSize = watch('size');

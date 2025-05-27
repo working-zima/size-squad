@@ -1,5 +1,6 @@
+import axiosInstance from '../api/axiosInstance';
 import { PaginationResponse, ProductRequest, ProductResponse } from '../types';
-import ApiService from './ApiService';
+// import ApiService from './ApiService';
 
 export default class ProductService {
   async fetchProducts({
@@ -19,7 +20,7 @@ export default class ProductService {
     page?: number;
     per?: number;
   } = {}): Promise<PaginationResponse<ProductResponse>> {
-    const { data } = await ApiService.get('/products', {
+    const { data } = await axiosInstance.get('/products', {
       params: {
         keyword,
         categoryId,
@@ -40,7 +41,7 @@ export default class ProductService {
   }: {
     productId: string;
   }): Promise<ProductResponse> {
-    const { data } = await ApiService.get(`/products/${productId}`);
+    const { data } = await axiosInstance.get(`/products/${productId}`);
     const { product } = data;
     return product;
   }
@@ -65,7 +66,7 @@ export default class ProductService {
     userId?: string;
   } = {}): Promise<PaginationResponse<ProductResponse>> {
     const url = userId ? `/products/user/${userId}` : `/products/user/`;
-    const { data } = await ApiService.get(url, {
+    const { data } = await axiosInstance.get(url, {
       params: {
         keyword,
         categoryId,
@@ -81,11 +82,12 @@ export default class ProductService {
   }
 
   async createProduct(newProduct: ProductRequest): Promise<ProductResponse> {
-    const { data } = await ApiService.post<ProductResponse>(
+    const { data } = await axiosInstance.post<ProductResponse>(
       '/products',
       newProduct,
     );
-
+    console.log(`newProduct: `, newProduct);
+    console.log(`data: `, data);
     return data;
   }
 
@@ -115,7 +117,7 @@ export default class ProductService {
       measurements,
       description,
     };
-    await ApiService.patch(`/products/${productId}`, product);
+    await axiosInstance.patch(`/products/${productId}`, product);
   }
 }
 

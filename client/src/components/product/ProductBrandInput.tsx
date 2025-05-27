@@ -2,11 +2,13 @@ import { Controller, useFormContext } from 'react-hook-form';
 
 import { TextInputBox } from '../ui/textbox/TextBoxComponents';
 
-type MySizeBrandInput = {
+type ProductBrandInputProps = {
   maxLength: number;
 };
 
-export default function MySizeBrandInput({ maxLength }: MySizeBrandInput) {
+export default function ProductBrandInput({
+  maxLength,
+}: ProductBrandInputProps) {
   const { control } = useFormContext();
 
   return (

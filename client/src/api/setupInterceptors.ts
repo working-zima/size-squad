@@ -6,7 +6,7 @@ import {
   onResponseError,
 } from './interceptors/responseInterceptor';
 
-export const setupInterceptors = (axios: AxiosInstance) => {
-  axios.interceptors.request.use(onRequest, onRequestError);
-  axios.interceptors.response.use(onResponse, onResponseError);
+export const setupInterceptors = (axiosInstance: AxiosInstance) => {
+  axiosInstance.interceptors.request.use(onRequest, onRequestError);
+  axiosInstance.interceptors.response.use(onResponse, onResponseError);
 };

@@ -6,13 +6,13 @@ import { nullSummary } from '../../nullObject';
 import { Category } from '../../types';
 import ComboBox from '../ui/selectbox/ComboBox';
 
-type MySizeCategoryBoxProps = {
+type ProductCategoryBoxProps = {
   categories: Category[];
 };
 
-export default function MySizeCategoryBox({
+export default function ProductCategoryBox({
   categories,
-}: MySizeCategoryBoxProps) {
+}: ProductCategoryBoxProps) {
   const { control, setValue, watch } = useFormContext();
 
   const category = watch('category');

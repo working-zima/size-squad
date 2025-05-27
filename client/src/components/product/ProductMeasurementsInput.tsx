@@ -5,13 +5,13 @@ import { MEASUREMENT } from '../../constants/apiLocalizationMap';
 import { Category, ProductInputForm } from '../../types';
 import { TextInputBox } from '../ui/textbox/TextBoxComponents';
 
-type MySizeMeasurementsInputProps = {
+type ProductMeasurementsInputProps = {
   categories: Category[];
 };
 
-export default function MySizeMeasurementsInput({
+export default function ProductMeasurementsInput({
   categories,
-}: MySizeMeasurementsInputProps) {
+}: ProductMeasurementsInputProps) {
   const { control, watch } = useFormContext<ProductInputForm>();
   const { fields, update, replace } = useFieldArray<ProductInputForm>({
     control,

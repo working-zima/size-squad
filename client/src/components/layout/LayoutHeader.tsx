@@ -1,6 +1,7 @@
 import { useMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { ROUTES } from '../../constants/pageRoutes';
 import { PageConfig } from '../../types';
 import LeftButton from './LeftButton';
 import RightButton from './RightButton';
@@ -59,8 +60,8 @@ const ContentWrapper = styled.div`
 `;
 
 export default function LayoutHeader({ page }: { page: PageConfig }) {
-  const isSignupCompletePage = useMatch('/signup/complete');
-  const isSearchPage = useMatch('/search');
+  const isSignupCompletePage = useMatch(ROUTES.SIGNUP_COMPLETE);
+  const isSearchPage = useMatch(ROUTES.SEARCH);
 
   const isHeaderless = isSignupCompletePage || isSearchPage;
 

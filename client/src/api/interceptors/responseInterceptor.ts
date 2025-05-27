@@ -1,8 +1,4 @@
-import axios, {
-  AxiosError,
-  AxiosResponse,
-  InternalAxiosRequestConfig,
-} from 'axios';
+import { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
 import { accessTokenUtil } from '../../auth/accessTokenUtil';
 import AuthService from '../../auth/AuthService';
@@ -33,6 +29,22 @@ export const onResponseError = async (error: AxiosError<ErrorResponse>) => {
 let isRefreshing = false;
 let failedQueue: Array<(token: string) => void> = [];
 
+/**
+ * 액세스 토큰이 만료되었을 때 자동으로 토큰을 재발급 받고, 실패했던 요청을 재시도
+ *
+ * - 최초 토큰 만료 시에는 `AuthService.reissueToken`을 호출하여 새 토큰을 발급받고, 실패 큐에 등록된 요청들을 순차적으로 다시 실행
+ * - 동시에 여러 요청이 실패한 경우 중복 갱신을 방지, 이미 진행 중이라면 큐에 등록된 콜백만 갱신된 토큰으로 재요청
+ *
+ * @param config - 실패한 요청의 Axios 설정 객체
+ * @returns 재시도된 Axios 응답 Promise
+ *
+ * @throws {ApiException} 토큰 재발급 실패 시 에러 발생
+ *
+ * @example
+ * if (response.status === 401 && response.data.message === 'TokenExpired') {
+ *   return await handleTokenRefresh(error.config);
+ * }
+ */
 const handleTokenRefresh = async (config: InternalAxiosRequestConfig) => {
   if (!isRefreshing) {
     isRefreshing = true;
@@ -59,7 +71,7 @@ const handleTokenRefresh = async (config: InternalAxiosRequestConfig) => {
     return new Promise((resolve) => {
       failedQueue.push((token) => {
         config.headers.Authorization = `Bearer ${token}`;
-        resolve(axios(config));
+        resolve(axiosInstance(config));
       });
     });
   }

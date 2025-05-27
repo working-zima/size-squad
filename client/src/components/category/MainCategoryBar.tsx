@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
 import { CATEGORY } from '../../constants/apiLocalizationMap';
+import { ROUTES } from '../../constants/pageRoutes';
 import { Category } from '../../types';
 import Button from '../ui/Button';
 
@@ -105,7 +106,7 @@ export default function MainCategoryBar({ categories }: MainCategoryProps) {
         }}
         data-id="all"
         active={activeBtn === 'all'}
-        onClick={() => handleNavigate('/mysize', 'all')}
+        onClick={() => handleNavigate(ROUTES.PRODUCT_LIST, 'all')}
       >
         <p>전체</p>
       </CategoryButton>
@@ -120,7 +121,7 @@ export default function MainCategoryBar({ categories }: MainCategoryProps) {
             active={activeBtn === category._id}
             onClick={() =>
               handleNavigate(
-                `/mysize?category1DepthCode=${category._id}`,
+                `${ROUTES.PRODUCT_LIST}?category1DepthCode=${category._id}`,
                 category._id,
               )
             }

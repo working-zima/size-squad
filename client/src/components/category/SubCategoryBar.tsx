@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
 import { SUBCATEGORY } from '../../constants/apiLocalizationMap';
+import { ROUTES } from '../../constants/pageRoutes';
 import { Summary } from '../../types';
 import Button from '../ui/Button';
 
@@ -67,7 +68,7 @@ export default function SubCategoryBar({ subCategories }: SubCategoryBarProps) {
   }, [subCategoryId]);
 
   const handleNavigate = (btnId: string) => {
-    let path = '/mysize';
+    let path = ROUTES.PRODUCT_LIST;
 
     if (categoryId) path = `${path}?category1DepthCode=${categoryId}`;
     if (btnId !== 'all') {

@@ -1,14 +1,14 @@
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { accessTokenUtil } from '../auth/accessTokenUtil';
-import MySizeEditForm from '../components/mySize/MySizeEditForm';
+import ProductEditForm from '../components/product/ProductEditForm';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
 import useInitialData from '../hooks/useInitialData';
 import useProduct from '../hooks/useProduct';
 import AccessDeniedPage from './AccessDeniedPage';
 import ErrorPage from './ErrorPage';
 
-export default function MySizeEditPage() {
+export default function ProductEditPage() {
   const navigate = useNavigate();
   const params = useParams();
   const productId = String(params.id);
@@ -44,7 +44,7 @@ export default function MySizeEditPage() {
     return <ErrorPage errorMessage={'사이즈 정보를 찾을 수 없습니다.'} />;
 
   return (
-    <MySizeEditForm
+    <ProductEditForm
       initialData={initialData}
       productData={productData}
       onComplete={handleComplete}

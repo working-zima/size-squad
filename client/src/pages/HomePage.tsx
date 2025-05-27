@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import Product from '../components/mySize/Product';
+import Product from '../components/product/Product';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
 import { Carousel } from '../components/ui/Slide/Carousel';
 import UserCard from '../components/UserCard';

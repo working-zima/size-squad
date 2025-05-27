@@ -3,6 +3,7 @@ import { LiaAngleLeftSolid } from 'react-icons/lia';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { ROUTES } from '../../constants/pageRoutes';
 import useProductsStore from '../../hooks/useProductsStore';
 import Button from '../ui/Button';
 import { SearchTextInputBox } from '../ui/textbox/TextBoxComponents';
@@ -64,7 +65,7 @@ export default function SearchInputHeader({
   };
 
   const handleClick = () => {
-    navigate('/mysize');
+    navigate(ROUTES.PRODUCT_LIST);
     hideHeader();
     hideBody();
     // TODO: 기능상 문제 없으면 지우기

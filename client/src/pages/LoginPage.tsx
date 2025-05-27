@@ -6,6 +6,7 @@ import { authService } from '../auth/AuthService';
 import LoginForm from '../components/logIn/LoginForm';
 import { FETCH_STATE } from '../constants/constants';
 import { ERROR_MESSAGES } from '../constants/messages';
+import { ROUTES } from '../constants/pageRoutes';
 import useAuthStore from '../hooks/useAuthStore';
 
 export default function LoginPage() {
@@ -28,7 +29,7 @@ export default function LoginPage() {
     if (accessToken) {
       resetForm();
       authStore.fetchMyUserData();
-      navigate('/');
+      navigate(ROUTES.HOME);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessToken]);

@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { accessTokenUtil } from '../auth/accessTokenUtil';
-import Product from '../components/mySize/Product';
+import Product from '../components/product/Product';
 import SearchInput from '../components/searchInput/SearchInput';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
 import BorderlessComboBox from '../components/ui/selectbox/BorderlessComboBox';

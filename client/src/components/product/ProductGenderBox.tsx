@@ -1,27 +1,29 @@
 import { Controller, useFormContext } from 'react-hook-form';
 
-import { FIT } from '../../constants/apiLocalizationMap';
+import { GENDER } from '../../constants/apiLocalizationMap';
 import { Summary } from '../../types';
 import ComboBox from '../ui/selectbox/ComboBox';
 
-type MySizeFitBoxPorps = {
-  fits: Summary[];
+type ProductGenderBoxProps = {
+  genders: Summary[];
 };
 
-export default function MySizeFitBox({ fits }: MySizeFitBoxPorps) {
+export default function ProductGenderBox({ genders }: ProductGenderBoxProps) {
   const { control } = useFormContext();
 
   return (
     <Controller
-      name="fit"
+      name="gender"
       control={control}
       render={({ field }) => (
         <ComboBox
-          label="의도한 핏"
+          label="성별"
           selectedItem={field.value}
-          items={fits}
+          items={genders}
           itemToId={(item) => item?._id || ''}
-          itemToText={(item) => FIT[item?.name] || ''}
+          itemToText={(item) =>
+            item?._id ? `${GENDER[item?.name]}용` : item?.name || ''
+          }
           onChange={(value) => field.onChange(value)}
         />
       )}

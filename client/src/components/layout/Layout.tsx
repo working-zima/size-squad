@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import { USERFIELDS } from '../../constants/apiLocalizationMap';
 import { PAGES } from '../../constants/constants';
+import { ROUTES } from '../../constants/pageRoutes';
 import useAuthStore from '../../hooks/useAuthStore';
 import useCheckAccessToken from '../../hooks/useCheckAccessToken';
 import LayoutFooter from './LayoutFooter';
@@ -47,10 +48,10 @@ export default function Layout() {
 
   const [{ user }] = useAuthStore();
 
-  const isEditSizePage = useMatch('/mysize/:id/edit');
-  const isEditProfilePage = useMatch('/mypage/:id/edit');
-  const isEditProfile = useMatch('/mypage/:id/edit/:editField');
-  const isMyPage = useMatch('/mypage/:id');
+  const isEditSizePage = useMatch(ROUTES.PRODUCT_EDIT_PATTERN);
+  const isEditProfilePage = useMatch(ROUTES.MYPAGE_EDIT_PATTERN);
+  const isEditProfile = useMatch(ROUTES.MYPAGE_INPUT_PATTERN);
+  const isMyPage = useMatch(ROUTES.MYPAGE_PATTERN);
 
   let page = PAGES[location.pathname] || {
     PAGETITLE: '',
@@ -60,14 +61,14 @@ export default function Layout() {
     Switcher: false,
   };
 
-  if (isEditSizePage) page = PAGES['/mysize/:id/edit'];
-  if (isEditProfilePage) page = PAGES['/mypage/:id/edit'];
+  if (isEditSizePage) page = PAGES[ROUTES.PRODUCT_EDIT_PATTERN];
+  if (isEditProfilePage) page = PAGES[ROUTES.MYPAGE_EDIT_PATTERN];
   if (isMyPage && user) {
-    page = PAGES['/mypage/:id'];
+    page = PAGES[ROUTES.MYPAGE_PATTERN];
     page.PAGETITLE = `${user.name}의 옷장`;
   }
   if (isEditProfile && user) {
-    page = PAGES['/mypage/:id/edit/:editField'];
+    page = PAGES[ROUTES.MYPAGE_INPUT_PATTERN];
     page.PAGETITLE = USERFIELDS[path] ? `${USERFIELDS[path]} 변경` : '';
   }
 

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import SignUpForm from '../components/signUp/SignUpForm';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
+import { ROUTES } from '../constants/pageRoutes';
 import useFetchGender from '../hooks/useGenders';
 import useSignupFormStore from '../hooks/useSignupFormStore';
 import ErrorPage from './ErrorPage';
@@ -24,7 +25,7 @@ export default function SignupPage() {
   useEffect(() => {
     if (accessToken) {
       store.reset();
-      navigate('/signup/complete');
+      navigate(ROUTES.SIGNUP_COMPLETE);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessToken]);

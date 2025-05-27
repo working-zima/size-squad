@@ -7,14 +7,14 @@ import useModal from '../../hooks/useModal';
 import { ApiError, InitialData, ProductInputForm, User } from '../../types';
 import Button from '../ui/Button';
 import { AlertModal } from '../ui/modal/ModalComponents';
-import MySizeBrandInput from './MySizeBrandInput';
-import MySizeCategoryBox from './MySizeCategoryBox';
-import MySizeDescriptionInput from './MySizeDescriptionInput';
-import MySizeFitBox from './MySizeFitBox';
-import MySizeGenderBox from './MySizeGenderBox';
-import MySizeMeasurementsInput from './MySizeMeasurementsInput';
-import MySizeNameInput from './MySizeNameInput';
-import MySizeSizeBox from './MySizeSizeBox';
+import ProductBrandInput from './ProductBrandInput';
+import ProductCategoryBox from './ProductCategoryBox';
+import ProductDescriptionInput from './ProductDescriptionInput';
+import ProductFitBox from './ProductFitBox';
+import ProductGenderBox from './ProductGenderBox';
+import ProductMeasurementsInput from './ProductMeasurementsInput';
+import ProductNameInput from './ProductNameInput';
+import ProductSizeBox from './ProductSizeBox';
 
 const Container = styled.div`
   padding: 20px ${(props) => props.theme.sizes.contentPadding} 0;
@@ -57,17 +57,17 @@ const ButtonWrapper = styled.div`
   }
 `;
 
-type MySizeNewFormProps = {
+type ProductNewFormProps = {
   initialData: InitialData;
   user: User;
   onComplete: () => void;
 };
 
-export default function MySizeNewForm({
+export default function ProductNewForm({
   initialData,
   user,
   onComplete,
-}: MySizeNewFormProps) {
+}: ProductNewFormProps) {
   const { mutateAsync } = useCreateUserProduct();
   const { modalRef, openModal, closeModal } = useModal();
   const [modalMessage, setModalMessage] = useState<string>();
@@ -133,14 +133,14 @@ export default function MySizeNewForm({
       <h2>New Product</h2>
       <FormProvider {...methods}>
         <Form onSubmit={methods.handleSubmit(onSubmit)}>
-          <MySizeBrandInput maxLength={29} />
-          <MySizeNameInput maxLength={29} />
-          <MySizeCategoryBox categories={initialData.categories} />
-          <MySizeGenderBox genders={initialData.genders} />
-          <MySizeSizeBox sizes={initialData.sizes} />
-          <MySizeMeasurementsInput categories={initialData.categories} />
-          <MySizeFitBox fits={initialData.fits} />
-          <MySizeDescriptionInput />
+          <ProductBrandInput maxLength={29} />
+          <ProductNameInput maxLength={29} />
+          <ProductCategoryBox categories={initialData.categories} />
+          <ProductGenderBox genders={initialData.genders} />
+          <ProductSizeBox sizes={initialData.sizes} />
+          <ProductMeasurementsInput categories={initialData.categories} />
+          <ProductFitBox fits={initialData.fits} />
+          <ProductDescriptionInput />
           {/* 등록 버튼 */}
           <ButtonWrapper>
             <Button type="submit" disabled={!isValid}>

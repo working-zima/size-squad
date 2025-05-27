@@ -2,6 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { accessTokenUtil } from '../../auth/accessTokenUtil';
+import { ROUTES } from '../../constants/pageRoutes';
 import { EmailForm } from './EmailForm';
 
 const Container = styled.footer`
@@ -95,7 +96,7 @@ export default function LayoutFooter() {
   const location = useLocation();
   const accessToken = accessTokenUtil.getAccessToken();
 
-  const noFooterPaths = ['/login', '/signup', '/mysize/new'];
+  const noFooterPaths = [ROUTES.LOGIN, ROUTES.SIGNUP, ROUTES.PRODUCT_NEW];
 
   if (noFooterPaths.some((path) => location.pathname.startsWith(path))) {
     return null;
@@ -122,11 +123,11 @@ export default function LayoutFooter() {
             <div>
               <p>
                 팀원만 이용할 수 있는 문의 기능입니다.{' '}
-                <Link to="login">로그인</Link> 후 이용해 주세요.
+                <Link to={ROUTES.LOGIN}>로그인</Link> 후 이용해 주세요.
               </p>
               <p>
                 혹시 아직 스쿼드의 일원이 아니라면 지금{' '}
-                <Link to="signup">합류</Link>해 보세요.
+                <Link to={ROUTES.SIGNUP}>합류</Link>해 보세요.
               </p>
             </div>
           )}

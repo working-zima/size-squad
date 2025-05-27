@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { accessTokenUtil } from '../auth/accessTokenUtil';
 import CategoryBar from '../components/category/CategoryBar';
-import ProductListSection from '../components/mySize/ProductListSection';
+import ProductListSection from '../components/product/ProductListSection';
 import { DEFAULT_PER } from '../constants/constants';
 import useAuthStore from '../hooks/useAuthStore';
 import { ProductParamsStore } from '../stores/ProductParamsStore';
@@ -25,7 +25,7 @@ const Container = styled.div`
   }
 `;
 
-export default function MySizeListPage() {
+export default function ProductListPage() {
   const [params] = useSearchParams();
   const categoryId = params.get('category1DepthCode') ?? undefined;
   const subCategoryId = params.get('category2DepthCode') ?? undefined;

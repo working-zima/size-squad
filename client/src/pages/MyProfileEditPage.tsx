@@ -6,6 +6,7 @@ import { accessTokenUtil } from '../auth/accessTokenUtil';
 import MyProfileEditForm from '../components/myProfile/MyProfileEditForm';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
 import { ConfirmTrigger } from '../components/ui/modal/ModalTrigger';
+import { ROUTES } from '../constants/pageRoutes';
 import useAuthStore from '../hooks/useAuthStore';
 import useSignupFormStore from '../hooks/useSignupFormStore';
 import { userService } from '../services/UserService';
@@ -50,7 +51,7 @@ export default function MyProfileEditPage() {
         accessTokenUtil.setAccessToken('');
         signupFormstore.reset();
         authStore.reset();
-        navigate('/');
+        navigate(ROUTES.HOME);
       } catch (error) {
         alert('회원 탈퇴 실패');
       }

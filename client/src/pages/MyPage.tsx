@@ -6,8 +6,9 @@ import { accessTokenUtil } from '../auth/accessTokenUtil';
 import { authService } from '../auth/AuthService';
 import Profile from '../components/mypage/Profile';
 import Sort from '../components/mypage/Sort';
-import Product from '../components/mySize/Product';
+import Product from '../components/product/Product';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
+import { ROUTES } from '../constants/pageRoutes';
 import useAuthStore from '../hooks/useAuthStore';
 import useCategories from '../hooks/useCategories';
 import useUser from '../hooks/useUser';
@@ -99,7 +100,7 @@ export default function MyPage() {
     accessTokenUtil.setAccessToken('');
     await queryClient.invalidateQueries({ queryKey: ['user'] });
     authStore.reset();
-    navigate('/');
+    navigate(ROUTES.HOME);
   };
 
   if (!accessTokenUtil.getAccessToken()) return <AccessDeniedPage />;
@@ -138,7 +139,7 @@ export default function MyPage() {
         <div id="more button" ref={moreRef} />
         {isProductsFetching && <LoadingSpinner />}
         {!isProductsLoading && !isProductsError && allProducts.length === 0 && (
-          <NoListPage itemName={'사이즈'} itemLink={'/mysize/new'} />
+          <NoListPage itemName={'사이즈'} itemLink={ROUTES.PRODUCT_NEW} />
         )}
       </Products>
     </Container>

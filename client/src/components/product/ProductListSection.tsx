@@ -2,6 +2,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { SORT_OPTIONS } from '../../constants/constants';
+import { ROUTES } from '../../constants/pageRoutes';
 import { useUserProducts } from '../../hooks/useUserProducts';
 import NoListPage from '../../pages/NoListPage';
 import { SortOption, User } from '../../types';
@@ -64,7 +65,7 @@ export default function ProductListSection({
     if (subCategoryId) queryParams.push(`category2DepthCode=${subCategoryId}`);
     queryParams.push(`sortCode=${sortOption.urlParam}`);
     const queryString = queryParams.join('&');
-    const path = `/mysize${queryString ? `?${queryString}` : ''}`;
+    const path = `${ROUTES.PRODUCT_LIST}${queryString ? `?${queryString}` : ''}`;
     navigate(path);
   };
 
@@ -90,7 +91,7 @@ export default function ProductListSection({
         {!isFetching && <div id="more button" ref={moreRef} />}
         {isFetching && <LoadingSpinner />}
         {!isLoading && !isError && allProducts.length === 0 && (
-          <NoListPage itemName={'사이즈'} itemLink={'/mysize/new'} />
+          <NoListPage itemName={'사이즈'} itemLink={ROUTES.PRODUCT_NEW} />
         )}
       </Products>
     </>

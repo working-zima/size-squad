@@ -1,14 +1,15 @@
 import { useNavigate } from 'react-router-dom';
 
 import { accessTokenUtil } from '../auth/accessTokenUtil';
-import MySizeNewForm from '../components/mySize/MySizeNewForm';
+import MySizeNewForm from '../components/product/ProductNewForm';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
+import { ROUTES } from '../constants/pageRoutes';
 import useAuthStore from '../hooks/useAuthStore';
 import useInitialData from '../hooks/useInitialData';
 import AccessDeniedPage from './AccessDeniedPage';
 import ErrorPage from './ErrorPage';
 
-export default function MySizeNewPage() {
+export default function ProductCreatePage() {
   const navigate = useNavigate();
   const [{ user, state: userState }] = useAuthStore();
 
@@ -23,7 +24,7 @@ export default function MySizeNewPage() {
   const loading = userState === 'loading' || initialDataIsLoading === true;
 
   const handleComplete = () => {
-    navigate('/mysize');
+    navigate(ROUTES.PRODUCT_LIST);
   };
 
   if (loading) return <LoadingSpinner />;

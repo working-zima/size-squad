@@ -2,11 +2,11 @@ import { Controller, useFormContext } from 'react-hook-form';
 
 import { TextInputBox } from '../ui/textbox/TextBoxComponents';
 
-type MySizeNameInput = {
+type MySizeNameInputProps = {
   maxLength: number;
 };
 
-export default function MySizeNameInput({ maxLength }: MySizeNameInput) {
+export default function ProductNameInput({ maxLength }: MySizeNameInputProps) {
   const { control } = useFormContext();
 
   return (

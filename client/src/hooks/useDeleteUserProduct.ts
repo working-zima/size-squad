@@ -4,10 +4,10 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 
-import { queryKeys } from '../constants/queryKeys';
 import { userService } from '../services/UserService';
 import { ProductParamsStore } from '../stores/ProductParamsStore';
 import { PaginationResponse, ProductResponse } from '../types';
+import { queryKeys } from '../utils/queryKeys';
 import {
   findProductFromUserProductsByProductId,
   getRelatedUserProductQueryKeys,

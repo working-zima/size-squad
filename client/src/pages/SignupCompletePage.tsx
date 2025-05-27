@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Button from '../components/ui/Button';
+import { ROUTES } from '../constants/pageRoutes';
 
 const Container = styled.div`
   display: flex;
@@ -64,11 +65,11 @@ export default function SignupCompletePage() {
   const navigate = useNavigate();
 
   const navegateHomeHandler = () => {
-    navigate('/');
+    navigate(ROUTES.HOME);
   };
 
   const navegateLogInHandler = () => {
-    navigate('/login');
+    navigate(ROUTES.LOGIN);
   };
 
   return (

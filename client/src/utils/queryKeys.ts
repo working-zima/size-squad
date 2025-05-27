@@ -1,5 +1,5 @@
+import { DEFAULT_PER, QUERY_KEYS } from '../constants/constants';
 import { UserProductQueryParams } from '../types';
-import { DEFAULT_PER, QUERY_KEYS } from './constants';
 
 export const queryKeys = {
   userProducts: (params: UserProductQueryParams) => {
