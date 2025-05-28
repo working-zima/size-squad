@@ -24,7 +24,7 @@ type ProductParamsStore = {
 };
 
 /**
- * 상품 목록 조회 시 사용하는 쿼리 파라미터 상태를 관리하는 zustand store
+ * 상품 목록 조회 시 사용하는 쿼리 파라미터 상태를 관리하는 store
  *
  * - keyword: 검색 키워드
  * - categoryId: 선택된 카테고리 ID
