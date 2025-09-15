@@ -7,7 +7,7 @@ import {
   useState,
 } from 'react';
 import { LiaAngleLeftSolid } from 'react-icons/lia';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { ROUTES } from '../../constants/pageRoutes';
@@ -53,9 +53,12 @@ export default function SearchInputHeader({
   addKeyword,
 }: SearchInputProps) {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const appliedKeyword = searchParams.get('query') || '';
+
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const [keyword, setKeyword] = useState('');
+  const [keyword, setKeyword] = useState(appliedKeyword);
 
   const stopPropagation = (event: MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
